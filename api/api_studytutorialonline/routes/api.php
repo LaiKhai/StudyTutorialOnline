@@ -27,4 +27,5 @@ Route::middleware(['auth:sanctum'])->group(function(){
     Route::apiResource('giangvien',GiangVienController::class);
     Route::apiResource('chucvu',ChucVuController::class);
     Route::apiResource('lop',LopController::class);
+    Route::post('/sinhvien/import',[SinhVienController::class,'import']);
 });
