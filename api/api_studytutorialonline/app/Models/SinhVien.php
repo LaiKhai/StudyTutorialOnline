@@ -15,7 +15,6 @@ class SinhVien extends Model
     protected $fillable=[
         'id',
         'id_lop',
-        'username',
         'email',
         'password',
         'ho_ten',
@@ -23,8 +22,6 @@ class SinhVien extends Model
         'mssv',
         'sdt',
         'ngay_sinh',
-        'nam_bat_dau',
-        'nam_ket_thuc',
         'trang_thai'
     ];
     public function lop(){

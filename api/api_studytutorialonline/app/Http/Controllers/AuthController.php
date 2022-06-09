@@ -16,7 +16,6 @@ class AuthController extends Controller
 //----------------------------------------------------------//
     public function dangKySinhVien(Request $request)
     {
-        $input['username']=$request->input('username');
         $input['email']=$request->input('email');
         $input['password']=Hash::make($request->input('password'));
         $input['ho_ten']=$request->input('ho_ten');
@@ -25,7 +24,6 @@ class AuthController extends Controller
         $input['ngay_sinh']=$request->input('ngay_sinh');
         $input['trang_thai']=1;
         $validator = Validator::make($input,[
-            'username'=>'required|max:255|unique:sinh_viens,username',
             'email'=>['required','max:255','email:rfc,dns','unique:sinh_viens,email','regex:/(.*)@caothang\.edu.vn/i'],
             'password'=>'required|max:255',
             'ho_ten'=>'required|max:255|string',

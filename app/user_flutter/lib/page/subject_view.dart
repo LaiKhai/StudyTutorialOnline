@@ -8,10 +8,11 @@ import 'package:user_flutter/Widget/Home/stream_item.dart';
 import 'package:user_flutter/Widget/Home/student_item.dart';
 import 'package:user_flutter/Widget/Home/subject_post.dart';
 import 'package:user_flutter/common/constant/color.dart';
-import 'package:user_flutter/data/class_data.dart';
 import 'package:user_flutter/data/model/subject.dart';
 import 'package:user_flutter/data/model/subject_assignment.dart';
 import 'package:user_flutter/data/model/subject_stream.dart';
+
+import '../data/class_data.dart';
 
 class SubjectView extends StatefulWidget {
   final Subject subject;
