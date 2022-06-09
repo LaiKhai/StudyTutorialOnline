@@ -17,6 +17,7 @@ class CreateLopsTable extends Migration
             $table->id();
             $table->foreignId('id_giangvien');
             $table->string('ten_lop');
+            $table->string('nien_khoa');
             $table->integer('trang_thai');
             $table->timestamps();
         });

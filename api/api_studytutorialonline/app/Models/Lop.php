@@ -15,6 +15,7 @@ class Lop extends Model
         'id',
         'id_giangvien',
         'ten_lop',
+        'nien_khoa',
         'trang_thai'
     ];
 

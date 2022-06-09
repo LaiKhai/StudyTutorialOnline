@@ -25,7 +25,11 @@ class US_Login_Screen extends StatelessWidget {
             borderRadius: BorderRadius.circular(25),
           ),
         ),
-        const US_TextField_Login(),
+        Container(
+          height: getHeightSize(context),
+          width: getWidthSize(context),
+          child: US_TextField_Login(),
+        )
       ],
     ));
   }
