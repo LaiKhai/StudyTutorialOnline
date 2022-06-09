@@ -5,6 +5,7 @@ import 'package:user_flutter/page/favourites_page.dart';
 import 'package:user_flutter/page/header_page.dart';
 import 'package:user_flutter/page/home_view.dart';
 import 'package:user_flutter/page/notifications_page.dart';
+import 'package:user_flutter/page/profile_page.dart';
 import 'package:user_flutter/page/thong_bao_page.dart';
 import 'package:user_flutter/provider/navigation_provider.dart';
 
@@ -41,7 +42,7 @@ class _MainPageState extends State<MainPage> {
 
     switch (navigationItem) {
       case NavigationItem.header:
-        return HeaderPage();
+        return Profile_page();
       case NavigationItem.people:
         return const HomeView();
       case NavigationItem.favourites:
