@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\GiangVien;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Validator;
 
 class GiangVienController extends Controller
 {
@@ -15,11 +16,11 @@ class GiangVienController extends Controller
      */
     public function index()
     {
-        $giangVien=GiangVien::all();
-        $response=[
-            'giangvien'=>$giangVien,
+        $giangVien = GiangVien::all();
+        $response = [
+            'giangvien' => $giangVien,
         ];
-        return response()->json($response,200);
+        return response()->json($response, 200);
     }
 
     /**
@@ -40,50 +41,55 @@ class GiangVienController extends Controller
      */
     public function store(Request $request)
     {
-        $input['email']=$request->input('email');
-        $input['password']=Hash::make($request->input('password'));
-        $input['ho_ten']=$request->input('ho_ten');
-        $input['msgv']=$request->input('msgv');
-        $input['sdt']=$request->input('sdt');
-        $input['ngay_sinh']=$request->input('ngay_sinh');
-        $input['id_chuc_vu']=$request->input('id_chuc_vu');
-        $input['trang_thai']=1;
-        $validator = Validator::make($input,[
-            'email'=>['required','max:255','email:rfc,dns','unique:sinh_viens,email','regex:/(.*)@caothang\.edu.vn/i'],
-            'password'=>'required|max:255',
-            'ho_ten'=>'required|max:255|string',
-            'msgv'=>'required|max:255|string',
-            'sdt'=>'required|max:255|string',
-            'ngay_sinh'=>'required|max:255|date',
-            'id_chuc_vu'=>'required|max:255|integer',
+        $input['id_khoa'] = $request->input('id_khoa');
+        $input['email'] = $request->input('email');
+        $input['password'] = Hash::make($request->input('password'));
+        $input['ho_ten'] = $request->input('ho_ten');
+        $input['msgv'] = $request->input('msgv');
+        $input['sdt'] = $request->input('sdt');
+        $input['ngay_sinh'] = $request->input('ngay_sinh');
+        $input['id_chuc_vu'] = $request->input('id_chuc_vu');
+        $input['trang_thai'] = 1;
+        $validator = Validator::make($input, [
+            'id_khoa' => 'required',
+            'email' => ['required', 'max:255', 'email:rfc,dns', 'unique:sinh_viens,email', 'regex:/(.*)@caothang\.edu.vn/i'],
+            'password' => ['required', 'max:255'],
+            'ho_ten' => ['required', 'max:255,string'],
+            'msgv' => ['required', 'max:255', 'string'],
+            'sdt' => ['required', 'max:255', 'string'],
+            'ngay_sinh' => ['required', 'max:255', 'date'],
+            'id_chuc_vu' => ['required', 'max:255', 'integer'],
         ]);
-        if($validator->fails()){
-            if(!empty($validator->errors())){
-                $response['data']=$validator->errors();
+        if ($validator->fails()) {
+            if (!empty($validator->errors())) {
+                $response['data'] = $validator->errors();
             }
-            $response['message']='Vaidator Error';
-            return response()->json($response,404);
+            $response['message'] = 'Vaidator Error';
+            return response()->json($response, 404);
         }
-        
-        $giangVien=GiangVien::create($input);
-        $response=[
-            'message'=>'Dang ky giang vien thanh cong !',
-            'giangvien'=>$giangVien
+
+        $giangVien = GiangVien::create($input);
+        $response = [
+            'message' => 'Dang ky giang vien thanh cong !',
+            'giangvien' => $giangVien
         ];
 
-        return response()->json($response,200);
+        return response()->json($response, 200);
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\GiangVien  $giangVien
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(GiangVien $giangVien)
+    public function show($id)
     {
-        $sinhvien=SinhVien::find($sinhVien)->first();
-        return response()->json($sinhvien,200);
+        $giangvien = GiangVien::find($id)->first();
+        $response = [
+            'giangvien' => $giangvien
+        ];
+        return response()->json($response, 200);
     }
 
     /**
