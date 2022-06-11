@@ -12,9 +12,11 @@ class GiangVien extends Model
 {
     use HasFactory;
     use HasApiTokens;
-    protected $table='giang_viens';
-    protected $fillable=[
+    protected $table = 'giang_viens';
+    protected $fillable = [
+        'id',
         'id_khoa',
+        'id_chuc_vu',
         'email',
         'password',
         'avt',
@@ -22,13 +24,14 @@ class GiangVien extends Model
         'sdt',
         'ho_ten',
         'ngay_sinh',
-        'id_chuc_vu',
         'trang_thai'
     ];
-    public function Khoas(){
-        return $this->beLongsTo(Khoa::class,'id_khoa');
+    public function Khoas()
+    {
+        return $this->beLongsTo(Khoa::class, 'id_khoa');
     }
-    public function chucVu(){
-        return $this->beLongsTo(ChucVu::class,'id_chuc_vu');
+    public function chucVu()
+    {
+        return $this->beLongsTo(ChucVu::class, 'id_chuc_vu');
     }
 }
