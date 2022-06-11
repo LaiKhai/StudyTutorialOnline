@@ -6,7 +6,6 @@ use App\Models\ChucVu;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
-use Illuminate\Support\Facades\Redirect;
 
 class ChucVuController extends Controller
 {
@@ -17,7 +16,11 @@ class ChucVuController extends Controller
      */
     public function index()
     {
-        //
+        $chucvu = ChucVu::all();
+        $response = [
+            'chucvu' => $chucvu
+        ];
+        return response()->json($response, 200);
     }
 
     /**
@@ -38,44 +41,48 @@ class ChucVuController extends Controller
      */
     public function store(Request $request)
     {
-        $input['ten_chuc_vu']=$request->input('ten_chuc_vu');
-        $input['trang_thai']=1;
-        $validator=Validator::make($input,[
-            'ten_chuc_vu'=>'required|string|max:255',
+        $input['ten_chuc_vu'] = $request->input('ten_chuc_vu');
+        $input['trang_thai'] = 1;
+        $validator = Validator::make($input, [
+            'ten_chuc_vu' => 'required|string|max:255',
         ]);
-        if($validator->fails()){
-            if(!empty($validator->errors())){
-                $response['data']=$validator->errors();
+        if ($validator->fails()) {
+            if (!empty($validator->errors())) {
+                $response['data'] = $validator->errors();
             }
-            $response['message']='Vaidator Error';
-            return response()->json($response,404);
+            $response['message'] = 'Vaidator Error';
+            return response()->json($response, 404);
         }
-        $chucVu=ChucVu::create($input);
-        $response=[
-            'message'=>'Tao thanh cong !',
-            'chucvu'=>$chucVu
+        $chucVu = ChucVu::create($input);
+        $response = [
+            'message' => 'Tao thanh cong !',
+            'chucvu' => $chucVu
         ];
-        return response()->json($response,200);
+        return response()->json($response, 200);
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\ChucVu  $chucVu
+     * @param  int  $id 
      * @return \Illuminate\Http\Response
      */
-    public function show(ChucVu $chucVu)
+    public function show($id)
     {
-        //
+        $chucvu = ChucVu::find($id);
+        $response = [
+            'chucvu' => $chucvu
+        ];
+        return response()->json($response, 200);
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\ChucVu  $chucVu
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit(ChucVu $chucVu)
+    public function edit($id)
     {
         //
     }
@@ -84,10 +91,10 @@ class ChucVuController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \App\Http\Requests\UpdateChucVuRequest  $request
-     * @param  \App\Models\ChucVu  $chucVu
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(UpdateChucVuRequest $request, ChucVu $chucVu)
+    public function update(Request $request, $id)
     {
         //
     }
@@ -95,10 +102,10 @@ class ChucVuController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\ChucVu  $chucVu
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(ChucVu $chucVu)
+    public function destroy($id)
     {
         //
     }

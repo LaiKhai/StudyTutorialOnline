@@ -6,12 +6,14 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\GiangVien;
 use App\Models\SinhVien;
+use App\Models\DS_SinhVien;
+use App\Models\LopHocPhan;
 
 class Lop extends Model
 {
     use HasFactory;
-    protected $table='lops';
-    protected $fillable=[
+    protected $table = 'lops';
+    protected $fillable = [
         'id',
         'id_giangvien',
         'ten_lop',
@@ -19,14 +21,21 @@ class Lop extends Model
         'trang_thai'
     ];
 
-    public function giangVien(){
-        return $this->hasOne(GiangVien::class,'id_giang_vien');
+    public function giangvien()
+    {
+        return $this->belongsTo(GiangVien::class, 'id_giang_vien');
     }
 
-    public function sinhVien(){
-        return $this->hasMany(SinhVien::class,'id_lop');
+    public function sinhvien()
+    {
+        return $this->hasMany(SinhVien::class, 'id_lop', 'id');
     }
-    public function lopHocPhan(){
-        return $this->hasMany(LopHocPhan::class,'id_lop');
+    public function lophocphan()
+    {
+        return $this->hasMany(LopHocPhan::class, 'id_lop', 'id');
+    }
+    public function dssinhvien()
+    {
+        return $this->hasMany(DS_SinhVien::class, 'id_lop', 'id');
     }
 }

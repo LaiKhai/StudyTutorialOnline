@@ -2,6 +2,10 @@
 
 namespace App\Models;
 
+use App\Models\BaiKiemTra;
+use App\Models\File;
+use App\Models\TraLoi;
+
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -22,4 +26,16 @@ class CauHoi extends Model
         'diem',
         'trang_thai'
     ];
+    public function baikiemtra()
+    {
+        return $this->belongsTo(BaiKiemTra::class, 'id_bai_kiem_tra');
+    }
+    public function file()
+    {
+        return $this->belongsTo(File::class, 'id_file');
+    }
+    public function traloi()
+    {
+        return $this->hasMany(TraLoi::class, 'id_cau_hoi', 'id');
+    }
 }

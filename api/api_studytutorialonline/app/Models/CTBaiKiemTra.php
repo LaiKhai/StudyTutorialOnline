@@ -2,6 +2,9 @@
 
 namespace App\Models;
 
+use App\Models\BaiKiemTra;
+use App\Models\TraLoi;
+
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -16,4 +19,12 @@ class CTBaiKiemTra extends Model
         'tong_diem',
         'trang_thai',
     ];
+    public function baikiemtra()
+    {
+        return $this->belongsTo(BaiKiemTra::class, 'id_bai_kiem_tra');
+    }
+    public function traloi()
+    {
+        return $this->belongsTo(TraLoi::class, 'id_tra_loi');
+    }
 }

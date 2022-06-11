@@ -19,7 +19,7 @@ class DS_GiangVien extends Model
 
     public function giangVien()
     {
-        return $this->hasMany(GiangVien::class, 'id_giang_vien');
+        return $this->belongsTo(GiangVien::class, 'id_giang_vien');
     }
     public function lopHocPhan()
     {

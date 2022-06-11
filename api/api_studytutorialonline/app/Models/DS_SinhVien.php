@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\SinhVien;
 use App\Models\LopHocPhan;
+use App\Models\Lop;
 
 class DS_SinhVien extends Model
 {
@@ -25,5 +26,9 @@ class DS_SinhVien extends Model
     public function lopHocPhan()
     {
         return $this->beLongsTo(LopHocPhan::class, 'id_lop_hoc_phan');
+    }
+    public function lop()
+    {
+        return $this->belongsTo(Lop::class, 'id_lop');
     }
 }

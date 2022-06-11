@@ -14,4 +14,8 @@ class LoaiBaiTap extends Model
         'ten_loai',
         'trang_thai'
     ];
+    public function baitap()
+    {
+        return $this->hasMany(BaiTap::class, 'id_loai', 'id');
+    }
 }
