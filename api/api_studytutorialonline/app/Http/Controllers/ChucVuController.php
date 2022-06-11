@@ -16,9 +16,9 @@ class ChucVuController extends Controller
      */
     public function index()
     {
-        $chucvu = ChucVu::all();
+        $chucVu = ChucVu::all();
         $response = [
-            'chucvu' => $chucvu
+            'chucvu' => $chucVu
         ];
         return response()->json($response, 200);
     }
@@ -69,9 +69,9 @@ class ChucVuController extends Controller
      */
     public function show($id)
     {
-        $chucvu = ChucVu::find($id);
+        $chucVu = ChucVu::find($id);
         $response = [
-            'chucvu' => $chucvu
+            'chucvu' => $chucVu
         ];
         return response()->json($response, 200);
     }
@@ -90,13 +90,27 @@ class ChucVuController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \App\Http\Requests\UpdateChucVuRequest  $request
+     * @param  \Illuminate\Http\Request  $request
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
     {
-        //
+        $chucVu = ChucVu::find($id);
+        if (empty($chucVu)) {
+            return response()->json(['message' => 'khong tim thay chuc vu nao !'], 200);
+        }
+        $input = $request->all();
+
+        $chucVu->ten_chuc_vu = $input['ten_chuc_vu'];
+        $chucVu->trang_thai = $input['trang_thai'];
+        $chucVu->save();
+
+        $response = [
+            'message' => 'chinh sua thanh cong !',
+            'chucvu' => $chucVu,
+        ];
+        return response()->json($response, 200);
     }
 
     /**
@@ -107,6 +121,18 @@ class ChucVuController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $chucVu = ChucVu::find($id);
+        if (empty($chucVu)) {
+            return response()->json(['message' => 'khong tim thay chuc vu nao !'], 200);
+        }
+        $chucVu->delete();
+        $chucVu->save();
+        $lstChucVu = ChucVu::all();
+        $response =
+            [
+                'message' => 'xoa chuc vu thanh cong !',
+                'chucvu' => $lstChucVu
+            ];
+        return response()->json($response, 200);
     }
 }
