@@ -8,6 +8,7 @@ import 'package:user_flutter/page/notifications_page.dart';
 import 'package:user_flutter/page/profile_page.dart';
 import 'package:user_flutter/page/thong_bao_page.dart';
 import 'package:user_flutter/provider/navigation_provider.dart';
+import 'package:user_flutter/text.dart';
 
 import '../data/model/navigation_item.dart';
 import 'updates_page.dart';
@@ -54,7 +55,7 @@ class _MainPageState extends State<MainPage> {
       case NavigationItem.plugins:
         return const Cai_Dat_Page();
       case NavigationItem.notifications:
-        return NotificationsPage();
+        return Cai_Dat_Page();
     }
   }
 }

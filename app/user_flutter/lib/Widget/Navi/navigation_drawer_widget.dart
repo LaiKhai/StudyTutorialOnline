@@ -42,7 +42,7 @@ class NavigationDrawerWidget extends StatelessWidget {
                       context,
                       item: NavigationItem.workflow,
                       text: 'Thông báo',
-                      icon: Icons.workspaces_outline,
+                      icon: Icons.notifications_outlined,
                     ),
                     const SizedBox(height: 16),
                     buildMenuItem(
@@ -65,7 +65,7 @@ class NavigationDrawerWidget extends StatelessWidget {
                       context,
                       item: NavigationItem.notifications,
                       text: 'Thông tin ứng dụng',
-                      icon: Icons.notifications_outlined,
+                      icon: Icons.workspaces_outline,
                     ),
                   ],
                 ),
@@ -85,7 +85,8 @@ class NavigationDrawerWidget extends StatelessWidget {
     final currentItem = provider.navigationItem;
     final isSelected = item == currentItem;
 
-    final color = isSelected ? const Color.fromARGB(255, 234, 234, 43) : Colors.white;
+    final color =
+        isSelected ? const Color.fromARGB(255, 234, 234, 43) : Colors.white;
 
     return Material(
       color: Colors.transparent,

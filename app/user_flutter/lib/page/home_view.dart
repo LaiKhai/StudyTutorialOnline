@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
+import 'package:user_flutter/Widget/Home/thong_bao.dart';
 import 'package:user_flutter/Widget/Navi/navigation_drawer_widget.dart';
 import 'package:user_flutter/common/constant/color.dart';
 import 'package:user_flutter/page/subject_view.dart';
@@ -37,12 +38,7 @@ class HomeView extends StatelessWidget {
               child: AppIconButton(
                 icon: Stack(
                   children: [
-                    SvgPicture.asset(
-                      "assets/icons/notification-fill.svg",
-                      width: 24,
-                      height: 24,
-                      color: Colors.white,
-                    ),
+                    thong_bao(),
                     Positioned(
                       right: 2,
                       top: 0,
