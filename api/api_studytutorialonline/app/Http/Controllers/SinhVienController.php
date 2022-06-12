@@ -70,12 +70,12 @@ class SinhVienController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\SinhVien  $sinhVien
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(SinhVien $sinhVien)
+    public function show($id)
     {
-        $sinhvien = SinhVien::find($sinhVien)->first();
+        $sinhvien = SinhVien::find($id);
         return response()->json($sinhvien, 200);
     }
 
@@ -83,10 +83,10 @@ class SinhVienController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\SinhVien  $sinhVien
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, SinhVien $sinhVien)
+    public function update(Request $request, $id)
     {
         //
     }
@@ -94,24 +94,23 @@ class SinhVienController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\SinhVien  $sinhVien
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(SinhVien $sinhVien)
+    public function destroy($id)
     {
         //
     }
     public function import(Request $request)
     {
-        if ($request->hasFile('SVimport')) {
-            $path1 = $request->file('SVimport')->store('temp', 'public');
-            $path = Storage::files($path1);
-            Excel::import(new SinhVienImport, $path);
-        }
-        $sinhVien = SinhVien::all();
+        $path1 = $request->file('file')->store('temp', 'public');
+        $path = storage_path('app') . '/' . $path1;
+        Excel::import(new SinhVienImport, $path);
+        $sinhVien = SinhVien::create();
+        $lstSinhVien = $sinhVien->all();
         $response = [
-            'message' => "Them thanh cong",
-            'sinhvien' => $path
+            'message' => 'them thanh cong !',
+            'sinhvien' => $lstSinhVien
         ];
         return response()->json($response, 200);
     }
