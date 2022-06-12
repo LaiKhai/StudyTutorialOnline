@@ -1,12 +1,13 @@
 <?php
 
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\SinhVienController;
 use App\Http\Controllers\GiangVienController;
 use App\Http\Controllers\LopController;
 use App\Http\Controllers\ChucVuController;
+use App\Http\Controllers\LoaiBaiTapController;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -29,4 +30,5 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::apiResource('giangvien', GiangVienController::class);
     Route::apiResource('chucvu', ChucVuController::class);
     Route::apiResource('lop', LopController::class);
+    Route::apiResource('loaibaitap', LoaiBaiTapController::class);
 });

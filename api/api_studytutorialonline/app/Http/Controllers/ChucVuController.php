@@ -98,14 +98,13 @@ class ChucVuController extends Controller
     {
         $chucVu = ChucVu::find($id);
         if (empty($chucVu)) {
-            return response()->json(['message' => 'khong tim thay chuc vu nao !'], 200);
+            return response()->json(['message' => 'khong tim thay chuc vu nao !'], 404);
         }
-        $input = $request->all();
-
-        $chucVu->ten_chuc_vu = $input['ten_chuc_vu'];
-        $chucVu->trang_thai = $input['trang_thai'];
+        $chucVu->fill([
+            'ten_chuc_vu' => $request->input('ten_chuc_vu'),
+            'trang_thai' => $request->input('trang_thai')
+        ]);
         $chucVu->save();
-
         $response = [
             'message' => 'chinh sua thanh cong !',
             'chucvu' => $chucVu,

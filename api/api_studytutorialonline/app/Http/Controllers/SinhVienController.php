@@ -22,6 +22,15 @@ class SinhVienController extends Controller
             $excel->file = '/admin_view/assets/images/No_Image.png';
         }
     }
+
+    public function FixImg(SinhVien $sinhVien)
+    {
+        if (Storage::disk('public')->exists($sinhVien->avt)) {
+            $sinhVien->avt = Storage::url($sinhVien->avt);
+        } else {
+            $sinhVien->avt = '/assets/images/no_image.png';
+        }
+    }
     /**
      * Store a newly created resource in storage.
      *
@@ -30,6 +39,9 @@ class SinhVienController extends Controller
     public function index()
     {
         $sinhVien = SinhVien::all();
+        foreach ($sinhVien as $item) {
+            $this->FixImg($item);
+        }
         $response = [
             'sinhvien' => $sinhVien,
         ];
@@ -68,6 +80,10 @@ class SinhVienController extends Controller
         }
 
         $sinhVien = SinhVien::create($input);
+        if ($request->hasFile('avt')) {
+            $sinhVien['avt'] = $request->file('avt')->store('assets/images/avatar/' . $sinhVien['id'], 'public');
+        }
+        $sinhVien->save();
         $response = [
             'message' => 'Dang ky sinh vien thanh cong !',
             'sinhvien' => $sinhVien
@@ -99,17 +115,21 @@ class SinhVienController extends Controller
     {
         $sinhVien = SinhVien::find($id);
         if (empty($sinhVien)) {
-            return response()->json(['messsage' => 'khong tim thay sinh vien nao !'], 200);
+            return response()->json(['messsage' => 'khong tim thay sinh vien nao !'], 404);
         }
-        $input = $request->all();
-        $sinhVien->email = $input['email'];
-        $sinhVien->password = $input['password'];
-        $sinhVien->ho_ten = $input['ho_ten'];
-        $sinhVien->avt = $input['avt'];
-        $sinhVien->mssv = $input['mssv'];
-        $sinhVien->sdt = $input['sdt'];
-        $sinhVien->ngay_sinh = $input['ngay_sinh'];
-        $sinhVien->trang_thai = $input['trang_thai'];
+        $sinhVien->fill([
+            'email' => $request->input('email'),
+            'password' => $request->input('password'),
+            'ho_ten' => $request->input('ho_ten'),
+            'mssv' => $request->input('mssv'),
+            'sdt' => $request->input('sdt'),
+            'ngay_sinh' => $request->input('ngay_sinh'),
+            'trang_thai' => $request->input('trang_thai'),
+        ]);
+        if ($request->hasFile('avt')) {
+            $sinhVien['avt'] = $request->file('avt')->store('assets/images/avatar/' . $sinhVien['id'], 'public');
+        }
+        $sinhVien->save();
         $response = [
             'message' => 'chinh sua thanh cong !',
             'sinhvien' => $sinhVien
@@ -125,18 +145,26 @@ class SinhVienController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $sinhVien = SinhVien::find($id);
+        if (empty($sinhVien)) {
+            $response = ['message' => 'khong tim thay sinh vien nao !'];
+            return response()->json($response, 404);
+        }
+        $lstSinhVien = SinhVien::all();
+        $sinhVien->delete();
+        $response = [
+            'message' => 'xoa thanh cong !',
+            'sinhvien' => $lstSinhVien
+        ];
+        return response()->json($response, 200);
     }
     public function import(Request $request)
     {
-        $md5Name = md5_file($request->file('file')->getRealPath());
-        $guessExtension = $request->file('file')->guessExtension();
-        $path1 = $request->file('file')->storeAs('temp', $md5Name . '.' . $guessExtension, 'public');
-        $path = Storage::files($path1);
-        $file_path = Storage::url(implode("/", $path));
-        Excel::import(new SinhVienImport, implode("/", $path));
-        $sinhVien = SinhVien::create();
-        $lstSinhVien = $sinhVien->all();
+        // $path1 = $request->file('file')->store('temp', 'public');
+        // $path = Storage::url($path1);
+        Excel::import(new SinhVienImport, $request->file('file'));
+
+        $lstSinhVien = SinhVien::all();
         $response = [
             'message' => 'them thanh cong !',
             'sinhvien' => $lstSinhVien
