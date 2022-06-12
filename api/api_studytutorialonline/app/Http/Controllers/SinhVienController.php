@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\SinhVien;
+use App\Models\FileExcel;
 use App\Models\Lop;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
@@ -13,6 +14,14 @@ use Illuminate\Support\Facades\Validator;
 
 class SinhVienController extends Controller
 {
+    public function FixFile(FileExcel $excel)
+    {
+        if (Storage::disk('public')->exists($excel->file)) {
+            $excel->file = Storage::url($excel->file);
+        } else {
+            $excel->file = '/admin_view/assets/images/No_Image.png';
+        }
+    }
     /**
      * Store a newly created resource in storage.
      *
@@ -88,7 +97,24 @@ class SinhVienController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $sinhVien = SinhVien::find($id);
+        if (empty($sinhVien)) {
+            return response()->json(['messsage' => 'khong tim thay sinh vien nao !'], 200);
+        }
+        $input = $request->all();
+        $sinhVien->email = $input['email'];
+        $sinhVien->password = $input['password'];
+        $sinhVien->ho_ten = $input['ho_ten'];
+        $sinhVien->avt = $input['avt'];
+        $sinhVien->mssv = $input['mssv'];
+        $sinhVien->sdt = $input['sdt'];
+        $sinhVien->ngay_sinh = $input['ngay_sinh'];
+        $sinhVien->trang_thai = $input['trang_thai'];
+        $response = [
+            'message' => 'chinh sua thanh cong !',
+            'sinhvien' => $sinhVien
+        ];
+        return response()->json($response, 200);
     }
 
     /**
@@ -103,9 +129,12 @@ class SinhVienController extends Controller
     }
     public function import(Request $request)
     {
-        $path1 = $request->file('file')->store('temp', 'public');
+        $md5Name = md5_file($request->file('file')->getRealPath());
+        $guessExtension = $request->file('file')->guessExtension();
+        $path1 = $request->file('file')->storeAs('temp', $md5Name . '.' . $guessExtension, 'public');
         $path = Storage::files($path1);
-        Excel::import(new SinhVienImport, Storage::url($path));
+        $file_path = Storage::url(implode("/", $path));
+        Excel::import(new SinhVienImport, implode("/", $path));
         $sinhVien = SinhVien::create();
         $lstSinhVien = $sinhVien->all();
         $response = [
