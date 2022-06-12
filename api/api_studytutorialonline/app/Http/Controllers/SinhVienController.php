@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Hash;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Imports\SinhVienImport;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Validator;
 
 class SinhVienController extends Controller
 {
@@ -19,11 +20,11 @@ class SinhVienController extends Controller
      */
     public function index()
     {
-        $sinhVien=SinhVien::all();
-        $response=[
-            'sinhvien'=>$sinhVien,
+        $sinhVien = SinhVien::all();
+        $response = [
+            'sinhvien' => $sinhVien,
         ];
-        return response()->json($response,200);
+        return response()->json($response, 200);
     }
 
     /**
@@ -34,36 +35,36 @@ class SinhVienController extends Controller
      */
     public function store(Request $request)
     {
-        $input['email']=$request->input('email');
-        $input['password']=Hash::make($request->input('password'));
-        $input['ho_ten']=$request->input('ho_ten');
-        $input['mssv']=$request->input('mssv');
-        $input['sdt']=$request->input('sdt');
-        $input['ngay_sinh']=$request->input('ngay_sinh');
-        $input['trang_thai']=1;
-        $validator = Validator::make($input,[
-            'email'=>['required','max:255','email:rfc,dns','unique:sinh_viens,email','regex:/(.*)@caothang\.edu.vn/i'],
-            'password'=>'required|max:255',
-            'ho_ten'=>'required|max:255|string',
-            'mssv'=>'required|max:255|string',
-            'sdt'=>'required|max:255|string',
-            'ngay_sinh'=>'required|max:255',
+        $input['email'] = $request->input('email');
+        $input['password'] = Hash::make($request->input('password'));
+        $input['ho_ten'] = $request->input('ho_ten');
+        $input['mssv'] = $request->input('mssv');
+        $input['sdt'] = $request->input('sdt');
+        $input['ngay_sinh'] = $request->input('ngay_sinh');
+        $input['trang_thai'] = 1;
+        $validator = Validator::make($input, [
+            'email' => ['required', 'max:255', 'email:rfc,dns', 'unique:sinh_viens,email', 'regex:/(.*)@caothang\.edu.vn/i'],
+            'password' => 'required|max:255',
+            'ho_ten' => 'required|max:255|string',
+            'mssv' => 'required|max:255|string',
+            'sdt' => 'required|max:255|string',
+            'ngay_sinh' => 'required|max:255',
         ]);
-        if($validator->fails()){
-            if(!empty($validator->errors())){
-                $response['data']=$validator->errors();
+        if ($validator->fails()) {
+            if (!empty($validator->errors())) {
+                $response['data'] = $validator->errors();
             }
-            $response['message']='Vaidator Error';
-            return response()->json($response,404);
+            $response['message'] = 'Vaidator Error';
+            return response()->json($response, 404);
         }
-        
-        $sinhVien=SinhVien::create($input);
-        $response=[
-            'message'=>'Dang ky sinh vien thanh cong !',
-            'sinhvien'=>$sinhVien
+
+        $sinhVien = SinhVien::create($input);
+        $response = [
+            'message' => 'Dang ky sinh vien thanh cong !',
+            'sinhvien' => $sinhVien
         ];
 
-        return response()->json($response,200);
+        return response()->json($response, 200);
     }
 
     /**
@@ -74,8 +75,8 @@ class SinhVienController extends Controller
      */
     public function show(SinhVien $sinhVien)
     {
-        $sinhvien=SinhVien::find($sinhVien)->first();
-        return response()->json($sinhvien,200);
+        $sinhvien = SinhVien::find($sinhVien)->first();
+        return response()->json($sinhvien, 200);
     }
 
     /**
@@ -100,18 +101,18 @@ class SinhVienController extends Controller
     {
         //
     }
-    public function import(Request $request) 
+    public function import(Request $request)
     {
-        if($request->hasFile('SVimport')){
-            $path1 = $request->file('SVimport')->store('temp','public');
-            $path=Storage::files($path1);
-            Excel::import(new SinhVienImport, $path);    
+        if ($request->hasFile('SVimport')) {
+            $path1 = $request->file('SVimport')->store('temp', 'public');
+            $path = Storage::files($path1);
+            Excel::import(new SinhVienImport, $path);
         }
-        $sinhVien=SinhVien::all();
-        $response=[
-            'message'=>"Them thanh cong",
-            'sinhvien'=>$path
+        $sinhVien = SinhVien::all();
+        $response = [
+            'message' => "Them thanh cong",
+            'sinhvien' => $path
         ];
-        return response()->json($response,200);
+        return response()->json($response, 200);
     }
 }
