@@ -104,8 +104,8 @@ class SinhVienController extends Controller
     public function import(Request $request)
     {
         $path1 = $request->file('file')->store('temp', 'public');
-        $path = storage_path('app') . '/' . $path1;
-        Excel::import(new SinhVienImport, $path);
+        $path = Storage::files($path1);
+        Excel::import(new SinhVienImport, Storage::url($path));
         $sinhVien = SinhVien::create();
         $lstSinhVien = $sinhVien->all();
         $response = [
