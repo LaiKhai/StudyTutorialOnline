@@ -18,14 +18,15 @@ use App\Http\Controllers\ChucVuController;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
-Route::post('dksv',[AuthController::class,'dangKySinhVien']);
-Route::post('dkgv',[AuthController::class,'dangKyGiangVien']);
-Route::post('dnsv',[AuthController::class,'dangNhapSinhVien']);
-Route::post('dngv',[AuthController::class,'dangNhapGiangVien']);
-Route::middleware(['auth:sanctum'])->group(function(){
-    Route::apiResource('sinhvien',SinhVienController::class);
-    Route::apiResource('giangvien',GiangVienController::class);
-    Route::apiResource('chucvu',ChucVuController::class);
-    Route::apiResource('lop',LopController::class);
-    Route::post('/sinhvien/import',[SinhVienController::class,'import']);
+
+Route::post('dksv', [AuthController::class, 'dangKySinhVien']);
+Route::post('dkgv', [AuthController::class, 'dangKyGiangVien']);
+Route::post('dnsv', [AuthController::class, 'dangNhapSinhVien']);
+Route::post('dngv', [AuthController::class, 'dangNhapGiangVien']);
+Route::post('/sinhvien/import', [SinhVienController::class, 'import']);
+Route::middleware(['auth:sanctum'])->group(function () {
+    Route::apiResource('sinhvien', SinhVienController::class);
+    Route::apiResource('giangvien', GiangVienController::class);
+    Route::apiResource('chucvu', ChucVuController::class);
+    Route::apiResource('lop', LopController::class);
 });

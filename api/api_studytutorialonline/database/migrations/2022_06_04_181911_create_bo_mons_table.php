@@ -17,6 +17,7 @@ class CreateBoMonsTable extends Migration
             $table->id();
             $table->foreignId('id_khoa');
             $table->string('ten_mon_hoc');
+            $table->integer('loai_mon_hoc');
             $table->integer('trang_thai');
             $table->timestamps();
         });
