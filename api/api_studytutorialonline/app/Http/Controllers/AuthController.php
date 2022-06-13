@@ -151,4 +151,37 @@ class AuthController extends Controller
             return response()->json($response, 200);
         }
     }
+
+    public function dangNhapAdmin(Request $request)
+    {
+        $input['email'] = $request->input('email');
+        $input['password'] = $request->input('password');
+        $validator = Validator::make($input, [
+            'email' => ['required', 'max:255', 'regex:/(.*)@caothang\.edu.vn/i'],
+            'password' => 'required'
+        ]);
+        if ($validator->fails()) {
+            if (!empty($validator->errors())) {
+                $response['data'] = $validator->errors();
+            }
+            $response['message'] = 'Vaidator Error';
+            return response()->json($response, 404);
+        }
+        $giangVien = GiangVien::where('email', $input['email'])->first();
+
+        if (!$giangVien || !Hash::check($input['password'], $giangVien->password)) {
+            return response(['message' => 'tai khoan hoac mat khau sai'], 401);
+        } else if ($giangVien->id_chuc_vu != 1) {
+            return response(['message' => 'khong phai tai khoan phong dao tao !'], 400);
+        } else {
+            $token = $giangVien->createToken('TokenGiangVien')->plainTextToken;
+            $response =
+                [
+                    'message' => 'Dang Nhap Thanh Cong !',
+                    'giangvien' => $giangVien,
+                    'token' => $token
+                ];
+            return response()->json($response, 200);
+        }
+    }
 }

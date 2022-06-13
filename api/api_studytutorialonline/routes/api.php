@@ -27,6 +27,7 @@ Route::post('dksv', [AuthController::class, 'dangKySinhVien']);
 Route::post('dkgv', [AuthController::class, 'dangKyGiangVien']);
 Route::post('dnsv', [AuthController::class, 'dangNhapSinhVien']);
 Route::post('dngv', [AuthController::class, 'dangNhapGiangVien']);
+Route::post('admin', [AuthController::class, 'dangNhapAdmin']);
 Route::post('/sinhvien/import', [SinhVienController::class, 'import']);
 Route::middleware(['auth:sanctum'])->group(function () {
     Route::apiResource('sinhvien', SinhVienController::class);
