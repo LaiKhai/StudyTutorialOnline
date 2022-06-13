@@ -15,8 +15,8 @@ class LopController extends Controller
      */
     public function index()
     {
-        $lstLop=Lop::all();
-        return response()->json($lstLop,200);
+        $lstLop = Lop::all();
+        return response()->json($lstLop, 200);
     }
 
     /**
@@ -32,52 +32,53 @@ class LopController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \App\Http\Requests\StoreLopRequest  $request
+     * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
     {
-        $input['id_giangvien']=$request->input('id_giangvien');
-        $input['ten_lop']=$request->input('ten_lop');
-        $input['trang_thai']=1;
+        $input['id_giangvien'] = $request->input('id_giangvien');
+        $input['ten_lop'] = $request->input('ten_lop');
+        $input['nien_khoa'] = $request->input('nien_khoa');
+        $input['trang_thai'] = 1;
 
-        $validator=Validator::make($input,['ten_lop'=>'required|max:255|string']);
+        $validator = Validator::make($input, ['ten_lop' => 'required|max:255|string', 'nien_khoa' => 'required|max:255|string']);
 
-        if($validator->fails()){
-            if(!empty($validator->errors())){
-                $respone['data']=$validator->errors();
+        if ($validator->fails()) {
+            if (!empty($validator->errors())) {
+                $respone['data'] = $validator->errors();
             }
-             $response['message']='Vaidator Error';
-            return response()->json($response,404);
+            $response['message'] = 'Vaidator Error';
+            return response()->json($response, 404);
         }
 
-        $lop=Lop::create($input);
-        $respone=[
-            'message'=>"Them lop thanh cong !",
-            'lop'=>$lop
+        $lop = Lop::create($input);
+        $respone = [
+            'message' => "Them lop thanh cong !",
+            'lop' => $lop
         ];
-        return response()->json($respone,200);
+        return response()->json($respone, 200);
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Lop  $lop
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(Lop $lop)
+    public function show($id)
     {
-        $lop=Lop::find($lop)->first();
-        return response()->json($lop,200);
+        $lop = Lop::find($id);
+        return response()->json($lop, 200);
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Lop  $lop
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit(Lop $lop)
+    public function edit($id)
     {
         //
     }
@@ -85,11 +86,11 @@ class LopController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \App\Http\Requests\UpdateLopRequest  $request
-     * @param  \App\Models\Lop  $lop
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(UpdateLopRequest $request, Lop $lop)
+    public function update(Request $request, $id)
     {
         //
     }
@@ -97,10 +98,10 @@ class LopController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Lop  $lop
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Lop $lop)
+    public function destroy($id)
     {
         //
     }
