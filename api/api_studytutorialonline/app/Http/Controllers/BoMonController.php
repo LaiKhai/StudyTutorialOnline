@@ -3,8 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\BoMon;
-use App\Http\Requests\StoreBoMonRequest;
-use App\Http\Requests\UpdateBoMonRequest;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
+
 
 class BoMonController extends Controller
 {
@@ -15,7 +16,14 @@ class BoMonController extends Controller
      */
     public function index()
     {
-        //
+        $lstBoMon = BoMon::all();
+        if (empty($lstBoMon)) {
+            return response()->json(['message' => 'khong co bo mon nao !'], 404);
+        }
+        $response = [
+            'bomon' => $lstBoMon
+        ];
+        return response()->json($response, 200);
     }
 
     /**
@@ -31,32 +39,61 @@ class BoMonController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \App\Http\Requests\StoreBoMonRequest  $request
+     * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(StoreBoMonRequest $request)
+    public function store(Request $request)
     {
-        //
+        $input['id_khoa'] = $request->input('id_khoa');
+        $input['ten_mon_hoc'] = $request->input('ten_mon_hoc');
+        $input['loai_mon_hoc'] = $request->input('loai_mon_hoc');
+        $input['trang_thai'] = $request->input('trang_thai');
+        $validator = Validator::make($input, [
+            'id_khoa' => ['required', 'max:255', 'integer'],
+            'ten_mon_hoc' => ['required', 'max:255', 'string'],
+            'loai_mon_hoc' => ['required', 'max:255', 'integer'],
+            'trang_thai' => ['required', 'max:255', 'integer'],
+        ]);
+        if ($validator->fails()) {
+            if (!empty($validator->errors())) {
+                $response['data'] = $validator->errors();
+            }
+            $response['message'] = 'Vaidator Error';
+            return response()->json($response, 404);
+        }
+        $boMon = BoMon::create($input);
+        $response = [
+            'message' => 'them thanh cong bo mon !',
+            'bomon' => $boMon
+        ];
+        return response()->json($response, 200);
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\BoMon  $boMon
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(BoMon $boMon)
+    public function show($id)
     {
-        //
+        $boMon = BoMon::find($id);
+        if (empty($boMon)) {
+            return response()->json(['message' => 'khong tim thay bo mon nao !'], 404);
+        }
+        $response = [
+            'bomon' => $boMon
+        ];
+        return response()->json($response, 200);
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\BoMon  $boMon
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit(BoMon $boMon)
+    public function edit($id)
     {
         //
     }
@@ -64,23 +101,48 @@ class BoMonController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \App\Http\Requests\UpdateBoMonRequest  $request
-     * @param  \App\Models\BoMon  $boMon
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(UpdateBoMonRequest $request, BoMon $boMon)
+    public function update(Request $request, $id)
     {
-        //
+        $boMon = BoMon::find($id);
+        if (empty($boMon)) {
+            return response()->json(['message' => 'khong tim thay bo mon nao !'], 404);
+        }
+        $boMon->fill([
+            'id_khoa' => $request->input('id_khoa'),
+            'ten_mon_hoc' => $request->input('ten_mon_hoc'),
+            'loai_mon_hoc' => $request->input('loai_mon_hoc'),
+            'trang_thai' => $request->input('trang_thai'),
+        ]);
+        $boMon->save();
+        $response = [
+            'message' => 'chinh sua thanh cong !',
+            'bomon' => $boMon
+        ];
+        return response()->json($response, 200);
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\BoMon  $boMon
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(BoMon $boMon)
+    public function destroy($id)
     {
-        //
+        $boMon = BoMon::find($id);
+        if (empty($boMon)) {
+            return response()->json(['message' => 'khong tim thay bo mon nao !'], 404);
+        }
+        $boMon->delete();
+        $lstBoMon = BoMon::all();
+        $response = [
+            'message' => 'xoa thanh cong !',
+            'bomon' => $lstBoMon
+        ];
+        return response()->json($response, 200);
     }
 }

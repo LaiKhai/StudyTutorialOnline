@@ -7,6 +7,9 @@ use App\Http\Controllers\GiangVienController;
 use App\Http\Controllers\LopController;
 use App\Http\Controllers\ChucVuController;
 use App\Http\Controllers\LoaiBaiTapController;
+use App\Http\Controllers\KhoaController;
+use App\Http\Controllers\LopHocPhanController;
+use App\Http\Controllers\BoMonController;
 
 
 /*
@@ -31,4 +34,7 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::apiResource('chucvu', ChucVuController::class);
     Route::apiResource('lop', LopController::class);
     Route::apiResource('loaibaitap', LoaiBaiTapController::class);
+    Route::apiResource('khoa', KhoaController::class);
+    Route::apiResource('lophocphan', LopHocPhanController::class);
+    Route::apiResource('bomon', BoMonController::class);
 });

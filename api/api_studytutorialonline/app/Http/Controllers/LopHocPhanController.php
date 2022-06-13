@@ -3,11 +3,21 @@
 namespace App\Http\Controllers;
 
 use App\Models\LopHocPhan;
-use App\Http\Requests\StoreLopHocPhanRequest;
-use App\Http\Requests\UpdateLopHocPhanRequest;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Validator;
+use Symfony\Component\Console\Input\Input;
 
 class LopHocPhanController extends Controller
 {
+    public function FixImg(LopHocPhan $lopHocPhan)
+    {
+        if (Storage::disk('public')->exists($lopHocPhan->avt)) {
+            $lopHocPhan->avt = Storage::url($lopHocPhan->avt);
+        } else {
+            $lopHocPhan->avt = '/assets/images/no_image.png';
+        }
+    }
     /**
      * Display a listing of the resource.
      *
@@ -15,7 +25,14 @@ class LopHocPhanController extends Controller
      */
     public function index()
     {
-        //
+        $lstLopHocPhan = LopHocPhan::all();
+        if (empty($lstLopHocPhan)) {
+            return response()->json(['message' => 'chua co lop hoc phan nao'], 404);
+        }
+        $response = [
+            'lophocphan' => $lstLopHocPhan,
+        ];
+        return response()->json($response, 200);
     }
 
     /**
@@ -31,32 +48,75 @@ class LopHocPhanController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \App\Http\Requests\StoreLopHocPhanRequest  $request
+     * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(StoreLopHocPhanRequest $request)
+    public function store(Request $request)
     {
-        //
+        $input['id_bo_mon'] = $request->input('id_bo_mon');
+        $input['id_lop'] = $request->input('id_lop');
+        $input['trang_thai'] = $request->input('trang_thai');
+        $validator = Validator::make($input, [
+            'id_bo_mon' => ['required', 'max:255', 'integer'],
+            'id_lop' => ['required', 'max:255', 'integer'],
+            'trang_thai' => ['required', 'max:255', 'integer'],
+        ]);
+        if ($validator->fails()) {
+            if (!empty($validator->errors())) {
+                $response['data'] = $validator->errors();
+            }
+            $response['message'] = 'Vaidator Error';
+            return response()->json($response, 404);
+        }
+        $lopHocPhan = LopHocPhan::create($input);
+        if ($request->hasFile('avt')) {
+            $lopHocPhan['avt'] = $request->file('avt')->store('assets/images/avatar/' . $lopHocPhan['id'], 'public');
+        }
+        $lopHocPhan->save();
+        $response = [
+            'message' => 'them lop hoc phan thanh cong !',
+            'lophocphan' => $lopHocPhan
+        ];
+        return response()->json($response, 200);
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\LopHocPhan  $lopHocPhan
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(LopHocPhan $lopHocPhan)
+    public function show($id)
     {
-        //
+        $lopHocPhan = LopHocPhan::find($id);
+        if (empty($lopHocPhan)) {
+            return response()->json(['message' => 'khong tim thay lop hoc phan nao !'], 404);
+        }
+        $lop = LopHocPhan::find($id)->lop;
+        $boMon = LopHocPhan::find($id)->bomon;
+        $lstbaiKiemTra = LopHocPhan::find($id)->baikiemtra;
+        $lstbaiTap = LopHocPhan::find($id)->baitap;
+        $dsGiangVien = LopHocPhan::find($id)->dsgiangvien;
+        $dsSinhVien = LopHocPhan::find($id)->dssinhvien;
+        $response = [
+            'lophocphan' => $lopHocPhan,
+            'lop' => $lop,
+            'baikiemtra' => $lstbaiKiemTra,
+            'bomon' => $boMon,
+            'baiTap' => $lstbaiTap,
+            'dsgiangvien' => $dsGiangVien,
+            'dssinhvien' => $dsSinhVien,
+        ];
+        return response($response, 200);
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\LopHocPhan  $lopHocPhan
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit(LopHocPhan $lopHocPhan)
+    public function edit($id)
     {
         //
     }
@@ -64,23 +124,48 @@ class LopHocPhanController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \App\Http\Requests\UpdateLopHocPhanRequest  $request
-     * @param  \App\Models\LopHocPhan  $lopHocPhan
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(UpdateLopHocPhanRequest $request, LopHocPhan $lopHocPhan)
+    public function update(Request $request, $id)
     {
-        //
+        $lopHocPhan = LopHocPhan::find($id);
+        if (empty($lopHocPhan)) {
+            return response()->json(['message' => ' khong tim thay lop hoc phan nao !', 404]);
+        }
+        $lopHocPhan->fill([
+            'id_bo_mon' => $request->input('id_bo_mon'),
+            'id_lop' => $request->input('id_lop'),
+            'trang_thai' => $request->input('trang_thai')
+        ]);
+
+        $lopHocPhan->save();
+        $response = [
+            'message' => 'chinh sua thanh cong !',
+            'lophocphan' => $lopHocPhan
+        ];
+        return response()->json($response, 200);
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\LopHocPhan  $lopHocPhan
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(LopHocPhan $lopHocPhan)
+    public function destroy($id)
     {
-        //
+        $lopHocPhan = LopHocPhan::find($id);
+        if (empty($lopHocPhan)) {
+            return response()->json(['message' => ' khong tim thay lop hoc phan nao !', 404]);
+        }
+        $lopHocPhan->delete();
+        $lstLopHocPhan = LopHocPhan::all();
+        $response = [
+            'message' => 'xoa thanh cong !',
+            'lophocphan' => $lstLopHocPhan
+        ];
+        return response()->json($response, 200);
     }
 }

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Lop;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Validation\Rules\Exists;
 
 class LopController extends Controller
 {
@@ -69,7 +70,12 @@ class LopController extends Controller
     public function show($id)
     {
         $lop = Lop::find($id);
-        return response()->json($lop, 200);
+        $sinhvien = Lop::find($id)->sinhvien;
+        $respone = [
+            'lop' => $lop,
+            'sinhvien' => $sinhvien
+        ];
+        return response()->json($respone, 200);
     }
 
     /**
@@ -92,7 +98,22 @@ class LopController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $lop = Lop::find($id);
+        if (empty($lop)) {
+            return response()->json(['message' => 'khong tim thay lop nao !'], 404);
+        }
+        $lop->fill([
+            'id_giangvien' => $request->input('id_giangvien'),
+            'ten_lop' => $request->input('ten_lop'),
+            'nien_khoa' => $request->input('nien_khoa'),
+            'trang_thai' => $request->input('trang_thai'),
+        ]);
+        $lop->save();
+        $respone = [
+            'message' => 'chinh sua thanh cong !',
+            'lop' => $lop
+        ];
+        return response()->json($respone, 200);
     }
 
     /**
@@ -103,6 +124,19 @@ class LopController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $lop = Lop::find($id);
+        $sinhVien = $lop->sinhvien->first();
+        if (empty($lop)) {
+            return response()->json(['message' => 'khong tim thay lop nao !'], 404);
+        } else if (!empty($sinhVien)) {
+            return response()->json(['message' => 'Lop dang co sinh vien nen khong the xoa !'], 404);
+        }
+        $lop->delete();
+        $lstLop = Lop::all();
+        $respone = [
+            'message' => 'xoa thanh cong !',
+            'lop' => $lstLop,
+        ];
+        return response()->json($respone, 200);
     }
 }
