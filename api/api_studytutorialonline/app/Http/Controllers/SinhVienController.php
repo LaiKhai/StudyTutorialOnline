@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Models\SinhVien;
 use App\Models\FileExcel;
-use App\Models\Lop;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Maatwebsite\Excel\Facades\Excel;
@@ -14,15 +13,6 @@ use Illuminate\Support\Facades\Validator;
 
 class SinhVienController extends Controller
 {
-    public function FixFile(FileExcel $excel)
-    {
-        if (Storage::disk('public')->exists($excel->file)) {
-            $excel->file = Storage::url($excel->file);
-        } else {
-            $excel->file = '/admin_view/assets/images/No_Image.png';
-        }
-    }
-
     public function FixImg(SinhVien $sinhVien)
     {
         if (Storage::disk('public')->exists($sinhVien->avt)) {
@@ -56,6 +46,7 @@ class SinhVienController extends Controller
      */
     public function store(Request $request)
     {
+        $input['id_lop'] = $request->input('id_lop');
         $input['email'] = $request->input('email');
         $input['password'] = Hash::make($request->input('password'));
         $input['ho_ten'] = $request->input('ho_ten');
@@ -64,6 +55,7 @@ class SinhVienController extends Controller
         $input['ngay_sinh'] = $request->input('ngay_sinh');
         $input['trang_thai'] = 1;
         $validator = Validator::make($input, [
+            'id_lop' => ['required', 'max:255', 'integer'],
             'email' => ['required', 'max:255', 'email:rfc,dns', 'unique:sinh_viens,email', 'regex:/(.*)@caothang\.edu.vn/i'],
             'password' => 'required|max:255',
             'ho_ten' => 'required|max:255|string',
@@ -150,8 +142,8 @@ class SinhVienController extends Controller
             $response = ['message' => 'khong tim thay sinh vien nao !'];
             return response()->json($response, 404);
         }
-        $lstSinhVien = SinhVien::all();
         $sinhVien->delete();
+        $lstSinhVien = SinhVien::all();
         $response = [
             'message' => 'xoa thanh cong !',
             'sinhvien' => $lstSinhVien
@@ -160,8 +152,6 @@ class SinhVienController extends Controller
     }
     public function import(Request $request)
     {
-        // $path1 = $request->file('file')->store('temp', 'public');
-        // $path = Storage::url($path1);
         Excel::import(new SinhVienImport, $request->file('file'));
 
         $lstSinhVien = SinhVien::all();

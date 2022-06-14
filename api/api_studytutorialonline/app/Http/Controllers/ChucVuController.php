@@ -36,7 +36,7 @@ class ChucVuController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \App\Http\Requests\StoreChucVuRequest  $request
+     *  @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
@@ -125,7 +125,6 @@ class ChucVuController extends Controller
             return response()->json(['message' => 'khong tim thay chuc vu nao !'], 200);
         }
         $chucVu->delete();
-        $chucVu->save();
         $lstChucVu = ChucVu::all();
         $response =
             [

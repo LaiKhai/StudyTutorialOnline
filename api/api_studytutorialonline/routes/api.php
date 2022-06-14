@@ -7,6 +7,9 @@ use App\Http\Controllers\GiangVienController;
 use App\Http\Controllers\LopController;
 use App\Http\Controllers\ChucVuController;
 use App\Http\Controllers\LoaiBaiTapController;
+use App\Http\Controllers\KhoaController;
+use App\Http\Controllers\LopHocPhanController;
+use App\Http\Controllers\BoMonController;
 
 
 /*
@@ -24,6 +27,7 @@ Route::post('dksv', [AuthController::class, 'dangKySinhVien']);
 Route::post('dkgv', [AuthController::class, 'dangKyGiangVien']);
 Route::post('dnsv', [AuthController::class, 'dangNhapSinhVien']);
 Route::post('dngv', [AuthController::class, 'dangNhapGiangVien']);
+Route::post('admin', [AuthController::class, 'dangNhapAdmin']);
 Route::post('/sinhvien/import', [SinhVienController::class, 'import']);
 Route::middleware(['auth:sanctum'])->group(function () {
     Route::apiResource('sinhvien', SinhVienController::class);
@@ -31,4 +35,7 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::apiResource('chucvu', ChucVuController::class);
     Route::apiResource('lop', LopController::class);
     Route::apiResource('loaibaitap', LoaiBaiTapController::class);
+    Route::apiResource('khoa', KhoaController::class);
+    Route::apiResource('lophocphan', LopHocPhanController::class);
+    Route::apiResource('bomon', BoMonController::class);
 });

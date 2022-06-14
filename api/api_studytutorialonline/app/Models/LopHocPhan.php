@@ -24,7 +24,7 @@ class LopHocPhan extends Model
         'trang_thai'
     ];
 
-    public function boMon()
+    public function bomon()
     {
         return $this->beLongsTo(BoMon::class, 'id_bo_mon');
     }
