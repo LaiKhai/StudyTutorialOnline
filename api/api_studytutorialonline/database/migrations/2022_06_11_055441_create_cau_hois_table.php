@@ -16,7 +16,7 @@ class CreateCauHoisTable extends Migration
         Schema::create('cau_hois', function (Blueprint $table) {
             $table->id();
             $table->foreignId('id_bai_kiem_tra');
-            $table->foreignId('id_file');
+            $table->foreignId('id_file')->nullable();
             $table->string('de_bai');
             $table->string('dap_an_1');
             $table->string('dap_an_2');

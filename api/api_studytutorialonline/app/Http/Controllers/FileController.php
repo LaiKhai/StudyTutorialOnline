@@ -3,11 +3,20 @@
 namespace App\Http\Controllers;
 
 use App\Models\File;
-use App\Http\Requests\StoreFileRequest;
-use App\Http\Requests\UpdateFileRequest;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 
 class FileController extends Controller
 {
+    public function FixFile(File $file)
+    {
+        if (Storage::disk('public')->exists($file->avt)) {
+            $file->noi_dung = Storage::url($file->noi_dung);
+        } else {
+            $file->noi_dung = null;
+        }
+    }
     /**
      * Display a listing of the resource.
      *
@@ -15,7 +24,14 @@ class FileController extends Controller
      */
     public function index()
     {
-        //
+        $file = File::all();
+        foreach ($file as $item) {
+            $this->FixFile($item);
+        }
+        $response = [
+            'file' => $file,
+        ];
+        return response()->json($response, 200);
     }
 
     /**
@@ -31,32 +47,57 @@ class FileController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \App\Http\Requests\StoreFileRequest  $request
+     * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(StoreFileRequest $request)
+    public function store(Request $request)
     {
-        //
+        $input['id_bai_viet'] = $request->input('id_bai_viet');
+        $input['loai_file'] = $request->input('loai_file');
+        $input['trang_thai'] = $request->input('trang_thai');
+        $validator = Validator::make($input, [
+            'id_bai_viet' => ['required', 'max:255', 'integer'],
+            'noi_dung' => ['required'],
+            'trang_thai' => ['required', 'max:255', 'integer'],
+        ]);
+        if ($validator->fails()) {
+            if (!empty($validator->errors())) {
+                $response['data'] = $validator->errors();
+            }
+            $response['message'] = 'Vaidator Error';
+            return response()->json($response, 404);
+        }
+        $file = File::create($input);
+        if ($request->hasFile('noi_dung')) {
+            $file['noi_dung'] = $request->file('noi_dung')->store('assets/files/' . $file['id'], 'public');
+        }
+        $file->save();
+        $response = [
+            'message' => 'them file thanh cong !',
+            'file' => $file
+        ];
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\File  $file
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(File $file)
+    public function show($id)
     {
-        //
+        $file = File::find($id);
+        $this->FixFile($file);
+        return response()->json($file, 200);
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\File  $file
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit(File $file)
+    public function edit($id)
     {
         //
     }
@@ -64,23 +105,51 @@ class FileController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \App\Http\Requests\UpdateFileRequest  $request
-     * @param  \App\Models\File  $file
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(UpdateFileRequest $request, File $file)
+    public function update(Request $request, $id)
     {
-        //
+        $file = File::find($id);
+        if (empty($file)) {
+            return response()->json(['messsage' => 'khong tim thay file nao !'], 404);
+        }
+        $file->fill([
+            'id_bai_viet' => $request->input('id_bai_viet'),
+            'loai_file' => $request->input('loai_file'),
+            'trang_thai' => $request->input('trang_thai')
+        ]);
+        if ($request->hasFile('noi_dung')) {
+            $file['noi_dung'] = $request->file('noi_dung')->store('assets/files/' . $file['id'], 'public');
+        }
+        $file->save();
+        $response = [
+            'message' => 'chinh sua thanh cong !',
+            'file' => $file
+        ];
+        return response()->json($response, 200);
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\File  $file
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(File $file)
+    public function destroy($id)
     {
-        //
+        $file = File::find($id);
+        if (empty($file)) {
+            $response = ['message' => 'khong tim thay file nao !'];
+            return response()->json($response, 404);
+        }
+        $file->delete();
+        $lstFile = File::all();
+        $response = [
+            'message' => 'xoa thanh cong !',
+            'file' => $lstFile
+        ];
+        return response()->json($response, 200);
     }
 }

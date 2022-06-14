@@ -92,8 +92,11 @@ class SinhVienController extends Controller
      */
     public function show($id)
     {
-        $sinhvien = SinhVien::find($id);
-        return response()->json($sinhvien, 200);
+        $sinhVien = SinhVien::find($id);
+        $this->FixImg($sinhVien);
+        $sinhVien->traloi;
+        $sinhVien->ctbaitap;
+        return response()->json($sinhVien, 200);
     }
 
     /**
@@ -150,11 +153,17 @@ class SinhVienController extends Controller
         ];
         return response()->json($response, 200);
     }
+
+
+
     public function import(Request $request)
     {
         Excel::import(new SinhVienImport, $request->file('file'));
 
         $lstSinhVien = SinhVien::all();
+        foreach ($lstSinhVien as $item) {
+            $this->FixImg($item);
+        }
         $response = [
             'message' => 'them thanh cong !',
             'sinhvien' => $lstSinhVien
