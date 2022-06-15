@@ -13,6 +13,7 @@ use App\Http\Controllers\KhoaController;
 use App\Http\Controllers\LopHocPhanController;
 use App\Http\Controllers\BoMonController;
 use App\Http\Controllers\LoaiBaiVietController;
+use App\Http\Controllers\DSSinhVienController;
 
 /*
 |--------------------------------------------------------------------------
@@ -33,6 +34,8 @@ Route::post('admin', [AuthController::class, 'dangNhapAdmin']);
 Route::post('/sinhvien/import', [SinhVienController::class, 'import']);
 //Lay danh sach lop theo id sinh vien
 Route::get('/lop/lstWithIdSV', [LopController::class, 'LstLopWithIdSV']);
+//Tao Danh sach sinh vien auto
+Route::get('/dssv/createDSSV', [DSSinhVienController::class, 'createDSSVWithSinhVien']);
 Route::apiResource('chucvu', ChucVuController::class);
 Route::apiResource('sinhvien', SinhVienController::class);
 Route::apiResource('giangvien', GiangVienController::class);
