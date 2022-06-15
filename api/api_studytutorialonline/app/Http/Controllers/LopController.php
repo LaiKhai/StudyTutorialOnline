@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Lop;
+use App\Models\SinhVien;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rules\Exists;
@@ -136,6 +137,23 @@ class LopController extends Controller
         $respone = [
             'message' => 'xoa thanh cong !',
             'lop' => $lstLop,
+        ];
+        return response()->json($respone, 200);
+    }
+
+    /**
+     * Lay danh sach lop theo id sinh vien
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function LstLopWithIdSV($id)
+    {
+        $sinhVien = SinhVien::find($id);
+        $lop = SinhVien::find($id)->lop;
+        $respone = [
+            'sinhvien' => $sinhVien,
+            'lstlop' => $lop
         ];
         return response()->json($respone, 200);
     }

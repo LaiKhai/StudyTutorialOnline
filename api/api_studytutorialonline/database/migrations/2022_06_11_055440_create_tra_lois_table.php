@@ -17,7 +17,7 @@ class CreateTraLoisTable extends Migration
             $table->id();
             $table->foreignId('id_sinh_vien');
             $table->foreignId('id_cau_hoi');
-            $table->foreignId('id_file');
+            $table->foreignId('id_file')->nullable();
             $table->string('dap_an');
             $table->float('diem');
             $table->integer('trang_thai');

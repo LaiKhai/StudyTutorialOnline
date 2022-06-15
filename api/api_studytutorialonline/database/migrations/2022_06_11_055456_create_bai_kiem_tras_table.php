@@ -17,7 +17,7 @@ class CreateBaiKiemTrasTable extends Migration
             $table->id();
             $table->foreignId('id_lop_hoc_phan');
             $table->foreignId('id_giang_vien');
-            $table->foreignId('id_file');
+            $table->foreignId('id_file')->nullable();
             $table->integer('sl_cau_hoi');
             $table->string('tieu_de');
             $table->string('noi_dung');

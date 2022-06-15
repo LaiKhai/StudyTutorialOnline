@@ -6,9 +6,19 @@ use App\Models\GiangVien;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Storage;
+
 
 class GiangVienController extends Controller
 {
+    public function FixImg(GiangVien $giangVien)
+    {
+        if (Storage::disk('public')->exists($giangVien->avt)) {
+            $giangVien->avt = Storage::url($giangVien->avt);
+        } else {
+            $giangVien->avt = '/assets/images/no_image.png';
+        }
+    }
     /**
      * Display a listing of the resource.
      *
@@ -17,6 +27,9 @@ class GiangVienController extends Controller
     public function index()
     {
         $giangVien = GiangVien::all();
+        foreach ($giangVien as $item) {
+            $this->FixImg($item);
+        }
         $response = [
             'giangvien' => $giangVien,
         ];
@@ -67,8 +80,11 @@ class GiangVienController extends Controller
             $response['message'] = 'Vaidator Error';
             return response()->json($response, 404);
         }
-
         $giangVien = GiangVien::create($input);
+        if ($request->hasFile('avt')) {
+            $giangVien['avt'] = $request->file('avt')->store('assets/images/avatar/' . $giangVien['id'], 'public');
+        }
+        $giangVien->save();
         $response = [
             'message' => 'Dang ky giang vien thanh cong !',
             'giangvien' => $giangVien
@@ -85,9 +101,15 @@ class GiangVienController extends Controller
      */
     public function show($id)
     {
-        $giangvien = GiangVien::find($id)->first();
+        $giangVien = GiangVien::find($id);
+        if (empty($giangVien)) {
+            return response()->json(['message' => 'Khong tim thay giang vien nao !'], 404);
+        }
+        $this->FixImg($giangVien);
+        $giangVien->chucVu;
+        $giangVien->Khoa;
         $response = [
-            'giangvien' => $giangvien
+            'giangvien' => $giangVien
         ];
         return response()->json($response, 200);
     }
@@ -95,10 +117,10 @@ class GiangVienController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\GiangVien  $giangVien
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit(GiangVien $giangVien)
+    public function edit($id)
     {
         //
     }
@@ -107,22 +129,56 @@ class GiangVienController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\GiangVien  $giangVien
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, GiangVien $giangVien)
+    public function update(Request $request, $id)
     {
-        //
+        $giangVien = GiangVien::find($id);
+        if (empty($giangVien)) {
+            return response()->json(['message' => ' Khong tim thay giang vien nao !', 404]);
+        }
+        $giangVien->fill([
+            'id_khoa' => $request->input('id_khoa'),
+            'id_chuc_vu' => $request->input('id_chuc_vu'),
+            'email' => $request->input('email'),
+            'password' => $request->input('password'),
+            'msgv' => $request->input('msgv'),
+            'sdt' => $request->input('sdt'),
+            'ho_ten' => $request->input('ho_ten'),
+            'ngay_sinh' => $request->input('ngay_sinh'),
+            'trang_thai' => $request->input('trang_thai')
+        ]);
+        if ($request->hasFile('avt')) {
+            $giangVien['avt'] = $request->file('avt')->store('assets/images/avatar/' . $giangVien['id'], 'public');
+        }
+        $giangVien->save();
+        $response = [
+            'message' => 'chinh sua thanh cong !',
+            'lophocphan' => $giangVien
+        ];
+        return response()->json($response, 200);
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\GiangVien  $giangVien
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(GiangVien $giangVien)
+    public function destroy($id)
     {
-        //
+        $giangVien = GiangVien::find($id);
+        if (empty($giangVien)) {
+            $response = ['message' => 'khong tim thay giang vien nao !'];
+            return response()->json($response, 404);
+        }
+        $giangVien->delete();
+        $lstGiangVien = GiangVien::all();
+        $response = [
+            'message' => 'xoa thanh cong !',
+            'sinhvien' => $lstGiangVien
+        ];
+        return response()->json($response, 200);
     }
 }

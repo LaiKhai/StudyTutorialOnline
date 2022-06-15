@@ -16,7 +16,7 @@ class CreateBaiTapsTable extends Migration
         Schema::create('bai_taps', function (Blueprint $table) {
             $table->id();
             $table->foreignId('id_lop_hoc_phan');
-            $table->foreignId('id_file');
+            $table->foreignId('id_file')->nullable();
             $table->foreignId('id_loai');
             $table->string('tieu_de');
             $table->string('noi_dung');

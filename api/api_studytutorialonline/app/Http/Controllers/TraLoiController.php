@@ -3,8 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\TraLoi;
-use App\Http\Requests\StoreTraLoiRequest;
-use App\Http\Requests\UpdateTraLoiRequest;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 
 class TraLoiController extends Controller
 {
@@ -15,7 +15,11 @@ class TraLoiController extends Controller
      */
     public function index()
     {
-        //
+        $traLoi = TraLoi::all();
+        $response = [
+            'traloi' => $traLoi
+        ];
+        return response()->json($response, 200);
     }
 
     /**
@@ -31,32 +35,64 @@ class TraLoiController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \App\Http\Requests\StoreTraLoiRequest  $request
+     * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(StoreTraLoiRequest $request)
+    public function store(Request $request)
     {
-        //
+        $input['id_sinh_vien'] = $request->input('id_sinh_vien');
+        $input['id_cau_hoi'] = $request->input('id_cau_hoi');
+        $input['id_file'] = $request->input('id_file');
+        $input['dap_an'] = $request->input('dap_an');
+        $input['diem'] = $request->input('diem');
+        $input['trang_thai'] = $request->input('trang_thai');
+        $validator = Validator::make($input, [
+            'id_sinh_vien' => ['required', 'max:255', 'integer'],
+            'id_cau_hoi' => ['required', 'max:255', 'integer'],
+            'dap_an' => ['required', 'max:255'],
+            'diem' => ['required', 'max:255'],
+            'trang_thai' => ['required', 'max:255', 'integer'],
+        ]);
+        if ($validator->fails()) {
+            if (!empty($validator->errors())) {
+                $response['data'] = $validator->errors();
+            }
+            $response['message'] = 'Vaidator Error';
+            return response()->json($response, 404);
+        }
+        $traLoi = TraLoi::create($input);
+        $response = [
+            'message' => 'them cau tra loi thanh cong',
+            'traloi' => $traLoi
+        ];
+        return response()->json($response, 200);
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\TraLoi  $traLoi
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(TraLoi $traLoi)
+    public function show($id)
     {
-        //
+        $traLoi = TraLoi::find($id);
+        if (empty($traLoi)) {
+            return response()->json(['message' => 'Khong tim thay cau tra loi nao !'], 404);
+        }
+        $response = [
+            'traloi' => $traLoi,
+        ];
+        return response($response, 200);
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\TraLoi  $traLoi
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit(TraLoi $traLoi)
+    public function edit($id)
     {
         //
     }
@@ -64,23 +100,50 @@ class TraLoiController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \App\Http\Requests\UpdateTraLoiRequest  $request
-     * @param  \App\Models\TraLoi  $traLoi
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(UpdateTraLoiRequest $request, TraLoi $traLoi)
+    public function update(Request $request, $id)
     {
-        //
+        $traLoi = TraLoi::find($id);
+        if (empty($traLoi)) {
+            return response()->json(['message' => ' Khong tim thay cau tra loi nao !', 404]);
+        }
+        $traLoi->fill([
+            'id_sinh_vien' => $request->input('id_sinh_vien'),
+            'id_cau_hoi' => $request->input('id_bai_tap'),
+            'id_file' => $request->input('id_file'),
+            'dap_an' => $request->input('dap_an'),
+            'diem' => $request->input('diem'),
+            'trang_thai' => $request->input('trang_thai')
+        ]);
+        $traLoi->save();
+        $response = [
+            'message' => 'chinh sua thanh cong !',
+            'traloi' => $traLoi
+        ];
+        return response()->json($response, 200);
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\TraLoi  $traLoi
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(TraLoi $traLoi)
+    public function destroy($id)
     {
-        //
+        $traLoi = TraLoi::find($id);
+        if (empty($baiTap)) {
+            return response()->json(['message' => ' Khong tim thay cau tra loi nao !', 404]);
+        }
+        $traLoi->delete();
+        $lstTraLoi = TraLoi::all();
+        $response = [
+            'message' => 'xoa thanh cong !',
+            'traloi' => $lstTraLoi
+        ];
+        return response()->json($response, 200);
     }
 }

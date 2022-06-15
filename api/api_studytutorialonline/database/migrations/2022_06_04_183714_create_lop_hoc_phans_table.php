@@ -17,7 +17,7 @@ class CreateLopHocPhansTable extends Migration
             $table->id();
             $table->foreignId('id_bo_mon');
             $table->foreignId('id_lop');
-            $table->string('avt');
+            $table->string('avt')->nullable();
             $table->integer('trang_thai');
             $table->timestamps();
         });
