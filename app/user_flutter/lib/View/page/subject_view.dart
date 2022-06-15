@@ -13,7 +13,6 @@ import 'package:user_flutter/View/Widget/Home/student_item.dart';
 import 'package:user_flutter/View/Widget/Home/subject_post.dart';
 import 'package:user_flutter/View/common/constant/color.dart';
 
-
 class SubjectView extends StatefulWidget {
   final Subject subject;
 
@@ -126,21 +125,21 @@ class _SubjectViewState extends State<SubjectView> {
                 ),
                 const SizedBox(height: 32),
                 // Assignment highlight
-                Row(
-                  children: assignments
-                      .where((item) => item.subjectId == widget.subject.id)
-                      .take(2)
-                      .map(
-                        (item) => Expanded(
-                          child: AssignmentHighlight(
-                            assignment: item,
-                            onTap: (item) {},
-                          ),
-                        ),
-                      )
-                      .toList(),
-                ),
-                const SizedBox(height: 32),
+                // Row(
+                //   children: assignments
+                //       .where((item) => item.subjectId == widget.subject.id)
+                //       .take(2)
+                //       .map(
+                //         (item) => Expanded(
+                //           child: AssignmentHighlight(
+                //             assignment: item,
+                //             onTap: (item) {},
+                //           ),
+                //         ),
+                //       )
+                //       .toList(),
+                // ),
+                // const SizedBox(height: 32),
                 // Menu
                 GNav(
                   selectedIndex: _activeIndex,

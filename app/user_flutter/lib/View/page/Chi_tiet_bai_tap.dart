@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:user_flutter/View/Widget/Bai_kiemtra/Tra_loi.dart';
 import 'package:user_flutter/View/common/constant/color.dart';
+import 'package:user_flutter/View/common/constant/dimen.dart';
 
 import '../common/constant/string.dart';
-
 
 class Chi_tiet_Page extends StatefulWidget {
   const Chi_tiet_Page({Key? key}) : super(key: key);
@@ -39,6 +40,15 @@ class _Chi_tiet_PageState extends State<Chi_tiet_Page> {
       appBar: AppBar(
         backgroundColor: const Color(0xFFF1F4F8),
         automaticallyImplyLeading: false,
+        leading: IconButton(
+          onPressed: () {
+            Navigator.pop(context);
+          },
+          icon: Icon(
+            Icons.arrow_back,
+            color: Color(0xFF57636C),
+          ),
+        ),
         title: Text(
           'Class Details',
           style: GoogleFonts.quicksand(
@@ -148,7 +158,8 @@ class _Chi_tiet_PageState extends State<Chi_tiet_Page> {
                   width: double.infinity,
                 ),
                 Padding(
-                    padding: const EdgeInsetsDirectional.fromSTEB(20, 12, 20, 0),
+                    padding:
+                        const EdgeInsetsDirectional.fromSTEB(20, 12, 20, 0),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: [
@@ -187,8 +198,8 @@ class _Chi_tiet_PageState extends State<Chi_tiet_Page> {
                           InkWell(
                             onTap: () {},
                             child: Container(
-                              width: 150,
-                              height: 150,
+                              width: getWidthSize(context) / 3,
+                              height: getWidthSize(context) / 3,
                               decoration: BoxDecoration(
                                 color: AppColor.grey,
                                 boxShadow: const [
@@ -251,7 +262,8 @@ class _Chi_tiet_PageState extends State<Chi_tiet_Page> {
                       ),
                     )
                   ],
-                ))
+                )),
+            Tra_Loi()
           ]))
         ],
       ),
