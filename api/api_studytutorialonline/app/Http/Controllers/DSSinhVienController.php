@@ -3,8 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Models\DS_SinhVien;
-use App\Http\Requests\StoreDS_SinhVienRequest;
-use App\Http\Requests\UpdateDS_SinhVienRequest;
+use App\Models\Lop;
+use App\Models\SinhVien;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
+
 
 class DSSinhVienController extends Controller
 {
@@ -31,10 +34,10 @@ class DSSinhVienController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \App\Http\Requests\StoreDS_SinhVienRequest  $request
+     * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(StoreDS_SinhVienRequest $request)
+    public function store(Request $request)
     {
         //
     }
@@ -42,10 +45,10 @@ class DSSinhVienController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\DS_SinhVien  $dS_SinhVien
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(DS_SinhVien $dS_SinhVien)
+    public function show($id)
     {
         //
     }
@@ -53,10 +56,10 @@ class DSSinhVienController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\DS_SinhVien  $dS_SinhVien
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit(DS_SinhVien $dS_SinhVien)
+    public function edit($id)
     {
         //
     }
@@ -64,11 +67,11 @@ class DSSinhVienController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \App\Http\Requests\UpdateDS_SinhVienRequest  $request
-     * @param  \App\Models\DS_SinhVien  $dS_SinhVien
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(UpdateDS_SinhVienRequest $request, DS_SinhVien $dS_SinhVien)
+    public function update(Request $request, $id)
     {
         //
     }
@@ -76,11 +79,28 @@ class DSSinhVienController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\DS_SinhVien  $dS_SinhVien
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(DS_SinhVien $dS_SinhVien)
+    public function destroy($id)
     {
         //
+    }
+
+    public function createDSSVWithSinhVien()
+    {
+        $sinhVien = SinhVien::all();
+        foreach ($sinhVien as $item) {
+            $input['id_sinh_vien'] = $item->id;
+            $input['id_lop_hoc_phan'] = $item->lop->lophocphan->id;
+            $input['id_lop'] = $item->lop->id;
+            $input['trang_thai'] = 1;
+            $dsSinhVien = DS_SinhVien::created($input);
+        }
+        $response = [
+            'message' => 'them thanh cong !',
+            'danhsachsinhvien' => $dsSinhVien
+        ];
+        return response()->json($response, 200);
     }
 }

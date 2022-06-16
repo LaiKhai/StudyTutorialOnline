@@ -7,10 +7,27 @@ use Illuminate\Support\Facades\Hash;
 use App\Models\SinhVien;
 use App\Models\GiangVien;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Validation\ValidationException;
 
 class AuthController extends Controller
 {
+    public function FixImgSV(SinhVien $sinhVien)
+    {
+        if (Storage::disk('public')->exists($sinhVien->avt)) {
+            $sinhVien->avt = Storage::url($sinhVien->avt);
+        } else {
+            $sinhVien->avt = '/assets/images/no_image.png';
+        }
+    }
+    public function FixImgGV(GiangVien $giangVien)
+    {
+        if (Storage::disk('public')->exists($giangVien->avt)) {
+            $giangVien->avt = Storage::url($giangVien->avt);
+        } else {
+            $giangVien->avt = '/assets/images/no_image.png';
+        }
+    }
     //-----------------------------------------------------------//
     //                           API Đăng kí Sinh Viên
     //----------------------------------------------------------//
@@ -41,6 +58,10 @@ class AuthController extends Controller
         }
 
         $sinhVien = SinhVien::create($input);
+        if ($request->hasFile('avt')) {
+            $sinhVien['avt'] = $request->file('avt')->store('assets/images/avatar/' . $sinhVien['id'], 'public');
+        }
+        $sinhVien->save();
         $response = [
             'message' => 'Dang ky sinh vien thanh cong !',
             'sinhvien' => $sinhVien
@@ -79,6 +100,10 @@ class AuthController extends Controller
         }
 
         $giangVien = GiangVien::create($input);
+        if ($request->hasFile('avt')) {
+            $giangVien['avt'] = $request->file('avt')->store('assets/images/avatar/' . $giangVien['id'], 'public');
+        }
+        $giangVien->save();
         $response = [
             'message' => 'Dang ky giang vien thanh cong !',
             'giangvien' => $giangVien
@@ -110,6 +135,7 @@ class AuthController extends Controller
         if (!$sinhVien || !Hash::check($input['password'], $sinhVien->password)) {
             return response(['message' => 'tai khoan hoac mat khau sai'], 401);
         } else {
+            $this->FixImgSV($sinhVien);
             $token = $sinhVien->createToken('TokenSinhVien')->plainTextToken;
             $response =
                 [
@@ -141,6 +167,7 @@ class AuthController extends Controller
         if (!$giangVien || !Hash::check($input['password'], $giangVien->password)) {
             return response(['message' => 'tai khoan hoac mat khau sai'], 401);
         } else {
+            $this->FixImgGV($giangVien);
             $token = $giangVien->createToken('TokenGiangVien')->plainTextToken;
             $response =
                 [
