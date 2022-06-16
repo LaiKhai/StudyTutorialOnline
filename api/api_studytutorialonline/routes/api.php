@@ -47,5 +47,6 @@ Route::apiResource('bomon', BoMonController::class);
 Route::apiResource('baitap', BaiTapController::class);
 Route::apiResource('baikiemtra', BaiKiemTraController::class);
 Route::apiResource('loaibaitap', LoaiBaiTapController::class);
+Route::apiResource('dssv', DSSinhVienController::class);
 Route::middleware(['auth:sanctum'])->group(function () {
 });
