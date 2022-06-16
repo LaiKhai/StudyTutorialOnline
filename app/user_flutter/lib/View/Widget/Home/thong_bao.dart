@@ -66,7 +66,7 @@ class _thong_baoState extends State<thong_bao> {
                   Container(
                     height: 0.5,
                     width: double.infinity,
-                    color: Color.fromARGB(255, 192, 191, 191),
+                    color: Color(0xFFdcdcdc),
                   )
                 ]);
               }),

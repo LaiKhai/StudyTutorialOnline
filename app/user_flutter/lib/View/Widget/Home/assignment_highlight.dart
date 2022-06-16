@@ -1,14 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 import 'package:user_flutter/Model/subject_assignment.dart';
 import 'package:user_flutter/View/Widget/Home/assignment_status.dart';
 
-
-
-
 import '../../common/constant/color.dart';
-
 
 class AssignmentHighlight extends StatelessWidget {
   final SubjectAssignment assignment;
@@ -36,7 +33,7 @@ class AssignmentHighlight extends StatelessWidget {
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(8),
             border: Border.all(
-              color: AppColor.dark,
+              color: US_APP_LINE,
               width: 1.3,
             ),
           ),
@@ -48,7 +45,7 @@ class AssignmentHighlight extends StatelessWidget {
                 assignment.title,
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,
-                style: const TextStyle(
+                style: GoogleFonts.quicksand(
                   color: AppColor.white,
                   fontSize: 16,
                   fontWeight: FontWeight.w600,
@@ -57,7 +54,7 @@ class AssignmentHighlight extends StatelessWidget {
               const SizedBox(height: 4),
               Text(
                 "Due ${DateFormat('MMM dd, HH:mm').format(assignment.dueAt)}",
-                style: const TextStyle(
+                style: GoogleFonts.quicksand(
                   color: AppColor.grey,
                   fontSize: 12,
                 ),

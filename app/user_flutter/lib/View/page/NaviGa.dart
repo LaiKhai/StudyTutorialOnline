@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:user_flutter/View/Widget/test.dart';
 import 'package:user_flutter/View/page/cai_dat_page.dart';
 import 'package:user_flutter/View/page/favourites_page.dart';
 import 'package:user_flutter/View/page/home_view.dart';
@@ -48,7 +49,7 @@ class _MainPageState extends State<MainPage> {
       case NavigationItem.workflow:
         return const Thong_Bao_Page();
       case NavigationItem.updates:
-        return UpdatesPage();
+        return app_tess();
       case NavigationItem.plugins:
         return const Cai_Dat_Page();
       case NavigationItem.notifications:

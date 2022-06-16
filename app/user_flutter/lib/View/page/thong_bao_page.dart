@@ -63,7 +63,7 @@ class _Thong_Bao_PageState extends State<Thong_Bao_Page> {
             Container(
               height: 0.5,
               width: double.infinity,
-              color: Color.fromARGB(255, 192, 191, 191),
+              color: Color(0xFFdcdcdc),
             )
           ]);
         })),

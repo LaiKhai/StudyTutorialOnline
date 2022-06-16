@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:user_flutter/Model/user.dart';
 import 'package:user_flutter/model/navigation_item.dart';
@@ -94,7 +95,8 @@ class NavigationDrawerWidget extends StatelessWidget {
         selected: isSelected,
         selectedTileColor: Colors.white24,
         leading: Icon(icon, color: color),
-        title: Text(text, style: TextStyle(color: color, fontSize: 16)),
+        title: Text(text,
+            style: GoogleFonts.quicksand(color: color, fontSize: 16)),
         onTap: () => selectItem(context, item),
       ),
     );
@@ -127,12 +129,14 @@ class NavigationDrawerWidget extends StatelessWidget {
                   children: [
                     Text(
                       name,
-                      style: const TextStyle(fontSize: 20, color: Colors.white),
+                      style: GoogleFonts.quicksand(
+                          fontSize: 20, color: Colors.white),
                     ),
                     const SizedBox(height: 4),
                     Text(
                       email,
-                      style: const TextStyle(fontSize: 14, color: Colors.white),
+                      style: GoogleFonts.quicksand(
+                          fontSize: 14, color: Colors.white),
                     ),
                   ],
                 ),

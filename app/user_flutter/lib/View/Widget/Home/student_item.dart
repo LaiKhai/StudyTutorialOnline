@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:user_flutter/Model/student.dart';
 import 'package:user_flutter/View/Widget/Home/app_icon_buttton.dart';
 import 'package:user_flutter/View/common/constant/color.dart';
-
-
 
 class StudentItem extends StatelessWidget {
   final Student student;
@@ -34,7 +33,7 @@ class StudentItem extends StatelessWidget {
               children: [
                 Text(
                   student.name,
-                  style: const TextStyle(
+                  style: GoogleFonts.quicksand(
                     color: AppColor.white,
                     fontSize: 16,
                     fontWeight: FontWeight.w600,
@@ -43,7 +42,7 @@ class StudentItem extends StatelessWidget {
                 const SizedBox(height: 2),
                 Text(
                   student.email,
-                  style: const TextStyle(
+                  style: GoogleFonts.quicksand(
                     color: AppColor.grey,
                     fontSize: 12,
                   ),

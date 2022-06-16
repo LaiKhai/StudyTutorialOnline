@@ -5,6 +5,7 @@ Color US_APP_COLOR = const Color(0xFF77c269);
 Color US_APP_COLOR_2 = Color.fromARGB(255, 79, 135, 69);
 // ignore: non_constant_identifier_names
 Color US_APP_WHITE = Colors.white;
+Color US_APP_LINE = Color(0xFFdcdcdc);
 
 class AppColor {
   static const theme = Color(0xFF76c369);

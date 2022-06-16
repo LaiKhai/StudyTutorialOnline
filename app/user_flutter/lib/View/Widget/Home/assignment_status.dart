@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:user_flutter/Model/subject_assignment.dart';
 import 'package:user_flutter/View/common/constant/color.dart';
-
 
 class AssignmentStatus extends StatelessWidget {
   final SubjectAssignmentType type;
@@ -23,7 +23,7 @@ class AssignmentStatus extends StatelessWidget {
               .withOpacity(0.25)),
       child: Text(
         type == SubjectAssignmentType.turnedIn ? "Turned In" : "Missing",
-        style: TextStyle(
+        style: GoogleFonts.quicksand(
           color: type == SubjectAssignmentType.turnedIn
               ? AppColor.green
               : AppColor.red,

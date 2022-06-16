@@ -48,7 +48,7 @@ class HomeView extends StatelessWidget {
                         decoration: BoxDecoration(
                           color: Theme.of(context).primaryColor,
                           border: Border.all(
-                            color: Theme.of(context).canvasColor,
+                            color: Color(0xFFdcdcdc),
                             width: 1.5,
                           ),
                           borderRadius: BorderRadius.circular(360),
@@ -116,8 +116,8 @@ class HomeView extends StatelessWidget {
                           ),
                           enabledBorder: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(8),
-                            borderSide: const BorderSide(
-                              color: AppColor.dark,
+                            borderSide: BorderSide(
+                              color: Color(0xFFdcdcdc),
                               width: 1.5,
                             ),
                           ),

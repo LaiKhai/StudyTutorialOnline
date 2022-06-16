@@ -7,7 +7,6 @@ import 'package:user_flutter/Model/sinhVien.dart';
 import 'package:user_flutter/View/common/constant/color.dart';
 import 'package:user_flutter/View/page/NaviGa.dart';
 
-
 import '../View/common/constant/string.dart';
 import 'package:http/http.dart' as http;
 
@@ -48,7 +47,8 @@ class Login {
             return AlertDialog(
               content: Text(
                 'Kiểm tra lại email hoặc password !',
-                style: ggTextStyle(16, FontWeight.normal, AppColor.black),
+                style: ggTextStyle(
+                    16, FontWeight.normal, AppColor.black),
               ),
               title: Row(
                 children: [
@@ -60,7 +60,8 @@ class Login {
                     width: 10,
                   ),
                   Text('Thông báo',
-                      style: ggTextStyle(15, FontWeight.bold, AppColor.green))
+                      style: ggTextStyle(
+                          15, FontWeight.bold, AppColor.green))
                 ],
               ),
               actions: [
@@ -70,7 +71,8 @@ class Login {
                     },
                     child: Text(
                       'OK',
-                      style: ggTextStyle(15, FontWeight.bold, AppColor.green),
+                      style: ggTextStyle(
+                          15, FontWeight.bold, AppColor.green),
                     ))
               ],
             );

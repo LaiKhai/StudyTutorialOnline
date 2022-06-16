@@ -50,7 +50,7 @@ class AssignmentWeek extends StatelessWidget {
               children: [
                 Text(
                   count.toString(),
-                  style: const TextStyle(
+                  style: GoogleFonts.quicksand(
                     color: Colors.white,
                     fontSize: 18,
                     fontWeight: FontWeight.bold,
@@ -73,7 +73,7 @@ class AssignmentWeek extends StatelessWidget {
               subjects.join(","),
               maxLines: 1,
               overflow: TextOverflow.ellipsis,
-              style: const TextStyle(
+              style: GoogleFonts.quicksand(
                 color: Color.fromARGB(255, 249, 238, 238),
                 fontSize: 12,
               ),

@@ -1,5 +1,6 @@
 import 'package:custom_pop_up_menu/custom_pop_up_menu.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class ChatModel {
   String content;
@@ -113,7 +114,7 @@ class _MyHomePageState extends State<MyHomePage> {
                                           EdgeInsets.symmetric(vertical: 10),
                                       child: Text(
                                         item.title,
-                                        style: TextStyle(
+                                        style: GoogleFonts.quicksand(
                                           color: Colors.white,
                                           fontSize: 12,
                                         ),

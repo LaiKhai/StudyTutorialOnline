@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 import 'package:intl/intl.dart';
 import 'package:user_flutter/Model/subject_assignment.dart';
@@ -16,7 +17,15 @@ class AssignmentItem extends StatelessWidget {
     return Container(
       margin: const EdgeInsets.symmetric(vertical: 8),
       decoration: BoxDecoration(
-        border: Border.all(color: AppColor.dark, width: 1.3),
+        color: Colors.white,
+        boxShadow: [
+          BoxShadow(
+            blurRadius: 4,
+            color: Color(0x34090F13),
+            offset: Offset(0, 2),
+          )
+        ],
+        border: Border.all(color: Color(0xFFdcdcdc), width: 1.3),
         borderRadius: BorderRadius.circular(8),
       ),
       child: Column(
@@ -43,7 +52,7 @@ class AssignmentItem extends StatelessWidget {
                         children: [
                           Text(
                             assignment.title,
-                            style: const TextStyle(
+                            style: GoogleFonts.quicksand(
                               color: AppColor.white,
                               fontWeight: FontWeight.w600,
                             ),
@@ -52,7 +61,7 @@ class AssignmentItem extends StatelessWidget {
                           Text(
                             "Due at " +
                                 DateFormat("MMM dd").format(assignment.dueAt),
-                            style: const TextStyle(
+                            style: GoogleFonts.quicksand(
                               color: AppColor.grey,
                               fontSize: 12,
                             ),
@@ -71,7 +80,7 @@ class AssignmentItem extends StatelessWidget {
                     assignment.description,
                     maxLines: 3,
                     overflow: TextOverflow.ellipsis,
-                    style: const TextStyle(
+                    style: GoogleFonts.quicksand(
                       color: AppColor.grey,
                       fontSize: 12,
                     ),
@@ -93,7 +102,7 @@ class AssignmentItem extends StatelessWidget {
               decoration: const BoxDecoration(
                 border: Border.symmetric(
                   horizontal: BorderSide(
-                    color: AppColor.dark,
+                    color: Color(0xFFdcdcdc),
                   ),
                 ),
               ),
@@ -107,9 +116,9 @@ class AssignmentItem extends StatelessWidget {
                     height: 16,
                   ),
                   const SizedBox(width: 16),
-                  const Text(
+                  Text(
                     "Add class's comment",
-                    style: TextStyle(
+                    style: GoogleFonts.quicksand(
                       color: AppColor.grey,
                       fontSize: 12,
                     ),

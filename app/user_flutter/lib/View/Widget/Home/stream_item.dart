@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 import 'package:user_flutter/Model/subject_stream.dart';
 import 'package:user_flutter/View/Widget/Home/stream_type.dart';
 import 'package:user_flutter/View/common/constant/color.dart';
 import 'package:user_flutter/View/page/Chi_tiet_bai_tap.dart';
-
 
 class StreamItem extends StatelessWidget {
   final SubjectStream stream;
@@ -16,52 +16,68 @@ class StreamItem extends StatelessWidget {
     return Container(
       margin: const EdgeInsets.symmetric(vertical: 8),
       decoration: BoxDecoration(
+        boxShadow: [
+          BoxShadow(
+            blurRadius: 4,
+            color: Color(0x34090F13),
+            offset: Offset(0, 2),
+          )
+        ],
+        color: Colors.white,
         border: Border.all(color: const Color(0xFFdcdcdc), width: 1),
         borderRadius: BorderRadius.circular(15),
       ),
       child: Column(
         children: [
-          Container(
-            padding: const EdgeInsets.all(12),
-            child: Row(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                SvgPicture.asset(
-                  stream.type == SubjectStreamType.material
-                      ? "assets/icons/material.svg"
-                      : "assets/icons/quiz.svg",
-                  color: AppColor.white,
-                  width: 24,
-                  height: 24,
-                ),
-                const SizedBox(width: 16),
-                Expanded(
-                  child: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        stream.title,
-                        style: const TextStyle(
-                          color: AppColor.white,
-                          fontWeight: FontWeight.w600,
-                        ),
-                      ),
-                      const SizedBox(height: 4),
-                      Text(
-                        DateFormat("MMM dd").format(stream.postedAt),
-                        style: const TextStyle(
-                          color: AppColor.grey,
-                          fontSize: 12,
-                        ),
-                      ),
-                    ],
+          InkWell(
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => const Chi_tiet_Page()),
+              );
+            },
+            child: Container(
+              padding: const EdgeInsets.all(12),
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  SvgPicture.asset(
+                    stream.type == SubjectStreamType.material
+                        ? "assets/icons/material.svg"
+                        : "assets/icons/quiz.svg",
+                    color: AppColor.white,
+                    width: 24,
+                    height: 24,
                   ),
-                ),
-                const SizedBox(width: 16),
-                // Type
-                StreamType(type: stream.type),
-              ],
+                  const SizedBox(width: 16),
+                  Expanded(
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          stream.title,
+                          style: GoogleFonts.quicksand(
+                            color: AppColor.white,
+                            fontWeight: FontWeight.w600,
+                          ),
+                        ),
+                        const SizedBox(height: 4),
+                        Text(
+                          DateFormat("MMM dd").format(stream.postedAt),
+                          style: GoogleFonts.quicksand(
+                            color: AppColor.grey,
+                            fontSize: 12,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  const SizedBox(width: 16),
+                  // Type
+                  StreamType(type: stream.type),
+                ],
+              ),
             ),
           ),
           Container(
@@ -76,12 +92,7 @@ class StreamItem extends StatelessWidget {
               bottomLeft: Radius.circular(8),
               bottomRight: Radius.circular(8),
             ),
-            onTap: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => const Chi_tiet_Page()),
-              );
-            },
+            onTap: () {},
             child: Container(
               padding: const EdgeInsets.all(12),
               child: Row(
@@ -94,9 +105,9 @@ class StreamItem extends StatelessWidget {
                     height: 16,
                   ),
                   const SizedBox(width: 16),
-                  const Text(
+                  Text(
                     "Add class's comment",
-                    style: TextStyle(
+                    style: GoogleFonts.quicksand(
                       color: AppColor.grey,
                       fontSize: 12,
                     ),

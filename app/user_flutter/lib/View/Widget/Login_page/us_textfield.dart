@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:user_flutter/View/common/constant/dimen.dart';
 import 'package:user_flutter/View/page/NaviGa.dart';
 
@@ -54,7 +55,7 @@ class _US_TextField_LoginState extends State<US_TextField_Login> {
               controller: _emailController,
               autofocus: false,
               keyboardType: TextInputType.emailAddress,
-              style: TextStyle(color: US_APP_WHITE, fontSize: 15),
+              style: GoogleFonts.quicksand(color: US_APP_WHITE, fontSize: 15),
               decoration: InputDecoration(
                 enabledBorder: const UnderlineInputBorder(
                     borderSide: BorderSide(color: Colors.white)),
@@ -69,7 +70,8 @@ class _US_TextField_LoginState extends State<US_TextField_Login> {
                       color: US_APP_WHITE,
                     )),
                 labelText: 'Email',
-                labelStyle: const TextStyle(fontSize: 16, color: Colors.white),
+                labelStyle:
+                    GoogleFonts.quicksand(fontSize: 16, color: Colors.white),
               ),
             ),
           ),
@@ -77,7 +79,7 @@ class _US_TextField_LoginState extends State<US_TextField_Login> {
             padding: const EdgeInsets.fromLTRB(0, 10, 0, 60),
             child: TextField(
               controller: _passwordController,
-              style: TextStyle(color: US_APP_WHITE, fontSize: 15),
+              style: GoogleFonts.quicksand(color: US_APP_WHITE, fontSize: 15),
               obscureText: isHidenPassword,
               keyboardType: TextInputType.visiblePassword,
               decoration: InputDecoration(
@@ -102,7 +104,8 @@ class _US_TextField_LoginState extends State<US_TextField_Login> {
                   ),
                 ),
                 labelText: 'Mật Khẩu',
-                labelStyle: TextStyle(fontSize: 16, color: US_APP_WHITE),
+                labelStyle:
+                    GoogleFonts.quicksand(fontSize: 16, color: US_APP_WHITE),
               ),
             ),
           ),
@@ -116,7 +119,7 @@ class _US_TextField_LoginState extends State<US_TextField_Login> {
               //     onPressed: () {},
               //     child: Text(
               //       "Đăng ký",
-              //       style: TextStyle(color: US_APP_WHITE),
+              //       style: GoogleFonts.quicksand(color: US_APP_WHITE),
               //     ),
               //     style: OutlinedButton.styleFrom(
               //         shape: RoundedRectangleBorder(
@@ -151,7 +154,7 @@ class _US_TextField_LoginState extends State<US_TextField_Login> {
           //   padding: EdgeInsets.fromLTRB(0, 40, 0, 40),
           //   child: Text(
           //     "Hoặc qua mạng xã hội",
-          //     style: TextStyle(color: Colors.white),
+          //     style: GoogleFonts.quicksand(color: Colors.white),
           //   ),
           // ),
           // // Row(
@@ -175,7 +178,7 @@ class _US_TextField_LoginState extends State<US_TextField_Login> {
           //             Container(
           //               child: Text(
           //                 'Facebook',
-          //                 style: TextStyle(color: Colors.white),
+          //                 style: GoogleFonts.quicksand(color: Colors.white),
           //               ),
           //             )
           //           ],
@@ -198,7 +201,7 @@ class _US_TextField_LoginState extends State<US_TextField_Login> {
           //             Container(
           //               child: Text(
           //                 'Google',
-          //                 style: TextStyle(color: Colors.white),
+          //                 style: GoogleFonts.quicksand(color: Colors.white),
           //               ),
           //             )
           //           ],

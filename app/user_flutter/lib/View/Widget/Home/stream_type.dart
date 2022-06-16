@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:user_flutter/Model/subject_stream.dart';
 
 import '../../common/constant/color.dart';
-
 
 class StreamType extends StatelessWidget {
   final SubjectStreamType type;
@@ -22,7 +22,7 @@ class StreamType extends StatelessWidget {
       ),
       child: Text(
         type == SubjectStreamType.material ? "Material" : "Quiz",
-        style: TextStyle(
+        style: GoogleFonts.quicksand(
           color: type == SubjectStreamType.material
               ? AppColor.material
               : AppColor.quiz,

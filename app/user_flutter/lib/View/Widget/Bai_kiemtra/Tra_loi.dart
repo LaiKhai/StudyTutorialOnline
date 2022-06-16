@@ -1,3 +1,6 @@
+import 'dart:io';
+
+import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:user_flutter/View/common/constant/color.dart';
@@ -10,6 +13,21 @@ class Tra_Loi extends StatefulWidget {
 }
 
 class _Tra_LoiState extends State<Tra_Loi> {
+  List<File> listFile = [];
+  chonAnh() async {
+    FilePickerResult? result = await FilePicker.platform.pickFiles(
+        type: FileType.custom,
+        allowedExtensions: ['jpg', 'png'],
+        allowMultiple: true);
+
+    if (result != null) {
+      listFile = result.paths.map((path) => File(path!)).toList();
+      setState(() {});
+    } else {
+      // User canceled the picker
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return // Generated code for this checkout_BottomSheet Widget...
@@ -36,8 +54,8 @@ class _Tra_LoiState extends State<Tra_Loi> {
               padding: EdgeInsetsDirectional.fromSTEB(0, 12, 0, 0),
               child: Text(
                 'File đính kèm',
-                style: TextStyle(
-                  fontFamily: 'Outfit',
+                style: GoogleFonts.quicksand(
+                  
                   color: Color(0xFF14181B),
                   fontSize: 20,
                   fontWeight: FontWeight.w500,
@@ -49,13 +67,14 @@ class _Tra_LoiState extends State<Tra_Loi> {
               thickness: 2,
               color: Color(0xFFF1F4F8),
             ),
-            ListView(
+            ListView.builder(
               padding: EdgeInsets.zero,
               primary: false,
               shrinkWrap: true,
               scrollDirection: Axis.vertical,
-              children: [
-                Padding(
+              itemCount: listFile.length,
+              itemBuilder: (context, index) {
+                return Padding(
                   padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 8),
                   child: Container(
                     width: double.infinity,
@@ -64,7 +83,7 @@ class _Tra_LoiState extends State<Tra_Loi> {
                       color: Colors.white,
                       borderRadius: BorderRadius.circular(8),
                       border: Border.all(
-                        color: Color(0xFFF1F4F8),
+                        color: US_APP_LINE,
                         width: 2,
                       ),
                     ),
@@ -98,8 +117,8 @@ class _Tra_LoiState extends State<Tra_Loi> {
                                 children: [
                                   Text(
                                     'Item Name',
-                                    style: TextStyle(
-                                      fontFamily: 'Roboto Mono',
+                                    style: GoogleFonts.quicksand(
+                                   
                                       color: Color(0xFF14181B),
                                       fontSize: 16,
                                       fontWeight: FontWeight.w500,
@@ -111,8 +130,7 @@ class _Tra_LoiState extends State<Tra_Loi> {
                                           0, 4, 0, 0),
                                       child: Text(
                                         'Secondary text',
-                                        style: TextStyle(
-                                          fontFamily: 'Roboto Mono',
+                                        style: GoogleFonts.quicksand(
                                           color: Color(0xFF57636C),
                                           fontSize: 12,
                                           fontWeight: FontWeight.normal,
@@ -138,43 +156,43 @@ class _Tra_LoiState extends State<Tra_Loi> {
                       ),
                     ),
                   ),
-                ),
-              ],
+                );
+              },
             ),
-            Column(
-              mainAxisSize: MainAxisSize.max,
-              children: [
-                Padding(
-                    padding: EdgeInsetsDirectional.fromSTEB(16, 0, 16, 24),
-                    child: // Generated code for this Container Widget...
-                        Material(
-                      color: Colors.white,
-                      elevation: 2,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(12),
-                      ),
-                      child: Container(
-                        width: double.infinity,
-                        height: 50,
-                        child: Center(
-                            child: Text(
-                          '+ Thêm file',
-                          style: GoogleFonts.quicksand(
-                              color: US_APP_COLOR,
-                              fontSize: 25,
-                              fontWeight: FontWeight.bold),
-                        )),
-                        decoration: BoxDecoration(
-                          color: Color.fromARGB(255, 255, 255, 255),
-                          borderRadius: BorderRadius.circular(12),
-                          border: Border.all(
+            InkWell(
+              onTap: () {
+                chonAnh();
+              },
+              child: Padding(
+                  padding: EdgeInsetsDirectional.fromSTEB(16, 0, 16, 24),
+                  child: // Generated code for this Container Widget...
+                      Material(
+                    color: Colors.white,
+                    elevation: 2,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                    child: Container(
+                      width: double.infinity,
+                      height: 50,
+                      child: Center(
+                          child: Text(
+                        '+ Thêm file',
+                        style: GoogleFonts.quicksand(
                             color: US_APP_COLOR,
-                            width: 1,
-                          ),
+                            fontSize: 25,
+                            fontWeight: FontWeight.bold),
+                      )),
+                      decoration: BoxDecoration(
+                        color: Color.fromARGB(255, 255, 255, 255),
+                        borderRadius: BorderRadius.circular(12),
+                        border: Border.all(
+                          color: US_APP_COLOR,
+                          width: 1,
                         ),
                       ),
-                    )),
-              ],
+                    ),
+                  )),
             ),
           ],
         ),

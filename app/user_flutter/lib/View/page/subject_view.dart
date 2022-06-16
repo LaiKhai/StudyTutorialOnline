@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
 import 'package:user_flutter/Model/class_data.dart';
 import 'package:user_flutter/Model/subject.dart';
 import 'package:user_flutter/Model/subject_assignment.dart';
 import 'package:user_flutter/Model/subject_stream.dart';
+import 'package:user_flutter/View/Widget/Bai_kiemtra/showdialog.dart';
 import 'package:user_flutter/View/Widget/Home/app_icon_buttton.dart';
-import 'package:user_flutter/View/Widget/Home/assignment_highlight.dart';
 import 'package:user_flutter/View/Widget/Home/assignment_item.dart';
 import 'package:user_flutter/View/Widget/Home/stream_item.dart';
 import 'package:user_flutter/View/Widget/Home/student_item.dart';
@@ -32,9 +33,9 @@ class _SubjectViewState extends State<SubjectView> {
     List<SubjectStream> subjectStreams =
         streams.where((item) => item.subjectId == widget.subject.id).toList();
     final List<Map<String, dynamic>> menus = [
-      {'index': 1, 'icon': Icons.timer, 'title': "Stream"},
-      {'index': 2, 'icon': Icons.assignment, 'title': "Assignment"},
-      {'index': 3, 'icon': Icons.group, 'title': "Classmates"},
+      {'index': 1, 'icon': Icons.timer, 'title': "Bản tin"},
+      {'index': 2, 'icon': Icons.assignment, 'title': "Bài tập"},
+      {'index': 3, 'icon': Icons.group, 'title': "Mọi người"},
     ];
     final List<Widget> bodies = [
       StreamBody(streams: subjectStreams),
@@ -47,6 +48,27 @@ class _SubjectViewState extends State<SubjectView> {
 
     return SafeArea(
       child: Scaffold(
+        floatingActionButton: _activeIndex == 1
+            ? FloatingActionButton.extended(
+                backgroundColor: AppColor.theme,
+                label: Text(
+                  'Tạo bài tập',
+                  style: GoogleFonts.quicksand(
+                    color: Colors.white,
+                    fontSize: 20,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                onPressed: () {
+                  showBottomDialog(context);
+                },
+                tooltip: 'Increment',
+                //foregroundColor: Colors.yellow,
+                //backgroundColor: Colors.red,
+                //elevation: 0.0,
+                //shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
+              )
+            : null,
         backgroundColor: const Color(0xFFF6F9FE),
         body: Padding(
           padding: const EdgeInsets.all(16),
@@ -76,7 +98,7 @@ class _SubjectViewState extends State<SubjectView> {
                         children: [
                           Text(
                             widget.subject.name,
-                            style: const TextStyle(
+                            style: GoogleFonts.quicksand( 
                               color: AppColor.white,
                               fontSize: 16,
                               fontWeight: FontWeight.w600,
@@ -87,7 +109,7 @@ class _SubjectViewState extends State<SubjectView> {
                             widget.subject.desc,
                             maxLines: 1,
                             overflow: TextOverflow.ellipsis,
-                            style: const TextStyle(
+                            style: GoogleFonts.quicksand(
                               color: AppColor.grey,
                               fontSize: 12,
                             ),
@@ -149,9 +171,8 @@ class _SubjectViewState extends State<SubjectView> {
                   gap: 8,
                   tabMargin: const EdgeInsets.symmetric(horizontal: 8),
                   color: AppColor.grey,
-                  activeColor: Theme.of(context).primaryColor,
-                  tabBackgroundColor:
-                      Theme.of(context).primaryColor.withOpacity(0.25),
+                  activeColor: US_APP_COLOR,
+                  tabBackgroundColor: US_APP_COLOR.withOpacity(0.25),
                   onTabChange: (index) {
                     setState(() {
                       _activeIndex = index;
@@ -173,8 +194,8 @@ class _SubjectViewState extends State<SubjectView> {
                           ),
                           icon: menu['icon'],
                           text: menu['title'],
-                          textStyle: TextStyle(
-                            color: Theme.of(context).primaryColor,
+                          textStyle: GoogleFonts.quicksand(
+                            color: US_APP_COLOR,
                             fontWeight: FontWeight.w600,
                           ),
                         ),
@@ -220,9 +241,9 @@ class StreamBody extends StatelessWidget {
         Expanded(
           child: ListView.builder(
             physics: const BouncingScrollPhysics(),
-            itemCount: 15,
+            itemCount: streams.length,
             itemBuilder: (ctx, index) {
-              final stream = streams[1];
+              final stream = streams[index];
               // Stream item
               return StreamItem(stream: stream);
             },

@@ -1,189 +1,257 @@
-import 'package:bottom_sheet_bar/bottom_sheet_bar.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
+import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
+import 'package:google_fonts/google_fonts.dart';
 
-class BottomSheetBarPage extends StatefulWidget {
-  final String title;
-
-  const BottomSheetBarPage({Key? key, this.title = ''}) : super(key: key);
-
-  @override
-  _BottomSheetBarPageState createState() => _BottomSheetBarPageState();
-}
-
-class ExampleApp extends StatelessWidget {
-  const ExampleApp({Key? key}) : super(key: key);
-
-  // This widget is the root of your application.
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'BottomSheetBar Demo',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-        visualDensity: VisualDensity.adaptivePlatformDensity,
-      ),
-      home: const BottomSheetBarPage(title: 'BottomSheetBar'),
-    );
+class CustomPicker extends CommonPickerModel {
+  String digits(int value, int length) {
+    return '$value'.padLeft(length, "0");
   }
-}
 
-class _BottomSheetBarPageState extends State<BottomSheetBarPage> {
-  bool _isLocked = false;
-  bool _isCollapsed = true;
-  bool _isExpanded = false;
-  int _listSize = 5;
-  final _bsbController = BottomSheetBarController();
-  final _listSizeController = TextEditingController(text: '5');
-
-  @override
-  void initState() {
-    _bsbController.addListener(_onBsbChanged);
-    _listSizeController.addListener(_onListSizeChanged);
-    super.initState();
+  CustomPicker({DateTime? currentTime, LocaleType? locale})
+      : super(locale: locale) {
+    this.currentTime = currentTime ?? DateTime.now();
+    this.setLeftIndex(this.currentTime.hour);
+    this.setMiddleIndex(this.currentTime.minute);
+    this.setRightIndex(this.currentTime.second);
   }
 
   @override
-  void dispose() {
-    _bsbController.removeListener(_onBsbChanged);
-    super.dispose();
-  }
-
-  void _onListSizeChanged() {
-    _listSize = int.tryParse(_listSizeController.text) ?? 5;
-  }
-
-  void _onBsbChanged() {
-    if (_bsbController.isCollapsed && !_isCollapsed) {
-      setState(() {
-        _isCollapsed = true;
-        _isExpanded = false;
-      });
-    } else if (_bsbController.isExpanded && !_isExpanded) {
-      setState(() {
-        _isCollapsed = false;
-        _isExpanded = true;
-      });
+  String? leftStringAtIndex(int index) {
+    if (index >= 0 && index < 24) {
+      return this.digits(index, 2);
+    } else {
+      return null;
     }
   }
 
   @override
-  Widget build(BuildContext context) => Scaffold(
-        appBar: AppBar(
-          title: Text(widget.title),
-          actions: [
-            if (_isCollapsed)
-              IconButton(
-                icon: const Icon(Icons.open_in_full),
-                onPressed: _bsbController.expand,
-              ),
-            if (_isExpanded)
-              IconButton(
-                icon: const Icon(Icons.close),
-                onPressed: _bsbController.collapse,
-              ),
-          ],
-        ),
-        body: BottomSheetBar(
-          backdropColor: Colors.green,
-          locked: _isLocked,
-          color: Colors.lightBlueAccent,
-          controller: _bsbController,
-          borderRadius: const BorderRadius.only(
-            topLeft: Radius.circular(32.0),
-            topRight: Radius.circular(32.0),
-          ),
-          borderRadiusExpanded: const BorderRadius.only(
-            topLeft: Radius.circular(0.0),
-            topRight: Radius.circular(0.0),
-          ),
-          boxShadows: [
-            BoxShadow(
-              color: Colors.grey.withOpacity(0.5),
-              spreadRadius: 5.0,
-              blurRadius: 32.0,
-              offset: const Offset(0, 0), // changes position of shadow
-            ),
-          ],
-          expandedBuilder: (scrollController) {
-            final itemList =
-                List<int>.generate(_listSize, (index) => index + 1);
-            return CustomScrollView(
-              controller: scrollController,
-              shrinkWrap: true,
-              slivers: [
-                SliverFixedExtentList(
-                  itemExtent: 56.0, // I'm forcing item heights
-                  delegate: SliverChildBuilderDelegate(
-                    (context, index) => ListTile(
-                      title: Text(
-                        itemList[index].toString(),
-                        style: const TextStyle(fontSize: 20.0),
-                      ),
-                      onTap: () => showDialog(
-                        context: context,
-                        builder: (context) => AlertDialog(
-                          title: Text(
-                            itemList[index].toString(),
-                          ),
-                        ),
-                      ),
-                    ),
-                    childCount: _listSize,
-                  ),
-                ),
-              ],
-            );
-          },
-          collapsed: TextButton(
-            onPressed: () => _bsbController.expand(),
-            child: Text(
-              'Click${_isLocked ? "" : " or swipe"} to expand',
-              style: const TextStyle(color: Colors.white),
-            ),
-          ),
-          body: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 12.0),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
-                const Text('BottomSheetBar is'),
-                Text(
-                  _isLocked ? 'Locked' : 'Unlocked',
-                  style: Theme.of(context).textTheme.headline4,
-                ),
-                Text(
-                  _isLocked
-                      ? 'Bottom sheet cannot be expanded or collapsed by swiping'
-                      : 'Swipe it to expand or collapse the bottom sheet',
-                  textAlign: TextAlign.center,
-                ),
-                SizedBox(
-                  width: 250,
-                  child: TextField(
-                    textAlign: TextAlign.center,
-                    keyboardType: TextInputType.number,
-                    inputFormatters: [FilteringTextInputFormatter.digitsOnly],
-                    controller: _listSizeController,
-                    decoration: const InputDecoration(
-                        hintText: 'Number of expanded list-items'),
-                  ),
-                ),
-              ],
-            ),
-          ),
-        ),
-        floatingActionButton: FloatingActionButton(
-          onPressed: _toggleLock,
-          tooltip: 'Toggle Lock',
-          child:
-              _isLocked ? const Icon(Icons.lock) : const Icon(Icons.lock_open),
-        ),
-      );
+  String? middleStringAtIndex(int index) {
+    if (index >= 0 && index < 60) {
+      return this.digits(index, 2);
+    } else {
+      return null;
+    }
+  }
 
-  void _toggleLock() {
-    setState(() {
-      _isLocked = !_isLocked;
-    });
+  @override
+  String? rightStringAtIndex(int index) {
+    if (index >= 0 && index < 60) {
+      return this.digits(index, 2);
+    } else {
+      return null;
+    }
+  }
+
+  @override
+  String leftDivider() {
+    return "|";
+  }
+
+  @override
+  String rightDivider() {
+    return "|";
+  }
+
+  @override
+  List<int> layoutProportions() {
+    return [1, 2, 1];
+  }
+
+  @override
+  DateTime finalTime() {
+    return currentTime.isUtc
+        ? DateTime.utc(
+            currentTime.year,
+            currentTime.month,
+            currentTime.day,
+            this.currentLeftIndex(),
+            this.currentMiddleIndex(),
+            this.currentRightIndex())
+        : DateTime(
+            currentTime.year,
+            currentTime.month,
+            currentTime.day,
+            this.currentLeftIndex(),
+            this.currentMiddleIndex(),
+            this.currentRightIndex());
+  }
+}
+
+class app_tess extends StatelessWidget {
+  // This widget is the root of your application.
+  @override
+  Widget build(BuildContext context) {
+    return new MaterialApp(
+      title: 'Flutter Demo',
+      theme: new ThemeData(
+        primarySwatch: Colors.blue,
+      ),
+      home: new HomePage(),
+    );
+  }
+}
+
+class HomePage extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Datetime Picker'),
+      ),
+      body: Center(
+        child: Column(
+          children: <Widget>[
+            TextButton(
+                onPressed: () {
+                  DatePicker.showDatePicker(context,
+                      showTitleActions: true,
+                      minTime: DateTime(2018, 3, 5),
+                      maxTime: DateTime(2019, 6, 7),
+                      theme: DatePickerTheme(
+                          headerColor: Colors.orange,
+                          backgroundColor: Colors.blue,
+                          itemStyle: GoogleFonts.quicksand(
+                              color: Colors.white,
+                              fontWeight: FontWeight.bold,
+                              fontSize: 18),
+                          doneStyle: GoogleFonts.quicksand(
+                              color: Colors.white,
+                              fontSize: 16)), onChanged: (date) {
+                    print('change $date in time zone ' +
+                        date.timeZoneOffset.inHours.toString());
+                  }, onConfirm: (date) {
+                    print('confirm $date');
+                  }, currentTime: DateTime.now(), locale: LocaleType.en);
+                },
+                child: Text(
+                  'show date picker(custom theme &date time range)',
+                  style: GoogleFonts.quicksand(color: Colors.blue),
+                )),
+            TextButton(
+                onPressed: () {
+                  DatePicker.showTimePicker(context, showTitleActions: true,
+                      onChanged: (date) {
+                    print('change $date in time zone ' +
+                        date.timeZoneOffset.inHours.toString());
+                  }, onConfirm: (date) {
+                    print('confirm $date');
+                  }, currentTime: DateTime.now());
+                },
+                child: Text(
+                  'show time picker',
+                  style: GoogleFonts.quicksand(color: Colors.blue),
+                )),
+            TextButton(
+                onPressed: () {
+                  DatePicker.showTime12hPicker(context, showTitleActions: true,
+                      onChanged: (date) {
+                    print('change $date in time zone ' +
+                        date.timeZoneOffset.inHours.toString());
+                  }, onConfirm: (date) {
+                    print('confirm $date');
+                  }, currentTime: DateTime.now());
+                },
+                child: Text(
+                  'show 12H time picker with AM/PM',
+                  style: GoogleFonts.quicksand(color: Colors.blue),
+                )),
+            TextButton(
+                onPressed: () {
+                  DatePicker.showDateTimePicker(context,
+                      showTitleActions: true,
+                      minTime: DateTime(2020, 5, 5, 20, 50),
+                      maxTime: DateTime(2020, 6, 7, 05, 09), onChanged: (date) {
+                    print('change $date in time zone ' +
+                        date.timeZoneOffset.inHours.toString());
+                  }, onConfirm: (date) {
+                    print('confirm $date');
+                  }, locale: LocaleType.zh);
+                },
+                child: Text(
+                  'show date time picker (Chinese)',
+                  style: GoogleFonts.quicksand(color: Colors.blue),
+                )),
+            TextButton(
+                onPressed: () {
+                  DatePicker.showDateTimePicker(context, showTitleActions: true,
+                      onChanged: (date) {
+                    print('change $date in time zone ' +
+                        date.timeZoneOffset.inHours.toString());
+                  }, onConfirm: (date) {
+                    print('confirm $date');
+                  }, currentTime: DateTime(2008, 12, 31, 23, 12, 34));
+                },
+                child: Text(
+                  'show date time picker (English-America)',
+                  style: GoogleFonts.quicksand(color: Colors.blue),
+                )),
+            TextButton(
+                onPressed: () {
+                  DatePicker.showDateTimePicker(context, showTitleActions: true,
+                      onChanged: (date) {
+                    print('change $date in time zone ' +
+                        date.timeZoneOffset.inHours.toString());
+                  }, onConfirm: (date) {
+                    print('confirm $date');
+                  },
+                      currentTime: DateTime(2008, 12, 31, 23, 12, 34),
+                      locale: LocaleType.nl);
+                },
+                child: Text(
+                  'show date time picker (Dutch)',
+                  style: GoogleFonts.quicksand(color: Colors.blue),
+                )),
+            TextButton(
+                onPressed: () {
+                  DatePicker.showDateTimePicker(context, showTitleActions: true,
+                      onChanged: (date) {
+                    print('change $date in time zone ' +
+                        date.timeZoneOffset.inHours.toString());
+                  }, onConfirm: (date) {
+                    print('confirm $date');
+                  },
+                      currentTime: DateTime(2008, 12, 31, 23, 12, 34),
+                      locale: LocaleType.ru);
+                },
+                child: Text(
+                  'show date time picker (Russian)',
+                  style: GoogleFonts.quicksand(color: Colors.blue),
+                )),
+            TextButton(
+                onPressed: () {
+                  DatePicker.showDateTimePicker(context, showTitleActions: true,
+                      onChanged: (date) {
+                    print('change $date in time zone ' +
+                        date.timeZoneOffset.inHours.toString());
+                  }, onConfirm: (date) {
+                    print('confirm $date');
+                  },
+                      currentTime: DateTime.utc(2019, 12, 31, 23, 12, 34),
+                      locale: LocaleType.de);
+                },
+                child: Text(
+                  'show date time picker in UTC (German)',
+                  style: GoogleFonts.quicksand(color: Colors.blue),
+                )),
+            TextButton(
+                onPressed: () {
+                  DatePicker.showPicker(context, showTitleActions: true,
+                      onChanged: (date) {
+                    print('change $date in time zone ' +
+                        date.timeZoneOffset.inHours.toString());
+                  }, onConfirm: (date) {
+                    print('confirm $date');
+                  },
+                      pickerModel: CustomPicker(currentTime: DateTime.now()),
+                      locale: LocaleType.en);
+                },
+                child: Text(
+                  'show custom time picker,\nyou can custom picker model like this',
+                  style: GoogleFonts.quicksand(color: Colors.blue),
+                )),
+          ],
+        ),
+      ),
+    );
   }
 }

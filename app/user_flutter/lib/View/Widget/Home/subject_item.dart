@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:user_flutter/Model/subject.dart';
 import '../../common/constant/color.dart';
 
@@ -40,7 +41,7 @@ class SubjectItem extends StatelessWidget {
                 children: [
                   Text(
                     subject.name,
-                    style: const TextStyle(
+                    style: GoogleFonts.quicksand(
                       color: AppColor.white,
                       fontSize: 24,
                       fontWeight: FontWeight.w600,
@@ -49,7 +50,7 @@ class SubjectItem extends StatelessWidget {
                   const SizedBox(height: 4),
                   Text(
                     subject.lecturer,
-                    style: TextStyle(
+                    style: GoogleFonts.quicksand(
                       color: AppColor.white.withOpacity(0.75),
                       fontWeight: FontWeight.w500,
                     ),

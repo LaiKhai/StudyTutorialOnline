@@ -3,7 +3,6 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:user_flutter/View/Widget/Navi/navigation_drawer_widget.dart';
 
-
 import '../Widget/will_custom.dart';
 import '../common/constant/color.dart';
 
@@ -323,7 +322,7 @@ class _Profile_pageState extends State<Profile_page> {
                                                                         Text(
                                                                           'April 25, 9:00am',
                                                                           style:
-                                                                              TextStyle(fontSize: 15),
+                                                                              GoogleFonts.quicksand(fontSize: 15),
                                                                         ),
                                                                         Padding(
                                                                           padding: EdgeInsetsDirectional.fromSTEB(
@@ -341,7 +340,7 @@ class _Profile_pageState extends State<Profile_page> {
                                                                         Text(
                                                                           'With Kaylene Huchtins',
                                                                           style:
-                                                                              TextStyle(fontSize: 15),
+                                                                              GoogleFonts.quicksand(fontSize: 15),
                                                                         ),
                                                                       ],
                                                                     ),
@@ -402,7 +401,7 @@ class _Profile_pageState extends State<Profile_page> {
                                                                         Text(
                                                                           'April 29, 9:00am',
                                                                           style:
-                                                                              TextStyle(fontSize: 15),
+                                                                              GoogleFonts.quicksand(fontSize: 15),
                                                                         ),
                                                                         Padding(
                                                                           padding: EdgeInsetsDirectional.fromSTEB(
@@ -420,7 +419,7 @@ class _Profile_pageState extends State<Profile_page> {
                                                                         Text(
                                                                           'With Kaylene Huchtins',
                                                                           style:
-                                                                              TextStyle(fontSize: 15),
+                                                                              GoogleFonts.quicksand(fontSize: 15),
                                                                         ),
                                                                       ],
                                                                     ),
@@ -481,7 +480,7 @@ class _Profile_pageState extends State<Profile_page> {
                                                                         Text(
                                                                           'April 29, 9:00am',
                                                                           style:
-                                                                              TextStyle(fontSize: 15),
+                                                                              GoogleFonts.quicksand(fontSize: 15),
                                                                         ),
                                                                         Padding(
                                                                           padding: EdgeInsetsDirectional.fromSTEB(
@@ -499,7 +498,7 @@ class _Profile_pageState extends State<Profile_page> {
                                                                         Text(
                                                                           'With Kaylene Huchtins',
                                                                           style:
-                                                                              TextStyle(fontSize: 15),
+                                                                              GoogleFonts.quicksand(fontSize: 15),
                                                                         ),
                                                                       ],
                                                                     ),
@@ -560,7 +559,7 @@ class _Profile_pageState extends State<Profile_page> {
                                                                         Text(
                                                                           'April 29, 9:00am',
                                                                           style:
-                                                                              TextStyle(fontSize: 15),
+                                                                              GoogleFonts.quicksand(fontSize: 15),
                                                                         ),
                                                                         Padding(
                                                                           padding: EdgeInsetsDirectional.fromSTEB(
@@ -578,7 +577,7 @@ class _Profile_pageState extends State<Profile_page> {
                                                                         Text(
                                                                           'With Kaylene Huchtins',
                                                                           style:
-                                                                              TextStyle(fontSize: 15),
+                                                                              GoogleFonts.quicksand(fontSize: 15),
                                                                         ),
                                                                       ],
                                                                     ),
@@ -639,7 +638,7 @@ class _Profile_pageState extends State<Profile_page> {
                                                                         Text(
                                                                           'April 29, 9:00am',
                                                                           style:
-                                                                              TextStyle(fontSize: 15),
+                                                                              GoogleFonts.quicksand(fontSize: 15),
                                                                         ),
                                                                         Padding(
                                                                           padding: EdgeInsetsDirectional.fromSTEB(
@@ -657,7 +656,7 @@ class _Profile_pageState extends State<Profile_page> {
                                                                         Text(
                                                                           'With Kaylene Huchtins',
                                                                           style:
-                                                                              TextStyle(fontSize: 15),
+                                                                              GoogleFonts.quicksand(fontSize: 15),
                                                                         ),
                                                                       ],
                                                                     ),
@@ -734,7 +733,7 @@ class _Profile_pageState extends State<Profile_page> {
                                                                         Text(
                                                                           '4 hour session',
                                                                           style:
-                                                                              TextStyle(fontSize: 15),
+                                                                              GoogleFonts.quicksand(fontSize: 15),
                                                                         ),
                                                                         Padding(
                                                                           padding: EdgeInsetsDirectional.fromSTEB(
@@ -752,7 +751,7 @@ class _Profile_pageState extends State<Profile_page> {
                                                                         Text(
                                                                           '\$500',
                                                                           style:
-                                                                              TextStyle(fontSize: 15),
+                                                                              GoogleFonts.quicksand(fontSize: 15),
                                                                         ),
                                                                       ],
                                                                     ),
@@ -813,7 +812,7 @@ class _Profile_pageState extends State<Profile_page> {
                                                                         Text(
                                                                           '2 Week Intensive',
                                                                           style:
-                                                                              TextStyle(fontSize: 15),
+                                                                              GoogleFonts.quicksand(fontSize: 15),
                                                                         ),
                                                                         Padding(
                                                                           padding: EdgeInsetsDirectional.fromSTEB(
@@ -831,7 +830,7 @@ class _Profile_pageState extends State<Profile_page> {
                                                                         Text(
                                                                           '\$2,000',
                                                                           style:
-                                                                              TextStyle(fontSize: 15),
+                                                                              GoogleFonts.quicksand(fontSize: 15),
                                                                         ),
                                                                       ],
                                                                     ),

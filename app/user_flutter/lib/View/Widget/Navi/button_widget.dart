@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class ButtonWidget extends StatelessWidget {
   final IconData icon;
@@ -28,7 +29,7 @@ class ButtonWidget extends StatelessWidget {
           const SizedBox(width: 16),
           Text(
             text,
-            style: const TextStyle(fontSize: 22, color: Colors.white),
+            style: GoogleFonts.quicksand(fontSize: 22, color: Colors.white),
           ),
         ],
       );
