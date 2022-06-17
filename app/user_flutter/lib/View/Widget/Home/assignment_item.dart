@@ -26,7 +26,7 @@ class AssignmentItem extends StatelessWidget {
           )
         ],
         border: Border.all(color: Color(0xFFdcdcdc), width: 1.3),
-        borderRadius: BorderRadius.circular(8),
+        borderRadius: BorderRadius.circular(15),
       ),
       child: Column(
         children: [
@@ -93,8 +93,8 @@ class AssignmentItem extends StatelessWidget {
             splashColor: AppColor.white.withOpacity(0.05),
             highlightColor: AppColor.white.withOpacity(0.15),
             borderRadius: const BorderRadius.only(
-              bottomLeft: Radius.circular(8),
-              bottomRight: Radius.circular(8),
+              bottomLeft: Radius.circular(15),
+              bottomRight: Radius.circular(15),
             ),
             onTap: () {},
             child: Container(

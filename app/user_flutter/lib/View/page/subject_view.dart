@@ -2,11 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:user_flutter/Model/class_data.dart';
 import 'package:user_flutter/Model/subject.dart';
 import 'package:user_flutter/Model/subject_assignment.dart';
 import 'package:user_flutter/Model/subject_stream.dart';
 import 'package:user_flutter/View/Widget/Bai_kiemtra/showdialog.dart';
+import 'package:user_flutter/View/Widget/Chi_tiet/Popup.dart';
 import 'package:user_flutter/View/Widget/Home/app_icon_buttton.dart';
 import 'package:user_flutter/View/Widget/Home/assignment_item.dart';
 import 'package:user_flutter/View/Widget/Home/stream_item.dart';
@@ -25,6 +27,20 @@ class SubjectView extends StatefulWidget {
 
 class _SubjectViewState extends State<SubjectView> {
   int _activeIndex = 0;
+  bool isGiangvien = false;
+  isGiangVien() async {
+    final SharedPreferences sharedPref = await SharedPreferences.getInstance();
+    setState(() {
+      isGiangvien = (sharedPref.getBool('isGiangVien') ?? false);
+    });
+  }
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    isGiangVien();
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -48,26 +64,28 @@ class _SubjectViewState extends State<SubjectView> {
 
     return SafeArea(
       child: Scaffold(
-        floatingActionButton: _activeIndex == 1
-            ? FloatingActionButton.extended(
-                backgroundColor: AppColor.theme,
-                label: Text(
-                  'Tạo bài tập',
-                  style: GoogleFonts.quicksand(
-                    color: Colors.white,
-                    fontSize: 20,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-                onPressed: () {
-                  showBottomDialog(context);
-                },
-                tooltip: 'Increment',
-                //foregroundColor: Colors.yellow,
-                //backgroundColor: Colors.red,
-                //elevation: 0.0,
-                //shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
-              )
+        floatingActionButton: isGiangvien
+            ? _activeIndex == 1
+                ? FloatingActionButton.extended(
+                    backgroundColor: AppColor.theme,
+                    label: Text(
+                      'Tạo bài tập',
+                      style: GoogleFonts.quicksand(
+                        color: Colors.white,
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    onPressed: () {
+                      showBottomDialog(context);
+                    },
+                    tooltip: 'Increment',
+                    //foregroundColor: Colors.yellow,
+                    //backgroundColor: Colors.red,
+                    //elevation: 0.0,
+                    //shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
+                  )
+                : null
             : null,
         backgroundColor: const Color(0xFFF6F9FE),
         body: Padding(
@@ -98,7 +116,7 @@ class _SubjectViewState extends State<SubjectView> {
                         children: [
                           Text(
                             widget.subject.name,
-                            style: GoogleFonts.quicksand( 
+                            style: GoogleFonts.quicksand(
                               color: AppColor.white,
                               fontSize: 16,
                               fontWeight: FontWeight.w600,
@@ -132,15 +150,7 @@ class _SubjectViewState extends State<SubjectView> {
                           onTap: () {},
                         ),
                         const SizedBox(width: 8),
-                        AppIconButton(
-                          icon: SvgPicture.asset(
-                            "assets/icons/info.svg",
-                            width: 24,
-                            height: 24,
-                            color: AppColor.white,
-                          ),
-                          onTap: () {},
-                        ),
+                        Popupmenu()
                       ],
                     ),
                   ],

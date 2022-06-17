@@ -1,14 +1,14 @@
-class SinhVien {
+class GiangVien {
   String? message;
-  Sinhvien? sinhvien;
+  Giangvien? giangvien;
   String? token;
 
-  SinhVien({this.message, this.sinhvien, this.token});
+  GiangVien({this.message, this.giangvien, this.token});
 
-  SinhVien.fromJson(Map<String, dynamic> json) {
+  GiangVien.fromJson(Map<String, dynamic> json) {
     message = json['message'];
-    sinhvien = json['sinhvien'] != null
-        ? new Sinhvien.fromJson(json['sinhvien'])
+    giangvien = json['giangvien'] != null
+        ? new Giangvien.fromJson(json['giangvien'])
         : null;
     token = json['token'];
   }
@@ -16,51 +16,54 @@ class SinhVien {
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     data['message'] = this.message;
-    if (this.sinhvien != null) {
-      data['sinhvien'] = this.sinhvien!.toJson();
+    if (this.giangvien != null) {
+      data['giangvien'] = this.giangvien!.toJson();
     }
     data['token'] = this.token;
     return data;
   }
 }
 
-class Sinhvien {
+class Giangvien {
   int? id;
-  Null? idLop;
+  Null? idKhoa;
+  int? idChucVu;
   String? email;
   String? password;
-  String? hoTen;
-  String? avt;
-  String? mssv;
+  Null? avt;
+  String? msgv;
   String? sdt;
+  String? hoTen;
   String? ngaySinh;
   int? trangThai;
   String? createdAt;
   String? updatedAt;
 
-  Sinhvien(
+  Giangvien(
       {this.id,
-      this.idLop,
+      this.idKhoa,
+      this.idChucVu,
       this.email,
       this.password,
-      this.hoTen,
       this.avt,
-      this.mssv,
+      this.msgv,
       this.sdt,
+      this.hoTen,
       this.ngaySinh,
       this.trangThai,
       this.createdAt,
       this.updatedAt});
 
-  Sinhvien.fromJson(Map<String, dynamic> json) {
+  Giangvien.fromJson(Map<String, dynamic> json) {
     id = json['id'];
-    idLop = json['id_lop'];
+    idKhoa = json['id_khoa'];
+    idChucVu = json['id_chuc_vu'];
     email = json['email'];
     password = json['password'];
-    hoTen = json['ho_ten'];
     avt = json['avt'];
-    mssv = json['mssv'];
+    msgv = json['msgv'];
     sdt = json['sdt'];
+    hoTen = json['ho_ten'];
     ngaySinh = json['ngay_sinh'];
     trangThai = json['trang_thai'];
     createdAt = json['created_at'];
@@ -70,13 +73,14 @@ class Sinhvien {
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     data['id'] = this.id;
-    data['id_lop'] = this.idLop;
+    data['id_khoa'] = this.idKhoa;
+    data['id_chuc_vu'] = this.idChucVu;
     data['email'] = this.email;
     data['password'] = this.password;
-    data['ho_ten'] = this.hoTen;
     data['avt'] = this.avt;
-    data['mssv'] = this.mssv;
+    data['msgv'] = this.msgv;
     data['sdt'] = this.sdt;
+    data['ho_ten'] = this.hoTen;
     data['ngay_sinh'] = this.ngaySinh;
     data['trang_thai'] = this.trangThai;
     data['created_at'] = this.createdAt;

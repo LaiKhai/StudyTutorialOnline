@@ -89,8 +89,8 @@ class StreamItem extends StatelessWidget {
             splashColor: AppColor.white.withOpacity(0.05),
             highlightColor: AppColor.white.withOpacity(0.15),
             borderRadius: const BorderRadius.only(
-              bottomLeft: Radius.circular(8),
-              bottomRight: Radius.circular(8),
+              bottomLeft: Radius.circular(15),
+              bottomRight: Radius.circular(15),
             ),
             onTap: () {},
             child: Container(

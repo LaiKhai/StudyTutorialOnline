@@ -35,7 +35,7 @@ class Login {
       final jsonResponse = SinhVien.fromJson(json.decode(response.body));
       final SharedPreferences sharedPref =
           await SharedPreferences.getInstance();
-      sharedPref.setString('token', jsonResponse.token);
+      sharedPref.setString('token', jsonResponse.token!);
       Future<String?> token = Login().getToken();
       Navigator.of(context).pushAndRemoveUntil(
           MaterialPageRoute(builder: (context) => Navigator_page()),

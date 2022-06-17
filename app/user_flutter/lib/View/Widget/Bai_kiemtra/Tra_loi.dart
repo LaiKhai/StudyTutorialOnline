@@ -55,7 +55,6 @@ class _Tra_LoiState extends State<Tra_Loi> {
               child: Text(
                 'File đính kèm',
                 style: GoogleFonts.quicksand(
-                  
                   color: Color(0xFF14181B),
                   fontSize: 20,
                   fontWeight: FontWeight.w500,
@@ -118,7 +117,6 @@ class _Tra_LoiState extends State<Tra_Loi> {
                                   Text(
                                     'Item Name',
                                     style: GoogleFonts.quicksand(
-                                   
                                       color: Color(0xFF14181B),
                                       fontSize: 16,
                                       fontWeight: FontWeight.w500,
@@ -143,15 +141,17 @@ class _Tra_LoiState extends State<Tra_Loi> {
                             ),
                           ),
                           InkWell(
-                            onTap: () {},
-                            child: Text(
-                              'X',
-                              style: GoogleFonts.quicksand(
-                                  color: Color(0xFF57636C),
-                                  fontSize: 20,
-                                  fontWeight: FontWeight.bold),
-                            ),
-                          )
+                              onTap: () {
+                                listFile.removeAt(index);
+                                setState(() {
+                                  listFile; 
+                                });
+                              },
+                              child: Icon(
+                                Icons.close,
+                                color: Color(0xFF57636C),
+                                size: 25,
+                              ))
                         ],
                       ),
                     ),

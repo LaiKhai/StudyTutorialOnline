@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:user_flutter/Model/Gianvien.dart';
 import 'package:user_flutter/Model/sinhVien.dart';
 import 'package:user_flutter/View/common/constant/color.dart';
 import 'package:user_flutter/View/page/NaviGa.dart';
@@ -23,19 +24,34 @@ class Login {
   }
 
 //--------------------------- Đăng Nhập Sinh Viên ------------------------------------//
-  Future<void> login(
-      String email, String password, BuildContext context) async {
-    String url = urlLoginSinhVien;
+  Future<void> login(String email, String password, BuildContext context,
+      bool giangVien) async {
+    String url;
+    if (giangVien == false) {
+      url = urlLoginSinhVien;
+    } else {
+      url = urlLoginGiangVien;
+    }
+
     Map body = {'email': email, 'password': password};
 
     var response = await http.post(Uri.parse(url),
         headers: <String, String>{'Accept': 'application/json'}, body: body);
 
     if (response.statusCode == 200) {
-      final jsonResponse = SinhVien.fromJson(json.decode(response.body));
+      print(response.body);
+      final jsonResponse;
+      if (giangVien == false) {
+        jsonResponse = SinhVien.fromJson(json.decode(response.body));
+      } else {
+        jsonResponse = GiangVien.fromJson(json.decode(response.body));
+      }
+
       final SharedPreferences sharedPref =
           await SharedPreferences.getInstance();
-      sharedPref.setString('token', jsonResponse.token);
+
+      sharedPref.setBool('isGiangVien', giangVien);
+      sharedPref.setString('token', jsonResponse.token!);
       Future<String?> token = Login().getToken();
       Navigator.of(context).pushAndRemoveUntil(
           MaterialPageRoute(builder: (context) => Navigator_page()),
@@ -47,12 +63,11 @@ class Login {
             return AlertDialog(
               content: Text(
                 'Kiểm tra lại email hoặc password !',
-                style: ggTextStyle(
-                    16, FontWeight.normal, AppColor.black),
+                style: ggTextStyle(16, FontWeight.normal, AppColor.black),
               ),
               title: Row(
                 children: [
-                  Icon(
+                  const Icon(
                     Icons.warning_rounded,
                     color: AppColor.green,
                   ),
@@ -60,8 +75,7 @@ class Login {
                     width: 10,
                   ),
                   Text('Thông báo',
-                      style: ggTextStyle(
-                          15, FontWeight.bold, AppColor.green))
+                      style: ggTextStyle(15, FontWeight.bold, AppColor.green))
                 ],
               ),
               actions: [
@@ -71,8 +85,7 @@ class Login {
                     },
                     child: Text(
                       'OK',
-                      style: ggTextStyle(
-                          15, FontWeight.bold, AppColor.green),
+                      style: ggTextStyle(15, FontWeight.bold, AppColor.green),
                     ))
               ],
             );

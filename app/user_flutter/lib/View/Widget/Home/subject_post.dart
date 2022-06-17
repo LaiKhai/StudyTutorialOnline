@@ -21,7 +21,7 @@ class SubjectPost extends StatelessWidget {
           )
         ],
         border: Border.all(color: Color(0xFFdcdcdc), width: 1.3),
-        borderRadius: BorderRadius.circular(8),
+        borderRadius: BorderRadius.circular(15),
       ),
       child: InkWell(
         onTap: () {

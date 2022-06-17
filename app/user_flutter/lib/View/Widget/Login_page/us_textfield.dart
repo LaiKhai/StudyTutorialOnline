@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:user_flutter/Model_View/login.dart';
 import 'package:user_flutter/View/common/constant/dimen.dart';
 import 'package:user_flutter/View/page/NaviGa.dart';
 
@@ -16,11 +17,11 @@ class US_TextField_Login extends StatefulWidget {
 class _US_TextField_LoginState extends State<US_TextField_Login> {
   TextEditingController _emailController = TextEditingController();
   TextEditingController _passwordController = TextEditingController();
-
-  bool isHidenPassword = true;
+  bool checkboxListTileValue = true;
+  bool isGiangVien = true;
   void _toggleButtonViewPassword() {
     setState(() {
-      isHidenPassword = !isHidenPassword;
+      isGiangVien = !isGiangVien;
     });
   }
 
@@ -48,6 +49,7 @@ class _US_TextField_LoginState extends State<US_TextField_Login> {
               ),
             ),
           ),
+// Generated code for this CheckboxListTile Widget...
 
           Container(
             padding: const EdgeInsets.only(top: 40),
@@ -76,11 +78,11 @@ class _US_TextField_LoginState extends State<US_TextField_Login> {
             ),
           ),
           Container(
-            padding: const EdgeInsets.fromLTRB(0, 10, 0, 60),
+            padding: const EdgeInsets.fromLTRB(0, 10, 0, 10),
             child: TextField(
               controller: _passwordController,
               style: GoogleFonts.quicksand(color: US_APP_WHITE, fontSize: 15),
-              obscureText: isHidenPassword,
+              obscureText: isGiangVien,
               keyboardType: TextInputType.visiblePassword,
               decoration: InputDecoration(
                 enabledBorder: UnderlineInputBorder(
@@ -98,7 +100,7 @@ class _US_TextField_LoginState extends State<US_TextField_Login> {
                 suffix: InkWell(
                   onTap: _toggleButtonViewPassword,
                   child: Icon(
-                    isHidenPassword ? Icons.visibility : Icons.visibility_off,
+                    isGiangVien ? Icons.visibility : Icons.visibility_off,
                     color: US_APP_WHITE,
                     size: 20,
                   ),
@@ -109,25 +111,28 @@ class _US_TextField_LoginState extends State<US_TextField_Login> {
               ),
             ),
           ),
+          Theme(
+            data: ThemeData(
+              unselectedWidgetColor: Color(0xFF95A1AC),
+            ),
+            child: CheckboxListTile(
+              value: checkboxListTileValue,
+              onChanged: (newValue) => setState(
+                  () => checkboxListTileValue = !checkboxListTileValue),
+              title: Text(
+                'Bạn là giảng viên',
+                style: GoogleFonts.quicksand(color: Colors.white),
+              ),
+              tileColor: Color(0xFFF5F5F5),
+              activeColor: US_APP_COLOR,
+              dense: false,
+              controlAffinity: ListTileControlAffinity.trailing,
+            ),
+          ),
+
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              // Container(
-              //   height: 55,
-              //   width: 142,
-              //   child: OutlinedButton(
-              //     onPressed: () {},
-              //     child: Text(
-              //       "Đăng ký",
-              //       style: GoogleFonts.quicksand(color: US_APP_WHITE),
-              //     ),
-              //     style: OutlinedButton.styleFrom(
-              //         shape: RoundedRectangleBorder(
-              //             borderRadius: BorderRadius.circular(30)),
-              //         side: BorderSide(color: US_APP_WHITE)),
-              //   ),
-              // ),
-
               SizedBox(
                 height: 55,
                 width: getWidthSize(context) * 2 / 3,
@@ -137,8 +142,9 @@ class _US_TextField_LoginState extends State<US_TextField_Login> {
                         MaterialPageRoute(
                             builder: (context) => Navigator_page()),
                         (route) => false);
+
                     // Login().login(_emailController.text,
-                    //     _passwordController.text, context);
+                    //     _passwordController.text, context, isGiangVien);
                   },
                   child: const Text("Đăng nhập"),
                   style: ElevatedButton.styleFrom(
@@ -150,64 +156,6 @@ class _US_TextField_LoginState extends State<US_TextField_Login> {
               )
             ],
           ),
-          // Container(
-          //   padding: EdgeInsets.fromLTRB(0, 40, 0, 40),
-          //   child: Text(
-          //     "Hoặc qua mạng xã hội",
-          //     style: GoogleFonts.quicksand(color: Colors.white),
-          //   ),
-          // ),
-          // // Row(
-          //   mainAxisAlignment: MainAxisAlignment.center,
-          //   children: [
-          //     ElevatedButton(
-          //         onPressed: () {},
-          //         style: ElevatedButton.styleFrom(
-          //             primary: Color.fromRGBO(0, 0, 0, 0),
-          //             onPrimary: Color.fromRGBO(0, 0, 0, 0)),
-          //         child: Column(
-          //           children: [
-          //             Container(
-          //               padding: EdgeInsets.only(bottom: 10),
-          //               child: Icon(
-          //                 Icons.facebook,
-          //                 color: Color.fromARGB(255, 38, 112, 223),
-          //                 size: 50,
-          //               ),
-          //             ),
-          //             Container(
-          //               child: Text(
-          //                 'Facebook',
-          //                 style: GoogleFonts.quicksand(color: Colors.white),
-          //               ),
-          //             )
-          //           ],
-          //         )),
-          //     ElevatedButton(
-          //         onPressed: () {},
-          //         style: ElevatedButton.styleFrom(
-          //             primary: Color.fromRGBO(0, 0, 0, 0),
-          //             onPrimary: Color.fromRGBO(0, 0, 0, 0)),
-          //         child: Column(
-          //           children: [
-          //             Container(
-          //                 width: 50,
-          //                 height: 50,
-          //                 padding: EdgeInsets.only(bottom: 10),
-          //                 child: Image.asset(
-          //                   'assets/images/ic_google_app.png',
-          //                   fit: BoxFit.contain,
-          //                 )),
-          //             Container(
-          //               child: Text(
-          //                 'Google',
-          //                 style: GoogleFonts.quicksand(color: Colors.white),
-          //               ),
-          //             )
-          //           ],
-          //         ))
-          //   ],
-          // )
         ],
       ),
     );
