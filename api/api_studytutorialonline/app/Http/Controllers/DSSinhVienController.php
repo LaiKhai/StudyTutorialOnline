@@ -20,6 +20,11 @@ class DSSinhVienController extends Controller
      */
     public function index()
     {
+        $lstDSSV = DS_SinhVien::all();
+        $response = [
+            'dssv' => $lstDSSV
+        ];
+        return response()->json($response, 200);
     }
 
     /**

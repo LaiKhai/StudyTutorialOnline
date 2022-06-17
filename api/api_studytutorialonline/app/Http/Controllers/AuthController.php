@@ -115,7 +115,7 @@ class AuthController extends Controller
     //                           API Đăng nhập
     //----------------------------------------------------------//
 
-    public function dangNhapSinhVien(Request $request)
+    public function loginUser(Request $request)
     {
         $input['email'] = $request->input('email');
         $input['password'] = $request->input('password');
@@ -131,51 +131,41 @@ class AuthController extends Controller
             return response()->json($response, 404);
         }
         $sinhVien = SinhVien::where('email', $input['email'])->first();
-
-        if (!$sinhVien || !Hash::check($input['password'], $sinhVien->password)) {
-            return response(['message' => 'tai khoan hoac mat khau sai'], 401);
-        } else {
-            $this->FixImgSV($sinhVien);
-            $token = $sinhVien->createToken('TokenSinhVien')->plainTextToken;
-            $response =
-                [
-                    'message' => 'Dang Nhap Thanh Cong !',
-                    'sinhvien' => $sinhVien,
-                    'token' => $token
-                ];
-            return response()->json($response, 200);
-        }
-    }
-
-    public function dangNhapGiangVien(Request $request)
-    {
-        $input['email'] = $request->input('email');
-        $input['password'] = $request->input('password');
-        $validator = Validator::make($input, [
-            'email' => ['required', 'max:255', 'regex:/(.*)@caothang\.edu.vn/i'],
-            'password' => 'required'
-        ]);
-        if ($validator->fails()) {
-            if (!empty($validator->errors())) {
-                $response['data'] = $validator->errors();
-            }
-            $response['message'] = 'Vaidator Error';
-            return response()->json($response, 404);
-        }
         $giangVien = GiangVien::where('email', $input['email'])->first();
 
-        if (!$giangVien || !Hash::check($input['password'], $giangVien->password)) {
-            return response(['message' => 'tai khoan hoac mat khau sai'], 401);
+        if ($sinhVien == null && $giangVien == null) {
+            $response = [
+                'message' => 'tai khoan khong ton tai !'
+            ];
+            return response()->json($response, 404);
+        } else if ($giangVien != null) {
+            if (!$giangVien || !Hash::check($input['password'], $giangVien->password)) {
+                return response(['message' => 'tai khoan hoac mat khau sai'], 401);
+            } else {
+                $this->FixImgGV($giangVien);
+                $token = $giangVien->createToken('TokenSinhVien')->plainTextToken;
+                $response =
+                    [
+                        'message' => 'Dang Nhap Thanh Cong !',
+                        'giangvien' => $giangVien,
+                        'token' => $token
+                    ];
+                return response()->json($response, 200);
+            }
         } else {
-            $this->FixImgGV($giangVien);
-            $token = $giangVien->createToken('TokenGiangVien')->plainTextToken;
-            $response =
-                [
-                    'message' => 'Dang Nhap Thanh Cong !',
-                    'giangvien' => $giangVien,
-                    'token' => $token
-                ];
-            return response()->json($response, 200);
+            if (!$sinhVien || !Hash::check($input['password'], $sinhVien->password)) {
+                return response(['message' => 'tai khoan hoac mat khau sai'], 401);
+            } else {
+                $this->FixImgSV($sinhVien);
+                $token = $sinhVien->createToken('TokenSinhVien')->plainTextToken;
+                $response =
+                    [
+                        'message' => 'Dang Nhap Thanh Cong !',
+                        'sinhvien' => $sinhVien,
+                        'token' => $token
+                    ];
+                return response()->json($response, 200);
+            }
         }
     }
 

@@ -17,10 +17,11 @@ class CreateGiangViensTable extends Migration
             $table->id();
             $table->foreignId('id_khoa')->nullable();
             $table->foreignId('id_chuc_vu');
-            $table->string('email');
-            $table->string('password');
+            $table->foreignId('id_lop')->nullable();
+            $table->string('email')->unique();
+            $table->string('password')->unique();
             $table->string('avt')->nullable();
-            $table->string('msgv');
+            $table->string('ma_so');
             $table->string('sdt');
             $table->string('ho_ten');
             $table->date('ngay_sinh');

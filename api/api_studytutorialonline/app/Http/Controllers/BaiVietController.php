@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\BaiViet;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 
 
 class BaiVietController extends Controller
@@ -15,7 +16,8 @@ class BaiVietController extends Controller
      */
     public function index()
     {
-        //
+        $lstBaiViet = BaiViet::all();
+        return response()->json($lstBaiViet, 200);
     }
 
     /**
@@ -36,6 +38,29 @@ class BaiVietController extends Controller
      */
     public function store(Request  $request)
     {
+        $input['id_lop_hoc_phan'] = $request->input('id_lop_hoc_phan');
+        $input['id_loai_bai_viet'] = $request->input('id_loai_bai_viet');
+        $input['noi_dung'] = $request->input('noi_dung');
+        $input['trang_thai'] = 1;
+        $validator = Validator::make($input, [
+            'id_lop_hoc_phan' => ['required', 'max:255', 'integer'],
+            'id_loai_bai_viet' => ['required', 'max:255', 'integer'],
+            'noi_dung' => ['required', 'string'],
+            'trang_thai' => ['required', 'max:255', 'integer']
+        ]);
+        if ($validator->fails()) {
+            if (!empty($validator->errors())) {
+                $response['data'] = $validator->errors();
+            }
+            $response['message'] = 'Vaidator Error';
+            return response()->json($response, 404);
+        }
+        $baiViet = BaiViet::created($input);
+        $response = [
+            'message' => 'them thanh cong !',
+            'baiviet' => $baiViet
+        ];
+        return response()->json($response, 200);
     }
 
     /**
