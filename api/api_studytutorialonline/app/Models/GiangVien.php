@@ -23,7 +23,7 @@ class GiangVien extends Model
         'email',
         'password',
         'avt',
-        'msgv',
+        'ma_so',
         'sdt',
         'ho_ten',
         'ngay_sinh',

@@ -47,7 +47,7 @@ class BoMonController extends Controller
         $input['id_khoa'] = $request->input('id_khoa');
         $input['ten_mon_hoc'] = $request->input('ten_mon_hoc');
         $input['loai_mon_hoc'] = $request->input('loai_mon_hoc');
-        $input['trang_thai'] = $request->input('trang_thai');
+        $input['trang_thai'] = 1;
         $validator = Validator::make($input, [
             'id_khoa' => ['required', 'max:255', 'integer'],
             'ten_mon_hoc' => ['required', 'max:255', 'string'],

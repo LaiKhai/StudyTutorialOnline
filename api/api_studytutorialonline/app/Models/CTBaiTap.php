@@ -16,7 +16,9 @@ class CTBaiTap extends Model
     protected $fillable = [
         'id_sinh_vien',
         'id_bai_tap',
+        'id_file',
         'id_lop_hoc_phan',
+        'noi_dung',
         'tg_nop_bai',
         'trang_thai'
     ];

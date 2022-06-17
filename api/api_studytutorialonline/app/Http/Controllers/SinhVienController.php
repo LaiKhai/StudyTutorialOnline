@@ -52,7 +52,7 @@ class SinhVienController extends Controller
         $input['email'] = $request->input('email');
         $input['password'] = Hash::make($request->input('password'));
         $input['ho_ten'] = $request->input('ho_ten');
-        $input['mssv'] = $request->input('mssv');
+        $input['ma_so'] = $request->input('ma_so');
         $input['sdt'] = $request->input('sdt');
         $input['ngay_sinh'] = $request->input('ngay_sinh');
         $input['trang_thai'] = 1;
@@ -61,7 +61,7 @@ class SinhVienController extends Controller
             'email' => ['required', 'max:255', 'email:rfc,dns', 'unique:sinh_viens,email', 'regex:/(.*)@caothang\.edu.vn/i'],
             'password' => 'required|max:255',
             'ho_ten' => 'required|max:255|string',
-            'mssv' => 'required|max:255|string',
+            'ma_so' => 'required|max:255|string',
             'sdt' => 'required|max:255|string',
             'ngay_sinh' => 'required|max:255',
         ]);
@@ -121,7 +121,7 @@ class SinhVienController extends Controller
             'email' => $request->input('email'),
             'password' => $request->input('password'),
             'ho_ten' => $request->input('ho_ten'),
-            'mssv' => $request->input('mssv'),
+            'ma_so' => $request->input('ma_so'),
             'sdt' => $request->input('sdt'),
             'ngay_sinh' => $request->input('ngay_sinh'),
             'trang_thai' => $request->input('trang_thai'),

@@ -22,7 +22,7 @@ class SinhVienImport implements ToModel, WithHeadingRow
             'id_lop' => $lop,
             'email' => $row['mssv'] . '@caothang.edu.vn',
             'password' => Hash::make($row['mssv']),
-            'mssv' => $row['mssv'],
+            'ma_so' => $row['mssv'],
             'ho_ten' => $row['ho_ten'],
             'ngay_sinh' => date('Y-m-d', $row['ngay_sinh']),
             'sdt' => $row['sdt'],

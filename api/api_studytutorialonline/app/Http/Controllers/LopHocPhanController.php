@@ -53,11 +53,9 @@ class LopHocPhanController extends Controller
     public function store(Request $request)
     {
         $input['id_bo_mon'] = $request->input('id_bo_mon');
-        $input['id_lop'] = $request->input('id_lop');
         $input['trang_thai'] = $request->input('trang_thai');
         $validator = Validator::make($input, [
             'id_bo_mon' => ['required', 'max:255', 'integer'],
-            'id_lop' => ['required', 'max:255', 'integer'],
             'trang_thai' => ['required', 'max:255', 'integer'],
         ]);
         if ($validator->fails()) {
