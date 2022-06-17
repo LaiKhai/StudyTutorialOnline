@@ -71,7 +71,14 @@ class BaiVietController extends Controller
      */
     public function show($id)
     {
-        //
+        $baiViet = BaiViet::find($id);
+        if (empty($baiViet)) {
+            return response()->json(['message' => 'khong tim thay bai viet !'], 404);
+        }
+        $response = [
+            'baiviet' => $baiViet
+        ];
+        return response()->json($response, 200);
     }
 
     /**
@@ -94,7 +101,22 @@ class BaiVietController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $baiViet = BaiViet::find($id);
+        if (empty($baiViet)) {
+            return response()->json(['message' => 'khong tim thay bai viet !'], 404);
+        }
+        $baiViet->fill([
+            'id_lop_hoc_phan' => $request->input('id_lop_hoc_phan'),
+            'id_loai_bai_viet' => $request->input('id_loai_bai_viet'),
+            'noi_dung' => $request->input('noi_dung'),
+            'trang_thai' => $request->input('trang_thai'),
+        ]);
+        $baiViet->save();
+        $response = [
+            'message' => 'chinh sua thanh cong !',
+            'khoa' => $baiViet
+        ];
+        return response()->json($response, 200);
     }
 
     /**
