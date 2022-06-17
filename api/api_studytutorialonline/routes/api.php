@@ -28,7 +28,7 @@ use App\Http\Controllers\DSSinhVienController;
 
 Route::post('dksv', [AuthController::class, 'dangKySinhVien']);
 Route::post('dkgv', [AuthController::class, 'dangKyGiangVien']);
-Route::post('dnsv', [AuthController::class, 'dangNhapSinhVien']);
+Route::post('login', [AuthController::class, 'loginUser']);
 Route::post('dngv', [AuthController::class, 'dangNhapGiangVien']);
 Route::post('admin', [AuthController::class, 'dangNhapAdmin']);
 Route::post('/sinhvien/import', [SinhVienController::class, 'import']);
@@ -36,6 +36,9 @@ Route::post('/sinhvien/import', [SinhVienController::class, 'import']);
 Route::get('/lop/lstWithIdSV', [LopController::class, 'LstLopWithIdSV']);
 //Tao Danh sach sinh vien auto
 Route::get('/dssv/createDSSV', [DSSinhVienController::class, 'createDSSVWithSinhVien']);
+//Lay danh sach lop hoc phan theo id sinh vien
+Route::get('/lophocphanwithsinhvien/{id}', [SinhVienController::class, 'detailLopHocPhan']);
+
 Route::apiResource('chucvu', ChucVuController::class);
 Route::apiResource('sinhvien', SinhVienController::class);
 Route::apiResource('giangvien', GiangVienController::class);

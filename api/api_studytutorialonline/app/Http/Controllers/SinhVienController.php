@@ -95,15 +95,11 @@ class SinhVienController extends Controller
     public function show($id)
     {
         $sinhVien = SinhVien::find($id);
-        $lopHocPhan = DS_SinhVien::join('lop_hoc_phans', 'ds_sinh_viens.id_lop_hoc_phan', '=', 'lop_hoc_phans.id')
-            ->where('ds_sinh_viens.id_sinh_vien', $id)
-            ->select('ds_sinh_viens.id_sinh_vien', 'lop_hoc_phans.*')->get();
         $this->FixImg($sinhVien);
         $sinhVien->traloi;
         $sinhVien->ctbaitap;
         $response = [
             'sinhvien' => $sinhVien,
-            'lophocphan' => $lopHocPhan
         ];
         return response()->json($response, 200);
     }
@@ -176,6 +172,23 @@ class SinhVienController extends Controller
         $response = [
             'message' => 'them thanh cong !',
             'sinhvien' => $lstSinhVien
+        ];
+        return response()->json($response, 200);
+    }
+
+    /**
+     * Display the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function detailLopHocPhan($id)
+    {
+        $lopHocPhan = DS_SinhVien::join('lop_hoc_phans', 'ds_sinh_viens.id_lop_hoc_phan', '=', 'lop_hoc_phans.id')
+            ->where('ds_sinh_viens.id_sinh_vien', $id)
+            ->select('ds_sinh_viens.id_sinh_vien', 'lop_hoc_phans.*')->get();
+        $response = [
+            'lophocphan' => $lopHocPhan
         ];
         return response()->json($response, 200);
     }

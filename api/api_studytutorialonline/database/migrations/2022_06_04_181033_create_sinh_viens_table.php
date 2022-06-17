@@ -15,13 +15,15 @@ class CreateSinhViensTable extends Migration
     {
         Schema::create('sinh_viens', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('id_lop')->nullable();
+            $table->foreignId('id_khoa')->nullable();
+            $table->foreignId('id_chuc_vu')->nullable();
+            $table->foreignId('id_lop');
             $table->string('email')->unique();
             $table->string('password')->unique();
-            $table->string('ho_ten');
             $table->string('avt')->nullable();
-            $table->string('mssv');
+            $table->string('ma_so');
             $table->string('sdt');
+            $table->string('ho_ten');
             $table->date('ngay_sinh');
             $table->integer('trang_thai');
             $table->timestamps();
