@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Imports\DSSVImport;
 use App\Models\DS_SinhVien;
-use App\Models\Lop;
+use Maatwebsite\Excel\Facades\Excel;
 use App\Models\SinhVien;
+use App\Models\LopHocPhan;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
@@ -18,7 +20,6 @@ class DSSinhVienController extends Controller
      */
     public function index()
     {
-        //
     }
 
     /**
@@ -90,17 +91,15 @@ class DSSinhVienController extends Controller
     public function createDSSVWithSinhVien()
     {
         $sinhVien = SinhVien::all();
+        $lopHocPhan = LopHocPhan::max('id');
         foreach ($sinhVien as $item) {
             $input['id_sinh_vien'] = $item->id;
-            $input['id_lop_hoc_phan'] = $item->lop->lophocphan->id;
-            $input['id_lop'] = $item->lop->id;
+            $input['id_lop'] = $item->id_lop;
+            $input['id_lop_hoc_phan'] = $lopHocPhan;
             $input['trang_thai'] = 1;
-            $dsSinhVien = DS_SinhVien::created($input);
+            DS_SinhVien::create($input);
         }
-        $response = [
-            'message' => 'them thanh cong !',
-            'danhsachsinhvien' => $dsSinhVien
-        ];
-        return response()->json($response, 200);
+        $lstdssv = DS_SinhVien::all();
+        return response()->json($lstdssv, 200);
     }
 }

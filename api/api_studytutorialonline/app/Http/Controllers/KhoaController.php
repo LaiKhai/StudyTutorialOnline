@@ -42,7 +42,7 @@ class KhoaController extends Controller
     public function store(Request $request)
     {
         $input['ten_khoa'] = $request->input('ten_khoa');
-        $input['trang_thai'] = $request->input('trang_thai');
+        $input['trang_thai'] = 1;
         $validator = Validator::make($input, [
             'ten_khoa' => ['required', 'max:255', 'string'],
             'trang_thai' => ['required', 'max:255', 'integer'],

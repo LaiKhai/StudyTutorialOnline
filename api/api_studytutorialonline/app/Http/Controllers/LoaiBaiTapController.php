@@ -39,7 +39,7 @@ class LoaiBaiTapController extends Controller
     public function store(Request $request)
     {
         $input['ten_loai'] = $request->input('ten_loai');
-        $input['trang_thai'] = $request->input('trang_thai');
+        $input['trang_thai'] = 1;
         $validator = Validator::make($input, [
             'ten_loai' => ['required', 'string', 'max:255'],
             'trang_thai' => ['required', 'integer']
