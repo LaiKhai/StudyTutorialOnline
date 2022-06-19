@@ -58,7 +58,7 @@ class GiangVienController extends Controller
         $input['email'] = $request->input('email');
         $input['password'] = Hash::make($request->input('password'));
         $input['ho_ten'] = $request->input('ho_ten');
-        $input['msgv'] = $request->input('msgv');
+        $input['ma_so'] = $request->input('ma_so');
         $input['sdt'] = $request->input('sdt');
         $input['ngay_sinh'] = $request->input('ngay_sinh');
         $input['id_chuc_vu'] = $request->input('id_chuc_vu');
@@ -68,7 +68,7 @@ class GiangVienController extends Controller
             'email' => ['required', 'max:255', 'email:rfc,dns', 'unique:sinh_viens,email', 'regex:/(.*)@caothang\.edu.vn/i'],
             'password' => ['required', 'max:255'],
             'ho_ten' => ['required', 'max:255,string'],
-            'msgv' => ['required', 'max:255', 'string'],
+            'ma_so' => ['required', 'max:255', 'string'],
             'sdt' => ['required', 'max:255', 'string'],
             'ngay_sinh' => ['required', 'max:255', 'date'],
             'id_chuc_vu' => ['required', 'max:255', 'integer'],
@@ -138,17 +138,17 @@ class GiangVienController extends Controller
         if (empty($giangVien)) {
             return response()->json(['message' => ' Khong tim thay giang vien nao !', 404]);
         }
-        $giangVien->fill([
-            'id_khoa' => $request->input('id_khoa'),
-            'id_chuc_vu' => $request->input('id_chuc_vu'),
-            'email' => $request->input('email'),
-            'password' => $request->input('password'),
-            'msgv' => $request->input('msgv'),
-            'sdt' => $request->input('sdt'),
-            'ho_ten' => $request->input('ho_ten'),
-            'ngay_sinh' => $request->input('ngay_sinh'),
-            'trang_thai' => $request->input('trang_thai')
-        ]);
+            $giangVien->fill([
+                'id_khoa' => $request->input('id_khoa'),
+                'id_chuc_vu' => $request->input('id_chuc_vu'),
+                'email' => $request->input('email'),
+                'password' => $request->input('password'),
+                'ma_so' => $request->input('ma_so'),
+                'sdt' => $request->input('sdt'),
+                'ho_ten' => $request->input('ho_ten'),
+                'ngay_sinh' => $request->input('ngay_sinh'),
+                'trang_thai' => $request->input('trang_thai')
+            ]);
         if ($request->hasFile('avt')) {
             $giangVien['avt'] = $request->file('avt')->store('assets/images/avatar/' . $giangVien['id'], 'public');
         }
@@ -168,17 +168,17 @@ class GiangVienController extends Controller
      */
     public function destroy($id)
     {
-        $giangVien = GiangVien::find($id);
-        if (empty($giangVien)) {
-            $response = ['message' => 'khong tim thay giang vien nao !'];
-            return response()->json($response, 404);
-        }
-        $giangVien->delete();
-        $lstGiangVien = GiangVien::all();
-        $response = [
-            'message' => 'xoa thanh cong !',
-            'sinhvien' => $lstGiangVien
-        ];
-        return response()->json($response, 200);
+            $giangVien = GiangVien::find($id);
+            if (empty($giangVien)) {
+                $response = ['message' => 'khong tim thay giang vien nao !'];
+                return response()->json($response, 404);
+            }
+            $giangVien->delete();
+            $lstGiangVien = GiangVien::all();
+            $response = [
+                'message' => 'xoa thanh cong !',
+                'sinhvien' => $lstGiangVien
+            ];
+            return response()->json($response, 200);
     }
 }

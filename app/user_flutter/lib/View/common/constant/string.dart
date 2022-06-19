@@ -7,8 +7,7 @@ TextStyle ggTextStyle(double? size, FontWeight? fweight, Color? color) {
       fontSize: size, fontWeight: fweight, color: color);
 }
 
-const String Link = 'http://192.168.1.3:8000';
+const String Link = 'http://210.2.86.140';
 const Key centerKey = ValueKey<String>('bottom-sliver-list');
-const String urlLoginSinhVien = '$Link/api/dnsv';
-const String urlLoginGiangVien = '$Link//api/dngv';
+const String urlLogin = '$Link/api/login';
 const String getClass = '$Link//api/lop';

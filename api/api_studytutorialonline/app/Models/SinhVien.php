@@ -22,7 +22,7 @@ class SinhVien extends Model
         'password',
         'ho_ten',
         'avt',
-        'mssv',
+        'ma_so',
         'sdt',
         'ngay_sinh',
         'trang_thai'

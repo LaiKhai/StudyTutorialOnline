@@ -37,7 +37,7 @@ class AuthController extends Controller
         $input['email'] = $request->input('email');
         $input['password'] = Hash::make($request->input('password'));
         $input['ho_ten'] = $request->input('ho_ten');
-        $input['mssv'] = $request->input('mssv');
+        $input['ma_so'] = $request->input('ma_so');
         $input['sdt'] = $request->input('sdt');
         $input['ngay_sinh'] = $request->input('ngay_sinh');
         $input['trang_thai'] = 1;
@@ -45,7 +45,7 @@ class AuthController extends Controller
             'email' => ['required', 'max:255', 'email:rfc,dns', 'unique:sinh_viens,email', 'regex:/(.*)@caothang\.edu.vn/i'],
             'password' => 'required|max:255',
             'ho_ten' => 'required|max:255|string',
-            'mssv' => 'required|max:255|string',
+            'ma_so' => 'required|max:255|string',
             'sdt' => 'required|max:255|string',
             'ngay_sinh' => 'required|max:255',
         ]);
@@ -77,7 +77,7 @@ class AuthController extends Controller
         $input['email'] = $request->input('email');
         $input['password'] = Hash::make($request->input('password'));
         $input['ho_ten'] = $request->input('ho_ten');
-        $input['msgv'] = $request->input('msgv');
+        $input['ma_so'] = $request->input('ma_so');
         $input['sdt'] = $request->input('sdt');
         $input['ngay_sinh'] = $request->input('ngay_sinh');
         $input['id_chuc_vu'] = $request->input('id_chuc_vu');
@@ -86,7 +86,7 @@ class AuthController extends Controller
             'email' => ['required', 'max:255', 'email:rfc,dns', 'unique:sinh_viens,email', 'regex:/(.*)@caothang\.edu.vn/i'],
             'password' => 'required|max:255',
             'ho_ten' => 'required|max:255|string',
-            'msgv' => 'required|max:255|string',
+            'ma_so' => 'required|max:255|string',
             'sdt' => 'required|max:255|string',
             'ngay_sinh' => 'required|max:255|date',
             'id_chuc_vu' => 'required|max:255|integer',
@@ -147,7 +147,7 @@ class AuthController extends Controller
                 $response =
                     [
                         'message' => 'Dang Nhap Thanh Cong !',
-                        'giangvien' => $giangVien,
+                        'user' => $giangVien,
                         'token' => $token
                     ];
                 return response()->json($response, 200);
@@ -161,7 +161,7 @@ class AuthController extends Controller
                 $response =
                     [
                         'message' => 'Dang Nhap Thanh Cong !',
-                        'sinhvien' => $sinhVien,
+                        'user' => $sinhVien,
                         'token' => $token
                     ];
                 return response()->json($response, 200);

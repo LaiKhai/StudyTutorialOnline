@@ -138,13 +138,13 @@ class _US_TextField_LoginState extends State<US_TextField_Login> {
                 width: getWidthSize(context) * 2 / 3,
                 child: ElevatedButton(
                   onPressed: () {
-                    Navigator.of(context).pushAndRemoveUntil(
-                        MaterialPageRoute(
-                            builder: (context) => Navigator_page()),
-                        (route) => false);
-
-                    // Login().login(_emailController.text,
-                    //     _passwordController.text, context, isGiangVien);
+                    // Navigator.of(context).pushAndRemoveUntil(
+                    //     MaterialPageRoute(
+                    //         builder: (context) => Navigator_page()),
+                    //     (route) => false);
+               
+                    Login().login(_emailController.text,
+                        _passwordController.text, context, isGiangVien);
                   },
                   child: const Text("Đăng nhập"),
                   style: ElevatedButton.styleFrom(

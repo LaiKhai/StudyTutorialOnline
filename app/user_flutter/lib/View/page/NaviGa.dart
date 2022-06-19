@@ -43,7 +43,7 @@ class _MainPageState extends State<MainPage> {
       case NavigationItem.header:
         return Profile_page();
       case NavigationItem.people:
-        return const HomeView();
+        return HomeView();
       case NavigationItem.favourites:
         return FavouritesPage();
       case NavigationItem.workflow:
