@@ -5,7 +5,7 @@ class AppColor {
   static const theme_iconlogin = Color(0xFFD57762);
   static const them_yelow = Color.fromARGB(255, 234, 234, 43);
   static const primary = Color(0xFF1162E4);
-  static const white = Colors.black;
+  static const white = Colors.white;
   static const grey = Color(0xFF676767);
   static const grey2 = Color(0xFFF5F5F5);
   static const black = Color(0xFF131820);

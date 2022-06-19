@@ -1,4 +1,6 @@
 import 'package:admin_studytutorialonline/common/contrains/color.dart';
+import 'package:admin_studytutorialonline/common/contrains/dimen.dart';
+import 'package:admin_studytutorialonline/widget/Drawer/Navigation_Drawer.dart';
 import 'package:flutter/material.dart';
 
 import '../widget/HomePage/AD_HomeList.dart';
@@ -16,14 +18,19 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     return Scaffold(
+      drawer: Navigationdrawerwidget(),
+      appBar: AppBar(
+        elevation: 0,
+        backgroundColor: AppColor.theme,
+      ),
       body: SingleChildScrollView(
         child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
           Container(
-            height: size.height / 4,
+            height: getHeightSize(context) * 0.2,
             decoration: const BoxDecoration(
                 borderRadius: BorderRadius.only(
-                    bottomLeft: Radius.circular(50),
-                    bottomRight: Radius.circular(50)),
+                    bottomLeft: Radius.circular(30),
+                    bottomRight: Radius.circular(30)),
                 color: AppColor.theme),
             child: const Center(
                 child: Text(

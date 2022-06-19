@@ -1,5 +1,6 @@
 import 'package:admin_studytutorialonline/common/contrains/color.dart';
 import 'package:admin_studytutorialonline/common/contrains/dimen.dart';
+import 'package:admin_studytutorialonline/page/AD_HomePage.dart';
 import 'package:flutter/material.dart';
 
 class LoginForm extends StatefulWidget {
@@ -104,7 +105,12 @@ class _LoginFormState extends State<LoginForm> {
               )),
           Center(
             child: GestureDetector(
-              onTap: () {},
+              onTap: () {
+                Navigator.pushAndRemoveUntil(
+                    context,
+                    MaterialPageRoute(builder: (context) => HomePage()),
+                    (route) => false);
+              },
               child: Container(
                 margin: EdgeInsets.fromLTRB(40, 0, 40, 0),
                 width: getWidthSize(context),

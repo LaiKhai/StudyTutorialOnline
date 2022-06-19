@@ -1,3 +1,4 @@
+import 'package:admin_studytutorialonline/common/contrains/dimen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -16,14 +17,18 @@ class _LoginPageState extends State<LoginPage> {
     return Scaffold(
       body: SingleChildScrollView(
           child: Column(
+        crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           Container(
+            padding: EdgeInsets.fromLTRB(0, 40, 0, 20),
             child: Image.asset(
               "assets/images/admin_login.png",
-              width: 200,
-              height: 200,
+              fit: BoxFit.cover,
+              width: getWidthSize(context),
+              height: 400,
             ),
-          )
+          ),
+          LoginForm()
         ],
       )),
     );
