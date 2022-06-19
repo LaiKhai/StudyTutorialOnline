@@ -37,7 +37,7 @@ class _HomeViewState extends State<HomeView> {
         future: Login.getUs(),
         builder: (context, snapshot) {
           if (snapshot.hasData) {
-            print(snapshot.data!.user!.hoTen.toString());
+            print(snapshot.data!.token);
             return SafeArea(
               child: Scaffold(
                 appBar: AppBar(

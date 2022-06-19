@@ -74,7 +74,7 @@ class LopController extends Controller
         $sinhvien = Lop::find($id)->sinhvien;
         $respone = [
             'lop' => $lop,
-            'sinhvien' => $sinhvien
+            'user' => $sinhvien
         ];
         return response()->json($respone, 200);
     }
@@ -152,7 +152,7 @@ class LopController extends Controller
         $sinhVien = SinhVien::find($id);
         $lop = SinhVien::find($id)->lop;
         $respone = [
-            'sinhvien' => $sinhVien,
+            'user' => $sinhVien,
             'lstlop' => $lop
         ];
         return response()->json($respone, 200);

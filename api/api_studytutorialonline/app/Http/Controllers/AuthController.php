@@ -64,7 +64,7 @@ class AuthController extends Controller
         $sinhVien->save();
         $response = [
             'message' => 'Dang ky sinh vien thanh cong !',
-            'sinhvien' => $sinhVien
+            'user' => $sinhVien
         ];
 
         return response()->json($response, 200);
@@ -106,7 +106,7 @@ class AuthController extends Controller
         $giangVien->save();
         $response = [
             'message' => 'Dang ky giang vien thanh cong !',
-            'giangvien' => $giangVien
+            'user' => $giangVien
         ];
 
         return response()->json($response, 200);
@@ -195,7 +195,7 @@ class AuthController extends Controller
             $response =
                 [
                     'message' => 'Dang Nhap Thanh Cong !',
-                    'giangvien' => $giangVien,
+                    'user' => $giangVien,
                     'token' => $token
                 ];
             return response()->json($response, 200);

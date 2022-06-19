@@ -35,7 +35,7 @@ class SinhVienController extends Controller
         }
 
         $response = [
-            'sinhvien' => $sinhVien,
+            'user' => $sinhVien,
         ];
         return response()->json($response, 200);
     }
@@ -80,7 +80,7 @@ class SinhVienController extends Controller
         $sinhVien->save();
         $response = [
             'message' => 'Dang ky sinh vien thanh cong !',
-            'sinhvien' => $sinhVien
+            'user' => $sinhVien
         ];
 
         return response()->json($response, 200);
@@ -99,7 +99,7 @@ class SinhVienController extends Controller
         $sinhVien->traloi;
         $sinhVien->ctbaitap;
         $response = [
-            'sinhvien' => $sinhVien,
+            'user' => $sinhVien,
         ];
         return response()->json($response, 200);
     }
@@ -132,7 +132,7 @@ class SinhVienController extends Controller
         $sinhVien->save();
         $response = [
             'message' => 'chinh sua thanh cong !',
-            'sinhvien' => $sinhVien
+            'user' => $sinhVien
         ];
         return response()->json($response, 200);
     }

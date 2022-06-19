@@ -1,30 +1,28 @@
 class User_login {
   String? message;
-  Giangvien? giangvien;
+  User? user;
   String? token;
 
-  User_login({this.message, this.giangvien, this.token});
+  User_login({this.message, this.user, this.token});
 
   User_login.fromJson(Map<String, dynamic> json) {
     message = json['message'];
-    giangvien = json['giangvien'] != null
-        ? new Giangvien.fromJson(json['giangvien'])
-        : null;
+    user = json['user'] != null ? new User.fromJson(json['user']) : null;
     token = json['token'];
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     data['message'] = this.message;
-    if (this.giangvien != null) {
-      data['giangvien'] = this.giangvien!.toJson();
+    if (this.user != null) {
+      data['user'] = this.user!.toJson();
     }
     data['token'] = this.token;
     return data;
   }
 }
 
-class Giangvien {
+class User {
   int? id;
   int? idKhoa;
   int? idChucVu;
@@ -40,7 +38,7 @@ class Giangvien {
   String? createdAt;
   String? updatedAt;
 
-  Giangvien(
+  User(
       {this.id,
       this.idKhoa,
       this.idChucVu,
@@ -56,16 +54,11 @@ class Giangvien {
       this.createdAt,
       this.updatedAt});
 
-  Giangvien.fromJson(Map<String, dynamic> json) {
+  User.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     idKhoa = json['id_khoa'];
     idChucVu = json['id_chuc_vu'];
-    if (json['id_lop'] == null) {
-      idLop = 0;
-    } else {
-      idLop = json['id_lop'];
-    }
-
+    idLop = json['id_lop'];
     email = json['email'];
     password = json['password'];
     avt = json['avt'];
@@ -97,3 +90,5 @@ class Giangvien {
     return data;
   }
 }
+
+User_login us = new User_login();
