@@ -64,7 +64,7 @@ class AuthController extends Controller
                 $response =
                     [
                         'message' => 'Dang Nhap Thanh Cong !',
-                        'giangvien' => $giangVien,
+                        'user' => $giangVien,
                         'token' => $token
                     ];
                 return response()->json($response, 200);
@@ -78,7 +78,7 @@ class AuthController extends Controller
                 $response =
                     [
                         'message' => 'Dang Nhap Thanh Cong !',
-                        'sinhvien' => $sinhVien,
+                        'user' => $sinhVien,
                         'token' => $token
                     ];
                 return response()->json($response, 200);
