@@ -4,6 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:user_flutter/Model/Gianvien.dart';
+import 'package:user_flutter/Model/User_login.dart';
 import 'package:user_flutter/Model/sinhVien.dart';
 import 'package:user_flutter/View/common/constant/color.dart';
 import 'package:user_flutter/View/page/NaviGa.dart';
@@ -16,22 +17,26 @@ import 'package:http/http.dart' as http;
 
 class Login {
   //--------------------------- Lấy token ------------------------------------//
-  Future<String> getToken() async {
+  static Future<String> getToken() async {
     final SharedPreferences sharedPref = await SharedPreferences.getInstance();
     String? token = sharedPref.getString('token');
     if (token == null) return '';
     return token;
   }
 
+  static Future<User_login> getUs() async {
+    final SharedPreferences sharedPref = await SharedPreferences.getInstance();
+    String? user_login = sharedPref.getString('user_login');
+
+    final us = User_login.fromJson(json.decode(user_login!));
+    user = us;
+    return us;
+  }
+
 //--------------------------- Đăng Nhập Sinh Viên ------------------------------------//
-  Future<void> login(String email, String password, BuildContext context,
+  Future<User_login> login(String email, String password, BuildContext context,
       bool giangVien) async {
-    String url;
-    if (giangVien == false) {
-      url = urlLoginSinhVien;
-    } else {
-      url = urlLoginGiangVien;
-    }
+    String url = urlLogin;
 
     Map body = {'email': email, 'password': password};
 
@@ -39,23 +44,19 @@ class Login {
         headers: <String, String>{'Accept': 'application/json'}, body: body);
 
     if (response.statusCode == 200) {
-      print(response.body);
-      final jsonResponse;
-      if (giangVien == false) {
-        jsonResponse = SinhVien.fromJson(json.decode(response.body));
-      } else {
-        jsonResponse = GiangVien.fromJson(json.decode(response.body));
-      }
+      final jsonResponse = User_login.fromJson(json.decode(response.body));
 
       final SharedPreferences sharedPref =
           await SharedPreferences.getInstance();
-
-      sharedPref.setBool('isGiangVien', giangVien);
       sharedPref.setString('token', jsonResponse.token!);
-      Future<String?> token = Login().getToken();
+      sharedPref.setString('user_login', response.body);
+
+      Future<String?> token = Login.getToken();
+
       Navigator.of(context).pushAndRemoveUntil(
           MaterialPageRoute(builder: (context) => Navigator_page()),
           (route) => false);
+      return jsonResponse;
     } else {
       showDialog(
           context: context,
@@ -90,6 +91,7 @@ class Login {
               ],
             );
           });
+      return new User_login();
     }
   }
 }

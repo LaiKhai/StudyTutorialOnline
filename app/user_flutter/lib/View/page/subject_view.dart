@@ -64,28 +64,26 @@ class _SubjectViewState extends State<SubjectView> {
 
     return SafeArea(
       child: Scaffold(
-        floatingActionButton: isGiangvien
-            ? _activeIndex == 1
-                ? FloatingActionButton.extended(
-                    backgroundColor: AppColor.theme,
-                    label: Text(
-                      'Tạo bài tập',
-                      style: GoogleFonts.quicksand(
-                        color: Colors.white,
-                        fontSize: 20,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                    onPressed: () {
-                      showBottomDialog(context);
-                    },
-                    tooltip: 'Increment',
-                    //foregroundColor: Colors.yellow,
-                    //backgroundColor: Colors.red,
-                    //elevation: 0.0,
-                    //shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
-                  )
-                : null
+        floatingActionButton: _activeIndex == 1
+            ? FloatingActionButton.extended(
+                backgroundColor: AppColor.theme,
+                label: Text(
+                  'Tạo bài tập',
+                  style: GoogleFonts.quicksand(
+                    color: Colors.white,
+                    fontSize: 20,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                onPressed: () {
+                  showBottomDialog(context);
+                },
+                tooltip: 'Increment',
+                //foregroundColor: Colors.yellow,
+                //backgroundColor: Colors.red,
+                //elevation: 0.0,
+                //shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
+              )
             : null,
         backgroundColor: const Color(0xFFF6F9FE),
         body: Padding(

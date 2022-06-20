@@ -31,7 +31,7 @@ class GiangVienController extends Controller
             $this->FixImg($item);
         }
         $response = [
-            'giangvien' => $giangVien,
+            'user' => $giangVien,
         ];
         return response()->json($response, 200);
     }
@@ -87,7 +87,7 @@ class GiangVienController extends Controller
         $giangVien->save();
         $response = [
             'message' => 'Dang ky giang vien thanh cong !',
-            'giangvien' => $giangVien
+            'user' => $giangVien
         ];
 
         return response()->json($response, 200);
@@ -109,7 +109,7 @@ class GiangVienController extends Controller
         $giangVien->chucVu;
         $giangVien->Khoa;
         $response = [
-            'giangvien' => $giangVien
+            'user' => $giangVien
         ];
         return response()->json($response, 200);
     }

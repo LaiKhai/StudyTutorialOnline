@@ -10,27 +10,29 @@ class US_Login_Screen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        body: Stack(
-      children: [
-        Container(
-          height: getHeightSize(context),
-          width: getWidthSize(context),
-          decoration: BoxDecoration(
-            image: DecorationImage(
-              fit: BoxFit.cover,
-              image: Image.asset(
-                'assets/images/jpg/back_ground_login.jpg',
-              ).image,
+        body: SingleChildScrollView(
+      child: Stack(
+        children: [
+          Container(
+            height: getHeightSize(context),
+            width: getWidthSize(context),
+            decoration: BoxDecoration(
+              image: DecorationImage(
+                fit: BoxFit.cover,
+                image: Image.asset(
+                  'assets/images/jpg/back_ground_login.jpg',
+                ).image,
+              ),
+              borderRadius: BorderRadius.circular(25),
             ),
-            borderRadius: BorderRadius.circular(25),
           ),
-        ),
-        Container(
-          height: getHeightSize(context),
-          width: getWidthSize(context),
-          child: US_TextField_Login(),
-        )
-      ],
+          Container(
+            height: getHeightSize(context),
+            width: getWidthSize(context),
+            child: US_TextField_Login(),
+          )
+        ],
+      ),
     ));
   }
 }
