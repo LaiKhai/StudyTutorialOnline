@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\BaiTap;
 use App\Models\BaiViet;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
@@ -17,7 +18,7 @@ class BaiVietController extends Controller
     public function index()
     {
         $lstBaiViet = BaiViet::all();
-        return response()->json($lstBaiViet, 200);
+        return response()->json(['baiviet' => $lstBaiViet], 200);
     }
 
     /**
@@ -55,7 +56,7 @@ class BaiVietController extends Controller
             $response['message'] = 'Vaidator Error';
             return response()->json($response, 404);
         }
-        $baiViet = BaiViet::created($input);
+        $baiViet = BaiViet::create($input);
         $response = [
             'message' => 'them thanh cong !',
             'baiviet' => $baiViet
@@ -114,7 +115,7 @@ class BaiVietController extends Controller
         $baiViet->save();
         $response = [
             'message' => 'chinh sua thanh cong !',
-            'khoa' => $baiViet
+            'baiviet' => $baiViet
         ];
         return response()->json($response, 200);
     }
@@ -127,6 +128,16 @@ class BaiVietController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $baiViet = BaiViet::find($id);
+        if (empty($baiViet)) {
+            return response()->json(['message' => 'khong tim thay bai viet !']);
+        }
+        $baiViet->delete();
+        $lstBaiViet = BaiViet::all();
+        $response = [
+            'message' => 'xoa thanh cong !',
+            'baiviet' => $lstBaiViet
+        ];
+        return response()->json($response, 200);
     }
 }

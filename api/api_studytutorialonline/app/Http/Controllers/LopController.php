@@ -44,7 +44,11 @@ class LopController extends Controller
         $input['nien_khoa'] = $request->input('nien_khoa');
         $input['trang_thai'] = 1;
 
-        $validator = Validator::make($input, ['ten_lop' => 'required|max:255|string', 'nien_khoa' => 'required|max:255|string']);
+        $validator = Validator::make($input, [
+            'id_giangvien' => 'required|max:255|string|unique:lops,id_giangvien',
+            'ten_lop' => 'required|max:255|string|unique:lops,ten_lop',
+            'nien_khoa' => 'required|max:255|string'
+        ]);
 
         if ($validator->fails()) {
             if (!empty($validator->errors())) {

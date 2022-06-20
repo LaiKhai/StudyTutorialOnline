@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\BaiKiemTraController;
 use App\Http\Controllers\BaiTapController;
+use App\Http\Controllers\BaiVietController;
 use App\Http\Controllers\SinhVienController;
 use App\Http\Controllers\GiangVienController;
 use App\Http\Controllers\LopController;
@@ -51,5 +52,7 @@ Route::apiResource('baitap', BaiTapController::class);
 Route::apiResource('baikiemtra', BaiKiemTraController::class);
 Route::apiResource('loaibaitap', LoaiBaiTapController::class);
 Route::apiResource('dssv', DSSinhVienController::class);
+Route::apiResource('loaibaiviet', LoaiBaiVietController::class);
+Route::apiResource('baiviet', BaiVietController::class);
 Route::middleware(['auth:sanctum'])->group(function () {
 });

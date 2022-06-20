@@ -20,9 +20,9 @@ class SinhVienImport implements ToModel, WithHeadingRow
         $lop = Lop::max('id');
         $import = new SinhVien([
             'id_lop' => $lop,
-            'email' => $row['ma_so'] . '@caothang.edu.vn',
-            'password' => Hash::make($row['ma_so']),
-            'ma_so' => $row['ma_so'],
+            'email' => $row['mssv'] . '@caothang.edu.vn',
+            'password' => Hash::make($row['mssv']),
+            'ma_so' => $row['mssv'],
             'ho_ten' => $row['ho_ten'],
             'ngay_sinh' => date('Y-m-d', $row['ngay_sinh']),
             'sdt' => $row['sdt'],
