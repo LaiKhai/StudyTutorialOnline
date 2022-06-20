@@ -16,7 +16,6 @@ class CreateDSSinhViensTable extends Migration
         Schema::create('ds_sinh_viens', function (Blueprint $table) {
             $table->foreignId('id_sinh_vien');
             $table->foreignId('id_lop_hoc_phan');
-            $table->foreignId('id_lop');
             $table->integer('trang_thai');
             $table->timestamps();
         });

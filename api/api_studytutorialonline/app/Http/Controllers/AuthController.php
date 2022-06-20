@@ -29,89 +29,6 @@ class AuthController extends Controller
         }
     }
     //-----------------------------------------------------------//
-    //                           API Đăng kí Sinh Viên
-    //----------------------------------------------------------//
-    public function dangKySinhVien(Request $request)
-    {
-        $input['id_lop'] = $request->input('id_lop');
-        $input['email'] = $request->input('email');
-        $input['password'] = Hash::make($request->input('password'));
-        $input['ho_ten'] = $request->input('ho_ten');
-        $input['mssv'] = $request->input('mssv');
-        $input['sdt'] = $request->input('sdt');
-        $input['ngay_sinh'] = $request->input('ngay_sinh');
-        $input['trang_thai'] = 1;
-        $validator = Validator::make($input, [
-            'email' => ['required', 'max:255', 'email:rfc,dns', 'unique:sinh_viens,email', 'regex:/(.*)@caothang\.edu.vn/i'],
-            'password' => 'required|max:255',
-            'ho_ten' => 'required|max:255|string',
-            'mssv' => 'required|max:255|string',
-            'sdt' => 'required|max:255|string',
-            'ngay_sinh' => 'required|max:255',
-        ]);
-        if ($validator->fails()) {
-            if (!empty($validator->errors())) {
-                $response['data'] = $validator->errors();
-            }
-            $response['message'] = 'Vaidator Error';
-            return response()->json($response, 404);
-        }
-
-        $sinhVien = SinhVien::create($input);
-        if ($request->hasFile('avt')) {
-            $sinhVien['avt'] = $request->file('avt')->store('assets/images/avatar/' . $sinhVien['id'], 'public');
-        }
-        $sinhVien->save();
-        $response = [
-            'message' => 'Dang ky sinh vien thanh cong !',
-            'sinhvien' => $sinhVien
-        ];
-
-        return response()->json($response, 200);
-    }
-    //-----------------------------------------------------------//
-    //                API Đăng kí Giảng Viên
-    //----------------------------------------------------------//
-    public function dangKyGiangVien(Request $request)
-    {
-        $input['email'] = $request->input('email');
-        $input['password'] = Hash::make($request->input('password'));
-        $input['ho_ten'] = $request->input('ho_ten');
-        $input['msgv'] = $request->input('msgv');
-        $input['sdt'] = $request->input('sdt');
-        $input['ngay_sinh'] = $request->input('ngay_sinh');
-        $input['id_chuc_vu'] = $request->input('id_chuc_vu');
-        $input['trang_thai'] = 1;
-        $validator = Validator::make($input, [
-            'email' => ['required', 'max:255', 'email:rfc,dns', 'unique:sinh_viens,email', 'regex:/(.*)@caothang\.edu.vn/i'],
-            'password' => 'required|max:255',
-            'ho_ten' => 'required|max:255|string',
-            'msgv' => 'required|max:255|string',
-            'sdt' => 'required|max:255|string',
-            'ngay_sinh' => 'required|max:255|date',
-            'id_chuc_vu' => 'required|max:255|integer',
-        ]);
-        if ($validator->fails()) {
-            if (!empty($validator->errors())) {
-                $response['data'] = $validator->errors();
-            }
-            $response['message'] = 'Vaidator Error';
-            return response()->json($response, 404);
-        }
-
-        $giangVien = GiangVien::create($input);
-        if ($request->hasFile('avt')) {
-            $giangVien['avt'] = $request->file('avt')->store('assets/images/avatar/' . $giangVien['id'], 'public');
-        }
-        $giangVien->save();
-        $response = [
-            'message' => 'Dang ky giang vien thanh cong !',
-            'giangvien' => $giangVien
-        ];
-
-        return response()->json($response, 200);
-    }
-    //-----------------------------------------------------------//
     //                           API Đăng nhập
     //----------------------------------------------------------//
 
@@ -147,7 +64,7 @@ class AuthController extends Controller
                 $response =
                     [
                         'message' => 'Dang Nhap Thanh Cong !',
-                        'giangvien' => $giangVien,
+                        'user' => $giangVien,
                         'token' => $token
                     ];
                 return response()->json($response, 200);
@@ -161,7 +78,7 @@ class AuthController extends Controller
                 $response =
                     [
                         'message' => 'Dang Nhap Thanh Cong !',
-                        'sinhvien' => $sinhVien,
+                        'user' => $sinhVien,
                         'token' => $token
                     ];
                 return response()->json($response, 200);
