@@ -16,6 +16,7 @@ class CreateLopHocPhansTable extends Migration
         Schema::create('lop_hoc_phans', function (Blueprint $table) {
             $table->id();
             $table->foreignId('id_bo_mon');
+            $table->foreignId('id_lop');
             $table->string('avt')->nullable();
             $table->integer('trang_thai');
             $table->timestamps();

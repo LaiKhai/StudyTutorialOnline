@@ -15,7 +15,6 @@ class DS_SinhVien extends Model
     protected $fillable = [
         'id_sinh_vien',
         'id_lop_hoc_phan',
-        'id_lop',
         'trang_thai',
     ];
 
@@ -26,9 +25,5 @@ class DS_SinhVien extends Model
     public function lopHocPhan()
     {
         return $this->beLongsTo(LopHocPhan::class, 'id_lop_hoc_phan');
-    }
-    public function lop()
-    {
-        return $this->belongsTo(Lop::class, 'id_lop');
     }
 }

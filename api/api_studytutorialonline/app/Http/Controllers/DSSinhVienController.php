@@ -99,7 +99,6 @@ class DSSinhVienController extends Controller
         $lopHocPhan = LopHocPhan::max('id');
         foreach ($sinhVien as $item) {
             $input['id_sinh_vien'] = $item->id;
-            $input['id_lop'] = $item->id_lop;
             $input['id_lop_hoc_phan'] = $lopHocPhan;
             $input['trang_thai'] = 1;
             DS_SinhVien::create($input);

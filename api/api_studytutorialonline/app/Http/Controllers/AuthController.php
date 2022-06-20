@@ -28,6 +28,7 @@ class AuthController extends Controller
             $giangVien->avt = '/assets/images/no_image.png';
         }
     }
+
     //-----------------------------------------------------------//
     //                           API Đăng nhập
     //----------------------------------------------------------//
@@ -64,7 +65,7 @@ class AuthController extends Controller
                 $response =
                     [
                         'message' => 'Dang Nhap Thanh Cong !',
-                        'giangvien' => $giangVien,
+                        'user' => $giangVien,
                         'token' => $token
                     ];
                 return response()->json($response, 200);
@@ -78,7 +79,7 @@ class AuthController extends Controller
                 $response =
                     [
                         'message' => 'Dang Nhap Thanh Cong !',
-                        'sinhvien' => $sinhVien,
+                        'user' => $sinhVien,
                         'token' => $token
                     ];
                 return response()->json($response, 200);
@@ -112,7 +113,7 @@ class AuthController extends Controller
             $response =
                 [
                     'message' => 'Dang Nhap Thanh Cong !',
-                    'giangvien' => $giangVien,
+                    'user' => $giangVien,
                     'token' => $token
                 ];
             return response()->json($response, 200);
