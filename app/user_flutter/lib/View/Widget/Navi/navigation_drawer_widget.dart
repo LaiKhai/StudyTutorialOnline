@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:user_flutter/Model/User_login.dart';
 import 'package:user_flutter/Model/user.dart';
+import 'package:user_flutter/View/common/constant/string.dart';
 import 'package:user_flutter/model/navigation_item.dart';
 import 'package:user_flutter/provider/navigation_provider.dart';
 
@@ -15,9 +17,9 @@ class NavigationDrawerWidget extends StatelessWidget {
             children: <Widget>[
               buildHeader(
                 context,
-                urlImage: urlImage,
-                name: name,
-                email: email,
+                urlImage: '${user.user!.avt}',
+                name: user.user!.hoTen!,
+                email: user.user!.email!,
               ),
               Container(
                 padding: padding,
@@ -116,25 +118,31 @@ class NavigationDrawerWidget extends StatelessWidget {
         child: InkWell(
           onTap: () => selectItem(context, NavigationItem.header),
           child: Container(
+            width: double.infinity,
             padding: padding.add(const EdgeInsets.symmetric(vertical: 40)),
             child: Row(
               children: [
                 CircleAvatar(
                     radius: 30, backgroundImage: NetworkImage(urlImage)),
                 const SizedBox(width: 20),
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      name,
-                      style: const TextStyle(fontSize: 20, color: Colors.white),
-                    ),
-                    const SizedBox(height: 4),
-                    Text(
-                      email,
-                      style: const TextStyle(fontSize: 14, color: Colors.white),
-                    ),
-                  ],
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        name,
+                        style:
+                            const TextStyle(fontSize: 20, color: Colors.white),
+                      ),
+                      const SizedBox(height: 4),
+                      Text(
+                        email,
+                        overflow: TextOverflow.ellipsis,
+                        style:
+                            const TextStyle(fontSize: 14, color: Colors.white),
+                      ),
+                    ],
+                  ),
                 ),
                 const Spacer(),
                 const CircleAvatar(

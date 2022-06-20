@@ -10,6 +10,7 @@ import 'package:user_flutter/Model_View/login.dart';
 import 'package:user_flutter/View/Widget/Home/thong_bao.dart';
 import 'package:user_flutter/View/Widget/Navi/navigation_drawer_widget.dart';
 import 'package:user_flutter/View/common/constant/color.dart';
+import 'package:user_flutter/View/common/constant/string.dart';
 import '../Widget/Home/app_icon_buttton.dart';
 import '../Widget/Home/assignment_week.dart';
 import '../Widget/Home/subject_item.dart';
@@ -24,10 +25,17 @@ class HomeView extends StatefulWidget {
 
 class _HomeViewState extends State<HomeView> {
   bool isGiangvien = false;
+  getUS() async {
+    final us = await Login.getUs();
+    setState(() {
+      user = us;
+    });
+  }
 
   @override
   void initState() {
     super.initState();
+    getUS();
   }
 
   @override
@@ -82,8 +90,9 @@ class _HomeViewState extends State<HomeView> {
                       ),
                     ),
                     const SizedBox(width: 12),
-                    const CircleAvatar(
-                      backgroundImage: AssetImage("assets/images/user.png"),
+                    CircleAvatar(
+                      backgroundImage:
+                          NetworkImage("${snapshot.data!.user!.avt}"),
                     )
                   ],
                 ),

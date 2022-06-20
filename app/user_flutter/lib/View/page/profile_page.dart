@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:page_transition/page_transition.dart';
+import 'package:user_flutter/Model/User_login.dart';
 import 'package:user_flutter/View/Widget/Navi/navigation_drawer_widget.dart';
 
 import '../Widget/will_custom.dart';
@@ -35,7 +36,7 @@ class _Profile_pageState extends State<Profile_page> {
                 Align(
                   alignment: AlignmentDirectional(0, -1),
                   child: Image.network(
-                    'https://images.unsplash.com/photo-1632932197818-6b131c21a961?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MjIyfHx1c2VyfGVufDB8fDB8fA%3D%3D&auto=format&fit=crop&w=800&q=60',
+                    user.user!.avt!,
                     width: double.infinity,
                     height: 500,
                     fit: BoxFit.cover,
@@ -157,15 +158,47 @@ class _Profile_pageState extends State<Profile_page> {
                                           mainAxisAlignment:
                                               MainAxisAlignment.spaceBetween,
                                           children: [
-                                            Text('Abernathy Reynolds',
+                                            Text(user.user!.hoTen!,
                                                 style: GoogleFonts.quicksand(
                                                     fontWeight: FontWeight.bold,
                                                     fontSize: 15)),
                                             Container(
-                                              width: 100,
-                                              height: 40,
-                                              color: US_APP_COLOR,
-                                            )
+                                                decoration: BoxDecoration(
+                                                  color: US_APP_COLOR,
+                                                  boxShadow: [
+                                                    BoxShadow(
+                                                      blurRadius: 1,
+                                                      color: Color(0x320E151B),
+                                                      offset: Offset(0, -2),
+                                                    )
+                                                  ],
+                                                  borderRadius:
+                                                      BorderRadius.only(
+                                                    bottomLeft:
+                                                        Radius.circular(16),
+                                                    bottomRight:
+                                                        Radius.circular(16),
+                                                    topLeft:
+                                                        Radius.circular(16),
+                                                    topRight:
+                                                        Radius.circular(16),
+                                                  ),
+                                                ),
+                                                width: 100,
+                                                height: 40,
+                                                child: Center(
+                                                  child: Text(
+                                                    user.user!.idChucVu == 0
+                                                        ? 'Sinh viên'
+                                                        : 'Giảng viên',
+                                                    style:
+                                                        GoogleFonts.quicksand(
+                                                            color: Colors.white,
+                                                            fontWeight:
+                                                                FontWeight
+                                                                    .bold),
+                                                  ),
+                                                ))
                                           ],
                                         ),
                                       ),
@@ -177,7 +210,7 @@ class _Profile_pageState extends State<Profile_page> {
                                           mainAxisAlignment:
                                               MainAxisAlignment.spaceBetween,
                                           children: [
-                                            Text('Austin, Tx.',
+                                            Text(user.user!.email!,
                                                 style: GoogleFonts.quicksand(
                                                     fontWeight: FontWeight.bold,
                                                     fontSize: 15)),

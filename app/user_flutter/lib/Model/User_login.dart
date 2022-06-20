@@ -1,3 +1,5 @@
+import 'package:user_flutter/View/common/constant/string.dart';
+
 class User_login {
   String? message;
   User? user;
@@ -58,10 +60,15 @@ class User {
     id = json['id'];
     idKhoa = json['id_khoa'];
     idChucVu = json['id_chuc_vu'];
-    idLop = json['id_lop'];
+    if (json['id_lop'] == null) {
+      idLop = 0;
+    } else {
+      idLop = json['id_lop'];
+    }
+
     email = json['email'];
     password = json['password'];
-    avt = json['avt'];
+    avt = '$Link/${json['avt']}';
     maSo = json['ma_so'];
     sdt = json['sdt'];
     hoTen = json['ho_ten'];
@@ -79,7 +86,7 @@ class User {
     data['id_lop'] = this.idLop;
     data['email'] = this.email;
     data['password'] = this.password;
-    data['avt'] = this.avt;
+    data['avt'] = '$Link/${this.avt}';
     data['ma_so'] = this.maSo;
     data['sdt'] = this.sdt;
     data['ho_ten'] = this.hoTen;
@@ -91,4 +98,4 @@ class User {
   }
 }
 
-User_login us = new User_login();
+User_login user = new User_login();
