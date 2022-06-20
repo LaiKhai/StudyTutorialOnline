@@ -15,7 +15,11 @@ class DatabaseSeeder extends Seeder
     {
         // \App\Models\User::factory(10)->create();
         $this->call(ChucVuSeeder::class);
-        $this->call(BoMonSeeder::class);
         $this->call(KhoaSeeder::class);
+        $this->call(BoMonSeeder::class);
+        
+        $this->call(GiangVienSeeder::class);
+        $this->call(LopSeeder::class);
+        $this->call(LoaiBaiTapSeeder::class);
     }
 }

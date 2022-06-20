@@ -15,11 +15,11 @@ class LoaiBaiTapSeeder extends Seeder
     public function run()
     {
         //
-        DB::table('chuc_vus')->insert([
+        DB::table('loai_bai_taps')->insert([
             'ten_loai' => 'Trắc nghiệm',
             'trang_thai' => 1
         ]);
-        DB::table('chuc_vus')->insert([
+        DB::table('loai_bai_taps')->insert([
             'ten_loai' => 'Tự luận',
             'trang_thai' => 1
         ]);
