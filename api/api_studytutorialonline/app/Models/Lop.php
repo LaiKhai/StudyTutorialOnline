@@ -23,7 +23,7 @@ class Lop extends Model
 
     public function giangvien()
     {
-        return $this->belongsTo(GiangVien::class, 'id_giang_vien');
+        return $this->belongsTo(GiangVien::class, 'id_giangvien');
     }
 
     public function sinhvien()

@@ -28,6 +28,10 @@ class LopHocPhan extends Model
     {
         return $this->beLongsTo(BoMon::class, 'id_bo_mon');
     }
+    public function lop()
+    {
+        return $this->beLongsTo(Lop::class, 'id_lop');
+    }
     public function baikiemtra()
     {
         return $this->hasMany(BaiKiemTra::class, 'id_lop_hoc_phan', 'id');

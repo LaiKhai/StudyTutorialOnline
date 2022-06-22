@@ -16,10 +16,14 @@ class CauHoiController extends Controller
     public function index()
     {
         $cauHoi = CauHoi::all();
+        foreach ($cauHoi as $item) {
+            $item->baikiemtra;
+            $item->file;
+        }
         $response = [
             'cauhoi' => $cauHoi
         ];
-        return response()->json($cauHoi, 200);
+        return response()->json($response, 200);
     }
 
     /**
@@ -88,6 +92,8 @@ class CauHoiController extends Controller
         if (empty($cauHoi)) {
             return response()->json(['message' => 'Khong tim thay cau hoi nao !'], 404);
         }
+        $cauHoi->baikiemtra;
+        $cauHoi->file;
         $response = [
             'cauhoi' => $cauHoi,
         ];

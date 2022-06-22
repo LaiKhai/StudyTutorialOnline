@@ -47,4 +47,8 @@ class File extends Model
     {
         return $this->hasMany(TraLoi::class, 'id_file', 'id');
     }
+    public function ctbaitap()
+    {
+        return $this->hasMany(CTBaiTap::class, 'id_file', 'id');
+    }
 }

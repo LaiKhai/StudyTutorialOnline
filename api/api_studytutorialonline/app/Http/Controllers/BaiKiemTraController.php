@@ -16,6 +16,11 @@ class BaiKiemTraController extends Controller
     public function index()
     {
         $baiKiemTra = BaiKiemTra::all();
+        foreach ($baiKiemTra as $item) {
+            $item->lophocphan;
+            $item->giangvien;
+            $item->file;
+        }
         $response = [
             'baikiemtra' => $baiKiemTra
         ];
@@ -84,6 +89,9 @@ class BaiKiemTraController extends Controller
         if (empty($baiKiemTra)) {
             return response()->json(['message' => 'Khong tim thay bai kiem tra nao !'], 404);
         }
+        $baiKiemTra->lophocphan;
+        $baiKiemTra->giangvien;
+        $baiKiemTra->file;
         $response = [
             'baikiemtra' => $baiKiemTra,
         ];

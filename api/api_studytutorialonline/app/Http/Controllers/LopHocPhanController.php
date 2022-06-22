@@ -25,6 +25,10 @@ class LopHocPhanController extends Controller
     public function index()
     {
         $lstLopHocPhan = LopHocPhan::all();
+        foreach ($lstLopHocPhan as $item) {
+            $item->bomon;
+            $item->lop;
+        }
         if (empty($lstLopHocPhan)) {
             return response()->json(['message' => 'chua co lop hoc phan nao'], 404);
         }
@@ -53,9 +57,11 @@ class LopHocPhanController extends Controller
     public function store(Request $request)
     {
         $input['id_bo_mon'] = $request->input('id_bo_mon');
+        $input['id_lop'] = $request->input('id_bo_mon');
         $input['trang_thai'] = $request->input('trang_thai');
         $validator = Validator::make($input, [
             'id_bo_mon' => ['required', 'max:255', 'integer'],
+            'id_lop' => ['required', 'max:255', 'integer'],
             'trang_thai' => ['required', 'max:255', 'integer'],
         ]);
         if ($validator->fails()) {
@@ -89,20 +95,14 @@ class LopHocPhanController extends Controller
         if (empty($lopHocPhan)) {
             return response()->json(['message' => 'khong tim thay lop hoc phan nao !'], 404);
         }
-        $lop = LopHocPhan::find($id)->lop;
-        $boMon = LopHocPhan::find($id)->bomon;
-        $lstbaiKiemTra = LopHocPhan::find($id)->baikiemtra;
-        $lstbaiTap = LopHocPhan::find($id)->baitap;
-        $dsGiangVien = LopHocPhan::find($id)->dsgiangvien;
-        $dsSinhVien = LopHocPhan::find($id)->dssinhvien;
+        $lopHocPhan->lop;
+        $lopHocPhan->baikiemtra;
+        $lopHocPhan->bomon;
+        $lopHocPhan->baitap;
+        $lopHocPhan->dsgiangvien;
+        $lopHocPhan->dssinhvien;
         $response = [
             'lophocphan' => $lopHocPhan,
-            'lop' => $lop,
-            'baikiemtra' => $lstbaiKiemTra,
-            'bomon' => $boMon,
-            'baiTap' => $lstbaiTap,
-            'dsgiangvien' => $dsGiangVien,
-            'dssinhvien' => $dsSinhVien,
         ];
         return response($response, 200);
     }

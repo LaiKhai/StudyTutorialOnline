@@ -18,11 +18,11 @@ class DS_SinhVien extends Model
         'trang_thai',
     ];
 
-    public function sinhVien()
+    public function sinhvien()
     {
         return $this->hasMany(SinhVien::class, 'id_sinh_vien');
     }
-    public function lopHocPhan()
+    public function lophocphan()
     {
         return $this->beLongsTo(LopHocPhan::class, 'id_lop_hoc_phan');
     }

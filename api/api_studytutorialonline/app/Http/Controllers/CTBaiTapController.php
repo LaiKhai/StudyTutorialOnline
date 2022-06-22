@@ -16,6 +16,12 @@ class CTBaiTapController extends Controller
     public function index()
     {
         $ctBaiTap = CTBaiTap::all();
+        foreach ($ctBaiTap as $item) {
+            $item->sinhvien;
+            $item->baitap;
+            $item->lophocphan;
+            $item->file;
+        }
         $response = [
             'ctbaitap' => $ctBaiTap
         ];
@@ -79,6 +85,10 @@ class CTBaiTapController extends Controller
         if (empty($ctBaiTap)) {
             return response()->json(['message' => 'Khong tim thay chi tiet bai tap nao !'], 404);
         }
+        $ctBaiTap->sinhvien;
+        $ctBaiTap->baitap;
+        $ctBaiTap->lophocphan;
+        $ctBaiTap->file;
         $response = [
             'ctbaitap' => $ctBaiTap,
         ];

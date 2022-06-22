@@ -34,4 +34,8 @@ class CTBaiTap extends Model
     {
         return $this->belongsTo(LopHocPhan::class, 'id_lop_hoc_phan');
     }
+    public function file()
+    {
+        return $this->belongsTo(File::class, 'id_file');
+    }
 }

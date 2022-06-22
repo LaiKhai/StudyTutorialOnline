@@ -17,8 +17,8 @@ class BoMonController extends Controller
     public function index()
     {
         $lstBoMon = BoMon::all();
-        if (empty($lstBoMon)) {
-            return response()->json(['message' => 'khong co bo mon nao !'], 404);
+        foreach ($lstBoMon as $item) {
+            $item->khoa;
         }
         $response = [
             'bomon' => $lstBoMon
@@ -81,6 +81,7 @@ class BoMonController extends Controller
         if (empty($boMon)) {
             return response()->json(['message' => 'khong tim thay bo mon nao !'], 404);
         }
+        $boMon->khoa;
         $response = [
             'bomon' => $boMon
         ];

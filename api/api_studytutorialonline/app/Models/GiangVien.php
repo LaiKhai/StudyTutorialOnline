@@ -29,11 +29,11 @@ class GiangVien extends Model
         'ngay_sinh',
         'trang_thai'
     ];
-    public function Khoa()
+    public function khoa()
     {
         return $this->beLongsTo(Khoa::class, 'id_khoa');
     }
-    public function chucVu()
+    public function chucvu()
     {
         return $this->beLongsTo(ChucVu::class, 'id_chuc_vu');
     }

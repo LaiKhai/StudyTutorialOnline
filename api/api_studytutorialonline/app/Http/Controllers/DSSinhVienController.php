@@ -21,6 +21,10 @@ class DSSinhVienController extends Controller
     public function index()
     {
         $lstDSSV = DS_SinhVien::all();
+        foreach ($lstDSSV as $item) {
+            $item->sinhvien;
+            $item->lophocphan;
+        }
         $response = [
             'dssv' => $lstDSSV
         ];
@@ -56,7 +60,16 @@ class DSSinhVienController extends Controller
      */
     public function show($id)
     {
-        //
+        $dssv = DS_SinhVien::find($id);
+        if (empty($dssv)) {
+            return response()->json(['message' => 'khong tim thay danh sach nao !'], 404);
+        }
+        $dssv->sinhvien;
+        $dssv->lophocphan;
+        $response = [
+            'dssv' => $dssv
+        ];
+        return response()->json($response, 200);
     }
 
     /**

@@ -16,6 +16,10 @@ class CTBaiKiemTraController extends Controller
     public function index()
     {
         $ctBaiKiemTra = CTBaiKiemTra::all();
+        foreach ($ctBaiKiemTra as $item) {
+            $item->baikiemtra;
+            $item->traloi;
+        }
         $response = [
             'ctbaikiemtra' => $ctBaiKiemTra
         ];
@@ -79,6 +83,8 @@ class CTBaiKiemTraController extends Controller
         if (empty($ctBaiKiemTra)) {
             return response()->json(['message' => 'Khong tim thay chi tiet bai kiem tra nao !'], 404);
         }
+        $ctBaiKiemTra->baikiemtra;
+        $ctBaiKiemTra->traloi;
         $response = [
             'ctbaikiemtra' => $ctBaiKiemTra,
         ];

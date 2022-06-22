@@ -26,6 +26,7 @@ class FileController extends Controller
     {
         $file = File::all();
         foreach ($file as $item) {
+            $item->baiviet;
             $this->FixFile($item);
         }
         $response = [
@@ -87,6 +88,7 @@ class FileController extends Controller
     public function show($id)
     {
         $file = File::find($id);
+        $file->biaviet;
         $this->FixFile($file);
         return response()->json($file, 200);
     }

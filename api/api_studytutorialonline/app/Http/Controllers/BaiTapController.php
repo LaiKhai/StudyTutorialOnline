@@ -16,6 +16,10 @@ class BaiTapController extends Controller
     public function index()
     {
         $lstBaiTap = BaiTap::all();
+        foreach ($lstBaiTap as $item) {
+            $item->lophocphan;
+            $item->loaibaitap;
+        }
         $response = [
             'baitap' => $lstBaiTap
         ];
@@ -84,6 +88,8 @@ class BaiTapController extends Controller
         if (empty($baiTap)) {
             return response()->json(['message' => 'Khong tim thay bai tap nao !'], 404);
         }
+        $baiTap->lophocphan;
+        $baiTap->loaibaitap;
         $response = [
             'baiTap' => $baiTap,
         ];

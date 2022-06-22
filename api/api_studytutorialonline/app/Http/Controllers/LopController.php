@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\GiangVien;
 use App\Models\Lop;
 use App\Models\SinhVien;
 use Illuminate\Http\Request;
@@ -18,7 +19,13 @@ class LopController extends Controller
     public function index()
     {
         $lstLop = Lop::all();
-        return response()->json($lstLop, 200);
+        foreach ($lstLop as $item) {
+            $item->giangvien;
+        }
+        $response = [
+            'lop' => $lstLop
+        ];
+        return response()->json($response, 200);
     }
 
     /**
@@ -45,7 +52,7 @@ class LopController extends Controller
         $input['trang_thai'] = 1;
 
         $validator = Validator::make($input, [
-            'id_giangvien' => 'required|max:255|string|unique:lops,id_giangvien',
+            'id_giangvien' => 'required|max:255|string',
             'ten_lop' => 'required|max:255|string|unique:lops,ten_lop',
             'nien_khoa' => 'required|max:255|string'
         ]);
@@ -75,10 +82,16 @@ class LopController extends Controller
     public function show($id)
     {
         $lop = Lop::find($id);
+        $lop->giangvien;
+        $lop->sinhvien;
         $sinhvien = Lop::find($id)->sinhvien;
+        // $lop = Lop::join("giang_viens", "lops.id_giangvien", "=", "giang_viens.id")
+        //     ->where("lops.id", $id)
+        //     ->select("lops.*", "giang_viens.ho_ten as ten_giang_vien")
+        //     ->get();
         $respone = [
             'lop' => $lop,
-            'user' => $sinhvien
+            'user' => $sinhvien,
         ];
         return response()->json($respone, 200);
     }

@@ -18,6 +18,10 @@ class BaiVietController extends Controller
     public function index()
     {
         $lstBaiViet = BaiViet::all();
+        foreach ($lstBaiViet as $item) {
+            $item->lophocphan;
+            $item->loaibaiviet;
+        }
         return response()->json(['baiviet' => $lstBaiViet], 200);
     }
 
@@ -76,6 +80,8 @@ class BaiVietController extends Controller
         if (empty($baiViet)) {
             return response()->json(['message' => 'khong tim thay bai viet !'], 404);
         }
+        $baiViet->lophocphan;
+        $baiViet->loaibaiviet;
         $response = [
             'baiviet' => $baiViet
         ];

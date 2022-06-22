@@ -16,6 +16,11 @@ class TraLoiController extends Controller
     public function index()
     {
         $traLoi = TraLoi::all();
+        foreach ($traLoi as $item) {
+            $item->sinhvien;
+            $item->cauhoi;
+            $item->file;
+        }
         $response = [
             'traloi' => $traLoi
         ];
@@ -77,6 +82,9 @@ class TraLoiController extends Controller
     public function show($id)
     {
         $traLoi = TraLoi::find($id);
+        $traLoi->sinhvien;
+        $traLoi->cauhoi;
+        $traLoi->file;
         if (empty($traLoi)) {
             return response()->json(['message' => 'Khong tim thay cau tra loi nao !'], 404);
         }

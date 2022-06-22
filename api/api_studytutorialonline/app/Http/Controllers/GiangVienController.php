@@ -28,6 +28,8 @@ class GiangVienController extends Controller
     {
         $giangVien = GiangVien::all();
         foreach ($giangVien as $item) {
+            $item->khoa;
+            $item->chucvu;
             $this->FixImg($item);
         }
         $response = [
