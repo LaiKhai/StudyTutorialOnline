@@ -14,7 +14,7 @@ class LopHocPhanController extends Controller
         if (Storage::disk('public')->exists($lopHocPhan->avt)) {
             $lopHocPhan->avt = Storage::url($lopHocPhan->avt);
         } else {
-            $lopHocPhan->avt = '/assets/images/no_image.png';
+            $lopHocPhan->avt = '/assets/images/lophocphan/no_image.jpg';
         }
     }
     /**
@@ -28,6 +28,7 @@ class LopHocPhanController extends Controller
         foreach ($lstLopHocPhan as $item) {
             $item->bomon;
             $item->lop;
+            $this->FixImg($item);
         }
         if (empty($lstLopHocPhan)) {
             return response()->json(['message' => 'chua co lop hoc phan nao'], 404);
@@ -73,9 +74,12 @@ class LopHocPhanController extends Controller
         }
         $lopHocPhan = LopHocPhan::create($input);
         if ($request->hasFile('avt')) {
-            $lopHocPhan['avt'] = $request->file('avt')->store('assets/images/avatar/' . $lopHocPhan['id'], 'public');
+            $lopHocPhan['avt'] = $request->file('avt')
+                ->store('assets/images/lophocphan/' . $lopHocPhan['id'], 'public');
         }
         $lopHocPhan->save();
+        $lopHocPhan->bomon;
+        $lopHocPhan->lop;
         $response = [
             'message' => 'them lop hoc phan thanh cong !',
             'lophocphan' => $lopHocPhan
@@ -136,8 +140,13 @@ class LopHocPhanController extends Controller
             'id_lop' => $request->input('id_lop'),
             'trang_thai' => $request->input('trang_thai')
         ]);
-
+        if ($request->hasFile('avt')) {
+            $lopHocPhan['avt'] = $request->file('avt')
+                ->store('assets/images/lophocphan/' . $lopHocPhan['id'], 'public');
+        }
         $lopHocPhan->save();
+        $lopHocPhan->bomon;
+        $lopHocPhan->lop;
         $response = [
             'message' => 'chinh sua thanh cong !',
             'lophocphan' => $lopHocPhan
