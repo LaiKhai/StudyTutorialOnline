@@ -5,8 +5,9 @@ import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:user_flutter/Model/User_login.dart';
 import 'package:user_flutter/Model/home_data.dart';
-import 'package:user_flutter/Model_View/get_lop.dart';
+import 'package:user_flutter/Model_View/get_lopHp.dart';
 import 'package:user_flutter/Model_View/login.dart';
+import 'package:user_flutter/View/Widget/Home/load_Lop_HP.dart';
 import 'package:user_flutter/View/Widget/Home/thong_bao.dart';
 import 'package:user_flutter/View/Widget/Navi/navigation_drawer_widget.dart';
 import 'package:user_flutter/View/common/constant/color.dart';
@@ -274,145 +275,130 @@ class _HomeViewState extends State<HomeView> {
                   key: centerKey,
                   slivers: <Widget>[
                     SliverList(
+                        key: centerKey,
                         delegate: SliverChildListDelegate([
-                      Container(
-                        padding: const EdgeInsets.only(
-                            bottom: 32, left: 20, right: 20),
-                        decoration: const BoxDecoration(
-                          color: AppColor.theme,
-                          borderRadius: BorderRadius.only(
-                            bottomLeft: Radius.circular(25),
-                            bottomRight: Radius.circular(25),
-                            topLeft: Radius.circular(0),
-                            topRight: Radius.circular(0),
-                          ),
-                        ),
-                        child: Align(
-                          alignment: Alignment.centerLeft,
-                          child: Column(
-                            mainAxisSize: MainAxisSize.min,
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              RichText(
-                                text: TextSpan(
-                                  style: GoogleFonts.quicksand(
-                                    fontSize: 24,
-                                    color: AppColor.white,
+                          Container(
+                            padding: const EdgeInsets.only(
+                                bottom: 32, left: 20, right: 20),
+                            decoration: const BoxDecoration(
+                              color: AppColor.theme,
+                              borderRadius: BorderRadius.only(
+                                bottomLeft: Radius.circular(25),
+                                bottomRight: Radius.circular(25),
+                                topLeft: Radius.circular(0),
+                                topRight: Radius.circular(0),
+                              ),
+                            ),
+                            child: Align(
+                              alignment: Alignment.centerLeft,
+                              child: Column(
+                                mainAxisSize: MainAxisSize.min,
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  RichText(
+                                    text: TextSpan(
+                                      style: GoogleFonts.quicksand(
+                                        fontSize: 24,
+                                        color: AppColor.white,
+                                      ),
+                                      children: [
+                                        TextSpan(
+                                          text: "Xin chào ",
+                                          style: GoogleFonts.quicksand(
+                                            color: AppColor.white,
+                                            fontWeight: FontWeight.w300,
+                                          ),
+                                        ),
+                                        TextSpan(
+                                            text: snapshot.data!.user!.hoTen,
+                                            style: GoogleFonts.quicksand(
+                                                fontWeight: FontWeight.bold)),
+                                      ],
+                                    ),
                                   ),
+                                  const SizedBox(height: 8),
+                                  SizedBox(
+                                    width:
+                                        MediaQuery.of(context).size.width * 0.6,
+                                    child: Text(
+                                      "Cảm ơn bạn đã chọn chúng tôi và chúng tôi sẽ cố gắng hết sức hổ trợ bạn.",
+                                      style: GoogleFonts.quicksand(
+                                        color: AppColor.grey,
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.only(
+                                left: 20, right: 20, top: 20),
+                            child: Column(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  crossAxisAlignment: CrossAxisAlignment.center,
                                   children: [
-                                    TextSpan(
-                                      text: "Xin chào ",
+                                    Text(
+                                      "Tuần này",
                                       style: GoogleFonts.quicksand(
                                         color: AppColor.white,
-                                        fontWeight: FontWeight.w300,
+                                        fontSize: 16,
+                                        fontWeight: FontWeight.w600,
                                       ),
                                     ),
-                                    TextSpan(
-                                        text: snapshot.data!.user!.hoTen,
-                                        style: GoogleFonts.quicksand(
-                                            fontWeight: FontWeight.bold)),
+                                    InkWell(
+                                      borderRadius: BorderRadius.circular(360),
+                                      splashColor: Theme.of(context)
+                                          .primaryColor
+                                          .withOpacity(0.25),
+                                      highlightColor: Theme.of(context)
+                                          .primaryColor
+                                          .withOpacity(0.4),
+                                      onTap: () {},
+                                      child: Padding(
+                                        padding: const EdgeInsets.all(4),
+                                        child: Text(
+                                          "Tất cả",
+                                          style: GoogleFonts.quicksand(
+                                            color: AppColor.primary,
+                                            fontSize: 12,
+                                            fontWeight: FontWeight.bold,
+                                          ),
+                                        ),
+                                      ),
+                                    ),
                                   ],
                                 ),
-                              ),
-                              const SizedBox(height: 8),
-                              SizedBox(
-                                width: MediaQuery.of(context).size.width * 0.6,
-                                child: Text(
-                                  "Cảm ơn bạn đã chọn chúng tôi và chúng tôi sẽ cố gắng hết sức hổ trợ bạn.",
-                                  style: GoogleFonts.quicksand(
-                                    color: AppColor.grey,
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
-                      Padding(
-                        padding:
-                            const EdgeInsets.only(left: 20, right: 20, top: 20),
-                        child: Column(
-                          mainAxisSize: MainAxisSize.min,
-                          children: [
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              children: [
-                                Text(
-                                  "Tuần này",
-                                  style: GoogleFonts.quicksand(
-                                    color: AppColor.white,
-                                    fontSize: 16,
-                                    fontWeight: FontWeight.w600,
-                                  ),
-                                ),
-                                InkWell(
-                                  borderRadius: BorderRadius.circular(360),
-                                  splashColor: Theme.of(context)
-                                      .primaryColor
-                                      .withOpacity(0.25),
-                                  highlightColor: Theme.of(context)
-                                      .primaryColor
-                                      .withOpacity(0.4),
-                                  onTap: () {},
-                                  child: Padding(
-                                    padding: const EdgeInsets.all(4),
-                                    child: Text(
-                                      "Tất cả",
-                                      style: GoogleFonts.quicksand(
-                                        color: AppColor.primary,
-                                        fontSize: 12,
-                                        fontWeight: FontWeight.bold,
+                                const SizedBox(height: 16),
+                                Row(
+                                  children: const [
+                                    Expanded(
+                                      child: AssignmentWeek(
+                                        count: 5,
+                                        subjects: ["Tên các lớp giao bài tập "],
+                                        type: AssignmentType.assigned,
                                       ),
                                     ),
-                                  ),
+                                    SizedBox(width: 16),
+                                    Expanded(
+                                      child: AssignmentWeek(
+                                        count: 2,
+                                        subjects: ["các lớp bỏ lở bài tập"],
+                                        type: AssignmentType.missed,
+                                      ),
+                                    ),
+                                  ],
                                 ),
                               ],
                             ),
-                            const SizedBox(height: 16),
-                            Row(
-                              children: const [
-                                Expanded(
-                                  child: AssignmentWeek(
-                                    count: 5,
-                                    subjects: ["Tên các lớp giao bài tập "],
-                                    type: AssignmentType.assigned,
-                                  ),
-                                ),
-                                SizedBox(width: 16),
-                                Expanded(
-                                  child: AssignmentWeek(
-                                    count: 2,
-                                    subjects: ["các lớp bỏ lở bài tập"],
-                                    type: AssignmentType.missed,
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ],
-                        ),
-                      ),
-                      const SizedBox(height: 32),
-                    ])),
-                    SliverList(
-                        delegate: SliverChildBuilderDelegate((context, index) {
-                      final subject = subjects[1];
-
-                      return Container(
-                        padding: const EdgeInsets.only(left: 20.0, right: 20.0),
-                        child: GestureDetector(
-                          onTap: () {
-                            // Navigate to subject view
-                            Navigator.of(context).push(
-                              MaterialPageRoute(
-                                builder: (_) => SubjectView(subject: subject),
-                              ),
-                            );
-                          },
-                          child: SubjectItem(subject: subject),
-                        ),
-                      );
-                    }, childCount: 10)),
+                          ),
+                          const SizedBox(height: 32),
+                        ])),
+                    Load_lopHP()
                   ],
                 ),
               ),

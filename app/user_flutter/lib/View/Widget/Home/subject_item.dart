@@ -1,15 +1,23 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:user_flutter/Model/color_Subject.dart';
+import 'package:user_flutter/Model/home_data.dart';
+import 'package:user_flutter/Model/lop_HP.dart';
 import 'package:user_flutter/Model/subject.dart';
+import 'package:user_flutter/View/common/constant/string.dart';
 import '../../common/constant/color.dart';
 
 class SubjectItem extends StatelessWidget {
-  final Subject subject;
+  final Lophocphan subject;
 
   const SubjectItem({Key? key, required this.subject}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    Random random = new Random();
+    int randomNumber = random.nextInt(4);
     return Stack(
       children: [
         Container(
@@ -27,7 +35,7 @@ class SubjectItem extends StatelessWidget {
               )
             ],
             gradient: LinearGradient(
-              colors: subject.gradient,
+              colors: gradient[randomNumber],
               begin: Alignment.centerRight,
               end: Alignment.centerLeft,
             ),
@@ -40,7 +48,7 @@ class SubjectItem extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    subject.name,
+                    subject.tenMonHoc!,
                     style: GoogleFonts.quicksand(
                       color: AppColor.white,
                       fontSize: 24,
@@ -49,7 +57,7 @@ class SubjectItem extends StatelessWidget {
                   ),
                   const SizedBox(height: 4),
                   Text(
-                    subject.lecturer,
+                    subject.tenLop!,
                     style: GoogleFonts.quicksand(
                       color: AppColor.white.withOpacity(0.75),
                       fontWeight: FontWeight.w500,
@@ -57,8 +65,8 @@ class SubjectItem extends StatelessWidget {
                   ),
                 ],
               ),
-              Image.asset(
-                subject.image,
+              Image.network(
+                'https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885__480.jpg',
                 width: 72,
                 height: 72,
               ),

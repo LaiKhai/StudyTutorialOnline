@@ -10,4 +10,5 @@ TextStyle ggTextStyle(double? size, FontWeight? fweight, Color? color) {
 const String Link = 'http://210.2.86.140';
 const Key centerKey = ValueKey<String>('bottom-sliver-list');
 const String urlLogin = '$Link/api/login';
-const String getClass = '$Link//api/lop';
+const String getAllClass = '$Link/api/lophocphan';
+const String getClass = '$Link/api/lophocphanwithsinhvien/';
