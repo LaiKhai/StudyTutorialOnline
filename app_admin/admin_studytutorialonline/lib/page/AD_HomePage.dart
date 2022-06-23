@@ -22,6 +22,16 @@ class _HomePageState extends State<HomePage> {
       appBar: AppBar(
         elevation: 0,
         backgroundColor: AppColor.theme,
+        actions: [
+          Container(
+              margin: EdgeInsets.fromLTRB(0, 10, 5, 0),
+              width: 60,
+              decoration:
+                  BoxDecoration(borderRadius: BorderRadius.circular(30)),
+              child: ClipRRect(
+                child: Image.asset('assets/images/no_image.png'),
+              ))
+        ],
       ),
       body: SingleChildScrollView(
         child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
