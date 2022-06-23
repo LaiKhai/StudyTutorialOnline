@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\DS_GiangVien;
 use App\Http\Requests\StoreDS_GiangVienRequest;
 use App\Http\Requests\UpdateDS_GiangVienRequest;
+use App\Models\GiangVien;
+use App\Models\LopHocPhan;
 
 class DSGiangVienController extends Controller
 {
@@ -82,5 +84,19 @@ class DSGiangVienController extends Controller
     public function destroy(DS_GiangVien $dS_GiangVien)
     {
         //
+    }
+
+    public function createDSSVWithGiangVien()
+    {
+        $giangVien = GiangVien::all();
+        $lopHocPhan = LopHocPhan::max('id');
+        foreach ($giangVien as $item) {
+            $input['id_giang_vien'] = $item->id;
+            $input['id_lop_hoc_phan'] = $lopHocPhan;
+            $input['trang_thai'] = 1;
+            DS_GiangVien::create($input);
+        }
+        $lstdsgv = DS_GiangVien::all();
+        return response()->json($lstdsgv, 200);
     }
 }

@@ -15,6 +15,7 @@ use App\Http\Controllers\LopHocPhanController;
 use App\Http\Controllers\BoMonController;
 use App\Http\Controllers\LoaiBaiVietController;
 use App\Http\Controllers\DSSinhVienController;
+use App\Http\Controllers\DSGiangVienController;
 
 /*
 |--------------------------------------------------------------------------
@@ -37,8 +38,12 @@ Route::post('/sinhvien/import', [SinhVienController::class, 'import']);
 Route::get('/lop/lstWithIdSV', [LopController::class, 'LstLopWithIdSV']);
 //Tao Danh sach sinh vien auto
 Route::get('/dssv/createDSSV', [DSSinhVienController::class, 'createDSSVWithSinhVien']);
+//Tao Danh sach giang vien auto
+Route::get('/dsgv/createDSGV', [DSGiangVienController::class, 'createDSSVWithGiangVien']);
 //Lay danh sach lop hoc phan theo id sinh vien
-Route::get('/lophocphanwithsinhvien/{id}', [SinhVienController::class, 'detailLopHocPhan']);
+Route::get('/lophocphanwithsinhvien/{id}', [SinhVienController::class, 'lophocphanwithsinhvien']);
+//Lay danh sach lop hoc phan theo id giang vien
+Route::get('/lophocphanwithgiangvien/{id}', [GiangVienController::class, 'lophocphanwithgiangvien']);
 
 Route::apiResource('chucvu', ChucVuController::class);
 Route::apiResource('sinhvien', SinhVienController::class);

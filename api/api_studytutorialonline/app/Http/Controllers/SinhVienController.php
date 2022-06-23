@@ -182,11 +182,14 @@ class SinhVienController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function detailLopHocPhan($id)
+    public function lophocphanwithsinhvien($id)
     {
         $lopHocPhan = DS_SinhVien::join('lop_hoc_phans', 'ds_sinh_viens.id_lop_hoc_phan', '=', 'lop_hoc_phans.id')
+            ->join('sinh_viens', 'ds_sinh_viens.id_sinh_vien', '=', 'sinh_viens.id')
+            ->join('bo_mons', 'lop_hoc_phans.id_bo_mon', '=', 'bo_mons.id')
+            ->join('lops', 'lop_hoc_phans.id_lop', '=', 'lops.id')
             ->where('ds_sinh_viens.id_sinh_vien', $id)
-            ->select('ds_sinh_viens.id_sinh_vien', 'lop_hoc_phans.*')->get();
+            ->select('ds_sinh_viens.id_sinh_vien', 'lop_hoc_phans.*', 'sinh_viens.ho_ten as ho_ten_sv', 'bo_mons.ten_mon_hoc', 'lops.ten_lop')->get();
         $response = [
             'lophocphan' => $lopHocPhan
         ];
