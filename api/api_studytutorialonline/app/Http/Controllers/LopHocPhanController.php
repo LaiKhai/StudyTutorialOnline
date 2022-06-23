@@ -14,7 +14,7 @@ class LopHocPhanController extends Controller
         if (Storage::disk('public')->exists($lopHocPhan->avt)) {
             $lopHocPhan->avt = Storage::url($lopHocPhan->avt);
         } else {
-            $lopHocPhan->avt = '/assets/images/lophocphan/no_image.jpg';
+            $lopHocPhan->avt = '/assets/images/lophocphan/no_image.png';
         }
     }
     /**
