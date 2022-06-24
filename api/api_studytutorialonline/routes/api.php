@@ -57,6 +57,7 @@ Route::apiResource('baitap', BaiTapController::class);
 Route::apiResource('baikiemtra', BaiKiemTraController::class);
 Route::apiResource('loaibaitap', LoaiBaiTapController::class);
 Route::apiResource('dssv', DSSinhVienController::class);
+Route::apiResource('dsgv', DSGiangVienController::class);
 Route::apiResource('loaibaiviet', LoaiBaiVietController::class);
 Route::apiResource('baiviet', BaiVietController::class);
 Route::middleware(['auth:sanctum'])->group(function () {
