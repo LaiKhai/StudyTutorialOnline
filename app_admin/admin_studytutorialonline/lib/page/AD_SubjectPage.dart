@@ -1,19 +1,19 @@
-import 'package:admin_studytutorialonline/common/contrains/color.dart';
-import 'package:admin_studytutorialonline/common/contrains/dimen.dart';
 import 'package:admin_studytutorialonline/common/contrains/string.dart';
+import 'package:admin_studytutorialonline/widget/Subject/AD_SubjectCard.dart';
 import 'package:flutter/material.dart';
 
-import '../widget/DepartmentPage/AD_DepartmentList.dart';
+import '../common/contrains/color.dart';
+import '../common/contrains/dimen.dart';
 import '../widget/Drawer/Navigation_Drawer.dart';
 
-class DepartmentPage extends StatefulWidget {
-  const DepartmentPage({Key? key}) : super(key: key);
+class SubjectPage extends StatefulWidget {
+  SubjectPage({Key? key}) : super(key: key);
 
   @override
-  _DepartmentPageState createState() => _DepartmentPageState();
+  State<SubjectPage> createState() => _SubjectPageState();
 }
 
-class _DepartmentPageState extends State<DepartmentPage> {
+class _SubjectPageState extends State<SubjectPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -42,34 +42,28 @@ class _DepartmentPageState extends State<DepartmentPage> {
                       bottomLeft: Radius.circular(30),
                       bottomRight: Radius.circular(30)),
                   color: AppColor.theme),
-              child: const Center(
+              child: Center(
                   child: Text(
-                'Khoa',
-                style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 32,
-                    fontWeight: FontWeight.w600),
+                'Bộ Môn',
+                style: ggTextStyle(30, FontWeight.bold, AppColor.white),
               )),
             ),
             Container(
               padding: const EdgeInsets.all(20),
-              child: const Text(
+              child: Text(
                 'Danh sách các thông báo',
-                style: TextStyle(
-                    color: AppColor.black,
-                    fontSize: 16,
-                    fontWeight: FontWeight.w600),
+                style: ggTextStyle(13, FontWeight.bold, AppColor.grey),
               ),
             ),
-            DepartmentList(),
+            SubjectCard(),
+            SizedBox(
+              height: 10,
+            ),
+            SubjectCard(),
             const SizedBox(
               height: 10,
             ),
-            DepartmentList(),
-            const SizedBox(
-              height: 10,
-            ),
-            DepartmentList(),
+            SubjectCard(),
           ]),
         ),
         floatingActionButton: FloatingActionButton(

@@ -1,3 +1,5 @@
+import 'package:admin_studytutorialonline/common/contrains/color.dart';
+import 'package:admin_studytutorialonline/common/contrains/string.dart';
 import 'package:flutter/material.dart';
 
 class ButtonWidget extends StatelessWidget {
@@ -39,10 +41,7 @@ class ButtonWidget extends StatelessWidget {
             const SizedBox(width: 16),
             Text(
               text,
-              style: const TextStyle(
-                  fontSize: 22,
-                  color: Colors.white,
-                  fontWeight: FontWeight.w600),
+              style: ggTextStyle(17, FontWeight.bold, AppColor.white),
             ),
             const SizedBox(
               height: 25,

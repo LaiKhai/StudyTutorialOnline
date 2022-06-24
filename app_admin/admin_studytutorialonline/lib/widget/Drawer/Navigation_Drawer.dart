@@ -2,14 +2,18 @@ import 'dart:ui';
 
 import 'package:admin_studytutorialonline/common/contrains/color.dart';
 import 'package:admin_studytutorialonline/common/contrains/string.dart';
+import 'package:admin_studytutorialonline/page/AD_DepartmentPage.dart';
+import 'package:admin_studytutorialonline/page/AD_HomePage.dart';
+import 'package:admin_studytutorialonline/page/AD_SubjectPage.dart';
+import 'package:admin_studytutorialonline/widget/DepartmentPage/AD_DepartmentList.dart';
+import 'package:admin_studytutorialonline/widget/Subject/AD_SubjectCard.dart';
 import 'package:flutter/material.dart';
 
 import 'childwidget/Drawer_Button.dart';
 import 'childwidget/Drawer_Form_Menu.dart';
-import 'package:google_fonts/google_fonts.dart';
 
 class Navigationdrawerwidget extends StatefulWidget {
-  const Navigationdrawerwidget({Key? key}) : super(key: key);
+  Navigationdrawerwidget({Key? key}) : super(key: key);
 
   @override
   _NavigationdrawerwidgetState createState() => _NavigationdrawerwidgetState();
@@ -32,7 +36,7 @@ class _NavigationdrawerwidgetState extends State<Navigationdrawerwidget> {
                         image: AssetImage('assets/images/class_room.png'),
                         fit: BoxFit.cover)),
                 alignment: Alignment.center,
-                height: 240,
+                height: 300,
               ),
               // Container(
               //   child: Image.network(
@@ -49,7 +53,7 @@ class _NavigationdrawerwidgetState extends State<Navigationdrawerwidget> {
                 padding: EdgeInsets.fromLTRB(30, 10, 0, 0),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
-                  children: const [
+                  children: [
                     SizedBox(
                       height: 40,
                     ),
@@ -63,20 +67,14 @@ class _NavigationdrawerwidgetState extends State<Navigationdrawerwidget> {
                     ),
                     Text(
                       'Lai Khai',
-                      style: TextStyle(
-                          fontSize: 20,
-                          fontWeight: FontWeight.bold,
-                          color: AppColor.white),
+                      style: ggTextStyle(20, FontWeight.bold, AppColor.white),
                     ),
                     SizedBox(
                       height: 10,
                     ),
                     Text(
                       'lhkhai@caothang.edu.vn',
-                      style: TextStyle(
-                          fontSize: 13,
-                          fontWeight: FontWeight.normal,
-                          color: AppColor.white),
+                      style: ggTextStyle(13, FontWeight.normal, AppColor.white),
                     ),
                     SizedBox(
                       height: 10,
@@ -99,7 +97,10 @@ class _NavigationdrawerwidgetState extends State<Navigationdrawerwidget> {
               ButtonWidget(
                   icon: Icons.home,
                   text: 'Trang chủ',
-                  onClicked: () {},
+                  onClicked: () {
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (context) => HomePage()));
+                  },
                   top: 10,
                   left: 20,
                   bottom: 10,
@@ -107,17 +108,25 @@ class _NavigationdrawerwidgetState extends State<Navigationdrawerwidget> {
               const Divider(
                   thickness: 1, indent: 20, endIndent: 20, color: Colors.white),
               ButtonWidget(
-                  icon: Icons.home,
+                  icon: Icons.cast_for_education_rounded,
                   text: 'Khoa',
-                  onClicked: () {},
+                  onClicked: () {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: ((context) => DepartmentPage())));
+                  },
                   top: 10,
                   left: 20,
-                  bottom: 0,
+                  bottom: 5,
                   right: 0),
               ButtonWidget(
-                  icon: Icons.home,
+                  icon: Icons.class__rounded,
                   text: 'Bộ môn',
-                  onClicked: () {},
+                  onClicked: () {
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (context) => SubjectPage()));
+                  },
                   top: 10,
                   left: 20,
                   bottom: 10,
@@ -125,15 +134,15 @@ class _NavigationdrawerwidgetState extends State<Navigationdrawerwidget> {
               const Divider(
                   thickness: 1, indent: 20, endIndent: 20, color: Colors.white),
               ButtonWidget(
-                  icon: Icons.home,
+                  icon: Icons.co_present_rounded,
                   text: 'Lớp',
                   onClicked: () {},
                   top: 10,
                   left: 20,
-                  bottom: 0,
+                  bottom: 5,
                   right: 0),
               ButtonWidget(
-                  icon: Icons.home,
+                  icon: Icons.collections_bookmark_rounded,
                   text: 'Lớp học phần',
                   onClicked: () {},
                   top: 10,
@@ -143,15 +152,15 @@ class _NavigationdrawerwidgetState extends State<Navigationdrawerwidget> {
               const Divider(
                   thickness: 1, indent: 20, endIndent: 20, color: Colors.white),
               ButtonWidget(
-                  icon: Icons.home,
+                  icon: Icons.face_sharp,
                   text: 'Sinh viên',
                   onClicked: () {},
                   top: 10,
                   left: 20,
-                  bottom: 0,
+                  bottom: 5,
                   right: 0),
               ButtonWidget(
-                  icon: Icons.home,
+                  icon: Icons.group,
                   text: 'Giảng viên',
                   onClicked: () {},
                   top: 10,
