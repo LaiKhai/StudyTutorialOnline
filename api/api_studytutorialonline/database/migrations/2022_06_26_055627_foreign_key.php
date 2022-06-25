@@ -78,6 +78,10 @@ class ForeignKey extends Migration
             $table->foreign('id_lop_hoc_phan')->references('id')->on('lop_hoc_phans');
             $table->foreign('id_loai_bai_viet')->references('id')->on('loai_bai_viets');
         });
+        Schema::table('binh_luans', function (Blueprint $table) {
+            $table->foreign('id_bai_tap')->references('id')->on('bai_taps');
+            $table->foreign('id_sinh_vien')->references('id')->on('sinh_viens');
+        });
     }
 
     /**

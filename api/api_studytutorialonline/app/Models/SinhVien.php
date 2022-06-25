@@ -43,4 +43,8 @@ class SinhVien extends Model
     {
         return $this->hasMany(TraLoi::class, 'id_sinh_vien', 'id');
     }
+    public function binhluan()
+    {
+        return $this->hasMany(BinhLuan::class, 'id_sinh_vien', 'id');
+    }
 }

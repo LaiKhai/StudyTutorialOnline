@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\DS_GiangVien;
+use App\Models\DS_SinhVien;
 use App\Models\LopHocPhan;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
@@ -103,10 +105,18 @@ class LopHocPhanController extends Controller
         $lopHocPhan->baikiemtra;
         $lopHocPhan->bomon;
         $lopHocPhan->baitap;
-        $lopHocPhan->dsgiangvien;
-        $lopHocPhan->dssinhvien;
+        $dsgv = DS_GiangVien::join('lop_hoc_phans', 'ds_giang_viens.id_lop_hoc_phan', '=', 'lop_hoc_phans.id')
+            ->join('giang_viens', 'ds_giang_viens.id_giang_vien', '=', 'giang_viens.id')
+            ->where('lop_hoc_phans.id', $id)
+            ->select('lop_hoc_phans.*', 'ds_giang_viens.*', 'giang_viens.*')->get();
+        $dssv = DS_SinhVien::join('lop_hoc_phans', 'ds_sinh_viens.id_lop_hoc_phan', '=', 'lop_hoc_phans.id')
+            ->join('sinh_viens', 'ds_sinh_viens.id_sinh_vien', '=', 'sinh_viens.id')
+            ->where('lop_hoc_phans.id', $id)
+            ->select('lop_hoc_phans.*', 'ds_sinh_viens.*', 'sinh_viens.*')->get();
         $response = [
             'lophocphan' => $lopHocPhan,
+            'dssv' => $dssv,
+            'dsgv' => $dsgv
         ];
         return response($response, 200);
     }
