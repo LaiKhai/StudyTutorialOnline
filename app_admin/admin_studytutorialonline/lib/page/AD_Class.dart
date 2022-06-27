@@ -1,19 +1,19 @@
-import 'package:admin_studytutorialonline/common/contrains/string.dart';
-import 'package:admin_studytutorialonline/widget/Subject/AD_SubjectCard.dart';
+import 'package:admin_studytutorialonline/widget/ClassPage/AD_ClassList.dart';
 import 'package:flutter/material.dart';
 
 import '../common/contrains/color.dart';
 import '../common/contrains/dimen.dart';
+import '../common/contrains/string.dart';
 import '../widget/Drawer/Navigation_Drawer.dart';
 
-class SubjectPage extends StatefulWidget {
-  SubjectPage({Key? key}) : super(key: key);
+class ClassPage extends StatefulWidget {
+  const ClassPage({Key? key}) : super(key: key);
 
   @override
-  State<SubjectPage> createState() => _SubjectPageState();
+  State<ClassPage> createState() => _ClassPageState();
 }
 
-class _SubjectPageState extends State<SubjectPage> {
+class _ClassPageState extends State<ClassPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -55,15 +55,15 @@ class _SubjectPageState extends State<SubjectPage> {
                 style: ggTextStyle(13, FontWeight.bold, AppColor.grey),
               ),
             ),
-            SubjectCard(),
+            ClassList(),
             SizedBox(
               height: 10,
             ),
-            SubjectCard(),
+            ClassList(),
             const SizedBox(
               height: 10,
             ),
-            SubjectCard(),
+            ClassList(),
           ]),
         ),
         floatingActionButton: FloatingActionButton(
