@@ -16,6 +16,7 @@ class CreateFilesTable extends Migration
         Schema::create('files', function (Blueprint $table) {
             $table->id();
             $table->string('noi_dung')->nullable();
+            $table->string('ten_file')->nullable();
             $table->string('loai_file')->nullable();
             $table->integer('trang_thai');
             $table->timestamps();

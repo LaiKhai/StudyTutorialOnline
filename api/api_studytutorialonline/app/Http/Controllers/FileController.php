@@ -14,7 +14,7 @@ class FileController extends Controller
         if (Storage::disk('public')->exists($file->noi_dung)) {
             $file->noi_dung = Storage::url($file->noi_dung);
         } else {
-            $file->noi_dung = null;
+            $file->noi_dung = 'null';
         }
     }
     /**
@@ -52,10 +52,6 @@ class FileController extends Controller
      */
     public function store(Request $request)
     {
-        if ($request->hasFile('noi_dung')) {
-            $input['noi_dung'] = $request->file('noi_dung')->store('assets/files/' . $request->file('noi_dung')->getClientOriginalName(), 'public');
-            $input['loai_file'] = $request->file('noi_dung')->extension();
-        }
         $input['trang_thai'] = 1;
         // $validator = Validator::make($input, [
         //     'noi_dung' => ['required']
@@ -68,7 +64,12 @@ class FileController extends Controller
         //     return response()->json($response, 404);
         // }
         $file = File::create($input);
-        $file->save;
+        if ($request->hasFile('noi_dung')) {
+            $file['noi_dung'] = $request->file('noi_dung')->store('assets/files/' . $file->id, 'public');
+            $file['loai_file'] = $request->file('noi_dung')->extension();
+            $file['ten_file'] = $request->file('noi_dung')->getClientOriginalName();
+        }
+        $file->save();
         $response = [
             'message' => 'them file thanh cong !',
             'file' => $file

@@ -19,6 +19,7 @@ class File extends Model
     protected $fillable = [
         'id',
         'noi_dung',
+        'ten_file',
         'loai_file',
         'trang_thai'
     ];
