@@ -10,6 +10,7 @@ import 'package:user_flutter/Model_View/login.dart';
 import 'package:user_flutter/View/Widget/Home/load_Lop_HP.dart';
 import 'package:user_flutter/View/Widget/Home/thong_bao.dart';
 import 'package:user_flutter/View/Widget/Navi/navigation_drawer_widget.dart';
+import 'package:user_flutter/View/Widget/widget_loadin.dart';
 import 'package:user_flutter/View/common/constant/color.dart';
 import 'package:user_flutter/View/common/constant/string.dart';
 import '../Widget/Home/app_icon_buttton.dart';
@@ -99,7 +100,7 @@ class _HomeViewState extends State<HomeView> {
                 ),
                 drawer: NavigationDrawerWidget(),
                 backgroundColor: const Color(0xFFF6F9FE),
-                floatingActionButton: isGiangvien
+                floatingActionButton: user.user!.idKhoa == 0
                     ? FloatingActionButton(
                         onPressed: () {
                           showBarModalBottomSheet(
@@ -404,10 +405,7 @@ class _HomeViewState extends State<HomeView> {
               ),
             );
           } else {
-            return Container(
-                child: Center(
-              child: CircularProgressIndicator(strokeWidth: 10),
-            ));
+            return Loading();
           }
         });
   }

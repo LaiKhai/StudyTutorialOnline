@@ -12,3 +12,5 @@ const Key centerKey = ValueKey<String>('bottom-sliver-list');
 const String urlLogin = '$Link/api/login';
 const String getAllClass = '$Link/api/lophocphan';
 const String getClass = '$Link/api/lophocphanwithsinhvien/';
+const String getClassGV = '$Link/api/lophocphanwithgiangvien/';
+const String getOneClass = '$Link/api/lophocphan/';

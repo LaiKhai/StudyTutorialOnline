@@ -3,7 +3,6 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:user_flutter/Model/color_Subject.dart';
-import 'package:user_flutter/Model/home_data.dart';
 import 'package:user_flutter/Model/lop_HP.dart';
 import 'package:user_flutter/Model/subject.dart';
 import 'package:user_flutter/View/common/constant/string.dart';
@@ -65,10 +64,11 @@ class SubjectItem extends StatelessWidget {
                   ),
                 ],
               ),
-              Image.network(
-                'https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885__480.jpg',
-                width: 72,
-                height: 72,
+              CircleAvatar(
+                radius: 40,
+                backgroundImage: NetworkImage(
+                  'https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885__480.jpg',
+                ),
               ),
             ],
           ),

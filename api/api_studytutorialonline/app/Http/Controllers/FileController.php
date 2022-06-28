@@ -54,7 +54,7 @@ class FileController extends Controller
     public function store(Request $request)
     {
         $input['id_bai_viet'] = $request->input('id_bai_viet');
-        $input['loai_file'] = $request->input('loai_file');
+        $input['loai_file'] = $request->input('loai_file'); 
         $input['trang_thai'] = $request->input('trang_thai');
         $validator = Validator::make($input, [
             'id_bai_viet' => ['required', 'max:255', 'integer'],

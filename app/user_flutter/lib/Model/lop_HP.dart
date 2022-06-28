@@ -1,3 +1,5 @@
+import 'package:user_flutter/Model/User_login.dart';
+
 class lop_HP {
   List<Lophocphan>? lophocphan;
 
@@ -7,7 +9,10 @@ class lop_HP {
     if (json['lophocphan'] != null) {
       lophocphan = <Lophocphan>[];
       json['lophocphan'].forEach((v) {
-        lophocphan!.add(new Lophocphan.fromJson(v));
+        if (user.user!.idChucVu != 0) {
+          lophocphan!.add(new Lophocphan.fromJsonGV(v));
+        } else
+          lophocphan!.add(new Lophocphan.fromJsonSV(v));
       });
     }
   }
@@ -26,7 +31,7 @@ class Lophocphan {
   int? id;
   int? idBoMon;
   int? idLop;
-  Null? avt;
+  String? avt;
   int? trangThai;
   String? createdAt;
   String? updatedAt;
@@ -47,7 +52,7 @@ class Lophocphan {
       this.tenMonHoc,
       this.tenLop});
 
-  Lophocphan.fromJson(Map<String, dynamic> json) {
+  Lophocphan.fromJsonSV(Map<String, dynamic> json) {
     idSinhVien = json['id_sinh_vien'];
     id = json['id'];
     idBoMon = json['id_bo_mon'];
@@ -61,6 +66,23 @@ class Lophocphan {
     createdAt = json['created_at'];
     updatedAt = json['updated_at'];
     hoTenSv = json['ho_ten_sv'];
+    tenMonHoc = json['ten_mon_hoc'];
+    tenLop = json['ten_lop'];
+  }
+  Lophocphan.fromJsonGV(Map<String, dynamic> json) {
+    idSinhVien = json['id_giang_vien'];
+    id = json['id'];
+    idBoMon = json['id_bo_mon'];
+    idLop = json['id_lop'];
+    if (json['avt'] == null) {
+      json['avt'] = 'assets/images/lophocphan/no_image.jpg';
+    } else {
+      avt = json['avt'];
+    }
+    trangThai = json['trang_thai'];
+    createdAt = json['created_at'];
+    updatedAt = json['updated_at'];
+    hoTenSv = json['ho_ten_gv'];
     tenMonHoc = json['ten_mon_hoc'];
     tenLop = json['ten_lop'];
   }

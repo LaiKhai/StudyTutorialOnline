@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:user_flutter/Model/User_login.dart';
+import 'package:user_flutter/View/common/constant/string.dart';
 import 'package:user_flutter/View/page/dang_Thong_bao.dart';
 
 import '../../common/constant/color.dart';
@@ -34,8 +36,8 @@ class SubjectPost extends StatelessWidget {
           children: [
             ClipRRect(
               borderRadius: BorderRadius.circular(360),
-              child: Image.asset(
-                "assets/images/user.png",
+              child: Image.network(
+                '${user.user!.avt!}',
                 width: 36,
                 height: 36,
               ),

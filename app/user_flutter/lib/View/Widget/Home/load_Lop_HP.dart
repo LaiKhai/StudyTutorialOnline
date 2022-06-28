@@ -3,6 +3,7 @@ import 'package:user_flutter/Model/home_data.dart';
 import 'package:user_flutter/Model/lop_HP.dart';
 import 'package:user_flutter/Model_View/get_lopHp.dart';
 import 'package:user_flutter/View/Widget/Home/subject_item.dart';
+import 'package:user_flutter/View/Widget/widget_loadin.dart';
 import 'package:user_flutter/View/page/subject_view.dart';
 
 class Load_lopHP extends StatefulWidget {
@@ -18,6 +19,7 @@ class _Load_lopHPState extends State<Load_lopHP> {
     return FutureBuilder<lop_HP>(
       future: LopHocPhan.getLopHP(),
       builder: (context, snapshot) {
+        print(snapshot.data.toString());
         if (snapshot.hasData) {
           return SliverList(
               delegate: SliverChildBuilderDelegate((context, index) {
@@ -30,21 +32,20 @@ class _Load_lopHPState extends State<Load_lopHP> {
                   // Navigate to subject view
                   Navigator.of(context).push(
                     MaterialPageRoute(
-                      builder: (_) => SubjectView(subject: subjects[1]),
-                    ),
+                        builder: (_) => SubjectView(
+                              id_lopHp: snapshot.data!.lophocphan![index].id!,
+                            )),
                   );
                 },
                 child: SubjectItem(subject: snapshot.data!.lophocphan![index]),
               ),
             );
           }, childCount: snapshot.data!.lophocphan!.length));
+        } else if (snapshot.data == null) {
+          return SliverList(delegate: SliverChildListDelegate([Container()]));
         } else {
           return SliverList(
-              delegate: SliverChildListDelegate([
-            Container(
-              color: Colors.red,
-            )
-          ]));
+              delegate: SliverChildListDelegate([const Loading()]));
         }
       },
     );
