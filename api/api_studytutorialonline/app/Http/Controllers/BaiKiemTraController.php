@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\BaiKiemTra;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
@@ -179,6 +180,21 @@ class BaiKiemTraController extends Controller
             'message' => 'xoa thanh cong !',
             'baikiemtra' => $lstBaiKiemTra
         ];
+        return response()->json($response, 200);
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function startBKT(Request $request)
+    {
+        $idBaiKiemTra = $request->input('id_bai_kiem_tra');
+        $idLopHocPhan = $request->input('id_lop_hoc_phan');
+        $startBKT = DB::select('CALL Bat_dau_KT(' . $idBaiKiemTra . ',' . $idLopHocPhan . ')');
+        $response = ['traloi' => $startBKT];
         return response()->json($response, 200);
     }
 }
