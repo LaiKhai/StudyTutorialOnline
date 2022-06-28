@@ -16,7 +16,11 @@ class DSGiangVienController extends Controller
      */
     public function index()
     {
-        //
+        $dsgv = DS_GiangVien::all();
+        $response = [
+            'lstdsgv' => $dsgv
+        ];
+        return response()->json($response, 200);
     }
 
     /**
