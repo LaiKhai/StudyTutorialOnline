@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\DS_GiangVien;
+use App\Models\DS_SinhVien;
 use App\Models\GiangVien;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
@@ -111,6 +112,8 @@ class GiangVienController extends Controller
         $this->FixImg($giangVien);
         $giangVien->chucVu;
         $giangVien->Khoa;
+        $giangVien->lop;
+
         $response = [
             'user' => $giangVien
         ];
