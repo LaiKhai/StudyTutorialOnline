@@ -28,12 +28,12 @@ class CreateBaiKiemTrasTable extends Migration
             $table->timestamps();
         });
 
-        $procedure = "DROP PROCEDURE IF EXISTS `Bat_dau_KT`;
-            DELIMITER $$
-            CREATE PROCEDURE `Bat_dau_KT`(IN `id_bai_ktra` INT, IN `id_lop_hphan` INT)
-            INSERT INTO tra_lois(id_sinh_vien,id_cau_hoi) select id_sinh_vien,cau_hois.id from ds_sinh_viens, cau_hois where id_bai_kiem_tra = id_bai_ktra and ds_sinh_viens.id_lop_hoc_phan=1$$
-            DELIMITER ;";
-        DB::unprepared($procedure);
+        // $procedure = "DROP PROCEDURE IF EXISTS `Bat_dau_KT`;
+        //     DELIMITER $$
+        //     CREATE PROCEDURE `Bat_dau_KT`(IN `id_bai_ktra` INT, IN `id_lop_hphan` INT)
+        //     INSERT INTO tra_lois(id_sinh_vien,id_cau_hoi) select id_sinh_vien,cau_hois.id from ds_sinh_viens, cau_hois where id_bai_kiem_tra = id_bai_ktra and ds_sinh_viens.id_lop_hoc_phan=1$$
+        //     DELIMITER ;";
+        // DB::unprepared($procedure);
     }
 
     /**

@@ -183,18 +183,18 @@ class BaiKiemTraController extends Controller
         return response()->json($response, 200);
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function startBKT(Request $request)
-    {
-        $idBaiKiemTra = $request->input('id_bai_kiem_tra');
-        $idLopHocPhan = $request->input('id_lop_hoc_phan');
-        $startBKT = DB::select('CALL Bat_dau_KT(' . $idBaiKiemTra . ',' . $idLopHocPhan . ')');
-        $response = ['traloi' => $startBKT];
-        return response()->json($response, 200);
-    }
+    // /**
+    //  * Store a newly created resource in storage.
+    //  *
+    //  * @param  \Illuminate\Http\Request  $request
+    //  * @return \Illuminate\Http\Response
+    //  */
+    // public function startBKT(Request $request)
+    // {
+    //     $idBaiKiemTra = $request->input('id_bai_kiem_tra');
+    //     $idLopHocPhan = $request->input('id_lop_hoc_phan');
+    //     $startBKT = DB::select('CALL Bat_dau_KT(' . $idBaiKiemTra . ',' . $idLopHocPhan . ')');
+    //     $response = ['traloi' => $startBKT];
+    //     return response()->json($response, 200);
+    // }
 }
