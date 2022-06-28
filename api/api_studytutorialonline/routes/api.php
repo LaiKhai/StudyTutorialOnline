@@ -44,6 +44,8 @@ Route::get('/dsgv/createDSGV', [DSGiangVienController::class, 'createDSSVWithGia
 Route::get('/lophocphanwithsinhvien/{id}', [SinhVienController::class, 'lophocphanwithsinhvien']);
 //Lay danh sach lop hoc phan theo id giang vien
 Route::get('/lophocphanwithgiangvien/{id}', [GiangVienController::class, 'lophocphanwithgiangvien']);
+//bat dau kiem tra
+Route::get('/lophocphanwithgiangvien/{id}', [GiangVienController::class, 'lophocphanwithgiangvien']);
 
 Route::apiResource('chucvu', ChucVuController::class);
 Route::apiResource('sinhvien', SinhVienController::class);
