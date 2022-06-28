@@ -19,6 +19,9 @@ class BaiTapController extends Controller
         foreach ($lstBaiTap as $item) {
             $item->lophocphan;
             $item->loaibaitap;
+            $item->file;
+            $item->ctbaitap;
+            $item->binhluan;
         }
         $response = [
             'baitap' => $lstBaiTap
@@ -69,6 +72,11 @@ class BaiTapController extends Controller
             return response()->json($response, 404);
         }
         $baiTap = BaiTap::create($input);
+        $baiTap->lophocphan;
+        $baiTap->loaibaitap;
+        $baiTap->file;
+        $baiTap->ctbaitap;
+        $baiTap->binhluan;
         $response = [
             'message' => 'them bai tap thanh cong !',
             'baiTap' => $baiTap
@@ -90,6 +98,9 @@ class BaiTapController extends Controller
         }
         $baiTap->lophocphan;
         $baiTap->loaibaitap;
+        $baiTap->file;
+        $baiTap->ctbaitap;
+        $baiTap->binhluan;
         $response = [
             'baiTap' => $baiTap,
         ];
@@ -131,6 +142,11 @@ class BaiTapController extends Controller
             'trang_thai' => $request->input('trang_thai')
         ]);
         $baiTap->save();
+        $baiTap->lophocphan;
+        $baiTap->loaibaitap;
+        $baiTap->file;
+        $baiTap->ctbaitap;
+        $baiTap->binhluan;
         $response = [
             'message' => 'chinh sua thanh cong !',
             'baitap' => $baiTap
@@ -152,6 +168,13 @@ class BaiTapController extends Controller
         }
         $baiTap->delete();
         $lstBaiTap = BaiTap::all();
+        foreach ($lstBaiTap as $item) {
+            $item->lophocphan;
+            $item->loaibaitap;
+            $item->file;
+            $item->ctbaitap;
+            $item->binhluan;
+        }
         $response = [
             'message' => 'xoa thanh cong !',
             'baitap' => $lstBaiTap

@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\BaiTap;
 use App\Models\BaiViet;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
@@ -21,6 +20,7 @@ class BaiVietController extends Controller
         foreach ($lstBaiViet as $item) {
             $item->lophocphan;
             $item->loaibaiviet;
+            $item->checkfile;
         }
         return response()->json(['baiviet' => $lstBaiViet], 200);
     }
@@ -61,6 +61,9 @@ class BaiVietController extends Controller
             return response()->json($response, 404);
         }
         $baiViet = BaiViet::create($input);
+        $baiViet->lophocphan;
+        $baiViet->loaibaiviet;
+        $baiViet->checkfile;
         $response = [
             'message' => 'them thanh cong !',
             'baiviet' => $baiViet
@@ -82,6 +85,7 @@ class BaiVietController extends Controller
         }
         $baiViet->lophocphan;
         $baiViet->loaibaiviet;
+        $baiViet->checkfile;
         $response = [
             'baiviet' => $baiViet
         ];
@@ -119,6 +123,9 @@ class BaiVietController extends Controller
             'trang_thai' => $request->input('trang_thai'),
         ]);
         $baiViet->save();
+        $baiViet->lophocphan;
+        $baiViet->loaibaiviet;
+        $baiViet->checkfile;
         $response = [
             'message' => 'chinh sua thanh cong !',
             'baiviet' => $baiViet
@@ -140,6 +147,11 @@ class BaiVietController extends Controller
         }
         $baiViet->delete();
         $lstBaiViet = BaiViet::all();
+        foreach ($lstBaiViet as $item) {
+            $item->lophocphan;
+            $item->loaibaiviet;
+            $item->checkfile;
+        }
         $response = [
             'message' => 'xoa thanh cong !',
             'baiviet' => $lstBaiViet

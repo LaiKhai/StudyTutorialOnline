@@ -18,7 +18,6 @@ class File extends Model
     protected $table = 'files';
     protected $fillable = [
         'id',
-        'id_bai_viet',
         'noi_dung',
         'loai_file',
         'trang_thai'
@@ -38,10 +37,6 @@ class File extends Model
     public function checkfile()
     {
         return $this->hasMany(CheckFile::class, 'id_file', 'id');
-    }
-    public function baiviet()
-    {
-        return $this->belongsTo(BaiViet::class, 'id_bai_viet');
     }
     public function traloi()
     {

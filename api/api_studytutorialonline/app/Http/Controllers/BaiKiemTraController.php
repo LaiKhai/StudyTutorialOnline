@@ -20,6 +20,8 @@ class BaiKiemTraController extends Controller
             $item->lophocphan;
             $item->giangvien;
             $item->file;
+            $item->ctbaikiemtra;
+            $item->cauhoi;
         }
         $response = [
             'baikiemtra' => $baiKiemTra
@@ -70,6 +72,11 @@ class BaiKiemTraController extends Controller
             return response()->json($response, 404);
         }
         $baiKiemTra = BaiKiemTra::create($input);
+        $baiKiemTra->lophocphan;
+        $baiKiemTra->giangvien;
+        $baiKiemTra->file;
+        $baiKiemTra->ctbaikiemtra;
+        $baiKiemTra->cauhoi;
         $response = [
             'message' => 'them bai kiem tra thanh cong !',
             'baikiemtra' => $baiKiemTra
@@ -92,6 +99,8 @@ class BaiKiemTraController extends Controller
         $baiKiemTra->lophocphan;
         $baiKiemTra->giangvien;
         $baiKiemTra->file;
+        $baiKiemTra->ctbaikiemtra;
+        $baiKiemTra->cauhoi;
         $response = [
             'baikiemtra' => $baiKiemTra,
         ];
@@ -133,6 +142,11 @@ class BaiKiemTraController extends Controller
             'trang_thai' => $request->input('trang_thai')
         ]);
         $baiKiemTra->save();
+        $baiKiemTra->lophocphan;
+        $baiKiemTra->giangvien;
+        $baiKiemTra->file;
+        $baiKiemTra->ctbaikiemtra;
+        $baiKiemTra->cauhoi;
         $response = [
             'message' => 'chinh sua thanh cong !',
             'baikiemtra' => $baiKiemTra
@@ -154,6 +168,13 @@ class BaiKiemTraController extends Controller
         }
         $baiKiemTra->delete();
         $lstBaiKiemTra = BaiKiemTra::all();
+        foreach ($lstBaiKiemTra as $item) {
+            $item->lophocphan;
+            $item->giangvien;
+            $item->file;
+            $item->ctbaikiemtra;
+            $item->cauhoi;
+        }
         $response = [
             'message' => 'xoa thanh cong !',
             'baikiemtra' => $lstBaiKiemTra

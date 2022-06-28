@@ -33,8 +33,4 @@ class BaiViet extends Model
     {
         return $this->hasMany(CheckFile::class, 'id_bai_viet', 'id');
     }
-    public function file()
-    {
-        return $this->hasMany(File::class, 'id_bai_viet', 'id');
-    }
 }
