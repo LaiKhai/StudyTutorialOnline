@@ -2,12 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\BaiViet;
+use App\Models\BinhLuan;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
-
-class BaiVietController extends Controller
+class BinhLuanController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -16,13 +15,15 @@ class BaiVietController extends Controller
      */
     public function index()
     {
-        $lstBaiViet = BaiViet::all();
-        foreach ($lstBaiViet as $item) {
-            $item->lophocphan;
-            $item->loaibaiviet;
-            $item->checkfile;
+        $binhLuan = BinhLuan::all();
+        foreach ($binhLuan as $item) {
+            $item->sinhvien;
+            $item->baitap;
         }
-        return response()->json(['baiviet' => $lstBaiViet], 200);
+        $response = [
+            'binhluan' => $binhLuan
+        ];
+        return response()->json($response, 200);
     }
 
     /**
@@ -41,17 +42,17 @@ class BaiVietController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request  $request)
+    public function store(Request $request)
     {
-        $input['id_lop_hoc_phan'] = $request->input('id_lop_hoc_phan');
-        $input['id_loai_bai_viet'] = $request->input('id_loai_bai_viet');
+        $input['id_bai_tap'] = $request->input('id_bai_tap');
+        $input['id_sinh_vien'] = $request->input('id_sinh_vien');
         $input['noi_dung'] = $request->input('noi_dung');
         $input['trang_thai'] = 1;
         $validator = Validator::make($input, [
-            'id_lop_hoc_phan' => ['required', 'max:255', 'integer'],
-            'id_loai_bai_viet' => ['required', 'max:255', 'integer'],
-            'noi_dung' => ['required', 'string'],
-            'trang_thai' => ['required', 'max:255', 'integer']
+            'id_bai_tap' => ['required', 'max:255', 'integer'],
+            'id_sinh_vien' => ['required', 'max:255', 'integer'],
+            'noi_dung' => ['required', 'max:255', 'string'],
+            'trang_thai' => ['required', 'max:255', 'integer'],
         ]);
         if ($validator->fails()) {
             if (!empty($validator->errors())) {
@@ -60,13 +61,12 @@ class BaiVietController extends Controller
             $response['message'] = 'Vaidator Error';
             return response()->json($response, 404);
         }
-        $baiViet = BaiViet::create($input);
-        $baiViet->lophocphan;
-        $baiViet->loaibaiviet;
-        $baiViet->checkfile;
+        $binhLuan = BinhLuan::create($input);
+        $binhLuan->baitap;
+        $binhLuan->sinhvien;
         $response = [
-            'message' => 'them thanh cong !',
-            'baiviet' => $baiViet
+            'message' => 'them thanh cong bo mon !',
+            'binhluan' => $binhLuan
         ];
         return response()->json($response, 200);
     }
@@ -79,15 +79,14 @@ class BaiVietController extends Controller
      */
     public function show($id)
     {
-        $baiViet = BaiViet::find($id);
-        if (empty($baiViet)) {
-            return response()->json(['message' => 'khong tim thay bai viet !'], 404);
+        $binhLuan = BinhLuan::find($id);
+        if (empty($binhLuan)) {
+            return response()->json(['message' => 'khong tim thay binh luan !'], 404);
         }
-        $baiViet->lophocphan;
-        $baiViet->loaibaiviet;
-        $baiViet->checkfile;
+        $binhLuan->baitap;
+        $binhLuan->sinhvien;
         $response = [
-            'baiviet' => $baiViet
+            'binhluan' => $binhLuan
         ];
         return response()->json($response, 200);
     }
@@ -112,23 +111,22 @@ class BaiVietController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $baiViet = BaiViet::find($id);
-        if (empty($baiViet)) {
-            return response()->json(['message' => 'khong tim thay bai viet !'], 404);
+        $binhLuan = BinhLuan::find($id);
+        if (empty($binhLuan)) {
+            return response()->json(['message' => 'khong tim thay binh luan !'], 404);
         }
-        $baiViet->fill([
-            'id_lop_hoc_phan' => $request->input('id_lop_hoc_phan'),
-            'id_loai_bai_viet' => $request->input('id_loai_bai_viet'),
+        $binhLuan->fill([
+            'id_bai_tap' => $request->input('id_bai_tap'),
+            'id_sinh_vien' => $request->input('id_sinh_vien'),
             'noi_dung' => $request->input('noi_dung'),
             'trang_thai' => $request->input('trang_thai'),
         ]);
-        $baiViet->save();
-        $baiViet->lophocphan;
-        $baiViet->loaibaiviet;
-        $baiViet->checkfile;
+        $binhLuan->save();
+        $binhLuan->baitap;
+        $binhLuan->sinhvien;
         $response = [
             'message' => 'chinh sua thanh cong !',
-            'baiviet' => $baiViet
+            'binhluan' => $binhLuan
         ];
         return response()->json($response, 200);
     }
@@ -141,20 +139,19 @@ class BaiVietController extends Controller
      */
     public function destroy($id)
     {
-        $baiViet = BaiViet::find($id);
-        if (empty($baiViet)) {
-            return response()->json(['message' => 'khong tim thay bai viet !']);
+        $binhLuan = BinhLuan::find($id);
+        if (empty($binhLuan)) {
+            return response()->json(['message' => 'khong tim thay binh luan !'], 404);
         }
-        $baiViet->delete();
-        $lstBaiViet = BaiViet::all();
-        foreach ($lstBaiViet as $item) {
-            $item->lophocphan;
-            $item->loaibaiviet;
-            $item->checkfile;
+        $binhLuan->delete();
+        $lstBinhLuan = BinhLuan::all();
+        foreach ($lstBinhLuan as $item) {
+            $item->baitap;
+            $item->sinhvien;
         }
         $response = [
             'message' => 'xoa thanh cong !',
-            'baiviet' => $lstBaiViet
+            'binhluan' => $lstBinhLuan
         ];
         return response()->json($response, 200);
     }

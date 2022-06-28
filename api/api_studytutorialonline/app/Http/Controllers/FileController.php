@@ -26,7 +26,6 @@ class FileController extends Controller
     {
         $file = File::all();
         foreach ($file as $item) {
-            $item->baiviet;
             $this->FixFile($item);
         }
         $response = [
@@ -53,11 +52,9 @@ class FileController extends Controller
      */
     public function store(Request $request)
     {
-        $input['id_bai_viet'] = $request->input('id_bai_viet');
-        $input['loai_file'] = $request->input('loai_file'); 
+        $input['loai_file'] = $request->input('loai_file');
         $input['trang_thai'] = $request->input('trang_thai');
         $validator = Validator::make($input, [
-            'id_bai_viet' => ['required', 'max:255', 'integer'],
             'noi_dung' => ['required'],
             'trang_thai' => ['required', 'max:255', 'integer'],
         ]);
@@ -88,7 +85,6 @@ class FileController extends Controller
     public function show($id)
     {
         $file = File::find($id);
-        $file->biaviet;
         $this->FixFile($file);
         return response()->json($file, 200);
     }
@@ -118,7 +114,6 @@ class FileController extends Controller
             return response()->json(['messsage' => 'khong tim thay file nao !'], 404);
         }
         $file->fill([
-            'id_bai_viet' => $request->input('id_bai_viet'),
             'loai_file' => $request->input('loai_file'),
             'trang_thai' => $request->input('trang_thai')
         ]);

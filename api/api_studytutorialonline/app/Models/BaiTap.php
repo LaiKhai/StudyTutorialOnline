@@ -41,4 +41,8 @@ class BaiTap extends Model
     {
         return $this->hasMany(CTBaiTap::class, 'id_bai_tap', 'id');
     }
+    public function binhluan()
+    {
+        return $this->hasMany(BinhLuan::class, 'id_bai_tap', 'id');
+    }
 }

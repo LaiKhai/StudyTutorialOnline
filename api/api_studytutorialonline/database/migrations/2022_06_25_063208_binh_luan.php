@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateFilesTable extends Migration
+class BinhLuan extends Migration
 {
     /**
      * Run the migrations.
@@ -13,10 +13,11 @@ class CreateFilesTable extends Migration
      */
     public function up()
     {
-        Schema::create('files', function (Blueprint $table) {
+        Schema::create('binh_luans', function (Blueprint $table) {
             $table->id();
-            $table->string('noi_dung')->nullable();
-            $table->string('loai_file');
+            $table->foreignId('id_bai_tap');
+            $table->foreignId('id_sinh_vien');
+            $table->string('noi_dung');
             $table->integer('trang_thai');
             $table->timestamps();
         });
@@ -29,6 +30,6 @@ class CreateFilesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('files');
+        Schema::dropIfExists('binh_luans');
     }
 }

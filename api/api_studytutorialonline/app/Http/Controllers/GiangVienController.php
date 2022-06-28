@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\DS_GiangVien;
+use App\Models\LopHocPhan;
 use App\Models\GiangVien;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
@@ -18,6 +19,14 @@ class GiangVienController extends Controller
             $giangVien->avt = Storage::url($giangVien->avt);
         } else {
             $giangVien->avt = '/assets/images/no_image.png';
+        }
+    }
+    public function FixImgLHP(LopHocPhan $lopHocPhan)
+    {
+        if (Storage::disk('public')->exists($lopHocPhan->avt)) {
+            $lopHocPhan->avt = Storage::url($lopHocPhan->avt);
+        } else {
+            $lopHocPhan->avt = '/assets/images/lophocphan/no_image.png';
         }
     }
     /**
@@ -111,6 +120,8 @@ class GiangVienController extends Controller
         $this->FixImg($giangVien);
         $giangVien->chucVu;
         $giangVien->Khoa;
+        $giangVien->lop;
+
         $response = [
             'user' => $giangVien
         ];
@@ -145,7 +156,7 @@ class GiangVienController extends Controller
             'id_khoa' => $request->input('id_khoa'),
             'id_chuc_vu' => $request->input('id_chuc_vu'),
             'email' => $request->input('email'),
-            'password' => $request->input('password'),
+            'password' => Hash::make($request->input('password')),
             'ma_so' => $request->input('ma_so'),
             'sdt' => $request->input('sdt'),
             'ho_ten' => $request->input('ho_ten'),
@@ -187,14 +198,15 @@ class GiangVienController extends Controller
 
     public function lophocphanwithgiangvien($id)
     {
-        $lopHocPhan = DS_GiangVien::join('lop_hoc_phans', 'ds_giang_viens.id_lop_hoc_phan', '=', 'lop_hoc_phans.id')
+        $lhp = DS_GiangVien::join('lop_hoc_phans', 'ds_giang_viens.id_lop_hoc_phan', '=', 'lop_hoc_phans.id')
             ->join('giang_viens', 'ds_giang_viens.id_giang_vien', '=', 'giang_viens.id')
             ->join('bo_mons', 'lop_hoc_phans.id_bo_mon', '=', 'bo_mons.id')
             ->join('lops', 'lop_hoc_phans.id_lop', '=', 'lops.id')
             ->where('ds_giang_viens.id_giang_vien', $id)
             ->select('ds_giang_viens.id_giang_vien', 'lop_hoc_phans.*', 'giang_viens.ho_ten as ho_ten_gv', 'bo_mons.ten_mon_hoc', 'lops.ten_lop')->get();
+
         $response = [
-            'lophocphan' => $lopHocPhan
+            'lophocphan' => $lhp
         ];
         return response()->json($response, 200);
     }

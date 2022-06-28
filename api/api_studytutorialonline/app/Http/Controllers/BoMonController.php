@@ -62,9 +62,13 @@ class BoMonController extends Controller
             return response()->json($response, 404);
         }
         $boMon = BoMon::create($input);
+        $boMon->khoa;
+        $lophocphan = BoMon::join('lop_hoc_phans', 'lop_hoc_phans.id_bo_mon', '=', 'bo_mons.id')
+            ->where('lop_hoc_phans.id_bo_mon', $boMon->lophocphan)->get();
         $response = [
             'message' => 'them thanh cong bo mon !',
-            'bomon' => $boMon
+            'bomon' => $boMon,
+            'lophocphan' => $lophocphan
         ];
         return response()->json($response, 200);
     }
@@ -82,8 +86,13 @@ class BoMonController extends Controller
             return response()->json(['message' => 'khong tim thay bo mon nao !'], 404);
         }
         $boMon->khoa;
+        $lophocphan = BoMon::join('lop_hoc_phans', 'lop_hoc_phans.id_bo_mon', '=', 'bo_mons.id')
+            ->join('lops', 'lop_hoc_phans.id_lop', '=', 'lops.id')
+            ->where('bo_mons.id', $id)
+            ->select('lop_hoc_phans.*', 'bo_mons.*', 'lops.*')->get();
         $response = [
-            'bomon' => $boMon
+            'bomon' => $boMon,
+            'lophocphan' => $lophocphan
         ];
         return response()->json($response, 200);
     }
@@ -119,9 +128,13 @@ class BoMonController extends Controller
             'trang_thai' => $request->input('trang_thai'),
         ]);
         $boMon->save();
+        $boMon->khoa;
+        $lophocphan = BoMon::join('lop_hoc_phans', 'lop_hoc_phans.id_bo_mon', '=', 'bo_mons.id')
+            ->where('lop_hoc_phans.id_bo_mon', $boMon->lophocphan)->get();
         $response = [
             'message' => 'chinh sua thanh cong !',
-            'bomon' => $boMon
+            'bomon' => $boMon,
+            'lophocphan' => $lophocphan
         ];
         return response()->json($response, 200);
     }
@@ -140,9 +153,16 @@ class BoMonController extends Controller
         }
         $boMon->delete();
         $lstBoMon = BoMon::all();
+        foreach ($lstBoMon as $item) {
+            $item->khoa;
+            $lophocphan = BoMon::join('lop_hoc_phans', 'lop_hoc_phans.id_bo_mon', '=', 'bo_mons.id')
+                ->where('lop_hoc_phans.id_bo_mon', $item->lophocphan)->get();
+        }
+
         $response = [
             'message' => 'xoa thanh cong !',
-            'bomon' => $lstBoMon
+            'bomon' => $lstBoMon,
+            'lophoaphan' => $lophocphan
         ];
         return response()->json($response, 200);
     }

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\BaiKiemTra;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
@@ -20,6 +21,8 @@ class BaiKiemTraController extends Controller
             $item->lophocphan;
             $item->giangvien;
             $item->file;
+            $item->ctbaikiemtra;
+            $item->cauhoi;
         }
         $response = [
             'baikiemtra' => $baiKiemTra
@@ -70,6 +73,11 @@ class BaiKiemTraController extends Controller
             return response()->json($response, 404);
         }
         $baiKiemTra = BaiKiemTra::create($input);
+        $baiKiemTra->lophocphan;
+        $baiKiemTra->giangvien;
+        $baiKiemTra->file;
+        $baiKiemTra->ctbaikiemtra;
+        $baiKiemTra->cauhoi;
         $response = [
             'message' => 'them bai kiem tra thanh cong !',
             'baikiemtra' => $baiKiemTra
@@ -92,6 +100,8 @@ class BaiKiemTraController extends Controller
         $baiKiemTra->lophocphan;
         $baiKiemTra->giangvien;
         $baiKiemTra->file;
+        $baiKiemTra->ctbaikiemtra;
+        $baiKiemTra->cauhoi;
         $response = [
             'baikiemtra' => $baiKiemTra,
         ];
@@ -133,6 +143,11 @@ class BaiKiemTraController extends Controller
             'trang_thai' => $request->input('trang_thai')
         ]);
         $baiKiemTra->save();
+        $baiKiemTra->lophocphan;
+        $baiKiemTra->giangvien;
+        $baiKiemTra->file;
+        $baiKiemTra->ctbaikiemtra;
+        $baiKiemTra->cauhoi;
         $response = [
             'message' => 'chinh sua thanh cong !',
             'baikiemtra' => $baiKiemTra
@@ -154,10 +169,32 @@ class BaiKiemTraController extends Controller
         }
         $baiKiemTra->delete();
         $lstBaiKiemTra = BaiKiemTra::all();
+        foreach ($lstBaiKiemTra as $item) {
+            $item->lophocphan;
+            $item->giangvien;
+            $item->file;
+            $item->ctbaikiemtra;
+            $item->cauhoi;
+        }
         $response = [
             'message' => 'xoa thanh cong !',
             'baikiemtra' => $lstBaiKiemTra
         ];
         return response()->json($response, 200);
     }
+
+    // /**
+    //  * Store a newly created resource in storage.
+    //  *
+    //  * @param  \Illuminate\Http\Request  $request
+    //  * @return \Illuminate\Http\Response
+    //  */
+    // public function startBKT(Request $request)
+    // {
+    //     $idBaiKiemTra = $request->input('id_bai_kiem_tra');
+    //     $idLopHocPhan = $request->input('id_lop_hoc_phan');
+    //     $startBKT = DB::select('CALL Bat_dau_KT(' . $idBaiKiemTra . ',' . $idLopHocPhan . ')');
+    //     $response = ['traloi' => $startBKT];
+    //     return response()->json($response, 200);
+    // }
 }

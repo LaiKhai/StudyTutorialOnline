@@ -45,6 +45,8 @@ Route::get('/dsgv/createDSGV', [DSGiangVienController::class, 'createDSSVWithGia
 Route::get('/lophocphanwithsinhvien/{id}', [SinhVienController::class, 'lophocphanwithsinhvien']);
 //Lay danh sach lop hoc phan theo id giang vien
 Route::get('/lophocphanwithgiangvien/{id}', [GiangVienController::class, 'lophocphanwithgiangvien']);
+//bat dau kiem tra
+Route::get('/lophocphanwithgiangvien/{id}', [GiangVienController::class, 'lophocphanwithgiangvien']);
 
 Route::apiResource('chucvu', ChucVuController::class);
 Route::apiResource('sinhvien', SinhVienController::class);
@@ -59,6 +61,7 @@ Route::apiResource('baikiemtra', BaiKiemTraController::class);
 Route::apiResource('loaibaitap', LoaiBaiTapController::class);
 Route::apiResource('files', FileController::class);
 Route::apiResource('dssv', DSSinhVienController::class);
+Route::apiResource('dsgv', DSGiangVienController::class);
 Route::apiResource('loaibaiviet', LoaiBaiVietController::class);
 Route::apiResource('baiviet', BaiVietController::class);
 Route::middleware(['auth:sanctum'])->group(function () {

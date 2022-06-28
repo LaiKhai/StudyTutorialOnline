@@ -1,5 +1,6 @@
 import 'package:admin_studytutorialonline/common/contrains/color.dart';
 import 'package:admin_studytutorialonline/common/contrains/dimen.dart';
+import 'package:admin_studytutorialonline/common/contrains/string.dart';
 import 'package:admin_studytutorialonline/widget/Drawer/Navigation_Drawer.dart';
 import 'package:flutter/material.dart';
 
@@ -34,37 +35,180 @@ class _HomePageState extends State<HomePage> {
         ],
       ),
       body: SingleChildScrollView(
-        child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-          Container(
-            height: getHeightSize(context) * 0.2,
-            decoration: const BoxDecoration(
-                borderRadius: BorderRadius.only(
-                    bottomLeft: Radius.circular(30),
-                    bottomRight: Radius.circular(30)),
-                color: AppColor.theme),
-            child: const Center(
-                child: Text(
-              'Trang chủ',
-              style: TextStyle(
-                  color: AppColor.white,
-                  fontSize: 32,
-                  fontWeight: FontWeight.w600),
-            )),
+          child: Stack(
+        children: [
+          Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+            Container(
+              height: getHeightSize(context) * 0.2,
+              decoration: const BoxDecoration(
+                  borderRadius: BorderRadius.only(
+                      bottomLeft: Radius.circular(30),
+                      bottomRight: Radius.circular(30)),
+                  color: AppColor.theme),
+              child: Center(
+                  child: Text(
+                'Trang chủ',
+                style: TextStyle(
+                    color: AppColor.white,
+                    fontSize: 32,
+                    fontWeight: FontWeight.w600),
+              )),
+            ),
+            Container(
+              padding: EdgeInsets.only(top: getHeightSize(context) * 0.1),
+              child: Column(
+                children: [
+                  Container(
+                      padding:
+                          EdgeInsets.only(left: getWidthSize(context) * 0.05),
+                      child: Align(
+                        alignment: Alignment.topLeft,
+                        child: Text(
+                          'Thông báo',
+                          style:
+                              ggTextStyle(13, FontWeight.bold, AppColor.grey),
+                        ),
+                      )),
+                  Container(
+                      padding: EdgeInsets.fromLTRB(20, 20, 20, 10),
+                      child: ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                            primary: Colors.white,
+                            shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(20))),
+                        onPressed: () {},
+                        child: Row(
+                          children: [
+                            Container(
+                              margin: EdgeInsets.fromLTRB(0, 10, 10, 10),
+                              height: 47,
+                              width: 47,
+                              child: ClipRRect(
+                                  child: Image.asset(
+                                      'assets/images/no_image.png')),
+                            ),
+                            Container(
+                              child: Text(
+                                'bạn muốn thông báo...',
+                                style: ggTextStyle(
+                                    12, FontWeight.normal, AppColor.grey),
+                              ),
+                            )
+                          ],
+                        ),
+                      )),
+                  Container(
+                      padding: EdgeInsets.fromLTRB(
+                          getWidthSize(context) * 0.05, 10, 10, 10),
+                      child: Align(
+                        alignment: Alignment.topLeft,
+                        child: Text(
+                          'Danh sách các thông báo',
+                          style:
+                              ggTextStyle(13, FontWeight.bold, AppColor.grey),
+                        ),
+                      )),
+                  HomeList(),
+                  HomeList(),
+                ],
+              ),
+            )
+          ]),
+          Positioned(
+            top: getHeightSize(context) * 0.15,
+            left: getWidthSize(context) * 0.08,
+            child: Container(
+              height: 100,
+              width: 100,
+              child: Card(
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10)),
+                  elevation: 3,
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Container(
+                        child: Text(
+                          '1k5',
+                          style:
+                              ggTextStyle(30, FontWeight.bold, AppColor.theme),
+                        ),
+                      ),
+                      Container(
+                        child: Text(
+                          'sinh viên',
+                          style:
+                              ggTextStyle(13, FontWeight.w500, AppColor.theme),
+                        ),
+                      )
+                    ],
+                  )),
+            ),
           ),
-          const SizedBox(
-            height: 20,
+          Positioned(
+            top: getHeightSize(context) * 0.15,
+            left: getWidthSize(context) * 0.38,
+            child: Container(
+              height: 100,
+              width: 100,
+              child: Card(
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10)),
+                  elevation: 3,
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Container(
+                        child: Text(
+                          '28',
+                          style:
+                              ggTextStyle(30, FontWeight.bold, AppColor.theme),
+                        ),
+                      ),
+                      Container(
+                        child: Text(
+                          'giảng viên',
+                          style:
+                              ggTextStyle(13, FontWeight.w500, AppColor.theme),
+                        ),
+                      )
+                    ],
+                  )),
+            ),
           ),
-          const HomeNoti(),
-          const SizedBox(
-            height: 10,
+          Positioned(
+            top: getHeightSize(context) * 0.15,
+            left: getWidthSize(context) * 0.67,
+            child: Container(
+              height: 100,
+              width: 100,
+              child: Card(
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10)),
+                  elevation: 3,
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Container(
+                        child: Text(
+                          '144',
+                          style:
+                              ggTextStyle(30, FontWeight.bold, AppColor.theme),
+                        ),
+                      ),
+                      Container(
+                        child: Text(
+                          'lớp',
+                          style:
+                              ggTextStyle(13, FontWeight.w500, AppColor.theme),
+                        ),
+                      )
+                    ],
+                  )),
+            ),
           ),
-          const HomeList(),
-          const SizedBox(
-            height: 10,
-          ),
-          const HomeList(),
-        ]),
-      ),
+        ],
+      )),
     );
   }
 }
