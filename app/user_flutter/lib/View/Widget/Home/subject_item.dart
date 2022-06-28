@@ -65,11 +65,10 @@ class SubjectItem extends StatelessWidget {
                 ],
               ),
               CircleAvatar(
-                radius: 40,
-                backgroundImage: NetworkImage(
-                  'https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885__480.jpg',
-                ),
-              ),
+                  radius: 40,
+                  backgroundImage: NetworkImage(
+                    Link + '/' + subject.avt!,
+                  )),
             ],
           ),
         ),
