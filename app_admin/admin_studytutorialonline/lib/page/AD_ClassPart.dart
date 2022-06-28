@@ -1,19 +1,19 @@
-import 'package:admin_studytutorialonline/common/contrains/string.dart';
-import 'package:admin_studytutorialonline/widget/Subject/AD_SubjectCard.dart';
+import 'package:admin_studytutorialonline/widget/ClassPart/AD_ClassPartList.dart';
 import 'package:flutter/material.dart';
 
 import '../common/contrains/color.dart';
 import '../common/contrains/dimen.dart';
+import '../common/contrains/string.dart';
 import '../widget/Drawer/Navigation_Drawer.dart';
 
-class SubjectPage extends StatefulWidget {
-  SubjectPage({Key? key}) : super(key: key);
+class ClassPartPage extends StatefulWidget {
+  const ClassPartPage({Key? key}) : super(key: key);
 
   @override
-  State<SubjectPage> createState() => _SubjectPageState();
+  State<ClassPartPage> createState() => _ClassPartPageState();
 }
 
-class _SubjectPageState extends State<SubjectPage> {
+class _ClassPartPageState extends State<ClassPartPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -44,7 +44,7 @@ class _SubjectPageState extends State<SubjectPage> {
                   color: AppColor.theme),
               child: Center(
                   child: Text(
-                'Bộ Môn',
+                'Lớp Học Phần',
                 style: ggTextStyle(30, FontWeight.bold, AppColor.white),
               )),
             ),
@@ -55,14 +55,15 @@ class _SubjectPageState extends State<SubjectPage> {
                 style: ggTextStyle(13, FontWeight.bold, AppColor.grey),
               ),
             ),
+            ClassPartList(),
             SizedBox(
               height: 10,
             ),
-            SubjectCard(),
+            ClassPartList(),
             const SizedBox(
               height: 10,
             ),
-            SubjectCard(),
+            ClassPartList(),
           ]),
         ),
         floatingActionButton: FloatingActionButton(

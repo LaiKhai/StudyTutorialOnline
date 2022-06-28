@@ -1,19 +1,19 @@
-import 'package:admin_studytutorialonline/common/contrains/string.dart';
-import 'package:admin_studytutorialonline/widget/Subject/AD_SubjectCard.dart';
+import 'package:admin_studytutorialonline/widget/StudentPage/AD_StudentCard.dart';
 import 'package:flutter/material.dart';
 
 import '../common/contrains/color.dart';
 import '../common/contrains/dimen.dart';
+import '../common/contrains/string.dart';
 import '../widget/Drawer/Navigation_Drawer.dart';
 
-class SubjectPage extends StatefulWidget {
-  SubjectPage({Key? key}) : super(key: key);
+class StudentPage extends StatefulWidget {
+  const StudentPage({Key? key}) : super(key: key);
 
   @override
-  State<SubjectPage> createState() => _SubjectPageState();
+  State<StudentPage> createState() => _StudentPageState();
 }
 
-class _SubjectPageState extends State<SubjectPage> {
+class _StudentPageState extends State<StudentPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -44,7 +44,7 @@ class _SubjectPageState extends State<SubjectPage> {
                   color: AppColor.theme),
               child: Center(
                   child: Text(
-                'Bộ Môn',
+                'Sinh Viên',
                 style: ggTextStyle(30, FontWeight.bold, AppColor.white),
               )),
             ),
@@ -58,11 +58,11 @@ class _SubjectPageState extends State<SubjectPage> {
             SizedBox(
               height: 10,
             ),
-            SubjectCard(),
+            StudentCard(),
             const SizedBox(
               height: 10,
             ),
-            SubjectCard(),
+            StudentCard(),
           ]),
         ),
         floatingActionButton: FloatingActionButton(
