@@ -119,7 +119,7 @@ class SinhVienController extends Controller
         }
         $sinhVien->fill([
             'email' => $request->input('email'),
-            'password' => $request->input('password'),
+            'password' => Hash::make($request->input('password')),
             'ho_ten' => $request->input('ho_ten'),
             'ma_so' => $request->input('ma_so'),
             'sdt' => $request->input('sdt'),

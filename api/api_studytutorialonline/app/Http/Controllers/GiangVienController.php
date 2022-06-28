@@ -148,7 +148,7 @@ class GiangVienController extends Controller
             'id_khoa' => $request->input('id_khoa'),
             'id_chuc_vu' => $request->input('id_chuc_vu'),
             'email' => $request->input('email'),
-            'password' => $request->input('password'),
+            'password' => Hash::make($request->input('password')),
             'ma_so' => $request->input('ma_so'),
             'sdt' => $request->input('sdt'),
             'ho_ten' => $request->input('ho_ten'),
