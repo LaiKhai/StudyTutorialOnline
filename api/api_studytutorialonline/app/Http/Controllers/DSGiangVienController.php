@@ -41,9 +41,9 @@ class DSGiangVienController extends Controller
      */
     public function store(Request $request)
     {
-        $lopHocPhan = LopHocPhan::max('id');
+
         $input['id_giang_vien'] = $request->input('id_giang_vien');
-        $input['id_lop_hoc_phan'] = $lopHocPhan;
+        $input['id_lop_hoc_phan'] = $request->inpuut('id_lop_hoc_phan');
         $input['trang_thai'] = 1;
         DS_GiangVien::create($input);
         $lstdsgv = DS_GiangVien::all();

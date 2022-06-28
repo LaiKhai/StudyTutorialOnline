@@ -16,6 +16,7 @@ use App\Http\Controllers\BoMonController;
 use App\Http\Controllers\LoaiBaiVietController;
 use App\Http\Controllers\DSSinhVienController;
 use App\Http\Controllers\DSGiangVienController;
+use App\Http\Controllers\FileController;
 
 /*
 |--------------------------------------------------------------------------
@@ -62,5 +63,6 @@ Route::apiResource('dssv', DSSinhVienController::class);
 Route::apiResource('dsgv', DSGiangVienController::class);
 Route::apiResource('loaibaiviet', LoaiBaiVietController::class);
 Route::apiResource('baiviet', BaiVietController::class);
+Route::apiResource('file', FileController::class);
 Route::middleware(['auth:sanctum'])->group(function () {
 });

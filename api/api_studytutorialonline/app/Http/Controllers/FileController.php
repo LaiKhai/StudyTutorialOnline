@@ -11,7 +11,7 @@ class FileController extends Controller
 {
     public function FixFile(File $file)
     {
-        if (Storage::disk('public')->exists($file->avt)) {
+        if (Storage::disk('public')->exists($file->noi_dung)) {
             $file->noi_dung = Storage::url($file->noi_dung);
         } else {
             $file->noi_dung = null;
@@ -52,28 +52,28 @@ class FileController extends Controller
      */
     public function store(Request $request)
     {
-        $input['loai_file'] = $request->input('loai_file');
-        $input['trang_thai'] = $request->input('trang_thai');
-        $validator = Validator::make($input, [
-            'noi_dung' => ['required'],
-            'trang_thai' => ['required', 'max:255', 'integer'],
-        ]);
-        if ($validator->fails()) {
-            if (!empty($validator->errors())) {
-                $response['data'] = $validator->errors();
-            }
-            $response['message'] = 'Vaidator Error';
-            return response()->json($response, 404);
-        }
-        $file = File::create($input);
         if ($request->hasFile('noi_dung')) {
-            $file['noi_dung'] = $request->file('noi_dung')->store('assets/files/' . $file['id'], 'public');
+            $input['noi_dung'] = $request->file('noi_dung')->store('assets/files/' . $request->file('noi_dung')->getClientOriginalName(), 'public');
+            $input['loai_file'] = $request->file('noi_dung')->extension();
         }
-        $file->save();
+        $input['trang_thai'] = 1;
+        // $validator = Validator::make($input, [
+        //     'noi_dung' => ['required']
+        // ]);
+        // if ($validator->fails()) {
+        //     if (!empty($validator->errors())) {
+        //         $response['data'] = $validator->errors();
+        //     }
+        //     $response['message'] = 'Vaidator Error';
+        //     return response()->json($response, 404);
+        // }
+        $file = File::create($input);
+        $file->save;
         $response = [
             'message' => 'them file thanh cong !',
             'file' => $file
         ];
+        return response()->json($response, 200);
     }
 
     /**
