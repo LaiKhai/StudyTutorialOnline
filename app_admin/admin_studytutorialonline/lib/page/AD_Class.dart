@@ -44,7 +44,7 @@ class _ClassPageState extends State<ClassPage> {
                   color: AppColor.theme),
               child: Center(
                   child: Text(
-                'Bộ Môn',
+                'Lớp',
                 style: ggTextStyle(30, FontWeight.bold, AppColor.white),
               )),
             ),

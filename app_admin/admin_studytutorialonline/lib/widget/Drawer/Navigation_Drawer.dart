@@ -2,9 +2,14 @@ import 'dart:ui';
 
 import 'package:admin_studytutorialonline/common/contrains/color.dart';
 import 'package:admin_studytutorialonline/common/contrains/string.dart';
+import 'package:admin_studytutorialonline/page/AD_Class.dart';
+import 'package:admin_studytutorialonline/page/AD_ClassPart.dart';
 import 'package:admin_studytutorialonline/page/AD_DepartmentPage.dart';
 import 'package:admin_studytutorialonline/page/AD_HomePage.dart';
+import 'package:admin_studytutorialonline/page/AD_StudentPage.dart';
 import 'package:admin_studytutorialonline/page/AD_SubjectPage.dart';
+import 'package:admin_studytutorialonline/page/AD_TecherPage.dart';
+import 'package:admin_studytutorialonline/widget/ClassPart/AD_ClassPartList.dart';
 import 'package:admin_studytutorialonline/widget/DepartmentPage/AD_DepartmentList.dart';
 import 'package:admin_studytutorialonline/widget/Subject/AD_SubjectCard.dart';
 import 'package:flutter/material.dart';
@@ -136,7 +141,10 @@ class _NavigationdrawerwidgetState extends State<Navigationdrawerwidget> {
               ButtonWidget(
                   icon: Icons.co_present_rounded,
                   text: 'Lớp',
-                  onClicked: () {},
+                  onClicked: () {
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (context) => ClassPage()));
+                  },
                   top: 10,
                   left: 20,
                   bottom: 5,
@@ -144,7 +152,12 @@ class _NavigationdrawerwidgetState extends State<Navigationdrawerwidget> {
               ButtonWidget(
                   icon: Icons.collections_bookmark_rounded,
                   text: 'Lớp học phần',
-                  onClicked: () {},
+                  onClicked: () {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => ClassPartPage()));
+                  },
                   top: 10,
                   left: 20,
                   bottom: 10,
@@ -154,7 +167,10 @@ class _NavigationdrawerwidgetState extends State<Navigationdrawerwidget> {
               ButtonWidget(
                   icon: Icons.face_sharp,
                   text: 'Sinh viên',
-                  onClicked: () {},
+                  onClicked: () {
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (context) => StudentPage()));
+                  },
                   top: 10,
                   left: 20,
                   bottom: 5,
@@ -162,7 +178,10 @@ class _NavigationdrawerwidgetState extends State<Navigationdrawerwidget> {
               ButtonWidget(
                   icon: Icons.group,
                   text: 'Giảng viên',
-                  onClicked: () {},
+                  onClicked: () {
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (context) => TeacherPage()));
+                  },
                   top: 10,
                   left: 20,
                   bottom: 10,

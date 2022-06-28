@@ -56,7 +56,7 @@ class _DepartmentPageState extends State<DepartmentPage> {
               child: const Text(
                 'Danh sách các thông báo',
                 style: TextStyle(
-                    color: AppColor.black,
+                    color: AppColor.grey,
                     fontSize: 16,
                     fontWeight: FontWeight.w600),
               ),
