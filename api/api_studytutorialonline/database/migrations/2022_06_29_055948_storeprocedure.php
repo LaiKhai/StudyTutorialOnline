@@ -17,10 +17,12 @@ class Storeprocedure extends Migration
         $dropbatdauKT = "DROP PROCEDURE IF EXISTS `Bat_dau_KT`;";
         $droptaobaiKT = "DROP PROCEDURE IF EXISTS `tao_Bai_Ktra`;";
         $droptaoCauTraLoi = "DROP PROCEDURE IF EXISTS `Tao_cau_TrL`;";
+        $droptaoCauHoi = "DROP PROCEDURE IF EXISTS `tao_cau_hoi`;";
 
         DB::unprepared($dropbatdauKT);
         DB::unprepared($droptaobaiKT);
         DB::unprepared($droptaoCauTraLoi);
+        DB::unprepared($droptaoCauHoi);
 
         $batdauKT = 'CREATE PROCEDURE `Bat_dau_KT`(IN `id_bai_ktra` INT, IN `id_lop_hphan` INT) 
         BEGIN
@@ -35,7 +37,7 @@ class Storeprocedure extends Migration
         VALUES (id_lop_hoc_phan,id_giang_vien,sl_cau_hoi,tieu_de,noi_dung,NOW(),1,NOW()); 
         END';
 
-        $taoCauHoi = "CREATE PROCEDURE `tao_cau_hoi`(IN `id_bai_kiem_tra` INT, IN `de_bai` VARCHAR(255), IN `dap_an_1` VARCHAR(255), IN `dap_an_2` VARCHAR(255), IN `dap_an_3` VARCHAR(255), IN `dap_an_4` VARCHAR(255), IN `dap_an_dung` VARCHAR(255),INT `diem` INT) 
+        $taoCauHoi = "CREATE PROCEDURE `tao_cau_hoi`(IN `id_bai_kiem_tra` INT, IN `de_bai` VARCHAR(255), IN `dap_an_1` VARCHAR(255), IN `dap_an_2` VARCHAR(255), IN `dap_an_3` VARCHAR(255), IN `dap_an_4` VARCHAR(255), IN `dap_an_dung` VARCHAR(255),IN `diem` INT) 
         INSERT INTO `cau_hois`( `id_bai_kiem_tra`, `de_bai`, `dap_an_1`, `dap_an_2`, `dap_an_3`, `dap_an_4`, `dap_an_dung`, `diem`, `trang_thai`, `created_at`, `updated_at`) 
         VALUES (id_bai_kiem_tra,de_bai,dap_an_1,dap_an_2,dap_an_3,dap_an_4,dap_an_dung,diem,1,NOW(),NOW());";
 
