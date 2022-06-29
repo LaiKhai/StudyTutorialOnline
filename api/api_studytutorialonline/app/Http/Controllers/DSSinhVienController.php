@@ -116,7 +116,7 @@ class DSSinhVienController extends Controller
             $input['trang_thai'] = 1;
             DS_SinhVien::create($input);
         }
-        $lstdssv = DS_SinhVien::all();
-        return response()->json($lstdssv, 200);
+        $lstDSSV = DS_SinhVien::all();
+        return response()->json($lstDSSV, 200);
     }
 }

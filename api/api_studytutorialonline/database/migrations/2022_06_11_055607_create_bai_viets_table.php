@@ -17,6 +17,8 @@ class CreateBaiVietsTable extends Migration
             $table->id();
             $table->foreignId('id_lop_hoc_phan');
             $table->foreignId('id_loai_bai_viet');
+            $table->foreignId('id_sinh_vien')->nullable();
+            $table->foreignId('id_giang_vien')->nullable();
             $table->string('noi_dung');
             $table->integer('trang_thai');
             $table->timestamps();

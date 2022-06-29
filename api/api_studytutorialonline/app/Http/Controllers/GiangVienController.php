@@ -40,6 +40,9 @@ class GiangVienController extends Controller
         foreach ($giangVien as $item) {
             $item->khoa;
             $item->chucvu;
+            $item->baikiemtra;
+            $item->lop;
+            $item->baiviet;
             $this->FixImg($item);
         }
         $response = [
@@ -97,6 +100,11 @@ class GiangVienController extends Controller
             $giangVien['avt'] = $request->file('avt')->store('assets/images/avatar/' . $giangVien['id'], 'public');
         }
         $giangVien->save();
+        $giangVien->khoa;
+        $giangVien->chucvu;
+        $giangVien->baikiemtra;
+        $giangVien->lop;
+        $giangVien->baiviet;
         $response = [
             'message' => 'Dang ky giang vien thanh cong !',
             'user' => $giangVien
@@ -118,9 +126,11 @@ class GiangVienController extends Controller
             return response()->json(['message' => 'Khong tim thay giang vien nao !'], 404);
         }
         $this->FixImg($giangVien);
-        $giangVien->chucVu;
-        $giangVien->Khoa;
+        $giangVien->khoa;
+        $giangVien->chucvu;
+        $giangVien->baikiemtra;
         $giangVien->lop;
+        $giangVien->baiviet;
 
         $response = [
             'user' => $giangVien
@@ -167,6 +177,11 @@ class GiangVienController extends Controller
             $giangVien['avt'] = $request->file('avt')->store('assets/images/avatar/' . $giangVien['id'], 'public');
         }
         $giangVien->save();
+        $giangVien->khoa;
+        $giangVien->chucvu;
+        $giangVien->baikiemtra;
+        $giangVien->lop;
+        $giangVien->baiviet;
         $response = [
             'message' => 'chinh sua thanh cong !',
             'lophocphan' => $giangVien
@@ -189,6 +204,14 @@ class GiangVienController extends Controller
         }
         $giangVien->delete();
         $lstGiangVien = GiangVien::all();
+        foreach ($lstGiangVien as $item) {
+            $item->khoa;
+            $item->chucvu;
+            $item->baikiemtra;
+            $item->lop;
+            $item->baiviet;
+            $this->FixImg($item);
+        }
         $response = [
             'message' => 'xoa thanh cong !',
             'giangvien' => $lstGiangVien

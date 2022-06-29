@@ -18,12 +18,22 @@ class BaiViet extends Model
         'id',
         'id_lop_hoc_phan',
         'id_loai_bai_viet',
+        'id_sinh_vien',
+        'id_giang_vien',
         'noi_dung',
         'trang_thai',
     ];
     public function lophocphan()
     {
         return $this->belongsTo(LopHocPhan::class, 'id_lop_hoc_phan');
+    }
+    public function sinhvien()
+    {
+        return $this->belongsTo(SinhVien::class, 'id_sinh_vien');
+    }
+    public function giangvien()
+    {
+        return $this->belongsTo(GiangVien::class, 'id_giang_vien');
     }
     public function loaibaiviet()
     {
