@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Imports\DSSVImport;
 use App\Models\DS_SinhVien;
 use Maatwebsite\Excel\Facades\Excel;
+use Illuminate\Support\Facades\DB;
 use App\Models\SinhVien;
 use App\Models\LopHocPhan;
 use Illuminate\Http\Request;
@@ -108,15 +109,28 @@ class DSSinhVienController extends Controller
 
     public function createDSSVWithSinhVien()
     {
-        $sinhVien = SinhVien::all();
         $lopHocPhan = LopHocPhan::max('id');
+        $sinhVien = DS_SinhVien::join('sinh_viens', 'ds_sinh_viens.id_sinh_vien', '=', 'sinh_viens.id')
+            ->join('lop_hoc_phans', 'ds_sinh_viens.id_lop_hoc_phan', '=', 'lop_hoc_phans.id')
+            ->join('lops', 'lop_hoc_phans.id_lop', '=', 'lops.id')
+            ->where('ds_sinh_viens.id_lop_hoc_phan', $lopHocPhan)
+            ->select('sinh_viens.*')->get();
+
         foreach ($sinhVien as $item) {
             $input['id_sinh_vien'] = $item->id;
             $input['id_lop_hoc_phan'] = $lopHocPhan;
-            $input['trang_thai'] = 1;
-            DS_SinhVien::create($input);
+            DB::select('call tao_dssv(?,?)', [
+                $input['id_sinh_vien'],
+                $input['id_lop_hoc_phan'],
+            ]);
         }
         $lstDSSV = DS_SinhVien::all();
-        return response()->json($lstDSSV, 200);
+        $response = [
+            'message' => 'them danh sach thanh cong !',
+            // 'dssv' => $lstDSSV
+            'sinhVien' => $sinhVien
+        ];
+
+        return response()->json($response, 200);
     }
 }
