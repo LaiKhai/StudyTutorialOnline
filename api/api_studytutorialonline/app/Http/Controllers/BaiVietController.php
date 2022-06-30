@@ -54,8 +54,8 @@ class BaiVietController extends Controller
         $validator = Validator::make($input, [
             'id_lop_hoc_phan' => ['required', 'max:255', 'integer'],
             'id_loai_bai_viet' => ['required', 'max:255', 'integer'],
-            'id_sinh_vien' => ['required', 'max:255', 'integer'],
-            'id_giang_vien' => ['required', 'max:255', 'integer'],
+            'id_sinh_vien' => ['max:255', 'integer'],
+            'id_giang_vien' => ['max:255', 'integer'],
             'noi_dung' => ['required', 'string'],
             'trang_thai' => ['required', 'max:255', 'integer']
         ]);

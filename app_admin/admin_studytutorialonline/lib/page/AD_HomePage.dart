@@ -1,6 +1,7 @@
 import 'package:admin_studytutorialonline/common/contrains/color.dart';
 import 'package:admin_studytutorialonline/common/contrains/dimen.dart';
 import 'package:admin_studytutorialonline/common/contrains/string.dart';
+import 'package:admin_studytutorialonline/page/AD_Post.dart';
 import 'package:admin_studytutorialonline/widget/Drawer/Navigation_Drawer.dart';
 import 'package:flutter/material.dart';
 
@@ -76,7 +77,10 @@ class _HomePageState extends State<HomePage> {
                             primary: Colors.white,
                             shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(20))),
-                        onPressed: () {},
+                        onPressed: () {
+                          Navigator.push(context,
+                              MaterialPageRoute(builder: (ctx) => PostPage()));
+                        },
                         child: Row(
                           children: [
                             Container(
