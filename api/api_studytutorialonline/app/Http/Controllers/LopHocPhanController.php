@@ -28,8 +28,11 @@ class LopHocPhanController extends Controller
     {
         $lstLopHocPhan = LopHocPhan::all();
         foreach ($lstLopHocPhan as $item) {
-            $item->bomon;
             $item->lop;
+            $item->baikiemtra;
+            $item->bomon;
+            $item->baitap;
+            $item->baiviet;
             $this->FixImg($item);
         }
         if (empty($lstLopHocPhan)) {
@@ -81,8 +84,11 @@ class LopHocPhanController extends Controller
         }
         $this->FixImg($lopHocPhan);
         $lopHocPhan->save();
-        $lopHocPhan->bomon;
         $lopHocPhan->lop;
+        $lopHocPhan->baikiemtra;
+        $lopHocPhan->bomon;
+        $lopHocPhan->baitap;
+        $lopHocPhan->baiviet;
         $response = [
             'message' => 'them lop hoc phan thanh cong !',
             'lophocphan' => $lopHocPhan
@@ -106,6 +112,7 @@ class LopHocPhanController extends Controller
         $lopHocPhan->baikiemtra;
         $lopHocPhan->bomon;
         $lopHocPhan->baitap;
+        $lopHocPhan->baiviet;
         $dsgv = DS_GiangVien::join('lop_hoc_phans', 'ds_giang_viens.id_lop_hoc_phan', '=', 'lop_hoc_phans.id')
             ->join('giang_viens', 'ds_giang_viens.id_giang_vien', '=', 'giang_viens.id')
             ->where('lop_hoc_phans.id', $id)
@@ -156,8 +163,11 @@ class LopHocPhanController extends Controller
                 ->store('assets/images/lophocphan/' . $lopHocPhan['id'], 'public');
         }
         $lopHocPhan->save();
-        $lopHocPhan->bomon;
         $lopHocPhan->lop;
+        $lopHocPhan->baikiemtra;
+        $lopHocPhan->bomon;
+        $lopHocPhan->baitap;
+        $lopHocPhan->baiviet;
         $response = [
             'message' => 'chinh sua thanh cong !',
             'lophocphan' => $lopHocPhan

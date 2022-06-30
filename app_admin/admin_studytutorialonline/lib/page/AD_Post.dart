@@ -21,13 +21,16 @@ class _PostPageState extends State<PostPage> {
       ),
       body: SingleChildScrollView(
           child: Container(
+        color: AppColor.white,
         width: getWidthSize(context),
         height: getHeightSize(context),
         child: Column(children: [
           Container(
+            padding: EdgeInsets.fromLTRB(30, 30, 0, 0),
+            width: getWidthSize(context),
             child: Text(
               'Thông Báo',
-              style: ggTextStyle(20, FontWeight.bold, AppColor.theme),
+              style: ggTextStyle(40, FontWeight.bold, AppColor.theme),
             ),
           )
         ]),
