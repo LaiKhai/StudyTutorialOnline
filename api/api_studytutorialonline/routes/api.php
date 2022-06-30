@@ -17,8 +17,6 @@ use App\Http\Controllers\FileController;
 use App\Http\Controllers\LoaiBaiVietController;
 use App\Http\Controllers\DSSinhVienController;
 use App\Http\Controllers\DSGiangVienController;
-use App\Http\Controllers\FileController;
-
 /*
 |--------------------------------------------------------------------------
 | API Routes

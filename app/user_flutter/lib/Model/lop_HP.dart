@@ -58,7 +58,7 @@ class Lophocphan {
     idBoMon = json['id_bo_mon'];
     idLop = json['id_lop'];
     if (json['avt'] == null) {
-      json['avt'] = 'assets/images/lophocphan/no_image.jpg';
+      json['avt'] = 'storage/assets/images/lophocphan/no_image.jpg';
     } else {
       avt = json['avt'];
     }

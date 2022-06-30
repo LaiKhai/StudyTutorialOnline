@@ -57,23 +57,30 @@ class _US_TextField_LoginState extends State<US_TextField_Login> {
               controller: _emailController,
               autofocus: false,
               keyboardType: TextInputType.emailAddress,
-              style: GoogleFonts.quicksand(color: US_APP_WHITE, fontSize: 15),
+              style: GoogleFonts.quicksand(
+                  fontWeight: FontWeight.bold,
+                  color: Color.fromARGB(255, 69, 66, 66),
+                  fontSize: 15),
               decoration: InputDecoration(
                 enabledBorder: const UnderlineInputBorder(
-                    borderSide: BorderSide(color: Colors.white)),
+                    borderSide:
+                        BorderSide(color: Color.fromARGB(255, 69, 66, 66))),
                 focusedBorder: const UnderlineInputBorder(
-                  borderSide: BorderSide(color: Colors.white),
+                  borderSide:
+                      BorderSide(color: Color.fromARGB(255, 69, 66, 66)),
                 ),
                 prefix: Container(
                     margin: EdgeInsets.only(right: 6),
                     child: Icon(
                       Icons.person,
                       size: 15,
-                      color: US_APP_WHITE,
+                      color: Color.fromARGB(255, 69, 66, 66),
                     )),
                 labelText: 'Email',
-                labelStyle:
-                    GoogleFonts.quicksand(fontSize: 16, color: Colors.white),
+                labelStyle: GoogleFonts.quicksand(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 16,
+                    color: Color.fromARGB(255, 69, 66, 66)),
               ),
             ),
           ),
@@ -81,33 +88,40 @@ class _US_TextField_LoginState extends State<US_TextField_Login> {
             padding: const EdgeInsets.fromLTRB(0, 10, 0, 10),
             child: TextField(
               controller: _passwordController,
-              style: GoogleFonts.quicksand(color: US_APP_WHITE, fontSize: 15),
+              style: GoogleFonts.quicksand(
+                  fontWeight: FontWeight.bold,
+                  color: Color.fromARGB(255, 69, 66, 66),
+                  fontSize: 15),
               obscureText: isGiangVien,
               keyboardType: TextInputType.visiblePassword,
               decoration: InputDecoration(
                 enabledBorder: UnderlineInputBorder(
-                    borderSide: BorderSide(color: US_APP_WHITE)),
+                    borderSide:
+                        BorderSide(color: Color.fromARGB(255, 69, 66, 66))),
                 focusedBorder: UnderlineInputBorder(
-                  borderSide: BorderSide(color: US_APP_WHITE),
+                  borderSide:
+                      BorderSide(color: Color.fromARGB(255, 69, 66, 66)),
                 ),
                 prefix: Container(
                     margin: EdgeInsets.only(right: 6),
                     child: Icon(
                       Icons.lock,
                       size: 15,
-                      color: US_APP_WHITE,
+                      color: Color.fromARGB(255, 69, 66, 66),
                     )),
                 suffix: InkWell(
                   onTap: _toggleButtonViewPassword,
                   child: Icon(
                     isGiangVien ? Icons.visibility : Icons.visibility_off,
-                    color: US_APP_WHITE,
+                    color: Color.fromARGB(255, 69, 66, 66),
                     size: 20,
                   ),
                 ),
                 labelText: 'Mật Khẩu',
-                labelStyle:
-                    GoogleFonts.quicksand(fontSize: 16, color: US_APP_WHITE),
+                labelStyle: GoogleFonts.quicksand(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 16,
+                    color: Color.fromARGB(255, 69, 66, 66)),
               ),
             ),
           ),
@@ -120,8 +134,10 @@ class _US_TextField_LoginState extends State<US_TextField_Login> {
               onChanged: (newValue) => setState(
                   () => checkboxListTileValue = !checkboxListTileValue),
               title: Text(
-                'Bạn là giảng viên',
-                style: GoogleFonts.quicksand(color: Colors.white),
+                'Lưu đăng nhập',
+                style: GoogleFonts.quicksand(
+                    fontWeight: FontWeight.bold,
+                    color: Color.fromARGB(255, 69, 66, 66)),
               ),
               tileColor: Color(0xFFF5F5F5),
               activeColor: US_APP_COLOR,
@@ -142,7 +158,7 @@ class _US_TextField_LoginState extends State<US_TextField_Login> {
                     //     MaterialPageRoute(
                     //         builder: (context) => Navigator_page()),
                     //     (route) => false);
-               
+
                     Login().login(_emailController.text,
                         _passwordController.text, context, isGiangVien);
                   },
