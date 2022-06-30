@@ -28,7 +28,6 @@ class _PostPageState extends State<PostPage> {
             child: Text(
               'Thông Báo',
               style: ggTextStyle(20, FontWeight.bold, AppColor.theme),
-              textAlign: TextAlign.left,
             ),
           )
         ]),
