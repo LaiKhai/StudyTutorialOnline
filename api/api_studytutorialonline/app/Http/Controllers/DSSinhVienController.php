@@ -110,11 +110,11 @@ class DSSinhVienController extends Controller
     public function createDSSVWithSinhVien()
     {
         $lopHocPhan = LopHocPhan::max('id');
-        $sinhVien = DS_SinhVien::join('sinh_viens', 'ds_sinh_viens.id_sinh_vien', '=', 'sinh_viens.id')
-            ->join('lop_hoc_phans', 'ds_sinh_viens.id_lop_hoc_phan', '=', 'lop_hoc_phans.id')
-            ->join('lops', 'lop_hoc_phans.id_lop', '=', 'lops.id')
-            ->where('ds_sinh_viens.id_lop_hoc_phan', $lopHocPhan)
-            ->select('sinh_viens.*')->get();
+        $idLop = LopHocPhan::find($lopHocPhan);
+        $sinhVien = SinhVien::join('lops', 'sinh_viens.id_lop', '=', 'lops.id')
+            ->where('sinh_viens.id_lop', $idLop->id_lop)
+            ->select('sinh_viens.*')
+            ->get();
 
         foreach ($sinhVien as $item) {
             $input['id_sinh_vien'] = $item->id;
@@ -128,7 +128,7 @@ class DSSinhVienController extends Controller
         $response = [
             'message' => 'them danh sach thanh cong !',
             // 'dssv' => $lstDSSV
-            'sinhVien' => $sinhVien
+            'sinhVien' => $lstDSSV
         ];
 
         return response()->json($response, 200);

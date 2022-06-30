@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Imports\SinhVienImport;
+use App\Exports\SinhVienExport;
 use App\Models\DS_SinhVien;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
@@ -189,6 +190,11 @@ class SinhVienController extends Controller
             'sinhvien' => $lstSinhVien
         ];
         return response()->json($response, 200);
+    }
+
+    public function export()
+    {
+        return Excel::download(new SinhVienExport, 'SinhVien.xlsx');
     }
 
     /**

@@ -36,12 +36,13 @@ Route::post('login', [AuthController::class, 'loginUser']);
 Route::post('dngv', [AuthController::class, 'dangNhapGiangVien']);
 Route::post('admin', [AuthController::class, 'dangNhapAdmin']);
 Route::post('/sinhvien/import', [SinhVienController::class, 'import']);
+Route::get('/sinhvien/export', [SinhVienController::class, 'export']);
 //Lay danh sach lop theo id sinh vien
 Route::get('/lop/lstWithIdSV', [LopController::class, 'LstLopWithIdSV']);
 //Tao Danh sach sinh vien auto
 Route::get('/dssv/createDSSV', [DSSinhVienController::class, 'createDSSVWithSinhVien']);
 //Tao Danh sach giang vien auto
-Route::get('/dsgv/createDSGV', [DSGiangVienController::class, 'createDSSVWithGiangVien']);
+Route::post('/dsgv/createDSGV', [DSGiangVienController::class, 'createDSSVWithGiangVien']);
 //Lay danh sach lop hoc phan theo id sinh vien
 Route::get('/lophocphanwithsinhvien/{id}', [SinhVienController::class, 'lophocphanwithsinhvien']);
 //Lay danh sach lop hoc phan theo id giang vien
