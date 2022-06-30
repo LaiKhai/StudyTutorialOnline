@@ -19,11 +19,11 @@ class CreateBaiKiemTrasTable extends Migration
             $table->foreignId('id_lop_hoc_phan');
             $table->foreignId('id_giang_vien');
             $table->foreignId('id_file')->nullable();
-            $table->integer('sl_cau_hoi');
+            $table->integer('sl_cau_hoi')->nullable();
             $table->string('tieu_de');
             $table->string('noi_dung');
-            $table->dateTime('tg_bat_dau');
-            $table->dateTime('tg_ket_thuc');
+            $table->dateTime('tg_bat_dau')->nullable();
+            $table->dateTime('tg_ket_thuc')->nullable();
             $table->integer('trang_thai');
             $table->timestamps();
         });

@@ -21,6 +21,8 @@ class BaiVietController extends Controller
             $item->lophocphan;
             $item->loaibaiviet;
             $item->checkfile;
+            $item->sinhvien;
+            $item->giangvien;
         }
         return response()->json(['baiviet' => $lstBaiViet], 200);
     }
@@ -45,11 +47,15 @@ class BaiVietController extends Controller
     {
         $input['id_lop_hoc_phan'] = $request->input('id_lop_hoc_phan');
         $input['id_loai_bai_viet'] = $request->input('id_loai_bai_viet');
+        $input['id_sinh_vien'] = $request->input('id_sinh_vien');
+        $input['id_giang_vien'] = $request->input('id_giang_vien');
         $input['noi_dung'] = $request->input('noi_dung');
         $input['trang_thai'] = 1;
         $validator = Validator::make($input, [
             'id_lop_hoc_phan' => ['required', 'max:255', 'integer'],
             'id_loai_bai_viet' => ['required', 'max:255', 'integer'],
+            'id_sinh_vien' => ['required', 'max:255', 'integer'],
+            'id_giang_vien' => ['required', 'max:255', 'integer'],
             'noi_dung' => ['required', 'string'],
             'trang_thai' => ['required', 'max:255', 'integer']
         ]);
@@ -64,6 +70,8 @@ class BaiVietController extends Controller
         $baiViet->lophocphan;
         $baiViet->loaibaiviet;
         $baiViet->checkfile;
+        $baiViet->sinhvien;
+        $baiViet->giangvien;
         $response = [
             'message' => 'them thanh cong !',
             'baiviet' => $baiViet
@@ -86,6 +94,8 @@ class BaiVietController extends Controller
         $baiViet->lophocphan;
         $baiViet->loaibaiviet;
         $baiViet->checkfile;
+        $baiViet->sinhvien;
+        $baiViet->giangvien;
         $response = [
             'baiviet' => $baiViet
         ];
@@ -126,6 +136,8 @@ class BaiVietController extends Controller
         $baiViet->lophocphan;
         $baiViet->loaibaiviet;
         $baiViet->checkfile;
+        $baiViet->sinhvien;
+        $baiViet->giangvien;
         $response = [
             'message' => 'chinh sua thanh cong !',
             'baiviet' => $baiViet
@@ -151,6 +163,8 @@ class BaiVietController extends Controller
             $item->lophocphan;
             $item->loaibaiviet;
             $item->checkfile;
+            $item->sinhvien;
+            $item->giangvien;
         }
         $response = [
             'message' => 'xoa thanh cong !',

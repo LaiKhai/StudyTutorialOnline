@@ -79,6 +79,7 @@ class LopHocPhanController extends Controller
             $lopHocPhan['avt'] = $request->file('avt')
                 ->store('assets/images/lophocphan/' . $lopHocPhan['id'], 'public');
         }
+        $this->FixImg($lopHocPhan);
         $lopHocPhan->save();
         $lopHocPhan->bomon;
         $lopHocPhan->lop;

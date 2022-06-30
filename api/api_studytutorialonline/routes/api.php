@@ -13,10 +13,12 @@ use App\Http\Controllers\LoaiBaiTapController;
 use App\Http\Controllers\KhoaController;
 use App\Http\Controllers\LopHocPhanController;
 use App\Http\Controllers\BoMonController;
-use App\Http\Controllers\FileController;
 use App\Http\Controllers\LoaiBaiVietController;
 use App\Http\Controllers\DSSinhVienController;
 use App\Http\Controllers\DSGiangVienController;
+use App\Http\Controllers\FileController;
+use App\Models\DS_GiangVien;
+
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -58,11 +60,23 @@ Route::apiResource('bomon', BoMonController::class);
 Route::apiResource('baitap', BaiTapController::class);
 Route::apiResource('baikiemtra', BaiKiemTraController::class);
 Route::apiResource('loaibaitap', LoaiBaiTapController::class);
-Route::apiResource('files', FileController::class);
 Route::apiResource('dssv', DSSinhVienController::class);
 Route::apiResource('dsgv', DSGiangVienController::class);
 Route::apiResource('loaibaiviet', LoaiBaiVietController::class);
 Route::apiResource('baiviet', BaiVietController::class);
 Route::apiResource('file', FileController::class);
+Route::apiResource('dsgv', DS_GiangVien::class);
 Route::middleware(['auth:sanctum'])->group(function () {
 });
+
+//Tạo Bài Kiểm Tra
+Route::post('taobaiKT', [BaiKiemTraController::class, 'taoBaiKT']);
+
+//Tạo Câu Hỏi
+Route::post('taoCauHoi', [BaiKiemTraController::class, 'taoCauHoi']);
+
+//Tạo trả lời
+Route::post('taoCauTraLoi', [BaiKiemTraController::class, 'taoCauTraloi']);
+
+//Bắt đầu kiểm tra
+Route::post('batdauKT', [BaiKiemTraController::class, 'batdauKT']);

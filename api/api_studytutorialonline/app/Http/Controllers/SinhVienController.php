@@ -31,6 +31,11 @@ class SinhVienController extends Controller
     {
         $sinhVien = SinhVien::all();
         foreach ($sinhVien as $item) {
+            $item->lop;
+            $item->ctbaitap;
+            $item->traloi;
+            $item->binhluan;
+            $item->baiviet;
             $this->FixImg($item);
         }
 
@@ -78,6 +83,11 @@ class SinhVienController extends Controller
             $sinhVien['avt'] = $request->file('avt')->store('assets/images/avatar/' . $sinhVien['id'], 'public');
         }
         $sinhVien->save();
+        $sinhVien->lop;
+        $sinhVien->ctbaitap;
+        $sinhVien->traloi;
+        $sinhVien->binhluan;
+        $sinhVien->baiviet;
         $response = [
             'message' => 'Dang ky sinh vien thanh cong !',
             'user' => $sinhVien
@@ -130,6 +140,11 @@ class SinhVienController extends Controller
             $sinhVien['avt'] = $request->file('avt')->store('assets/images/avatar/' . $sinhVien['id'], 'public');
         }
         $sinhVien->save();
+        $sinhVien->lop;
+        $sinhVien->ctbaitap;
+        $sinhVien->traloi;
+        $sinhVien->binhluan;
+        $sinhVien->baiviet;
         $response = [
             'message' => 'chinh sua thanh cong !',
             'user' => $sinhVien

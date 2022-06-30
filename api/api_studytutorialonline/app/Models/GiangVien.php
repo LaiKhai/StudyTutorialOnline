@@ -49,4 +49,8 @@ class GiangVien extends Model
     {
         return $this->hasMany(Lop::class, 'id_giangvien', 'id');
     }
+    public function baiviet()
+    {
+        return $this->hasMany(BaiViet::class, 'id_giang_vien', 'id');
+    }
 }

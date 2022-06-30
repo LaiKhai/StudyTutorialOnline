@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\BaiKiemTra;
+use App\Models\CauHoi;
+use App\Models\TraLoi;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
@@ -183,18 +185,92 @@ class BaiKiemTraController extends Controller
         return response()->json($response, 200);
     }
 
-    // /**
-    //  * Store a newly created resource in storage.
-    //  *
-    //  * @param  \Illuminate\Http\Request  $request
-    //  * @return \Illuminate\Http\Response
-    //  */
-    // public function startBKT(Request $request)
-    // {
-    //     $idBaiKiemTra = $request->input('id_bai_kiem_tra');
-    //     $idLopHocPhan = $request->input('id_lop_hoc_phan');
-    //     $startBKT = DB::select('CALL Bat_dau_KT(' . $idBaiKiemTra . ',' . $idLopHocPhan . ')');
-    //     $response = ['traloi' => $startBKT];
-    //     return response()->json($response, 200);
-    // }
+    /**
+     * Remove the specified resource from storage.
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function taoBaiKT(Request $request)
+    {
+        DB::select('call tao_Bai_Ktra(?,?,?,?,?,?)', [
+            $request->input('tg_ket_thuc'),
+            $request->input('id_lop_hoc_phan'),
+            $request->input('sl_cau_hoi'),
+            $request->input('id_giang_vien'),
+            $request->input('tieu_de'),
+            $request->input('noi_dung'),
+        ]);
+        $baiKiemTra = BaiKiemTra::all();
+        $response = [
+            'message' => 'Tao bai kiem tra thanh cong !',
+            'baikiemtra' => $baiKiemTra
+        ];
+        return response()->json($response, 200);
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function taoCauHoi(Request $request)
+    {
+        DB::select('call tao_cau_hoi(?,?,?,?,?,?,?,?)', [
+            $request->input('id_bai_kiem_tra'),
+            $request->input('de_bai'),
+            $request->input('dap_an_1'),
+            $request->input('dap_an_2'),
+            $request->input('dap_an_3'),
+            $request->input('dap_an_4'),
+            $request->input('dap_an_dung'),
+            $request->input('diem'),
+        ]);
+        $cauHoi = CauHoi::all();
+        $response = [
+            'message' => 'Tao cau hoi thanh cong !',
+            'cauhoi' => $cauHoi
+        ];
+        return response()->json($response, 200);
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function taoCauTraloi(Request $request)
+    {
+        DB::select('call Tao_cau_TrL(?,?,?,?)', [
+            $request->input('dap_an'),
+            $request->input('id_cau_hoi'),
+            $request->input('id_bai_kiem_tra'),
+            $request->input('id_cau_tra_loi'),
+        ]);
+        $traLoi = TraLoi::find($request->input('id_cau_tra_loi'));
+        $response = [
+            'message' => 'da tra loi !',
+            'baikiemtra' => $traLoi
+        ];
+        return response()->json($response, 200);
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function batdauKT(Request $request)
+    {
+
+        DB::select('exec Bat_dau_KT(?,?)', [$request->input('id_bai_kiem_tra'), $request->input('id_lop_hoc_phan')]);
+        $traLoi = TraLoi::all();
+        $response = [
+            'message' => 'da bat dau kiem tra !',
+            'traloi' => $traLoi
+        ];
+        return response()->json($response, 200);
+    }
 }
