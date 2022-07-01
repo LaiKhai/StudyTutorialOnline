@@ -113,10 +113,6 @@ class LopHocPhanController extends Controller
         $lopHocPhan->baikiemtra;
         $lopHocPhan->bomon;
         $lopHocPhan->baitap;
-        foreach ($lopHocPhan->baiviet as $item) {
-            $idSinhVien = $item->id_sinh_vien;
-            $idGiangVien = $item->id_giang_vien;
-        }
 
         $dsgv = DS_GiangVien::join('lop_hoc_phans', 'ds_giang_viens.id_lop_hoc_phan', '=', 'lop_hoc_phans.id')
             ->join('giang_viens', 'ds_giang_viens.id_giang_vien', '=', 'giang_viens.id')
@@ -126,26 +122,11 @@ class LopHocPhanController extends Controller
             ->join('sinh_viens', 'ds_sinh_viens.id_sinh_vien', '=', 'sinh_viens.id')
             ->where('lop_hoc_phans.id', $id)
             ->select('lop_hoc_phans.*', 'sinh_viens.*')->get();
-        $baiViet = BaiViet::join('lop_hoc_phans', 'bai_viets.id_lop_hoc_phan', '=', 'lop_hoc_phans.id')
-            ->join('loai_bai_viets', 'bai_viets.id_loai_bai_viet', '=', 'loai_bai_viets.id')
-            ->where('lop_hoc_phans.id', $id)
-            ->select('lop_hoc_phans.*', 'loai_bai_viets.*')
-            ->get();
-        $sinhVien = BaiViet::join('sinh_viens', 'bai_viets.id_sinh_vien', '=', 'sinh_viens.id')
-            ->where('sinh_viens.id', $idSinhVien)
-            ->select('sinh_viens.*')
-            ->get();
-        $giangVien = BaiViet::join('giang_viens', 'bai_viets.id_giang_vien', '=', 'giang_viens.id')
-            ->where('giang_viens.id', $idGiangVien)
-            ->select('giang_viens.*')
-            ->get();
+
         $response = [
             'lophocphan' => $lopHocPhan,
             'dssv' => $dssv,
-            'dsgv' => $dsgv,
-            'baiviet' => $baiViet,
-            'sinhvien' => $sinhVien,
-            'giangvien' => $giangVien
+            'dsgv' => $dsgv
         ];
         return response($response, 200);
     }
@@ -215,5 +196,41 @@ class LopHocPhanController extends Controller
             'lophocphan' => $lstLopHocPhan
         ];
         return response()->json($response, 200);
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function ListBaiViet($id)
+    {
+        $lopHocPhan = LopHocPhan::find($id);
+        if (empty($lopHocPhan)) {
+            return response()->json(['message' => 'khong tim thay lop hoc phan nao !'], 404);
+        }
+        foreach ($lopHocPhan->baiviet as $item) {
+            if ($item->sinhvien != null) {
+                $baiViet = BaiViet::join('lop_hoc_phans', 'bai_viets.id_lop_hoc_phan', '=', 'lop_hoc_phans.id')
+                    ->join('loai_bai_viets', 'bai_viets.id_loai_bai_viet', '=', 'loai_bai_viets.id')
+                    ->join('sinh_viens', 'bai_viets.id_sinh_vien', '=', 'sinh_viens.id')
+                    ->where('lop_hoc_phans.id', $id)
+                    ->select('lop_hoc_phans.*', 'bai_viets.*', 'loai_bai_viets.*', 'sinh_viens.*')
+                    ->get();
+            } else if ($item->giangvien != null) {
+                $baiViet = BaiViet::join('lop_hoc_phans', 'bai_viets.id_lop_hoc_phan', '=', 'lop_hoc_phans.id')
+                    ->join('loai_bai_viets', 'bai_viets.id_loai_bai_viet', '=', 'loai_bai_viets.id')
+                    ->join('giang_viens', 'bai_viets.id_giang_vien', '=', 'giang_viens.id')
+                    ->where('lop_hoc_phans.id', $id)
+                    ->select('lop_hoc_phans.*', 'bai_viets.*', 'loai_bai_viets.*', 'giang_viens.*')
+                    ->get();
+            }
+        }
+
+        $response = [
+            'baiviet' => $baiViet,
+        ];
+        return response($response, 200);
     }
 }
