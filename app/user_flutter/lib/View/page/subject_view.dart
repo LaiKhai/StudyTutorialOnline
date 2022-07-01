@@ -18,8 +18,10 @@ import 'package:user_flutter/View/Widget/Home/assignment_item.dart';
 import 'package:user_flutter/View/Widget/Home/stream_item.dart';
 import 'package:user_flutter/View/Widget/Home/student_item.dart';
 import 'package:user_flutter/View/Widget/Home/subject_post.dart';
+import 'package:user_flutter/View/Widget/button_back.dart';
 import 'package:user_flutter/View/Widget/widget_loadin.dart';
 import 'package:user_flutter/View/common/constant/color.dart';
+import 'package:user_flutter/View/page/NaviGa.dart';
 
 import '../../Model_View/get_lopHp.dart';
 
@@ -78,185 +80,193 @@ class _SubjectViewState extends State<SubjectView> {
               .toList()),
       ClassmateBody(id_lop: widget.id_lopHp)
     ];
-    return SafeArea(
-      child: FutureBuilder<Ctiet_lopHP>(
-          future: LopHocPhan.getOneLopHP(widget.id_lopHp),
-          builder: (context, snapshot) {
-            if (snapshot.hasData) {
-              chitiet = snapshot.data!;
-              return Scaffold(
-                floatingActionButton: user.user!.idChucVu != 0
-                    ? FloatingActionButton.extended(
-                        backgroundColor: AppColor.theme,
-                        label: Text(
-                          'Tạo bài tập',
-                          style: GoogleFonts.quicksand(
-                            color: Colors.white,
-                            fontSize: 20,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                        onPressed: () {
-                          showBottomDialog(context, snapshot.data!.lophocphan!);
-                        },
-                        tooltip: 'Increment',
-                        //foregroundColor: Colors.yellow,
-                        //backgroundColor: Colors.red,
-                        //elevation: 0.0,
-                        //shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
-                      )
-                    : null,
-                backgroundColor: const Color(0xFFF6F9FE),
-                body: Padding(
-                  padding: const EdgeInsets.all(16),
-                  child: SingleChildScrollView(
-                    controller: scroll,
-                    child: Column(
-                      children: [
-                        Row(
-                          children: [
-                            AppIconButton(
-                              icon: SvgPicture.asset(
-                                "assets/icons/back.svg",
-                                width: 24,
-                                height: 24,
-                                color: AppColor.white,
-                              ),
-                              onTap: () {
-                                // Navigate back
-                                Navigator.of(context).pop();
-                              },
+    return CustomWillPopChat(
+      child: SafeArea(
+        child: FutureBuilder<Ctiet_lopHP>(
+            future: LopHocPhan.getOneLopHP(widget.id_lopHp),
+            builder: (context, snapshot) {
+              if (snapshot.hasData) {
+                chitiet = snapshot.data!;
+                return Scaffold(
+                  floatingActionButton: user.user!.idChucVu != 0
+                      ? FloatingActionButton.extended(
+                          backgroundColor: AppColor.theme,
+                          label: Text(
+                            'Tạo bài tập',
+                            style: GoogleFonts.quicksand(
+                              color: Colors.white,
+                              fontSize: 20,
+                              fontWeight: FontWeight.bold,
                             ),
-                            const SizedBox(width: 16),
-                            Expanded(
-                              child: Column(
+                          ),
+                          onPressed: () {
+                            showBottomDialog(
+                                context, snapshot.data!.lophocphan!);
+                          },
+                          tooltip: 'Increment',
+                          //foregroundColor: Colors.yellow,
+                          //backgroundColor: Colors.red,
+                          //elevation: 0.0,
+                          //shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
+                        )
+                      : null,
+                  backgroundColor: const Color(0xFFF6F9FE),
+                  body: Padding(
+                    padding: const EdgeInsets.all(16),
+                    child: SingleChildScrollView(
+                      controller: scroll,
+                      child: Column(
+                        children: [
+                          Row(
+                            children: [
+                              AppIconButton(
+                                icon: SvgPicture.asset(
+                                  "assets/icons/back.svg",
+                                  width: 24,
+                                  height: 24,
+                                  color: AppColor.white,
+                                ),
+                                onTap: () {
+                                  // Navigate back
+                                  Navigator.of(context).pushAndRemoveUntil(
+                                      MaterialPageRoute(
+                                          builder: (context) =>
+                                              Navigator_page()),
+                                      (route) => false);
+                                },
+                              ),
+                              const SizedBox(width: 16),
+                              Expanded(
+                                child: Column(
+                                  mainAxisSize: MainAxisSize.min,
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      chitiet.lophocphan!.bomon!.tenMonHoc!,
+                                      style: GoogleFonts.quicksand(
+                                        color: AppColor.white,
+                                        fontSize: 16,
+                                        fontWeight: FontWeight.w600,
+                                      ),
+                                    ),
+                                    const SizedBox(height: 2),
+                                    Text(
+                                      chitiet.lophocphan!.lop!.tenLop!,
+                                      maxLines: 1,
+                                      overflow: TextOverflow.ellipsis,
+                                      style: GoogleFonts.quicksand(
+                                        color: AppColor.grey,
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 12,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              const SizedBox(width: 16),
+                              Row(
                                 mainAxisSize: MainAxisSize.min,
-                                crossAxisAlignment: CrossAxisAlignment.start,
+                                crossAxisAlignment: CrossAxisAlignment.center,
                                 children: [
-                                  Text(
-                                    chitiet.lophocphan!.bomon!.tenMonHoc!,
-                                    style: GoogleFonts.quicksand(
+                                  AppIconButton(
+                                    icon: SvgPicture.asset(
+                                      "assets/icons/gmeet.svg",
+                                      width: 24,
+                                      height: 24,
                                       color: AppColor.white,
-                                      fontSize: 16,
+                                    ),
+                                    onTap: () {},
+                                  ),
+                                  const SizedBox(width: 8),
+                                  Popupmenu()
+                                ],
+                              ),
+                            ],
+                          ),
+                          const SizedBox(height: 32),
+                          // Assignment highlight
+                          // Row(
+                          //   children: assignments
+                          //       .where((item) => item.subjectId == widget.subject.id)
+                          //       .take(2)
+                          //       .map(
+                          //         (item) => Expanded(
+                          //           child: AssignmentHighlight(
+                          //             assignment: item,
+                          //             onTap: (item) {},
+                          //           ),
+                          //         ),
+                          //       )
+                          //       .toList(),
+                          // ),
+                          // const SizedBox(height: 32),
+                          // Menu
+                          GNav(
+                            selectedIndex: _activeIndex,
+                            curve: Curves.easeInOutQuint,
+                            duration: const Duration(milliseconds: 300),
+                            haptic: true,
+                            gap: 8,
+                            tabMargin:
+                                const EdgeInsets.symmetric(horizontal: 8),
+                            color: AppColor.grey,
+                            activeColor: US_APP_COLOR,
+                            tabBackgroundColor: US_APP_COLOR.withOpacity(0.25),
+                            onTabChange: (index) {
+                              setState(() {
+                                _activeIndex = index;
+
+                                pageController.animateToPage(
+                                  index,
+                                  duration: const Duration(milliseconds: 300),
+                                  curve: Curves.easeInOutQuint,
+                                );
+                              });
+                            },
+                            tabs: menus
+                                .map(
+                                  (menu) => GButton(
+                                    gap: 8,
+                                    padding: const EdgeInsets.symmetric(
+                                      horizontal: 16,
+                                      vertical: 8,
+                                    ),
+                                    icon: menu['icon'],
+                                    text: menu['title'],
+                                    textStyle: GoogleFonts.quicksand(
+                                      color: US_APP_COLOR,
                                       fontWeight: FontWeight.w600,
                                     ),
                                   ),
-                                  const SizedBox(height: 2),
-                                  Text(
-                                    chitiet.lophocphan!.lop!.tenLop!,
-                                    maxLines: 1,
-                                    overflow: TextOverflow.ellipsis,
-                                    style: GoogleFonts.quicksand(
-                                      color: AppColor.grey,
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 12,
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                            const SizedBox(width: 16),
-                            Row(
-                              mainAxisSize: MainAxisSize.min,
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              children: [
-                                AppIconButton(
-                                  icon: SvgPicture.asset(
-                                    "assets/icons/gmeet.svg",
-                                    width: 24,
-                                    height: 24,
-                                    color: AppColor.white,
-                                  ),
-                                  onTap: () {},
-                                ),
-                                const SizedBox(width: 8),
-                                Popupmenu()
-                              ],
-                            ),
-                          ],
-                        ),
-                        const SizedBox(height: 32),
-                        // Assignment highlight
-                        // Row(
-                        //   children: assignments
-                        //       .where((item) => item.subjectId == widget.subject.id)
-                        //       .take(2)
-                        //       .map(
-                        //         (item) => Expanded(
-                        //           child: AssignmentHighlight(
-                        //             assignment: item,
-                        //             onTap: (item) {},
-                        //           ),
-                        //         ),
-                        //       )
-                        //       .toList(),
-                        // ),
-                        // const SizedBox(height: 32),
-                        // Menu
-                        GNav(
-                          selectedIndex: _activeIndex,
-                          curve: Curves.easeInOutQuint,
-                          duration: const Duration(milliseconds: 300),
-                          haptic: true,
-                          gap: 8,
-                          tabMargin: const EdgeInsets.symmetric(horizontal: 8),
-                          color: AppColor.grey,
-                          activeColor: US_APP_COLOR,
-                          tabBackgroundColor: US_APP_COLOR.withOpacity(0.25),
-                          onTabChange: (index) {
-                            setState(() {
-                              _activeIndex = index;
-
-                              pageController.animateToPage(
-                                index,
-                                duration: const Duration(milliseconds: 300),
-                                curve: Curves.easeInOutQuint,
-                              );
-                            });
-                          },
-                          tabs: menus
-                              .map(
-                                (menu) => GButton(
-                                  gap: 8,
-                                  padding: const EdgeInsets.symmetric(
-                                    horizontal: 16,
-                                    vertical: 8,
-                                  ),
-                                  icon: menu['icon'],
-                                  text: menu['title'],
-                                  textStyle: GoogleFonts.quicksand(
-                                    color: US_APP_COLOR,
-                                    fontWeight: FontWeight.w600,
-                                  ),
-                                ),
-                              )
-                              .toList(),
-                        ),
-                        const SizedBox(height: 16),
-                        // Post
-                        SizedBox(
-                          height: MediaQuery.of(context).size.height - 150,
-                          child: PageView.builder(
-                            controller: pageController,
-                            physics: const BouncingScrollPhysics(),
-                            onPageChanged: (index) {
-                              setState(() {
-                                _activeIndex = index;
-                              });
-                            },
-                            itemCount: bodies.length,
-                            itemBuilder: (ctx, index) => bodies[index],
+                                )
+                                .toList(),
                           ),
-                        ),
-                      ],
+                          const SizedBox(height: 16),
+                          // Post
+                          SizedBox(
+                            height: MediaQuery.of(context).size.height - 150,
+                            child: PageView.builder(
+                              controller: pageController,
+                              physics: const BouncingScrollPhysics(),
+                              onPageChanged: (index) {
+                                setState(() {
+                                  _activeIndex = index;
+                                });
+                              },
+                              itemCount: bodies.length,
+                              itemBuilder: (ctx, index) => bodies[index],
+                            ),
+                          ),
+                        ],
+                      ),
                     ),
                   ),
-                ),
-              );
-            } else {
-              return Loading();
-            }
-          }),
+                );
+              } else {
+                return Loading();
+              }
+            }),
+      ),
     );
   }
 }
@@ -292,7 +302,6 @@ class _StreamBodyState extends State<StreamBody> {
                 itemBuilder: (ctx, index) {
                   // Stream item
                   return StreamItem(
-                  
                     bv: snapshot.data!.baiviet![index],
                   );
                 },
