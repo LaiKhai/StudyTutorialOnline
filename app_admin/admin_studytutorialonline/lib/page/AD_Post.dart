@@ -26,12 +26,18 @@ class _PostPageState extends State<PostPage> {
         height: getHeightSize(context),
         child: Column(children: [
           Container(
-            padding: EdgeInsets.fromLTRB(30, 30, 0, 0),
+            padding: EdgeInsets.fromLTRB(30, 20, 0, 0),
             width: getWidthSize(context),
             child: Text(
               'Thông Báo',
               style: ggTextStyle(40, FontWeight.bold, AppColor.theme),
             ),
+          ),
+          Container(
+            margin: EdgeInsets.fromLTRB(10, 20, 10, 20),
+            height: 5,
+            width: getWidthSize(context),
+            color: AppColor.theme,
           )
         ]),
       )),
