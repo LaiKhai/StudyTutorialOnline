@@ -4,21 +4,27 @@ import 'package:flutter/material.dart';
 import '../common/contrains/color.dart';
 import '../common/contrains/dimen.dart';
 import '../common/contrains/string.dart';
+import '../data/User.dart';
 import '../widget/Drawer/Navigation_Drawer.dart';
 import '../widget/StudentPage/AD_StudentCard.dart';
 
 class TeacherPage extends StatefulWidget {
-  const TeacherPage({Key? key}) : super(key: key);
+  final User us;
+  const TeacherPage({Key? key, required this.us}) : super(key: key);
 
   @override
-  State<TeacherPage> createState() => _TeacherPageState();
+  State<TeacherPage> createState() => _TeacherPageState(us: us);
 }
 
 class _TeacherPageState extends State<TeacherPage> {
+  final User us;
+  _TeacherPageState({required this.us});
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        drawer: Navigationdrawerwidget(),
+        drawer: Navigationdrawerwidget(
+          us: us,
+        ),
         appBar: AppBar(
           elevation: 0,
           backgroundColor: AppColor.theme,

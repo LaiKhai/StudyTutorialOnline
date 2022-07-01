@@ -5,22 +5,30 @@ import 'package:admin_studytutorialonline/page/AD_Post.dart';
 import 'package:admin_studytutorialonline/widget/Drawer/Navigation_Drawer.dart';
 import 'package:flutter/material.dart';
 
+import '../data/User.dart';
 import '../widget/HomePage/AD_HomeList.dart';
 import '../widget/HomePage/AD_HomeNotice.dart';
 
 class HomePage extends StatefulWidget {
-  const HomePage({Key? key}) : super(key: key);
+  final User us;
+  const HomePage({Key? key, required this.us}) : super(key: key);
 
   @override
-  _HomePageState createState() => _HomePageState();
+  _HomePageState createState() {
+    return _HomePageState(us: us);
+  }
 }
 
 class _HomePageState extends State<HomePage> {
+  final User us;
+  _HomePageState({required this.us});
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     return Scaffold(
-      drawer: Navigationdrawerwidget(),
+      drawer: Navigationdrawerwidget(
+        us: us,
+      ),
       appBar: AppBar(
         elevation: 0,
         backgroundColor: AppColor.theme,
@@ -31,7 +39,7 @@ class _HomePageState extends State<HomePage> {
               decoration:
                   BoxDecoration(borderRadius: BorderRadius.circular(30)),
               child: ClipRRect(
-                child: Image.asset('assets/images/no_image.png'),
+                child: Image.network(baseUrl + us.avt),
               ))
         ],
       ),

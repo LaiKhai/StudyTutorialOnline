@@ -14,17 +14,22 @@ import 'package:admin_studytutorialonline/widget/DepartmentPage/AD_DepartmentLis
 import 'package:admin_studytutorialonline/widget/Subject/AD_SubjectCard.dart';
 import 'package:flutter/material.dart';
 
+import '../../data/User.dart';
 import 'childwidget/Drawer_Button.dart';
 import 'childwidget/Drawer_Form_Menu.dart';
 
 class Navigationdrawerwidget extends StatefulWidget {
-  Navigationdrawerwidget({Key? key}) : super(key: key);
+  final User us;
+  Navigationdrawerwidget({Key? key, required this.us}) : super(key: key);
 
   @override
-  _NavigationdrawerwidgetState createState() => _NavigationdrawerwidgetState();
+  _NavigationdrawerwidgetState createState() =>
+      _NavigationdrawerwidgetState(us: us);
 }
 
 class _NavigationdrawerwidgetState extends State<Navigationdrawerwidget> {
+  final User us;
+  _NavigationdrawerwidgetState({required this.us});
   @override
   Widget build(BuildContext context) {
     return Drawer(
@@ -103,8 +108,12 @@ class _NavigationdrawerwidgetState extends State<Navigationdrawerwidget> {
                   icon: Icons.home,
                   text: 'Trang chủ',
                   onClicked: () {
-                    Navigator.push(context,
-                        MaterialPageRoute(builder: (context) => HomePage()));
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => HomePage(
+                                  us: us,
+                                )));
                   },
                   top: 10,
                   left: 20,
@@ -119,7 +128,7 @@ class _NavigationdrawerwidgetState extends State<Navigationdrawerwidget> {
                     Navigator.push(
                         context,
                         MaterialPageRoute(
-                            builder: ((context) => DepartmentPage())));
+                            builder: ((context) => DepartmentPage(us: us))));
                   },
                   top: 10,
                   left: 20,
@@ -129,8 +138,12 @@ class _NavigationdrawerwidgetState extends State<Navigationdrawerwidget> {
                   icon: Icons.class__rounded,
                   text: 'Bộ môn',
                   onClicked: () {
-                    Navigator.push(context,
-                        MaterialPageRoute(builder: (context) => SubjectPage()));
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => SubjectPage(
+                                  us: us,
+                                )));
                   },
                   top: 10,
                   left: 20,
@@ -142,8 +155,10 @@ class _NavigationdrawerwidgetState extends State<Navigationdrawerwidget> {
                   icon: Icons.co_present_rounded,
                   text: 'Lớp',
                   onClicked: () {
-                    Navigator.push(context,
-                        MaterialPageRoute(builder: (context) => ClassPage()));
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => ClassPage(us: us)));
                   },
                   top: 10,
                   left: 20,
@@ -156,7 +171,7 @@ class _NavigationdrawerwidgetState extends State<Navigationdrawerwidget> {
                     Navigator.push(
                         context,
                         MaterialPageRoute(
-                            builder: (context) => ClassPartPage()));
+                            builder: (context) => ClassPartPage(us: us)));
                   },
                   top: 10,
                   left: 20,
@@ -168,8 +183,10 @@ class _NavigationdrawerwidgetState extends State<Navigationdrawerwidget> {
                   icon: Icons.face_sharp,
                   text: 'Sinh viên',
                   onClicked: () {
-                    Navigator.push(context,
-                        MaterialPageRoute(builder: (context) => StudentPage()));
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => StudentPage(us: us)));
                   },
                   top: 10,
                   left: 20,
@@ -179,8 +196,10 @@ class _NavigationdrawerwidgetState extends State<Navigationdrawerwidget> {
                   icon: Icons.group,
                   text: 'Giảng viên',
                   onClicked: () {
-                    Navigator.push(context,
-                        MaterialPageRoute(builder: (context) => TeacherPage()));
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => TeacherPage(us: us)));
                   },
                   top: 10,
                   left: 20,

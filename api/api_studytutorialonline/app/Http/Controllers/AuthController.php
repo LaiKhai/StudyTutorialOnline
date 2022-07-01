@@ -110,6 +110,12 @@ class AuthController extends Controller
             return response(['message' => 'khong phai tai khoan phong dao tao !'], 400);
         } else {
             $token = $giangVien->createToken('TokenGiangVien')->plainTextToken;
+            $giangVien->khoa;
+            $giangVien->chucvu;
+            $giangVien->baikiemtra;
+            $giangVien->lop;
+            $giangVien->baiviet;
+            $this->FixImgGV($giangVien);
             $response =
                 [
                     'message' => 'Dang Nhap Thanh Cong !',

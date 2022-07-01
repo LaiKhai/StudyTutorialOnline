@@ -3,21 +3,25 @@ import 'package:admin_studytutorialonline/common/contrains/dimen.dart';
 import 'package:admin_studytutorialonline/common/contrains/string.dart';
 import 'package:flutter/material.dart';
 
+import '../data/User.dart';
 import '../widget/DepartmentPage/AD_DepartmentList.dart';
 import '../widget/Drawer/Navigation_Drawer.dart';
 
 class DepartmentPage extends StatefulWidget {
-  const DepartmentPage({Key? key}) : super(key: key);
+  final User us;
+  const DepartmentPage({Key? key, required this.us}) : super(key: key);
 
   @override
-  _DepartmentPageState createState() => _DepartmentPageState();
+  _DepartmentPageState createState() => _DepartmentPageState(us: us);
 }
 
 class _DepartmentPageState extends State<DepartmentPage> {
+  final User us;
+  _DepartmentPageState({required this.us});
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        drawer: Navigationdrawerwidget(),
+        drawer: Navigationdrawerwidget(us: us),
         appBar: AppBar(
           elevation: 0,
           backgroundColor: AppColor.theme,
