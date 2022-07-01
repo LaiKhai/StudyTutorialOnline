@@ -48,6 +48,7 @@ class Lophocphan {
   String? updatedAt;
   Lop? lop;
   Bomon? bomon;
+  List<Baiviet>? baiviet;
 
   Lophocphan(
       {this.id,
@@ -69,10 +70,14 @@ class Lophocphan {
     createdAt = json['created_at'];
     updatedAt = json['updated_at'];
     lop = json['lop'] != null ? new Lop.fromJson(json['lop']) : null;
-   
+    if (json['baiviet'] != null) {
+      baiviet = <Baiviet>[];
+      json['baiviet'].forEach((v) {
+        baiviet!.add(new Baiviet.fromJson(v));
+      });
+    }
     bomon = json['bomon'] != null ? new Bomon.fromJson(json['bomon']) : null;
-    if (json['baitap'] != null) {
-   }
+    if (json['baitap'] != null) {}
   }
 
   Map<String, dynamic> toJson() {
@@ -87,11 +92,11 @@ class Lophocphan {
     if (this.lop != null) {
       data['lop'] = this.lop!.toJson();
     }
-    
+
     if (this.bomon != null) {
       data['bomon'] = this.bomon!.toJson();
     }
-   
+
     return data;
   }
 }
@@ -255,6 +260,55 @@ class Dssv {
     data['sdt'] = this.sdt;
     data['ho_ten'] = this.hoTen;
     data['ngay_sinh'] = this.ngaySinh;
+    return data;
+  }
+}
+
+class Baiviet {
+  int? id;
+  int? idLopHocPhan;
+  int? idLoaiBaiViet;
+  int? idSinhVien;
+  int? idGiangVien;
+  String? noiDung;
+  int? trangThai;
+  String? createdAt;
+  String? updatedAt;
+
+  Baiviet(
+      {this.id,
+      this.idLopHocPhan,
+      this.idLoaiBaiViet,
+      this.idSinhVien,
+      this.idGiangVien,
+      this.noiDung,
+      this.trangThai,
+      this.createdAt,
+      this.updatedAt});
+
+  Baiviet.fromJson(Map<String, dynamic> json) {
+    id = json['id'];
+    idLopHocPhan = json['id_lop_hoc_phan'];
+    idLoaiBaiViet = json['id_loai_bai_viet'];
+    idSinhVien = json['id_sinh_vien'];
+    idGiangVien = json['id_giang_vien'];
+    noiDung = json['noi_dung'];
+    trangThai = json['trang_thai'];
+    createdAt = json['created_at'];
+    updatedAt = json['updated_at'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['id'] = this.id;
+    data['id_lop_hoc_phan'] = this.idLopHocPhan;
+    data['id_loai_bai_viet'] = this.idLoaiBaiViet;
+    data['id_sinh_vien'] = this.idSinhVien;
+    data['id_giang_vien'] = this.idGiangVien;
+    data['noi_dung'] = this.noiDung;
+    data['trang_thai'] = this.trangThai;
+    data['created_at'] = this.createdAt;
+    data['updated_at'] = this.updatedAt;
     return data;
   }
 }

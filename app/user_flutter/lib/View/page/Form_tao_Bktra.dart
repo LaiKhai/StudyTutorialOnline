@@ -1,16 +1,11 @@
-import 'dart:ffi';
-
 import 'package:easy_debounce/easy_debounce.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:group_radio_button/group_radio_button.dart';
 import 'package:user_flutter/View/Widget/Form_tao.dart/Tao_tra_loi.dart';
 import 'package:user_flutter/View/common/constant/color.dart';
 import 'package:user_flutter/View/common/constant/dimen.dart';
 import 'package:user_flutter/View/common/constant/string.dart';
-import 'package:user_flutter/View/controller/TracNghiemcontroller.dart';
-import 'package:user_flutter/View/controller/tao_bai.dart';
-import 'package:user_flutter/View/page/test.dart';
+import 'package:user_flutter/View/page/Bai_Ktra.dart';
 
 class Tao_trac_nghiem extends StatefulWidget {
   TextEditingController diemToiDaController = new TextEditingController();
@@ -136,7 +131,9 @@ class _Tao_trac_nghiemState extends State<Tao_trac_nghiem> {
             Navigator.push(
               context,
               MaterialPageRoute(
-                  builder: (context) => Test(
+                  builder: (context) => Bai_Ktra(
+                        tieuDe: widget.TieuDeController.text,
+                        moTa: widget.MoTaController.text,
                         Lst_Cauhoi: Lst_Cauhoi,
                         lst_Trl_TracNghiem: lst_Trl_TracNghiem,
                       )),
@@ -156,7 +153,8 @@ class _Tao_trac_nghiemState extends State<Tao_trac_nghiem> {
                 delegate: SliverChildListDelegate([
                   Container(
                       margin: EdgeInsets.only(top: 20, left: 20, right: 20),
-                      padding: EdgeInsets.only(bottom: 20, left: 20, right: 20),
+                      padding: EdgeInsets.only(
+                          bottom: 20, left: 20, right: 20, top: 20),
                       decoration: BoxDecoration(
                         color: Colors.white,
                         boxShadow: [
@@ -297,7 +295,8 @@ class _Tao_trac_nghiemState extends State<Tao_trac_nghiem> {
                 delegate: SliverChildBuilderDelegate((context, index) {
               return Container(
                 margin: EdgeInsets.only(top: 20, left: 20, right: 20),
-                padding: EdgeInsets.only(bottom: 20, left: 20, right: 20),
+                padding:
+                    EdgeInsets.only(bottom: 20, left: 20, right: 20, top: 20),
                 decoration: BoxDecoration(
                   color: Colors.white,
                   borderRadius: BorderRadius.circular(12),

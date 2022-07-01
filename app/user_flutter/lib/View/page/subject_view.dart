@@ -4,11 +4,13 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:user_flutter/Model/User_login.dart';
+import 'package:user_flutter/Model/bai_Viet.dart';
 import 'package:user_flutter/Model/cTiet_LopHP.dart';
 import 'package:user_flutter/Model/class_data.dart';
 import 'package:user_flutter/Model/home_data.dart';
 import 'package:user_flutter/Model/subject_assignment.dart';
 import 'package:user_flutter/Model/subject_stream.dart';
+import 'package:user_flutter/Model_View/Baiviet.dart';
 import 'package:user_flutter/View/Widget/Bai_kiemtra/showdialog.dart';
 import 'package:user_flutter/View/Widget/Chi_tiet/Popup.dart';
 import 'package:user_flutter/View/Widget/Home/app_icon_buttton.dart';
@@ -66,7 +68,10 @@ class _SubjectViewState extends State<SubjectView> {
       {'index': 3, 'icon': Icons.group, 'title': "Mọi người"},
     ];
     final List<Widget> bodies = [
-      StreamBody(streams: subjectStreams),
+      StreamBody(
+        streams: subjectStreams,
+        id_Lop: widget.id_lopHp,
+      ),
       AssignmentBody(
           assignments: assignments
               .where((item) => item.subjectId == subjects[1].id)
@@ -92,7 +97,7 @@ class _SubjectViewState extends State<SubjectView> {
                           ),
                         ),
                         onPressed: () {
-                          showBottomDialog(context,snapshot.data!.lophocphan!);
+                          showBottomDialog(context, snapshot.data!.lophocphan!);
                         },
                         tooltip: 'Increment',
                         //foregroundColor: Colors.yellow,
@@ -256,28 +261,47 @@ class _SubjectViewState extends State<SubjectView> {
   }
 }
 
-class StreamBody extends StatelessWidget {
+class StreamBody extends StatefulWidget {
+  int id_Lop;
   final List<SubjectStream> streams;
 
-  const StreamBody({Key? key, required this.streams}) : super(key: key);
+  StreamBody({Key? key, required this.streams, required this.id_Lop})
+      : super(key: key);
 
+  @override
+  State<StreamBody> createState() => _StreamBodyState();
+}
+
+class _StreamBodyState extends State<StreamBody> {
   @override
   Widget build(BuildContext context) {
     return Column(
       children: [
-        const SubjectPost(),
+        SubjectPost(
+          id_lop: widget.id_Lop,
+        ),
         const SizedBox(height: 16),
         Expanded(
-          child: ListView.builder(
-            physics: const BouncingScrollPhysics(),
-            itemCount: streams.length,
-            itemBuilder: (ctx, index) {
-              final stream = streams[index];
-              // Stream item
-              return StreamItem(stream: stream);
-            },
-          ),
-        ),
+            child: FutureBuilder<baiViets>(
+          future: BaiViet.getAllBaiViet(),
+          builder: ((context, snapshot) {
+            if (snapshot.hasData) {
+              return ListView.builder(
+                physics: const BouncingScrollPhysics(),
+                itemCount: snapshot.data!.baiviet!.length,
+                itemBuilder: (ctx, index) {
+                  // Stream item
+                  return StreamItem(
+                  
+                    bv: snapshot.data!.baiviet![index],
+                  );
+                },
+              );
+            } else {
+              return Loading();
+            }
+          }),
+        )),
       ],
     );
   }
@@ -290,9 +314,12 @@ class AssignmentBody extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    int id = 0;
     return Column(
       children: [
-        const SubjectPost(),
+        SubjectPost(
+          id_lop: id,
+        ),
         const SizedBox(height: 16),
         Expanded(
           child: ListView.builder(

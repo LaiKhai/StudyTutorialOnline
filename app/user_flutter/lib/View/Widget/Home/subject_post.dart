@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:user_flutter/Model/User_login.dart';
-import 'package:user_flutter/View/common/constant/string.dart';
 import 'package:user_flutter/View/page/dang_Thong_bao.dart';
 
 import '../../common/constant/color.dart';
 
 class SubjectPost extends StatelessWidget {
-  const SubjectPost({Key? key}) : super(key: key);
+  int id_lop;
+  SubjectPost({Key? key, required this.id_lop}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -29,7 +29,10 @@ class SubjectPost extends StatelessWidget {
         onTap: () {
           Navigator.push(
             context,
-            MaterialPageRoute(builder: (context) => const Dang_thong_bao()),
+            MaterialPageRoute(
+                builder: (context) => Dang_thong_bao(
+                      id_lop: id_lop,
+                    )),
           );
         },
         child: Row(

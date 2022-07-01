@@ -1,4 +1,4 @@
-enum SubjectStreamType { material, quiz }
+enum SubjectStreamType { notification, quiz }
 
 class SubjectStream {
   final int id;

@@ -1,22 +1,44 @@
+// ignore_for_file: unnecessary_new, duplicate_ignore
+
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
+import 'package:user_flutter/Model/bai_Viet.dart';
+import 'package:user_flutter/Model/model_reing/model_bV.dart';
 import 'package:user_flutter/Model/subject_stream.dart';
 import 'package:user_flutter/View/Widget/Home/stream_type.dart';
 import 'package:user_flutter/View/common/constant/color.dart';
+import 'package:user_flutter/View/common/constant/string.dart';
 import 'package:user_flutter/View/page/Chi_tiet_bai_tap.dart';
 
 class StreamItem extends StatelessWidget {
-  final SubjectStream stream;
-  const StreamItem({Key? key, required this.stream}) : super(key: key);
+  final Baiviet bv;
+  StreamItem({Key? key, required this.bv}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    bViet baiviet;
+    if (bv.giangvien != null) {
+      // ignore: unnecessary_new
+      baiviet = new bViet(
+          Ng_viet: bv.giangvien!.hoTen!,
+          NoiDung: bv.noiDung!,
+          avt: bv.giangvien!.avt!,
+          time_viet: bv.createdAt!,
+          Type: 1);
+    } else {
+      baiviet = new bViet(
+          Ng_viet: bv.sinhvien!.hoTen!,
+          NoiDung: bv.noiDung!,
+          avt: bv.sinhvien!.avt!,
+          time_viet: bv.createdAt!,
+          Type: 1);
+    }
     return Container(
       margin: const EdgeInsets.symmetric(vertical: 8),
       decoration: BoxDecoration(
-        boxShadow: [
+        boxShadow: const [
           BoxShadow(
             blurRadius: 4,
             color: Color(0x34090F13),
@@ -28,26 +50,33 @@ class StreamItem extends StatelessWidget {
         borderRadius: BorderRadius.circular(15),
       ),
       child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           InkWell(
             onTap: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => const Chi_tiet_Page()),
-              );
+              if (baiviet.Type == 2) {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => const Chi_tiet_Page()),
+                );
+              }
             },
             child: Container(
               padding: const EdgeInsets.all(12),
               child: Row(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  SvgPicture.asset(
-                    stream.type == SubjectStreamType.material
-                        ? "assets/icons/material.svg"
-                        : "assets/icons/quiz.svg",
-                    color: AppColor.white,
-                    width: 24,
-                    height: 24,
+                  // SvgPicture.asset(
+                  //   stream.type == SubjectStreamType.material
+                  //       ? "assets/icons/material.svg"
+                  //       : "assets/icons/quiz.svg",
+                  //   color: AppColor.white,
+                  //   width: 24,
+                  //   height: 24,
+                  // ),
+                  CircleAvatar(
+                    backgroundImage: NetworkImage(Link + baiviet.avt),
                   ),
                   const SizedBox(width: 16),
                   Expanded(
@@ -56,7 +85,7 @@ class StreamItem extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          stream.title,
+                          baiviet.Ng_viet,
                           style: GoogleFonts.quicksand(
                             color: AppColor.white,
                             fontWeight: FontWeight.w600,
@@ -64,7 +93,7 @@ class StreamItem extends StatelessWidget {
                         ),
                         const SizedBox(height: 4),
                         Text(
-                          DateFormat("MMM dd").format(stream.postedAt),
+                          DateFormat("MMM dd").format(baiviet.time_viet),
                           style: GoogleFonts.quicksand(
                             color: AppColor.grey,
                             fontSize: 12,
@@ -75,10 +104,14 @@ class StreamItem extends StatelessWidget {
                   ),
                   const SizedBox(width: 16),
                   // Type
-                  StreamType(type: stream.type),
+                  StreamType(type: baiviet.Type),
                 ],
               ),
             ),
+          ),
+          Padding(
+            padding: const EdgeInsets.all(12),
+            child: Text(baiviet.NoiDung),
           ),
           Container(
             height: 1,
