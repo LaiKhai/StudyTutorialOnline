@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\BaiViet;
 use App\Models\DS_GiangVien;
 use App\Models\DS_SinhVien;
 use App\Models\LopHocPhan;
@@ -28,8 +29,11 @@ class LopHocPhanController extends Controller
     {
         $lstLopHocPhan = LopHocPhan::all();
         foreach ($lstLopHocPhan as $item) {
-            $item->bomon;
             $item->lop;
+            $item->baikiemtra;
+            $item->bomon;
+            $item->baitap;
+            $item->baiviet;
             $this->FixImg($item);
         }
         if (empty($lstLopHocPhan)) {
@@ -81,8 +85,11 @@ class LopHocPhanController extends Controller
         }
         $this->FixImg($lopHocPhan);
         $lopHocPhan->save();
-        $lopHocPhan->bomon;
         $lopHocPhan->lop;
+        $lopHocPhan->baikiemtra;
+        $lopHocPhan->bomon;
+        $lopHocPhan->baitap;
+        $lopHocPhan->baiviet;
         $response = [
             'message' => 'them lop hoc phan thanh cong !',
             'lophocphan' => $lopHocPhan
@@ -106,6 +113,11 @@ class LopHocPhanController extends Controller
         $lopHocPhan->baikiemtra;
         $lopHocPhan->bomon;
         $lopHocPhan->baitap;
+        foreach ($lopHocPhan->baiviet as $item) {
+            $idSinhVien = $item->id_sinh_vien;
+            $idGiangVien = $item->id_giang_vien;
+        }
+
         $dsgv = DS_GiangVien::join('lop_hoc_phans', 'ds_giang_viens.id_lop_hoc_phan', '=', 'lop_hoc_phans.id')
             ->join('giang_viens', 'ds_giang_viens.id_giang_vien', '=', 'giang_viens.id')
             ->where('lop_hoc_phans.id', $id)
@@ -114,10 +126,26 @@ class LopHocPhanController extends Controller
             ->join('sinh_viens', 'ds_sinh_viens.id_sinh_vien', '=', 'sinh_viens.id')
             ->where('lop_hoc_phans.id', $id)
             ->select('lop_hoc_phans.*', 'sinh_viens.*')->get();
+        $baiViet = BaiViet::join('lop_hoc_phans', 'bai_viets.id_lop_hoc_phan', '=', 'lop_hoc_phans.id')
+            ->join('loai_bai_viets', 'bai_viets.id_loai_bai_viet', '=', 'loai_bai_viets.id')
+            ->where('lop_hoc_phans.id', $id)
+            ->select('lop_hoc_phans.*', 'loai_bai_viets.*')
+            ->get();
+        $sinhVien = BaiViet::join('sinh_viens', 'bai_viets.id_sinh_vien', '=', 'sinh_viens.id')
+            ->where('sinh_viens.id', $idSinhVien)
+            ->select('sinh_viens.*')
+            ->get();
+        $giangVien = BaiViet::join('giang_viens', 'bai_viets.id_giang_vien', '=', 'giang_viens.id')
+            ->where('giang_viens.id', $idGiangVien)
+            ->select('giang_viens.*')
+            ->get();
         $response = [
             'lophocphan' => $lopHocPhan,
             'dssv' => $dssv,
-            'dsgv' => $dsgv
+            'dsgv' => $dsgv,
+            'baiviet' => $baiViet,
+            'sinhvien' => $sinhVien,
+            'giangvien' => $giangVien
         ];
         return response($response, 200);
     }
@@ -156,8 +184,11 @@ class LopHocPhanController extends Controller
                 ->store('assets/images/lophocphan/' . $lopHocPhan['id'], 'public');
         }
         $lopHocPhan->save();
-        $lopHocPhan->bomon;
         $lopHocPhan->lop;
+        $lopHocPhan->baikiemtra;
+        $lopHocPhan->bomon;
+        $lopHocPhan->baitap;
+        $lopHocPhan->baiviet;
         $response = [
             'message' => 'chinh sua thanh cong !',
             'lophocphan' => $lopHocPhan

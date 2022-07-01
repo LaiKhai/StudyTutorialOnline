@@ -104,7 +104,7 @@ class LoaiBaiVietController extends Controller
             return response()->json(['message' => 'khong tim thay loai bai viet !'], 404);
         }
         $loaiBaiViet->fill([
-            'ten_loai' => $request->input('noi_dung'),
+            'ten_loai' => $request->input('ten_loai'),
             'trang_thai' => $request->input('trang_thai'),
         ]);
         $loaiBaiViet->save();

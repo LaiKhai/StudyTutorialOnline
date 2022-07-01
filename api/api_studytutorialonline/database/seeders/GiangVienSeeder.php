@@ -1,8 +1,11 @@
 <?php
 
-namespace Database\Seeders;use Illuminate\Support\Facades\DB;
+namespace Database\Seeders;
+
+use Illuminate\Support\Facades\DB;
 
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\Hash;
 use Carbon\Carbon;
 
 class GiangVienSeeder extends Seeder
@@ -16,18 +19,17 @@ class GiangVienSeeder extends Seeder
     {
         //
         DB::table('giang_viens')->insert([
-            
-        'id_khoa' => '1',
-        'id_chuc_vu' => '1',
-        'email' => 'giangvien1@caothang.edu.vn',
-        'password' => '123456',
-        
-        'ma_so' => '21012000',
-        'sdt' => '210120000',
-        'ho_ten' => 'Giảng viên 1',
-        'ngay_sinh' => Carbon::now(),
-        'trang_thai' => '1',
+
+            'id_khoa' => '1',
+            'id_chuc_vu' => '1',
+            'email' => 'giangvien1@caothang.edu.vn',
+            'password' => Hash::make('123456'),
+
+            'ma_so' => '21012000',
+            'sdt' => '210120000',
+            'ho_ten' => 'Giảng viên 1',
+            'ngay_sinh' => Carbon::now(),
+            'trang_thai' => '1',
         ]);
-        
     }
 }

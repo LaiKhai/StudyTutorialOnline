@@ -4,20 +4,24 @@ import 'package:flutter/material.dart';
 
 import '../common/contrains/color.dart';
 import '../common/contrains/dimen.dart';
+import '../data/User.dart';
 import '../widget/Drawer/Navigation_Drawer.dart';
 
 class SubjectPage extends StatefulWidget {
-  SubjectPage({Key? key}) : super(key: key);
+  final User us;
+  SubjectPage({Key? key, required this.us}) : super(key: key);
 
   @override
-  State<SubjectPage> createState() => _SubjectPageState();
+  State<SubjectPage> createState() => _SubjectPageState(us: us);
 }
 
 class _SubjectPageState extends State<SubjectPage> {
+  final User us;
+  _SubjectPageState({required this.us});
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        drawer: Navigationdrawerwidget(),
+        drawer: Navigationdrawerwidget(us: us),
         appBar: AppBar(
           elevation: 0,
           backgroundColor: AppColor.theme,

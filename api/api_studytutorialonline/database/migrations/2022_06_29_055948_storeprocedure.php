@@ -19,12 +19,14 @@ class Storeprocedure extends Migration
         $droptaoCauTraLoi = "DROP PROCEDURE IF EXISTS `Tao_cau_TrL`;";
         $droptaoCauHoi = "DROP PROCEDURE IF EXISTS `tao_cau_hoi`;";
         $droptaoDSSV = "DROP PROCEDURE IF EXISTS `tao_dssv`;";
+        $droptaoDSGV = "DROP PROCEDURE IF EXISTS `tao_dsgv`;";
 
         DB::unprepared($dropbatdauKT);
         DB::unprepared($droptaobaiKT);
         DB::unprepared($droptaoCauTraLoi);
         DB::unprepared($droptaoCauHoi);
         DB::unprepared($droptaoDSSV);
+        DB::unprepared($droptaoDSGV);
 
         $batdauKT = 'CREATE PROCEDURE `Bat_dau_KT`(IN `id_bai_ktra` INT, IN `id_lop_hphan` INT) 
         BEGIN
@@ -54,12 +56,17 @@ class Storeprocedure extends Migration
         INSERT INTO `ds_sinh_viens`(`id_sinh_vien`,`id_lop_hoc_phan`,`trang_thai`,`created_at`,`updated_at`)
         VALUES(id_sinh_vien,id_lop_hoc_phan,1,NOW(),NOW());";
 
+        $taoDSGV = "CREATE PROCEDURE `tao_dsgv`(IN `id_giang_vien` VARCHAR(255),IN `id_lop_hoc_phan` INT)
+        INSERT INTO `ds_giang_viens`(`id_giang_vien`,`id_lop_hoc_phan`,`trang_thai`,`created_at`,`updated_at`)
+        VALUES(id_giang_vien,id_lop_hoc_phan,1,NOW(),NOW());";
+
         DB::unprepared($taoBaiKT);
         DB::unprepared($batdauKT);
         DB::unprepared($taoCauHoi);
         DB::unprepared($taoCauTraLoi);
 
         DB::unprepared($taoDSSV);
+        DB::unprepared($taoDSGV);
     }
 
     /**

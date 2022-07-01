@@ -53,16 +53,7 @@ class FileController extends Controller
     public function store(Request $request)
     {
         $input['trang_thai'] = 1;
-        // $validator = Validator::make($input, [
-        //     'noi_dung' => ['required']
-        // ]);
-        // if ($validator->fails()) {
-        //     if (!empty($validator->errors())) {
-        //         $response['data'] = $validator->errors();
-        //     }
-        //     $response['message'] = 'Vaidator Error';
-        //     return response()->json($response, 404);
-        // }
+
         $file = File::create($input);
         if ($request->hasFile('noi_dung')) {
             $file['noi_dung'] = $request->file('noi_dung')->store('assets/files/' . $file->id, 'public');

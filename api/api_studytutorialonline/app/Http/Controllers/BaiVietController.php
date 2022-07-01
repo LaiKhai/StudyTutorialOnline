@@ -3,12 +3,33 @@
 namespace App\Http\Controllers;
 
 use App\Models\BaiViet;
+use App\Models\CheckFile;
+use App\Models\File;
+use App\Models\SinhVien;
+use App\Models\GiangVien;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 
 
 class BaiVietController extends Controller
 {
+    public function FixImg(SinhVien $sinhVien)
+    {
+        if (Storage::disk('public')->exists($sinhVien->avt)) {
+            $sinhVien->avt = Storage::url($sinhVien->avt);
+        } else {
+            $sinhVien->avt = '/assets/images/no_image.png';
+        }
+    }
+    public function FixImgGV(GiangVien $giangVien)
+    {
+        if (Storage::disk('public')->exists($giangVien->avt)) {
+            $giangVien->avt = Storage::url($giangVien->avt);
+        } else {
+            $giangVien->avt = '/assets/images/no_image.png';
+        }
+    }
     /**
      * Display a listing of the resource.
      *
@@ -17,6 +38,7 @@ class BaiVietController extends Controller
     public function index()
     {
         $lstBaiViet = BaiViet::all();
+
         foreach ($lstBaiViet as $item) {
             $item->lophocphan;
             $item->loaibaiviet;
@@ -24,7 +46,9 @@ class BaiVietController extends Controller
             $item->sinhvien;
             $item->giangvien;
         }
-        return response()->json(['baiviet' => $lstBaiViet], 200);
+        return response()->json([
+            'baiviet' => $lstBaiViet,
+        ], 200);
     }
 
     /**
@@ -54,9 +78,6 @@ class BaiVietController extends Controller
         $validator = Validator::make($input, [
             'id_lop_hoc_phan' => ['required', 'max:255', 'integer'],
             'id_loai_bai_viet' => ['required', 'max:255', 'integer'],
-            'id_sinh_vien',
-            'id_giang_vien',
-            'noi_dung' => ['required', 'string'],
             'trang_thai' => ['required', 'max:255', 'integer']
         ]);
         if ($validator->fails()) {
@@ -67,14 +88,36 @@ class BaiVietController extends Controller
             return response()->json($response, 404);
         }
         $baiViet = BaiViet::create($input);
+        if ($request->hasFile('file')) {
+            $inputfile['noi_dung'] = $request->file('file')->store('assets/files/' . $request->file('file')->getClientOriginalName(), 'public');
+            $inputfile['loai_file'] = $request->file('file')->extension();
+            $inputfile['ten_file'] = $request->file('file')->getClientOriginalName();
+            $inputfile['trang_thai'] = 1;
+            $file = File::create($inputfile);
+
+            $inputcheckfile['id_bai_viet'] = $baiViet->id;
+            $inputcheckfile['id_file'] = $file->id;
+            $inputcheckfile['trang_thai'] = 1;
+            CheckFile::create($inputcheckfile);
+        }
+
+        $checkfile = CheckFile::join('bai_viets', 'check_files.id_bai_viet', '=', 'bai_viets.id')
+            ->join('files', 'check_files.id_file', '=', 'files.id')
+            ->where('check_files.id_bai_viet', $baiViet->id)
+            ->select('files.*')
+            ->get();
         $baiViet->lophocphan;
         $baiViet->loaibaiviet;
         $baiViet->checkfile;
-        $baiViet->sinhvien;
-        $baiViet->giangvien;
+        if ($baiViet->sinhvien != null) {
+            $this->FixImg($baiViet->sinhvien);
+        } else if ($baiViet->giangvien != null) {
+            $this->FixImgGV($baiViet->giangvien);
+        }
         $response = [
             'message' => 'them thanh cong !',
-            'baiviet' => $baiViet
+            'baiviet' => $baiViet,
+            'file' => $checkfile
         ];
         return response()->json($response, 200);
     }
@@ -91,13 +134,22 @@ class BaiVietController extends Controller
         if (empty($baiViet)) {
             return response()->json(['message' => 'khong tim thay bai viet !'], 404);
         }
+        $checkfile = CheckFile::join('bai_viets', 'check_files.id_bai_viet', '=', 'bai_viets.id')
+            ->join('files', 'check_files.id_file', '=', 'files.id')
+            ->where('check_files.id_bai_viet', $id)
+            ->select('files.*')
+            ->get();
         $baiViet->lophocphan;
         $baiViet->loaibaiviet;
         $baiViet->checkfile;
-        $baiViet->sinhvien;
-        $baiViet->giangvien;
+        if ($baiViet->sinhvien != null) {
+            $this->FixImg($baiViet->sinhvien);
+        } else if ($baiViet->giangvien != null) {
+            $this->FixImgGV($baiViet->giangvien);
+        }
         $response = [
-            'baiviet' => $baiViet
+            'baiviet' => $baiViet,
+            'file' => $checkfile
         ];
         return response()->json($response, 200);
     }
@@ -129,6 +181,8 @@ class BaiVietController extends Controller
         $baiViet->fill([
             'id_lop_hoc_phan' => $request->input('id_lop_hoc_phan'),
             'id_loai_bai_viet' => $request->input('id_loai_bai_viet'),
+            'id_sinh_vien' => $request->input('id_sinh_vien'),
+            'id_giang_vien' => $request->input('id_giang_vien'),
             'noi_dung' => $request->input('noi_dung'),
             'trang_thai' => $request->input('trang_thai'),
         ]);
@@ -136,8 +190,8 @@ class BaiVietController extends Controller
         $baiViet->lophocphan;
         $baiViet->loaibaiviet;
         $baiViet->checkfile;
-        $baiViet->sinhvien;
-        $baiViet->giangvien;
+        $this->FixImg($baiViet->sinhvien);
+        $this->FixImgGV($baiViet->giangvien);
         $response = [
             'message' => 'chinh sua thanh cong !',
             'baiviet' => $baiViet

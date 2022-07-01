@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\DS_GiangVien;
 use Illuminate\Http\Request;
 use App\Models\GiangVien;
+use Illuminate\Support\Facades\DB;
 use App\Models\LopHocPhan;
 
 class DSGiangVienController extends Controller
@@ -95,16 +96,22 @@ class DSGiangVienController extends Controller
         //
     }
 
-    public function createDSSVWithGiangVien()
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function createDSSVWithGiangVien(Request $request)
     {
-        $giangVien = GiangVien::all();
+
         $lopHocPhan = LopHocPhan::max('id');
-        foreach ($giangVien as $item) {
-            $input['id_giang_vien'] = $item->id;
-            $input['id_lop_hoc_phan'] = $lopHocPhan;
-            $input['trang_thai'] = 1;
-            DS_GiangVien::create($input);
-        }
+        $input['id_giang_vien'] = $request->input('id_giang_vien');
+        $input['id_lop_hoc_phan'] = $lopHocPhan;
+        DB::select('call tao_dsgv(?,?)', [
+            $input['id_giang_vien'],
+            $input['id_lop_hoc_phan'],
+        ]);
         $lstdsgv = DS_GiangVien::all();
         return response()->json($lstdsgv, 200);
     }
