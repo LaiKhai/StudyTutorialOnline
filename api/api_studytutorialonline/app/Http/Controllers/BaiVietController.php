@@ -127,6 +127,8 @@ class BaiVietController extends Controller
         $baiViet->fill([
             'id_lop_hoc_phan' => $request->input('id_lop_hoc_phan'),
             'id_loai_bai_viet' => $request->input('id_loai_bai_viet'),
+            'id_sinh_vien' => $request->input('id_sinh_vien'),
+            'id_giang_vien' => $request->input('id_giang_vien'),
             'noi_dung' => $request->input('noi_dung'),
             'trang_thai' => $request->input('trang_thai'),
         ]);
