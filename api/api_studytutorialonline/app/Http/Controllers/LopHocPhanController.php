@@ -199,7 +199,7 @@ class LopHocPhanController extends Controller
     }
 
     /**
-     * Remove the specified resource from storage.
+     * Display the specified resource.
      *
      * @param  int  $id
      * @return \Illuminate\Http\Response
