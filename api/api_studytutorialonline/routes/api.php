@@ -50,7 +50,7 @@ Route::get('/lophocphanwithgiangvien/{id}', [GiangVienController::class, 'lophoc
 //bat dau kiem tra
 Route::get('/lophocphanwithgiangvien/{id}', [GiangVienController::class, 'lophocphanwithgiangvien']);
 //lấy danh sách bài viết theo lớp học phần
-Route::post('/lophocphan/listbaiviet/{id}', [LopHocPhanController::class, 'ListBaiViet']);
+Route::get('/lophocphan/listbaiviet/{id}', [LopHocPhanController::class, 'ListBaiViet']);
 
 Route::apiResource('chucvu', ChucVuController::class);
 Route::apiResource('sinhvien', SinhVienController::class);
