@@ -108,7 +108,7 @@ class BaiVietController extends Controller
             ->get();
         $baiViet->lophocphan;
         $baiViet->loaibaiviet;
-        $baiViet->checkfile;
+
         if ($baiViet->sinhvien != null) {
             $this->FixImg($baiViet->sinhvien);
         } else if ($baiViet->giangvien != null) {
@@ -141,7 +141,6 @@ class BaiVietController extends Controller
             ->get();
         $baiViet->lophocphan;
         $baiViet->loaibaiviet;
-        $baiViet->checkfile;
         if ($baiViet->sinhvien != null) {
             $this->FixImg($baiViet->sinhvien);
         } else if ($baiViet->giangvien != null) {
@@ -189,7 +188,6 @@ class BaiVietController extends Controller
         $baiViet->save();
         $baiViet->lophocphan;
         $baiViet->loaibaiviet;
-        $baiViet->checkfile;
         $this->FixImg($baiViet->sinhvien);
         $this->FixImgGV($baiViet->giangvien);
         $response = [
