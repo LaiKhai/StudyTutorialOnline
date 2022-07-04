@@ -6,6 +6,7 @@ use App\Models\BaiViet;
 use App\Models\DS_GiangVien;
 use App\Models\DS_SinhVien;
 use App\Models\LopHocPhan;
+use App\Models\CheckFile;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
@@ -219,6 +220,12 @@ class LopHocPhanController extends Controller
                     ->orderBy('bai_viets.created_at', 'DESC')
                     ->select('lop_hoc_phans.*', 'bai_viets.*', 'loai_bai_viets.*', 'sinh_viens.*')
                     ->get();
+                $file = CheckFile::join('bai_viets', 'check_files.id_bai_viet', '=', 'bai_viets.id')
+                    ->join('files', 'check_files.id_file', '=', 'files.id')
+                    ->join('lop_hoc_phans', 'bai_viets.id_lop_hoc_phan', '=', 'lop_hoc_phans.id')
+                    ->where('lop_hoc_phans.id', $id)
+                    ->select('files.*')
+                    ->get();
             } else if ($item->giangvien != null) {
                 $baiViet = BaiViet::join('lop_hoc_phans', 'bai_viets.id_lop_hoc_phan', '=', 'lop_hoc_phans.id')
                     ->join('loai_bai_viets', 'bai_viets.id_loai_bai_viet', '=', 'loai_bai_viets.id')
@@ -232,6 +239,7 @@ class LopHocPhanController extends Controller
 
         $response = [
             'baiviet' => $baiViet,
+            'file' => $file
         ];
         return response($response, 200);
     }

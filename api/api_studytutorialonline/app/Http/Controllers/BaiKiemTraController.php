@@ -202,7 +202,8 @@ class BaiKiemTraController extends Controller
             $request->input('tieu_de'),
             $request->input('noi_dung'),
         ]);
-        $baiKiemTra = BaiKiemTra::all();
+        $idbaiKiemTra = BaiKiemTra::max('id');
+        $baiKiemTra = BaiKiemTra::find($idbaiKiemTra);
         $response = [
             'message' => 'Tao bai kiem tra thanh cong !',
             'baikiemtra' => $baiKiemTra
