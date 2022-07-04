@@ -88,18 +88,22 @@ class BaiVietController extends Controller
             return response()->json($response, 404);
         }
         $baiViet = BaiViet::create($input);
+        $inputcheckfile['id_bai_viet'] = $baiViet->id;
+        $inputcheckfile['trang_thai'] = 1;
+        $inputfile['trang_thai'] = 1;
+        $files = $request->file('file');
         if ($request->hasFile('file')) {
-            $inputfile['noi_dung'] = $request->file('file')->store('assets/files/' . $request->file('file')->getClientOriginalName(), 'public');
-            $inputfile['loai_file'] = $request->file('file')->extension();
-            $inputfile['ten_file'] = $request->file('file')->getClientOriginalName();
-            $inputfile['trang_thai'] = 1;
-            $file = File::create($inputfile);
-
-            $inputcheckfile['id_bai_viet'] = $baiViet->id;
-            $inputcheckfile['id_file'] = $file->id;
-            $inputcheckfile['trang_thai'] = 1;
-            CheckFile::create($inputcheckfile);
+            foreach ($files as $itemFile) {
+                $path = $itemFile->store('assets/files/' . $itemFile->getClientOriginalName(), 'public');
+                $inputfile['noi_dung'] = $path;
+                $inputfile['loai_file'] = $itemFile->extension();
+                $inputfile['ten_file'] = $itemFile->getClientOriginalName();
+                $itemFile2 = File::create($inputfile);
+                $inputcheckfile['id_file'] = $itemFile2->id;
+                CheckFile::create($inputcheckfile);
+            }
         }
+
 
         $checkfile = CheckFile::join('bai_viets', 'check_files.id_bai_viet', '=', 'bai_viets.id')
             ->join('files', 'check_files.id_file', '=', 'files.id')

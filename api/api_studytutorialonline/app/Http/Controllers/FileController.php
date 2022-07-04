@@ -141,4 +141,27 @@ class FileController extends Controller
         ];
         return response()->json($response, 200);
     }
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function dowloadFile(Request $request, $id)
+    {
+        $file = File::find($id);
+        if (empty($file)) {
+            $response = ['message' => 'khong tim thay file nao !'];
+            return response()->json($response, 404);
+        }
+        $this->FixFile($file);
+        return response()->download('http://127.0.0.1:8000/storage/app/public/assets/files/appstore.png/1Grf23XSmhMwtKg0i6C3PVv41wvo4IGd5hUtfCqk.png', 'filename.jpg');
+        // if (Storage::disk('public')->exists($file->noi_dung)) {
+        //     $this->FixFile($file);
+        //     return Storage::dowload($request->getSchemeAndHttpHost() . $file->noi_dung);
+        // } else {
+        //     $response = ['message' => 'khong the tai file !'];
+        //     return response()->json($response, 404);
+        // }
+    }
 }

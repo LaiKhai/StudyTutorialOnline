@@ -44,6 +44,9 @@ class CauHoiController extends Controller
      */
     public function store(Request $request)
     {
+        // foreach(json_decode($request) as $item){
+
+        // }
         $input['id_bai_kiem_tra'] = $request->input('id_bai_kiem_tra');
         $input['id_file'] = $request->input('id_file');
         $input['de_bai'] = $request->input('de_bai');

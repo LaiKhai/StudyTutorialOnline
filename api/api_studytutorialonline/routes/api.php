@@ -52,6 +52,9 @@ Route::get('/lophocphanwithgiangvien/{id}', [GiangVienController::class, 'lophoc
 //lấy danh sách bài viết theo lớp học phần
 Route::get('/listbaiviet/{id}', [LopHocPhanController::class, 'ListBaiViet']);
 
+//Dowload file
+Route::get('/dowloadfile/{id}', [FileController::class, 'dowloadFile']);
+
 Route::apiResource('chucvu', ChucVuController::class);
 Route::apiResource('sinhvien', SinhVienController::class);
 Route::apiResource('giangvien', GiangVienController::class);

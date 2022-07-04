@@ -193,6 +193,7 @@ class BaiKiemTraController extends Controller
      */
     public function taoBaiKT(Request $request)
     {
+
         DB::select('call tao_Bai_Ktra(?,?,?,?,?,?)', [
             $request->input('tg_ket_thuc'),
             $request->input('id_lop_hoc_phan'),
@@ -217,16 +218,18 @@ class BaiKiemTraController extends Controller
      */
     public function taoCauHoi(Request $request)
     {
-        DB::select('call tao_cau_hoi(?,?,?,?,?,?,?,?)', [
-            $request->input('id_bai_kiem_tra'),
-            $request->input('de_bai'),
-            $request->input('dap_an_1'),
-            $request->input('dap_an_2'),
-            $request->input('dap_an_3'),
-            $request->input('dap_an_4'),
-            $request->input('dap_an_dung'),
-            $request->input('diem'),
-        ]);
+        foreach ($request->json() as $item) {
+            DB::select('call tao_cau_hoi(?,?,?,?,?,?,?,?)', [
+                $item['id_bai_kiem_tra'],
+                $item['de_bai'],
+                $item['dap_an_1'],
+                $item['dap_an_2'],
+                $item['dap_an_3'],
+                $item['dap_an_4'],
+                $item['dap_an_dung'],
+                $item['diem'],
+            ]);
+        }
         $cauHoi = CauHoi::all();
         $response = [
             'message' => 'Tao cau hoi thanh cong !',

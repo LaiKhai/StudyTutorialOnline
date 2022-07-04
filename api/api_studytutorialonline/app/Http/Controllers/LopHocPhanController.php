@@ -216,6 +216,7 @@ class LopHocPhanController extends Controller
                     ->join('loai_bai_viets', 'bai_viets.id_loai_bai_viet', '=', 'loai_bai_viets.id')
                     ->join('sinh_viens', 'bai_viets.id_sinh_vien', '=', 'sinh_viens.id')
                     ->where('lop_hoc_phans.id', $id)
+                    ->orderBy('bai_viets.created_at', 'DESC')
                     ->select('lop_hoc_phans.*', 'bai_viets.*', 'loai_bai_viets.*', 'sinh_viens.*')
                     ->get();
             } else if ($item->giangvien != null) {
@@ -223,6 +224,7 @@ class LopHocPhanController extends Controller
                     ->join('loai_bai_viets', 'bai_viets.id_loai_bai_viet', '=', 'loai_bai_viets.id')
                     ->join('giang_viens', 'bai_viets.id_giang_vien', '=', 'giang_viens.id')
                     ->where('lop_hoc_phans.id', $id)
+                    ->orderBy('bai_viets.created_at', 'DESC')
                     ->select('lop_hoc_phans.*', 'bai_viets.*', 'loai_bai_viets.*', 'giang_viens.*')
                     ->get();
             }
