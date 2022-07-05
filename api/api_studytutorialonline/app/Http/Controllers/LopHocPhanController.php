@@ -38,9 +38,13 @@ class LopHocPhanController extends Controller
             $this->FixImg($item);
         }
         if (empty($lstLopHocPhan)) {
-            return response()->json(['message' => 'chua co lop hoc phan nao'], 404);
+            return response()->json([
+                'status' => 'false',
+                'message' => 'chua co lop hoc phan nao'
+            ], 404);
         }
         $response = [
+            'status' => 'true',
             'lophocphan' => $lstLopHocPhan,
         ];
         return response()->json($response, 200);
@@ -75,6 +79,7 @@ class LopHocPhanController extends Controller
         if ($validator->fails()) {
             if (!empty($validator->errors())) {
                 $response['data'] = $validator->errors();
+                $response['status'] = 'false';
             }
             $response['message'] = 'Vaidator Error';
             return response()->json($response, 404);
@@ -92,6 +97,7 @@ class LopHocPhanController extends Controller
         $lopHocPhan->baitap;
         $lopHocPhan->baiviet;
         $response = [
+            'status' => 'true',
             'message' => 'them lop hoc phan thanh cong !',
             'lophocphan' => $lopHocPhan
         ];
@@ -108,7 +114,10 @@ class LopHocPhanController extends Controller
     {
         $lopHocPhan = LopHocPhan::find($id);
         if (empty($lopHocPhan)) {
-            return response()->json(['message' => 'khong tim thay lop hoc phan nao !'], 404);
+            return response()->json([
+                'status' => 'false',
+                'message' => 'khong tim thay lop hoc phan nao !'
+            ], 404);
         }
         $lopHocPhan->lop;
         $lopHocPhan->baikiemtra;
@@ -125,6 +134,7 @@ class LopHocPhanController extends Controller
             ->select('lop_hoc_phans.*', 'sinh_viens.*')->get();
 
         $response = [
+            'status' => 'true',
             'lophocphan' => $lopHocPhan,
             'dssv' => $dssv,
             'dsgv' => $dsgv
@@ -154,7 +164,10 @@ class LopHocPhanController extends Controller
     {
         $lopHocPhan = LopHocPhan::find($id);
         if (empty($lopHocPhan)) {
-            return response()->json(['message' => ' khong tim thay lop hoc phan nao !', 404]);
+            return response()->json([
+                'status' => 'false',
+                'message' => ' khong tim thay lop hoc phan nao !', 404
+            ]);
         }
         $lopHocPhan->fill([
             'id_bo_mon' => $request->input('id_bo_mon'),
@@ -172,6 +185,7 @@ class LopHocPhanController extends Controller
         $lopHocPhan->baitap;
         $lopHocPhan->baiviet;
         $response = [
+            'status' => 'true',
             'message' => 'chinh sua thanh cong !',
             'lophocphan' => $lopHocPhan
         ];
@@ -188,11 +202,15 @@ class LopHocPhanController extends Controller
     {
         $lopHocPhan = LopHocPhan::find($id);
         if (empty($lopHocPhan)) {
-            return response()->json(['message' => ' khong tim thay lop hoc phan nao !', 404]);
+            return response()->json([
+                'status' => 'false',
+                'message' => ' khong tim thay lop hoc phan nao !', 404
+            ]);
         }
         $lopHocPhan->delete();
         $lstLopHocPhan = LopHocPhan::all();
         $response = [
+            'status' => 'true',
             'message' => 'xoa thanh cong !',
             'lophocphan' => $lstLopHocPhan
         ];
@@ -209,7 +227,10 @@ class LopHocPhanController extends Controller
     {
         $lopHocPhan = LopHocPhan::find($id);
         if (empty($lopHocPhan)) {
-            return response()->json(['baiviet' => []], 404);
+            return response()->json([
+                'status' => 'false',
+                'baiviet' => []
+            ], 404);
         }
         foreach ($lopHocPhan->baiviet as $item) {
             if ($item->sinhvien != null) {
@@ -238,6 +259,7 @@ class LopHocPhanController extends Controller
         }
 
         $response = [
+            'status' => 'true',
             'baiviet' => $baiViet,
             'file' => $file
         ];

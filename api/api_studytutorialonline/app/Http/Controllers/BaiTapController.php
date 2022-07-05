@@ -24,6 +24,7 @@ class BaiTapController extends Controller
             $item->binhluan;
         }
         $response = [
+            'status' => 'true',
             'baitap' => $lstBaiTap
         ];
         return response()->json($response, 200);
@@ -67,6 +68,7 @@ class BaiTapController extends Controller
         if ($validator->fails()) {
             if (!empty($validator->errors())) {
                 $response['data'] = $validator->errors();
+                $response['status'] = 'false';
             }
             $response['message'] = 'Vaidator Error';
             return response()->json($response, 404);
@@ -78,6 +80,7 @@ class BaiTapController extends Controller
         $baiTap->ctbaitap;
         $baiTap->binhluan;
         $response = [
+            'status' => 'true',
             'message' => 'them bai tap thanh cong !',
             'baiTap' => $baiTap
         ];
@@ -94,7 +97,10 @@ class BaiTapController extends Controller
     {
         $baiTap = BaiTap::find($id);
         if (empty($baiTap)) {
-            return response()->json(['message' => 'Khong tim thay bai tap nao !'], 404);
+            return response()->json([
+                'status' => 'false',
+                'message' => 'Khong tim thay bai tap nao !'
+            ], 404);
         }
         $baiTap->lophocphan;
         $baiTap->loaibaitap;
@@ -102,6 +108,7 @@ class BaiTapController extends Controller
         $baiTap->ctbaitap;
         $baiTap->binhluan;
         $response = [
+            'status' => 'true',
             'baiTap' => $baiTap,
         ];
         return response($response, 200);
@@ -129,7 +136,10 @@ class BaiTapController extends Controller
     {
         $baiTap = BaiTap::find($id);
         if (empty($baiTap)) {
-            return response()->json(['message' => ' Khong tim thay bai tap nao !', 404]);
+            return response()->json([
+                'status' => 'false',
+                'message' => ' Khong tim thay bai tap nao !', 404
+            ]);
         }
         $baiTap->fill([
             'id_lop_hoc_phan' => $request->input('id_lop_hoc_phan'),
@@ -148,6 +158,7 @@ class BaiTapController extends Controller
         $baiTap->ctbaitap;
         $baiTap->binhluan;
         $response = [
+            'status' => 'true',
             'message' => 'chinh sua thanh cong !',
             'baitap' => $baiTap
         ];
@@ -164,7 +175,10 @@ class BaiTapController extends Controller
     {
         $baiTap = BaiTap::find($id);
         if (empty($baiTap)) {
-            return response()->json(['message' => ' Khong tim thay bai tap nao !', 404]);
+            return response()->json([
+                'status' => 'false',
+                'message' => ' Khong tim thay bai tap nao !', 404
+            ]);
         }
         $baiTap->delete();
         $lstBaiTap = BaiTap::all();
@@ -176,6 +190,7 @@ class BaiTapController extends Controller
             $item->binhluan;
         }
         $response = [
+            'status' => 'true',
             'message' => 'xoa thanh cong !',
             'baitap' => $lstBaiTap
         ];

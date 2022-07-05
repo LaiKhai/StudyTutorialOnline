@@ -16,7 +16,10 @@ class LoaiBaiTapController extends Controller
     public function index()
     {
         $loaiBaiTap = LoaiBaiTap::all();
-        $respone = ['loaibaitap' => $loaiBaiTap];
+        $respone = [
+            'status' => 'true',
+            'loaibaitap' => $loaiBaiTap
+        ];
         return response()->json($respone, 200);
     }
 
@@ -47,6 +50,7 @@ class LoaiBaiTapController extends Controller
         if ($validator->fails()) {
             if (!empty($validator->errors())) {
                 $respone['error'] = $validator->errors();
+                $response['status'] = 'false';
             }
             $respone['message'] = 'Validator Errors';
             return response()->json($respone, 404);
@@ -54,6 +58,7 @@ class LoaiBaiTapController extends Controller
         $loaiBaiTap = LoaiBaiTap::create($input);
         $respone =
             [
+                'status' => 'true',
                 'message' => 'them loai bai tap thanh cong !',
                 'loaibaitap' => $loaiBaiTap
             ];
@@ -71,11 +76,13 @@ class LoaiBaiTapController extends Controller
         $loaiBaiTap = LoaiBaiTap::find($id);
         if (empty($loaiBaiTap)) {
             $respone = [
+                'status' => 'false',
                 'message' => 'khong tim thay loai bai tap nao !',
             ];
             return response()->json($respone, 404);
         }
         $respone = [
+            'status' => 'true',
             'loaibaitap' => $loaiBaiTap
         ];
         return response()->json($respone, 200);
@@ -103,7 +110,10 @@ class LoaiBaiTapController extends Controller
     {
         $loaiBaiTap = LoaiBaiTap::find($id);
         if (empty($loaiBaiTap)) {
-            return response()->json(['messsage' => 'khong tim thay sinh vien nao !'], 404);
+            return response()->json([
+                'status' => 'false',
+                'messsage' => 'khong tim thay sinh vien nao !'
+            ], 404);
         }
         $loaiBaiTap->fill([
             'ten_loai' => $request->input('ten_loai'),
@@ -112,6 +122,7 @@ class LoaiBaiTapController extends Controller
 
         $loaiBaiTap->save();
         $response = [
+            'status' => 'true',
             'message' => 'chinh sua thanh cong !',
             'sinhvien' => $loaiBaiTap
         ];
@@ -128,12 +139,16 @@ class LoaiBaiTapController extends Controller
     {
         $loaiBaiTap = LoaiBaiTap::find($id);
         if (empty($loaiBaiTap)) {
-            $response = ['message' => 'khong tim thay sinh vien nao !'];
+            $response = [
+                'status' => 'false',
+                'message' => 'khong tim thay sinh vien nao !'
+            ];
             return response()->json($response, 404);
         }
         $loaiBaiTap->delete();
         $lstLoaiBT = LoaiBaiTap::all();
         $response = [
+            'status' => 'true',
             'message' => 'xoa thanh cong !',
             'sinhvien' => $lstLoaiBT
         ];

@@ -47,6 +47,7 @@ class BaiVietController extends Controller
             $item->giangvien;
         }
         return response()->json([
+            'status' => 'true',
             'baiviet' => $lstBaiViet,
         ], 200);
     }
@@ -83,6 +84,7 @@ class BaiVietController extends Controller
         if ($validator->fails()) {
             if (!empty($validator->errors())) {
                 $response['data'] = $validator->errors();
+                $response['status'] = 'false';
             }
             $response['message'] = 'Vaidator Error';
             return response()->json($response, 404);
@@ -119,6 +121,7 @@ class BaiVietController extends Controller
             $this->FixImgGV($baiViet->giangvien);
         }
         $response = [
+            'status' => 'true',
             'message' => 'them thanh cong !',
             'baiviet' => $baiViet,
             'file' => $checkfile
@@ -136,7 +139,10 @@ class BaiVietController extends Controller
     {
         $baiViet = BaiViet::find($id);
         if (empty($baiViet)) {
-            return response()->json(['message' => 'khong tim thay bai viet !'], 404);
+            return response()->json([
+                'status' => 'false',
+                'message' => 'khong tim thay bai viet !'
+            ], 404);
         }
         $checkfile = CheckFile::join('bai_viets', 'check_files.id_bai_viet', '=', 'bai_viets.id')
             ->join('files', 'check_files.id_file', '=', 'files.id')
@@ -151,6 +157,7 @@ class BaiVietController extends Controller
             $this->FixImgGV($baiViet->giangvien);
         }
         $response = [
+            'status' => 'true',
             'baiviet' => $baiViet,
             'file' => $checkfile
         ];
@@ -179,7 +186,10 @@ class BaiVietController extends Controller
     {
         $baiViet = BaiViet::find($id);
         if (empty($baiViet)) {
-            return response()->json(['message' => 'khong tim thay bai viet !'], 404);
+            return response()->json([
+                'status' => 'false',
+                'message' => 'khong tim thay bai viet !'
+            ], 404);
         }
         $baiViet->fill([
             'id_lop_hoc_phan' => $request->input('id_lop_hoc_phan'),
@@ -195,6 +205,7 @@ class BaiVietController extends Controller
         $this->FixImg($baiViet->sinhvien);
         $this->FixImgGV($baiViet->giangvien);
         $response = [
+            'status' => 'true',
             'message' => 'chinh sua thanh cong !',
             'baiviet' => $baiViet
         ];
@@ -211,7 +222,10 @@ class BaiVietController extends Controller
     {
         $baiViet = BaiViet::find($id);
         if (empty($baiViet)) {
-            return response()->json(['message' => 'khong tim thay bai viet !']);
+            return response()->json([
+                'status' => 'false',
+                'message' => 'khong tim thay bai viet !'
+            ]);
         }
         $baiViet->delete();
         $lstBaiViet = BaiViet::all();
@@ -223,6 +237,7 @@ class BaiVietController extends Controller
             $item->giangvien;
         }
         $response = [
+            'status' => 'true',
             'message' => 'xoa thanh cong !',
             'baiviet' => $lstBaiViet
         ];

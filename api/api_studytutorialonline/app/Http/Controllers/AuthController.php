@@ -44,6 +44,7 @@ class AuthController extends Controller
         if ($validator->fails()) {
             if (!empty($validator->errors())) {
                 $response['data'] = $validator->errors();
+                $response['status'] = 'false';
             }
             $response['message'] = 'Vaidator Error';
             return response()->json($response, 404);
@@ -53,17 +54,22 @@ class AuthController extends Controller
 
         if ($sinhVien == null && $giangVien == null) {
             $response = [
+                'status' => 'false',
                 'message' => 'tai khoan khong ton tai !'
             ];
             return response()->json($response, 404);
         } else if ($giangVien != null) {
             if (!$giangVien || !Hash::check($input['password'], $giangVien->password)) {
-                return response(['message' => 'tai khoan hoac mat khau sai'], 401);
+                return response([
+                    'status' => 'false',
+                    'message' => 'tai khoan hoac mat khau sai'
+                ], 401);
             } else {
                 $this->FixImgGV($giangVien);
                 $token = $giangVien->createToken('TokenSinhVien')->plainTextToken;
                 $response =
                     [
+                        'status' => 'true',
                         'message' => 'Dang Nhap Thanh Cong !',
                         'user' => $giangVien,
                         'token' => $token
@@ -78,6 +84,7 @@ class AuthController extends Controller
                 $token = $sinhVien->createToken('TokenSinhVien')->plainTextToken;
                 $response =
                     [
+                        'status' => 'true',
                         'message' => 'Dang Nhap Thanh Cong !',
                         'user' => $sinhVien,
                         'token' => $token
@@ -98,6 +105,7 @@ class AuthController extends Controller
         if ($validator->fails()) {
             if (!empty($validator->errors())) {
                 $response['data'] = $validator->errors();
+                $response['status'] = 'false';
             }
             $response['message'] = 'Vaidator Error';
             return response()->json($response, 404);
@@ -105,9 +113,15 @@ class AuthController extends Controller
         $giangVien = GiangVien::where('email', $input['email'])->first();
 
         if (!$giangVien || !Hash::check($input['password'], $giangVien->password)) {
-            return response(['message' => 'tai khoan hoac mat khau sai'], 401);
+            return response([
+                'status' => 'false',
+                'message' => 'tai khoan hoac mat khau sai'
+            ], 401);
         } else if ($giangVien->id_chuc_vu != 1) {
-            return response(['message' => 'khong phai tai khoan phong dao tao !'], 400);
+            return response([
+                'status' => 'false',
+                'message' => 'khong phai tai khoan phong dao tao !'
+            ], 400);
         } else {
             $token = $giangVien->createToken('TokenGiangVien')->plainTextToken;
             $giangVien->khoa;
@@ -118,6 +132,7 @@ class AuthController extends Controller
             $this->FixImgGV($giangVien);
             $response =
                 [
+                    'status' => 'true',
                     'message' => 'Dang Nhap Thanh Cong !',
                     'user' => $giangVien,
                     'token' => $token

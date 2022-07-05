@@ -46,6 +46,7 @@ class GiangVienController extends Controller
             $this->FixImg($item);
         }
         $response = [
+            'status' => 'true',
             'user' => $giangVien,
         ];
         return response()->json($response, 200);
@@ -91,6 +92,7 @@ class GiangVienController extends Controller
         if ($validator->fails()) {
             if (!empty($validator->errors())) {
                 $response['data'] = $validator->errors();
+                $response['status'] = 'false';
             }
             $response['message'] = 'Vaidator Error';
             return response()->json($response, 404);
@@ -106,6 +108,7 @@ class GiangVienController extends Controller
         $giangVien->lop;
         $giangVien->baiviet;
         $response = [
+            'status' => 'true',
             'message' => 'Dang ky giang vien thanh cong !',
             'user' => $giangVien
         ];
@@ -123,7 +126,10 @@ class GiangVienController extends Controller
     {
         $giangVien = GiangVien::find($id);
         if (empty($giangVien)) {
-            return response()->json(['message' => 'Khong tim thay giang vien nao !'], 404);
+            return response()->json([
+                'status' => 'false',
+                'message' => 'Khong tim thay giang vien nao !'
+            ], 404);
         }
         $this->FixImg($giangVien);
         $giangVien->khoa;
@@ -133,6 +139,7 @@ class GiangVienController extends Controller
         $giangVien->baiviet;
 
         $response = [
+            'status' => 'true',
             'user' => $giangVien
         ];
         return response()->json($response, 200);
@@ -160,7 +167,10 @@ class GiangVienController extends Controller
     {
         $giangVien = GiangVien::find($id);
         if (empty($giangVien)) {
-            return response()->json(['message' => ' Khong tim thay giang vien nao !', 404]);
+            return response()->json([
+                'status' => 'false',
+                'message' => ' Khong tim thay giang vien nao !', 404
+            ]);
         }
         $giangVien->fill([
             'id_khoa' => $request->input('id_khoa'),
@@ -183,6 +193,7 @@ class GiangVienController extends Controller
         $giangVien->lop;
         $giangVien->baiviet;
         $response = [
+            'status' => 'true',
             'message' => 'chinh sua thanh cong !',
             'lophocphan' => $giangVien
         ];
@@ -199,7 +210,10 @@ class GiangVienController extends Controller
     {
         $giangVien = GiangVien::find($id);
         if (empty($giangVien)) {
-            $response = ['message' => 'khong tim thay giang vien nao !'];
+            $response = [
+                'status' => 'false',
+                'message' => 'khong tim thay giang vien nao !'
+            ];
             return response()->json($response, 404);
         }
         $giangVien->delete();
@@ -213,6 +227,7 @@ class GiangVienController extends Controller
             $this->FixImg($item);
         }
         $response = [
+            'status' => 'true',
             'message' => 'xoa thanh cong !',
             'giangvien' => $lstGiangVien
         ];
@@ -229,6 +244,7 @@ class GiangVienController extends Controller
             ->select('ds_giang_viens.id_giang_vien', 'lop_hoc_phans.*', 'giang_viens.ho_ten as ho_ten_gv', 'bo_mons.ten_mon_hoc', 'lops.ten_lop')->get();
 
         $response = [
+            'status' => 'true',
             'lophocphan' => $lhp
         ];
         return response()->json($response, 200);

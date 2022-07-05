@@ -18,6 +18,7 @@ class KhoaController extends Controller
     {
         $lstKhoa = Khoa::all();
         $response = [
+            'status' => 'true',
             'khoa' => $lstKhoa
         ];
         return response()->json($response, 200);
@@ -50,12 +51,14 @@ class KhoaController extends Controller
         if ($validator->fails()) {
             if (!empty($validator->errors())) {
                 $response['data'] = $validator->errors();
+                $response['status'] = 'false';
             }
             $response['message'] = 'Vaidator Error';
             return response()->json($response, 404);
         }
         $khoa = Khoa::create($input);
         $response = [
+            'status' => 'true',
             'message' => 'them thanh cong !',
             'khoa' => $khoa
         ];
@@ -72,9 +75,13 @@ class KhoaController extends Controller
     {
         $khoa = Khoa::find($id);
         if (empty($khoa)) {
-            return response()->json(['message' => 'khong tim thay khoa nao !'], 404);
+            return response()->json([
+                'status' => 'false',
+                'message' => 'khong tim thay khoa nao !'
+            ], 404);
         }
         $response = [
+            'status' => 'true',
             'khoa' => $khoa
         ];
         return response()->json($response, 200);
@@ -102,7 +109,10 @@ class KhoaController extends Controller
     {
         $khoa = Khoa::find($id);
         if (empty($khoa)) {
-            return response()->json(['message' => 'khong tim thay khoa nao !'], 404);
+            return response()->json([
+                'status' => 'false',
+                'message' => 'khong tim thay khoa nao !'
+            ], 404);
         }
         $khoa->fill([
             'ten_khoa' => $request->input('ten_khoa'),
@@ -110,6 +120,7 @@ class KhoaController extends Controller
         ]);
         $khoa->save();
         $response = [
+            'status' => 'true',
             'message' => 'chinh sua thanh cong !',
             'khoa' => $khoa
         ];
@@ -126,11 +137,15 @@ class KhoaController extends Controller
     {
         $khoa = Khoa::find($id);
         if (empty($khoa)) {
-            return response()->json(['message' => 'khong tim thay khoa nao !'], 404);
+            return response()->json([
+                'status' => 'false',
+                'message' => 'khong tim thay khoa nao !'
+            ], 404);
         }
         $khoa->delete();
         $lstKhoa = Khoa::all();
         $response = [
+            'status' => 'true',
             'message' => 'xoa thanh cong !',
             'khoa' => $lstKhoa
         ];

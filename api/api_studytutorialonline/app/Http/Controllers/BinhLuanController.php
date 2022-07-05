@@ -21,6 +21,7 @@ class BinhLuanController extends Controller
             $item->baitap;
         }
         $response = [
+            'status' => 'true',
             'binhluan' => $binhLuan
         ];
         return response()->json($response, 200);
@@ -57,6 +58,7 @@ class BinhLuanController extends Controller
         if ($validator->fails()) {
             if (!empty($validator->errors())) {
                 $response['data'] = $validator->errors();
+                $response['status'] = 'false';
             }
             $response['message'] = 'Vaidator Error';
             return response()->json($response, 404);
@@ -65,6 +67,7 @@ class BinhLuanController extends Controller
         $binhLuan->baitap;
         $binhLuan->sinhvien;
         $response = [
+            'status' => 'true',
             'message' => 'them thanh cong bo mon !',
             'binhluan' => $binhLuan
         ];
@@ -81,11 +84,15 @@ class BinhLuanController extends Controller
     {
         $binhLuan = BinhLuan::find($id);
         if (empty($binhLuan)) {
-            return response()->json(['message' => 'khong tim thay binh luan !'], 404);
+            return response()->json([
+                'status' => 'false',
+                'message' => 'khong tim thay binh luan !'
+            ], 404);
         }
         $binhLuan->baitap;
         $binhLuan->sinhvien;
         $response = [
+            'status' => 'true',
             'binhluan' => $binhLuan
         ];
         return response()->json($response, 200);
@@ -113,7 +120,10 @@ class BinhLuanController extends Controller
     {
         $binhLuan = BinhLuan::find($id);
         if (empty($binhLuan)) {
-            return response()->json(['message' => 'khong tim thay binh luan !'], 404);
+            return response()->json([
+                'status' => 'false',
+                'message' => 'khong tim thay binh luan !'
+            ], 404);
         }
         $binhLuan->fill([
             'id_bai_tap' => $request->input('id_bai_tap'),
@@ -125,6 +135,7 @@ class BinhLuanController extends Controller
         $binhLuan->baitap;
         $binhLuan->sinhvien;
         $response = [
+            'status' => 'true',
             'message' => 'chinh sua thanh cong !',
             'binhluan' => $binhLuan
         ];
@@ -141,7 +152,10 @@ class BinhLuanController extends Controller
     {
         $binhLuan = BinhLuan::find($id);
         if (empty($binhLuan)) {
-            return response()->json(['message' => 'khong tim thay binh luan !'], 404);
+            return response()->json([
+                'status' => 'false',
+                'message' => 'khong tim thay binh luan !'
+            ], 404);
         }
         $binhLuan->delete();
         $lstBinhLuan = BinhLuan::all();
@@ -150,6 +164,7 @@ class BinhLuanController extends Controller
             $item->sinhvien;
         }
         $response = [
+            'status' => 'true',
             'message' => 'xoa thanh cong !',
             'binhluan' => $lstBinhLuan
         ];

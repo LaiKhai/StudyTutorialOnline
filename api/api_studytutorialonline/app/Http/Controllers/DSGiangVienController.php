@@ -19,6 +19,7 @@ class DSGiangVienController extends Controller
     {
         $dsgv = DS_GiangVien::all();
         $response = [
+            'status' => 'true',
             'lstdsgv' => $dsgv
         ];
         return response()->json($response, 200);
@@ -48,7 +49,11 @@ class DSGiangVienController extends Controller
         $input['trang_thai'] = 1;
         DS_GiangVien::create($input);
         $lstdsgv = DS_GiangVien::all();
-        return response()->json($lstdsgv, 200);
+        $response = [
+            'status' => 'true',
+            'lstdsgv' => $lstdsgv
+        ];
+        return response()->json($response, 200);
     }
 
     /**
@@ -113,6 +118,11 @@ class DSGiangVienController extends Controller
             $input['id_lop_hoc_phan'],
         ]);
         $lstdsgv = DS_GiangVien::all();
-        return response()->json($lstdsgv, 200);
+
+        $response = [
+            'status' => 'true',
+            'lstdsgv' => $lstdsgv
+        ];
+        return response()->json($response, 200);
     }
 }

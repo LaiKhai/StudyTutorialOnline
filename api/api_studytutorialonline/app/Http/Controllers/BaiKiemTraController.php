@@ -27,6 +27,7 @@ class BaiKiemTraController extends Controller
             $item->cauhoi;
         }
         $response = [
+            'status' => 'true',
             'baikiemtra' => $baiKiemTra
         ];
         return response()->json($response, 200);
@@ -70,6 +71,7 @@ class BaiKiemTraController extends Controller
         if ($validator->fails()) {
             if (!empty($validator->errors())) {
                 $response['data'] = $validator->errors();
+                $response['status'] = 'false';
             }
             $response['message'] = 'Vaidator Error';
             return response()->json($response, 404);
@@ -81,6 +83,7 @@ class BaiKiemTraController extends Controller
         $baiKiemTra->ctbaikiemtra;
         $baiKiemTra->cauhoi;
         $response = [
+            'status' => 'true',
             'message' => 'them bai kiem tra thanh cong !',
             'baikiemtra' => $baiKiemTra
         ];
@@ -97,7 +100,10 @@ class BaiKiemTraController extends Controller
     {
         $baiKiemTra = BaiKiemTra::find($id);
         if (empty($baiKiemTra)) {
-            return response()->json(['message' => 'Khong tim thay bai kiem tra nao !'], 404);
+            return response()->json([
+                'status' => 'false',
+                'message' => 'Khong tim thay bai kiem tra nao !'
+            ], 404);
         }
         $baiKiemTra->lophocphan;
         $baiKiemTra->giangvien;
@@ -105,6 +111,7 @@ class BaiKiemTraController extends Controller
         $baiKiemTra->ctbaikiemtra;
         $baiKiemTra->cauhoi;
         $response = [
+            'status' => 'true',
             'baikiemtra' => $baiKiemTra,
         ];
         return response($response, 200);
@@ -132,7 +139,10 @@ class BaiKiemTraController extends Controller
     {
         $baiKiemTra = BaiKiemTra::find($id);
         if (empty($baiKiemTra)) {
-            return response()->json(['message' => ' Khong tim thay bai kiem tra nao !', 404]);
+            return response()->json([
+                'status' => 'false',
+                'message' => ' Khong tim thay bai kiem tra nao !', 404
+            ]);
         }
         $baiKiemTra->fill([
             'id_lop_hoc_phan' => $request->input('id_lop_hoc_phan'),
@@ -151,6 +161,7 @@ class BaiKiemTraController extends Controller
         $baiKiemTra->ctbaikiemtra;
         $baiKiemTra->cauhoi;
         $response = [
+            'status' => 'true',
             'message' => 'chinh sua thanh cong !',
             'baikiemtra' => $baiKiemTra
         ];
@@ -179,6 +190,7 @@ class BaiKiemTraController extends Controller
             $item->cauhoi;
         }
         $response = [
+            'status' => 'true',
             'message' => 'xoa thanh cong !',
             'baikiemtra' => $lstBaiKiemTra
         ];
@@ -205,6 +217,7 @@ class BaiKiemTraController extends Controller
         $idbaiKiemTra = BaiKiemTra::max('id');
         $baiKiemTra = BaiKiemTra::find($idbaiKiemTra);
         $response = [
+            'status' => 'true',
             'message' => 'Tao bai kiem tra thanh cong !',
             'baikiemtra' => $baiKiemTra
         ];
@@ -233,6 +246,7 @@ class BaiKiemTraController extends Controller
         }
         $cauHoi = CauHoi::all();
         $response = [
+            'status' => 'true',
             'message' => 'Tao cau hoi thanh cong !',
             'cauhoi' => $cauHoi
         ];

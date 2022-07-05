@@ -18,6 +18,7 @@ class ChucVuController extends Controller
     {
         $chucVu = ChucVu::all();
         $response = [
+            'status' => 'true',
             'chucvu' => $chucVu
         ];
         return response()->json($response, 200);
@@ -49,12 +50,14 @@ class ChucVuController extends Controller
         if ($validator->fails()) {
             if (!empty($validator->errors())) {
                 $response['data'] = $validator->errors();
+                $response['status'] = 'false';
             }
             $response['message'] = 'Vaidator Error';
             return response()->json($response, 404);
         }
         $chucVu = ChucVu::create($input);
         $response = [
+            'status' => 'true',
             'message' => 'Tao thanh cong !',
             'chucvu' => $chucVu
         ];
@@ -71,6 +74,7 @@ class ChucVuController extends Controller
     {
         $chucVu = ChucVu::find($id);
         $response = [
+            'status' => 'true',
             'chucvu' => $chucVu
         ];
         return response()->json($response, 200);
@@ -98,7 +102,10 @@ class ChucVuController extends Controller
     {
         $chucVu = ChucVu::find($id);
         if (empty($chucVu)) {
-            return response()->json(['message' => 'khong tim thay chuc vu nao !'], 404);
+            return response()->json([
+                'status' => 'false',
+                'message' => 'khong tim thay chuc vu nao !'
+            ], 404);
         }
         $chucVu->fill([
             'ten_chuc_vu' => $request->input('ten_chuc_vu'),
@@ -106,6 +113,7 @@ class ChucVuController extends Controller
         ]);
         $chucVu->save();
         $response = [
+            'status' => 'true',
             'message' => 'chinh sua thanh cong !',
             'chucvu' => $chucVu,
         ];
@@ -122,12 +130,16 @@ class ChucVuController extends Controller
     {
         $chucVu = ChucVu::find($id);
         if (empty($chucVu)) {
-            return response()->json(['message' => 'khong tim thay chuc vu nao !'], 200);
+            return response()->json([
+                'status' => 'false',
+                'message' => 'khong tim thay chuc vu nao !'
+            ], 200);
         }
         $chucVu->delete();
         $lstChucVu = ChucVu::all();
         $response =
             [
+                'status' => 'true',
                 'message' => 'xoa chuc vu thanh cong !',
                 'chucvu' => $lstChucVu
             ];

@@ -21,6 +21,7 @@ class CauHoiController extends Controller
             $item->file;
         }
         $response = [
+            'status' => 'true',
             'cauhoi' => $cauHoi
         ];
         return response()->json($response, 200);
@@ -71,12 +72,14 @@ class CauHoiController extends Controller
         if ($validator->fails()) {
             if (!empty($validator->errors())) {
                 $response['data'] = $validator->errors();
+                $response['status'] = 'false';
             }
             $response['message'] = 'Vaidator Error';
             return response()->json($response, 404);
         }
         $cauHoi = CauHoi::created($input);
         $response = [
+            'status' => 'true',
             'message' => 'them thanh cong !',
             'cauhoi' => $cauHoi
         ];
@@ -93,11 +96,15 @@ class CauHoiController extends Controller
     {
         $cauHoi = CauHoi::find($id);
         if (empty($cauHoi)) {
-            return response()->json(['message' => 'Khong tim thay cau hoi nao !'], 404);
+            return response()->json([
+                'status' => 'false',
+                'message' => 'Khong tim thay cau hoi nao !'
+            ], 404);
         }
         $cauHoi->baikiemtra;
         $cauHoi->file;
         $response = [
+            'status' => 'true',
             'cauhoi' => $cauHoi,
         ];
         return response($response, 200);
@@ -125,7 +132,10 @@ class CauHoiController extends Controller
     {
         $cauHoi = CauHoi::find($id);
         if (empty($cauHoi)) {
-            return response()->json(['message' => ' Khong tim thay cau hoi nao !', 404]);
+            return response()->json([
+                'status' => 'false',
+                'message' => ' Khong tim thay cau hoi nao !', 404
+            ]);
         }
         $cauHoi->fill([
             'id_sinh_vien' => $request->input('id_sinh_vien'),
@@ -136,6 +146,7 @@ class CauHoiController extends Controller
         ]);
         $cauHoi->save();
         $response = [
+            'status' => 'true',
             'message' => 'chinh sua thanh cong !',
             'cauhoi' => $cauHoi
         ];
@@ -152,11 +163,15 @@ class CauHoiController extends Controller
     {
         $cauHoi = CauHoi::find($id);
         if (empty($baiTap)) {
-            return response()->json(['message' => ' Khong tim thay cau hoi nao !', 404]);
+            return response()->json([
+                'status' => 'false',
+                'message' => ' Khong tim thay cau hoi nao !', 404
+            ]);
         }
         $cauHoi->delete();
         $lstCauHoi = CauHoi::all();
         $response = [
+            'status' => 'true',
             'message' => 'xoa thanh cong !',
             'cauhoi' => $lstCauHoi
         ];
