@@ -229,7 +229,7 @@ class LopHocPhanController extends Controller
         if (empty($lopHocPhan)) {
             return response()->json([
                 'status' => false,
-                'baiviet' => []
+                'data' => []
             ], 404);
         }
         foreach ($lopHocPhan->baiviet as $item) {
@@ -241,7 +241,7 @@ class LopHocPhanController extends Controller
                     ->leftJoin('files', 'check_files.id_file', '=', 'files.id')
                     ->where('lop_hoc_phans.id', $id)
                     ->orderBy('bai_viets.created_at', 'DESC')
-                    ->select('lop_hoc_phans.*', 'bai_viets.*', 'loai_bai_viets.*', 'sinh_viens.*', 'files.*')
+                    ->select('lop_hoc_phans.*', 'bai_viets.*', 'bai_viets.noi_dung as noidungBaiViet', 'loai_bai_viets.*', 'sinh_viens.*', 'files.*')
                     ->get();
             } else if ($item->giangvien != null) {
                 $baiViet = BaiViet::leftJoin('lop_hoc_phans', 'bai_viets.id_lop_hoc_phan', '=', 'lop_hoc_phans.id')
@@ -258,7 +258,7 @@ class LopHocPhanController extends Controller
 
         $response = [
             'status' => true,
-            'baiviet' => $baiViet
+            'data' => $baiViet
         ];
         return response($response, 200);
     }
@@ -275,13 +275,13 @@ class LopHocPhanController extends Controller
         if (empty($lopHocPhan)) {
             return response()->json([
                 'status' => false,
-                'baiviet' => []
+                'data' => []
             ], 404);
         }
         $lopHocPhan->baikiemtra;
         $response = [
             'status' => true,
-            'lstBKT' => $lopHocPhan
+            'data' => $lopHocPhan
         ];
         return response()->json($response, 200);
     }
