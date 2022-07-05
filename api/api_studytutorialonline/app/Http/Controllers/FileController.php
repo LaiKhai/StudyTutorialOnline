@@ -29,7 +29,7 @@ class FileController extends Controller
             $this->FixFile($item);
         }
         $response = [
-            'status' => 'true',
+            'status' => true,
             'file' => $file,
         ];
         return response()->json($response, 200);
@@ -63,7 +63,7 @@ class FileController extends Controller
         }
         $file->save();
         $response = [
-            'status' => 'true',
+            'status' => true,
             'message' => 'them file thanh cong !',
             'file' => $file
         ];
@@ -81,7 +81,7 @@ class FileController extends Controller
         $file = File::find($id);
         $this->FixFile($file);
         $response = [
-            'status' => 'true',
+            'status' => true,
             'file' => $file
         ];
         return response()->json($response, 200);
@@ -110,7 +110,7 @@ class FileController extends Controller
         $file = File::find($id);
         if (empty($file)) {
             return response()->json([
-                'status' => 'false',
+                'status' => false,
                 'messsage' => 'khong tim thay file nao !'
             ], 404);
         }
@@ -123,7 +123,7 @@ class FileController extends Controller
         }
         $file->save();
         $response = [
-            'status' => 'true',
+            'status' => true,
             'message' => 'chinh sua thanh cong !',
             'file' => $file
         ];
@@ -141,7 +141,7 @@ class FileController extends Controller
         $file = File::find($id);
         if (empty($file)) {
             $response = [
-                'status' => 'false',
+                'status' => false,
                 'message' => 'khong tim thay file nao !'
             ];
             return response()->json($response, 404);
@@ -149,7 +149,7 @@ class FileController extends Controller
         $file->delete();
         $lstFile = File::all();
         $response = [
-            'status' => 'true',
+            'status' => true,
             'message' => 'xoa thanh cong !',
             'file' => $lstFile
         ];
@@ -166,7 +166,7 @@ class FileController extends Controller
         $file = File::find($id);
         if (empty($file)) {
             $response = [
-                'status' => 'false',
+                'status' => false,
                 'message' => 'khong tim thay file nao !'
             ];
             return response()->json($response, 404);

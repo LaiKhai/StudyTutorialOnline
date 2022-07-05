@@ -39,12 +39,12 @@ class LopHocPhanController extends Controller
         }
         if (empty($lstLopHocPhan)) {
             return response()->json([
-                'status' => 'false',
+                'status' => false,
                 'message' => 'chua co lop hoc phan nao'
             ], 404);
         }
         $response = [
-            'status' => 'true',
+            'status' => true,
             'lophocphan' => $lstLopHocPhan,
         ];
         return response()->json($response, 200);
@@ -79,7 +79,7 @@ class LopHocPhanController extends Controller
         if ($validator->fails()) {
             if (!empty($validator->errors())) {
                 $response['data'] = $validator->errors();
-                $response['status'] = 'false';
+                $response['status'] = false;
             }
             $response['message'] = 'Vaidator Error';
             return response()->json($response, 404);
@@ -97,7 +97,7 @@ class LopHocPhanController extends Controller
         $lopHocPhan->baitap;
         $lopHocPhan->baiviet;
         $response = [
-            'status' => 'true',
+            'status' => true,
             'message' => 'them lop hoc phan thanh cong !',
             'lophocphan' => $lopHocPhan
         ];
@@ -115,7 +115,7 @@ class LopHocPhanController extends Controller
         $lopHocPhan = LopHocPhan::find($id);
         if (empty($lopHocPhan)) {
             return response()->json([
-                'status' => 'false',
+                'status' => false,
                 'message' => 'khong tim thay lop hoc phan nao !'
             ], 404);
         }
@@ -134,7 +134,7 @@ class LopHocPhanController extends Controller
             ->select('lop_hoc_phans.*', 'sinh_viens.*')->get();
 
         $response = [
-            'status' => 'true',
+            'status' => true,
             'lophocphan' => $lopHocPhan,
             'dssv' => $dssv,
             'dsgv' => $dsgv
@@ -165,7 +165,7 @@ class LopHocPhanController extends Controller
         $lopHocPhan = LopHocPhan::find($id);
         if (empty($lopHocPhan)) {
             return response()->json([
-                'status' => 'false',
+                'status' => false,
                 'message' => ' khong tim thay lop hoc phan nao !', 404
             ]);
         }
@@ -185,7 +185,7 @@ class LopHocPhanController extends Controller
         $lopHocPhan->baitap;
         $lopHocPhan->baiviet;
         $response = [
-            'status' => 'true',
+            'status' => true,
             'message' => 'chinh sua thanh cong !',
             'lophocphan' => $lopHocPhan
         ];
@@ -203,14 +203,14 @@ class LopHocPhanController extends Controller
         $lopHocPhan = LopHocPhan::find($id);
         if (empty($lopHocPhan)) {
             return response()->json([
-                'status' => 'false',
+                'status' => false,
                 'message' => ' khong tim thay lop hoc phan nao !', 404
             ]);
         }
         $lopHocPhan->delete();
         $lstLopHocPhan = LopHocPhan::all();
         $response = [
-            'status' => 'true',
+            'status' => true,
             'message' => 'xoa thanh cong !',
             'lophocphan' => $lstLopHocPhan
         ];
@@ -228,41 +228,61 @@ class LopHocPhanController extends Controller
         $lopHocPhan = LopHocPhan::find($id);
         if (empty($lopHocPhan)) {
             return response()->json([
-                'status' => 'false',
+                'status' => false,
                 'baiviet' => []
             ], 404);
         }
         foreach ($lopHocPhan->baiviet as $item) {
             if ($item->sinhvien != null) {
-                $baiViet = BaiViet::join('lop_hoc_phans', 'bai_viets.id_lop_hoc_phan', '=', 'lop_hoc_phans.id')
-                    ->join('loai_bai_viets', 'bai_viets.id_loai_bai_viet', '=', 'loai_bai_viets.id')
-                    ->join('sinh_viens', 'bai_viets.id_sinh_vien', '=', 'sinh_viens.id')
+                $baiViet = BaiViet::leftJoin('lop_hoc_phans', 'bai_viets.id_lop_hoc_phan', '=', 'lop_hoc_phans.id')
+                    ->leftJoin('loai_bai_viets', 'bai_viets.id_loai_bai_viet', '=', 'loai_bai_viets.id')
+                    ->leftJoin('sinh_viens', 'bai_viets.id_sinh_vien', '=', 'sinh_viens.id')
+                    ->leftJoin('check_files', 'check_files.id_bai_viet', '=', 'bai_viets.id')
+                    ->leftJoin('files', 'check_files.id_file', '=', 'files.id')
                     ->where('lop_hoc_phans.id', $id)
                     ->orderBy('bai_viets.created_at', 'DESC')
-                    ->select('lop_hoc_phans.*', 'bai_viets.*', 'loai_bai_viets.*', 'sinh_viens.*')
-                    ->get();
-                $file = CheckFile::join('bai_viets', 'check_files.id_bai_viet', '=', 'bai_viets.id')
-                    ->join('files', 'check_files.id_file', '=', 'files.id')
-                    ->join('lop_hoc_phans', 'bai_viets.id_lop_hoc_phan', '=', 'lop_hoc_phans.id')
-                    ->where('lop_hoc_phans.id', $id)
-                    ->select('files.*')
+                    ->select('lop_hoc_phans.*', 'bai_viets.*', 'loai_bai_viets.*', 'sinh_viens.*', 'files.*')
                     ->get();
             } else if ($item->giangvien != null) {
-                $baiViet = BaiViet::join('lop_hoc_phans', 'bai_viets.id_lop_hoc_phan', '=', 'lop_hoc_phans.id')
-                    ->join('loai_bai_viets', 'bai_viets.id_loai_bai_viet', '=', 'loai_bai_viets.id')
-                    ->join('giang_viens', 'bai_viets.id_giang_vien', '=', 'giang_viens.id')
+                $baiViet = BaiViet::leftJoin('lop_hoc_phans', 'bai_viets.id_lop_hoc_phan', '=', 'lop_hoc_phans.id')
+                    ->leftJoin('loai_bai_viets', 'bai_viets.id_loai_bai_viet', '=', 'loai_bai_viets.id')
+                    ->leftJoin('giang_viens', 'bai_viets.id_giang_vien', '=', 'giang_viens.id')
+                    ->leftJoin('check_files', 'check_files.id_bai_viet', '=', 'bai_viets.id')
+                    ->leftJoin('files', 'check_files.id_file', '=', 'files.id')
                     ->where('lop_hoc_phans.id', $id)
                     ->orderBy('bai_viets.created_at', 'DESC')
-                    ->select('lop_hoc_phans.*', 'bai_viets.*', 'loai_bai_viets.*', 'giang_viens.*')
+                    ->select('lop_hoc_phans.*', 'bai_viets.*', 'loai_bai_viets.*', 'giang_viens.*', 'files.*')
                     ->get();
             }
         }
 
         $response = [
-            'status' => 'true',
-            'baiviet' => $baiViet,
-            'file' => $file
+            'status' => true,
+            'baiviet' => $baiViet
         ];
         return response($response, 200);
+    }
+
+    /**
+     * Display the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function ListBaiKiemTra($id)
+    {
+        $lopHocPhan = LopHocPhan::find($id);
+        if (empty($lopHocPhan)) {
+            return response()->json([
+                'status' => false,
+                'baiviet' => []
+            ], 404);
+        }
+        $lopHocPhan->baikiemtra;
+        $response = [
+            'status' => true,
+            'lstBKT' => $lopHocPhan
+        ];
+        return response()->json($response, 200);
     }
 }

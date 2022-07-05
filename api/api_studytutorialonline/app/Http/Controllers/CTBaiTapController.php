@@ -23,7 +23,7 @@ class CTBaiTapController extends Controller
             $item->file;
         }
         $response = [
-            'status' => 'true',
+            'status' => true,
             'ctbaitap' => $ctBaiTap
         ];
         return response()->json($response, 200);
@@ -62,14 +62,14 @@ class CTBaiTapController extends Controller
         if ($validator->fails()) {
             if (!empty($validator->errors())) {
                 $response['data'] = $validator->errors();
-                $response['status'] = 'false';
+                $response['status'] = false;
             }
             $response['message'] = 'Vaidator Error';
             return response()->json($response, 404);
         }
         $ctBaiTap = CTBaiTap::created($input);
         $response = [
-            'status' => 'true',
+            'status' => true,
             'message' => 'them thanh cong !',
             'ctbaitap' => $ctBaiTap
         ];
@@ -87,7 +87,7 @@ class CTBaiTapController extends Controller
         $ctBaiTap = CTBaiTap::find($id);
         if (empty($ctBaiTap)) {
             return response()->json([
-                'status' => 'false',
+                'status' => false,
                 'message' => 'Khong tim thay chi tiet bai tap nao !'
             ], 404);
         }
@@ -96,7 +96,7 @@ class CTBaiTapController extends Controller
         $ctBaiTap->lophocphan;
         $ctBaiTap->file;
         $response = [
-            'status' => 'true',
+            'status' => true,
             'ctbaitap' => $ctBaiTap,
         ];
         return response($response, 200);
@@ -125,7 +125,7 @@ class CTBaiTapController extends Controller
         $ctBaiTap = CTBaiTap::find($id);
         if (empty($ctBaiTap)) {
             return response()->json([
-                'status' => 'false',
+                'status' => false,
                 'message' => ' Khong tim thay chi tiet bai tap nao !', 404
             ]);
         }
@@ -138,7 +138,7 @@ class CTBaiTapController extends Controller
         ]);
         $ctBaiTap->save();
         $response = [
-            'status' => 'true',
+            'status' => true,
             'message' => 'chinh sua thanh cong !',
             'ctbaitap' => $ctBaiTap
         ];
@@ -156,14 +156,14 @@ class CTBaiTapController extends Controller
         $ctBaiTap = CTBaiTap::find($id);
         if (empty($baiTap)) {
             return response()->json([
-                'status' => 'false',
+                'status' => false,
                 'message' => ' Khong tim thay chi tiet bai kiem tra nao !', 404
             ]);
         }
         $ctBaiTap->delete();
         $lstCTBaiTap = CTBaiTap::all();
         $response = [
-            'status' => 'true',
+            'status' => true,
             'message' => 'xoa thanh cong !',
             'ctbaitap' => $lstCTBaiTap
         ];

@@ -23,7 +23,7 @@ class LopController extends Controller
             $item->giangvien;
         }
         $response = [
-            'status' => 'true',
+            'status' => true,
             'lop' => $lstLop
         ];
         return response()->json($response, 200);
@@ -61,7 +61,7 @@ class LopController extends Controller
         if ($validator->fails()) {
             if (!empty($validator->errors())) {
                 $respone['data'] = $validator->errors();
-                $respone['status'] = 'false';
+                $respone['status'] = false;
             }
             $response['message'] = 'Vaidator Error';
             return response()->json($response, 404);
@@ -69,7 +69,7 @@ class LopController extends Controller
 
         $lop = Lop::create($input);
         $respone = [
-            'status' => 'true',
+            'status' => true,
             'message' => "Them lop thanh cong !",
             'lop' => $lop
         ];
@@ -93,7 +93,7 @@ class LopController extends Controller
         //     ->select("lops.*", "giang_viens.ho_ten as ten_giang_vien")
         //     ->get();
         $respone = [
-            'status' => 'true',
+            'status' => true,
             'lop' => $lop,
             'user' => $sinhvien,
         ];
@@ -123,7 +123,7 @@ class LopController extends Controller
         $lop = Lop::find($id);
         if (empty($lop)) {
             return response()->json([
-                'status' => 'false',
+                'status' => false,
                 'message' => 'khong tim thay lop nao !'
             ], 404);
         }
@@ -135,7 +135,7 @@ class LopController extends Controller
         ]);
         $lop->save();
         $respone = [
-            'status' => 'true',
+            'status' => true,
             'message' => 'chinh sua thanh cong !',
             'lop' => $lop
         ];
@@ -154,19 +154,19 @@ class LopController extends Controller
         $sinhVien = $lop->sinhvien->first();
         if (empty($lop)) {
             return response()->json([
-                'status' => 'false',
+                'status' => false,
                 'message' => 'khong tim thay lop nao !'
             ], 404);
         } else if (!empty($sinhVien)) {
             return response()->json([
-                'status' => 'false',
+                'status' => false,
                 'message' => 'Lop dang co sinh vien nen khong the xoa !'
             ], 404);
         }
         $lop->delete();
         $lstLop = Lop::all();
         $respone = [
-            'status' => 'true',
+            'status' => true,
             'message' => 'xoa thanh cong !',
             'lop' => $lstLop,
         ];
@@ -184,7 +184,7 @@ class LopController extends Controller
         $sinhVien = SinhVien::find($id);
         $lop = SinhVien::find($id)->lop;
         $respone = [
-            'status' => 'true',
+            'status' => true,
             'user' => $sinhVien,
             'lstlop' => $lop
         ];

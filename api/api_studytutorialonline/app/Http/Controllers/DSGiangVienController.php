@@ -19,7 +19,7 @@ class DSGiangVienController extends Controller
     {
         $dsgv = DS_GiangVien::all();
         $response = [
-            'status' => 'true',
+            'status' => true,
             'lstdsgv' => $dsgv
         ];
         return response()->json($response, 200);
@@ -50,7 +50,7 @@ class DSGiangVienController extends Controller
         DS_GiangVien::create($input);
         $lstdsgv = DS_GiangVien::all();
         $response = [
-            'status' => 'true',
+            'status' => true,
             'lstdsgv' => $lstdsgv
         ];
         return response()->json($response, 200);
@@ -120,7 +120,7 @@ class DSGiangVienController extends Controller
         $lstdsgv = DS_GiangVien::all();
 
         $response = [
-            'status' => 'true',
+            'status' => true,
             'lstdsgv' => $lstdsgv
         ];
         return response()->json($response, 200);

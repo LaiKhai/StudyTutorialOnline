@@ -22,6 +22,7 @@ class TraLoiController extends Controller
             $item->file;
         }
         $response = [
+            'status' => true,
             'traloi' => $traLoi
         ];
         return response()->json($response, 200);
@@ -61,12 +62,14 @@ class TraLoiController extends Controller
         if ($validator->fails()) {
             if (!empty($validator->errors())) {
                 $response['data'] = $validator->errors();
+                $response['status'] = false;
             }
             $response['message'] = 'Vaidator Error';
             return response()->json($response, 404);
         }
         $traLoi = TraLoi::create($input);
         $response = [
+            'status' => true,
             'message' => 'them cau tra loi thanh cong',
             'traloi' => $traLoi
         ];
@@ -86,9 +89,13 @@ class TraLoiController extends Controller
         $traLoi->cauhoi;
         $traLoi->file;
         if (empty($traLoi)) {
-            return response()->json(['message' => 'Khong tim thay cau tra loi nao !'], 404);
+            return response()->json([
+                'status' => false,
+                'message' => 'Khong tim thay cau tra loi nao !'
+            ], 404);
         }
         $response = [
+            'status' => true,
             'traloi' => $traLoi,
         ];
         return response($response, 200);
@@ -116,7 +123,10 @@ class TraLoiController extends Controller
     {
         $traLoi = TraLoi::find($id);
         if (empty($traLoi)) {
-            return response()->json(['message' => ' Khong tim thay cau tra loi nao !', 404]);
+            return response()->json([
+                'status' => false,
+                'message' => ' Khong tim thay cau tra loi nao !', 404
+            ]);
         }
         $traLoi->fill([
             'id_sinh_vien' => $request->input('id_sinh_vien'),
@@ -128,6 +138,7 @@ class TraLoiController extends Controller
         ]);
         $traLoi->save();
         $response = [
+            'status' => true,
             'message' => 'chinh sua thanh cong !',
             'traloi' => $traLoi
         ];
@@ -144,11 +155,15 @@ class TraLoiController extends Controller
     {
         $traLoi = TraLoi::find($id);
         if (empty($baiTap)) {
-            return response()->json(['message' => ' Khong tim thay cau tra loi nao !', 404]);
+            return response()->json([
+                'status' => false,
+                'message' => ' Khong tim thay cau tra loi nao !', 404
+            ]);
         }
         $traLoi->delete();
         $lstTraLoi = TraLoi::all();
         $response = [
+            'status' => true,
             'message' => 'xoa thanh cong !',
             'traloi' => $lstTraLoi
         ];

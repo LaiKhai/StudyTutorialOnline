@@ -27,7 +27,7 @@ class DSSinhVienController extends Controller
             $item->lophocphan;
         }
         $response = [
-            'status' => 'true',
+            'status' => true,
             'dssv' => $lstDSSV
         ];
         return response()->json($response, 200);
@@ -65,14 +65,14 @@ class DSSinhVienController extends Controller
         $dssv = DS_SinhVien::find($id);
         if (empty($dssv)) {
             return response()->json([
-                'status' => 'false',
+                'status' => false,
                 'message' => 'khong tim thay danh sach nao !'
             ], 404);
         }
         $dssv->sinhvien;
         $dssv->lophocphan;
         $response = [
-            'status' => 'true',
+            'status' => true,
             'dssv' => $dssv
         ];
         return response()->json($response, 200);
@@ -131,7 +131,7 @@ class DSSinhVienController extends Controller
         }
         $lstDSSV = DS_SinhVien::all();
         $response = [
-            'status' => 'true',
+            'status' => true,
             'message' => 'them danh sach thanh cong !',
             // 'dssv' => $lstDSSV
             'sinhVien' => $lstDSSV

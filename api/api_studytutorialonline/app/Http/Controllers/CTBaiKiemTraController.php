@@ -21,7 +21,7 @@ class CTBaiKiemTraController extends Controller
             $item->traloi;
         }
         $response = [
-            'status' => 'true',
+            'status' => true,
             'ctbaikiemtra' => $ctBaiKiemTra
         ];
         return response()->json($response, 200);
@@ -60,14 +60,14 @@ class CTBaiKiemTraController extends Controller
         if ($validator->fails()) {
             if (!empty($validator->errors())) {
                 $response['data'] = $validator->errors();
-                $response['status'] = 'false';
+                $response['status'] = false;
             }
             $response['message'] = 'Vaidator Error';
             return response()->json($response, 404);
         }
         $ctBaiKiemTra = CTBaiKiemTra::create($input);
         $response = [
-            'status' => 'true',
+            'status' => true,
             'message' => 'them chi tiet bai kiem tra thanh cong !',
             'ctbaikiemtra' => $ctBaiKiemTra
         ];
@@ -85,14 +85,14 @@ class CTBaiKiemTraController extends Controller
         $ctBaiKiemTra = CTBaiKiemTra::find($id);
         if (empty($ctBaiKiemTra)) {
             return response()->json([
-                'status' => 'false',
+                'status' => false,
                 'message' => 'Khong tim thay chi tiet bai kiem tra nao !'
             ], 404);
         }
         $ctBaiKiemTra->baikiemtra;
         $ctBaiKiemTra->traloi;
         $response = [
-            'status' => 'true',
+            'status' => true,
             'ctbaikiemtra' => $ctBaiKiemTra,
         ];
         return response($response, 200);
@@ -121,7 +121,7 @@ class CTBaiKiemTraController extends Controller
         $ctBaiKiemTra = CTBaiKiemTra::find($id);
         if (empty($ctBaiKiemTra)) {
             return response()->json([
-                'status' => 'false',
+                'status' => false,
                 'message' => ' Khong tim thay chi tiet bai kiem tra nao !', 404
             ]);
         }
@@ -134,7 +134,7 @@ class CTBaiKiemTraController extends Controller
         ]);
         $ctBaiKiemTra->save();
         $response = [
-            'status' => 'true',
+            'status' => true,
             'message' => 'chinh sua thanh cong !',
             'ctbaikiemtra' => $ctBaiKiemTra
         ];
@@ -152,14 +152,14 @@ class CTBaiKiemTraController extends Controller
         $ctBaiKiemTra = CTBaiKiemTra::find($id);
         if (empty($baiTap)) {
             return response()->json([
-                'status' => 'false',
+                'status' => false,
                 'message' => ' Khong tim thay chi tiet bai kiem tra nao !', 404
             ]);
         }
         $ctBaiKiemTra->delete();
         $lstCTBaiKiemTra = CTBaiKiemTra::all();
         $response = [
-            'status' => 'true',
+            'status' => true,
             'message' => 'xoa thanh cong !',
             'ctbaikiemtra' => $lstCTBaiKiemTra
         ];
