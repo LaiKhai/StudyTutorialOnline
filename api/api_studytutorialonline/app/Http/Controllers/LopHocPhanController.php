@@ -209,7 +209,7 @@ class LopHocPhanController extends Controller
     {
         $lopHocPhan = LopHocPhan::find($id);
         if (empty($lopHocPhan)) {
-            return response()->json(['message' => 'khong tim thay lop hoc phan nao !'], 404);
+            return response()->json(['baiviet' => []], 404);
         }
         foreach ($lopHocPhan->baiviet as $item) {
             if ($item->sinhvien != null) {
