@@ -21,6 +21,7 @@ class BoMonController extends Controller
             $item->khoa;
         }
         $response = [
+            'status' => true,
             'bomon' => $lstBoMon
         ];
         return response()->json($response, 200);
@@ -57,6 +58,7 @@ class BoMonController extends Controller
         if ($validator->fails()) {
             if (!empty($validator->errors())) {
                 $response['data'] = $validator->errors();
+                $response['status'] = false;
             }
             $response['message'] = 'Vaidator Error';
             return response()->json($response, 404);
@@ -66,6 +68,7 @@ class BoMonController extends Controller
         $lophocphan = BoMon::join('lop_hoc_phans', 'lop_hoc_phans.id_bo_mon', '=', 'bo_mons.id')
             ->where('lop_hoc_phans.id_bo_mon', $boMon->lophocphan)->get();
         $response = [
+            'status' => true,
             'message' => 'them thanh cong bo mon !',
             'bomon' => $boMon,
             'lophocphan' => $lophocphan
@@ -83,7 +86,10 @@ class BoMonController extends Controller
     {
         $boMon = BoMon::find($id);
         if (empty($boMon)) {
-            return response()->json(['message' => 'khong tim thay bo mon nao !'], 404);
+            return response()->json([
+                'status' => false,
+                'message' => 'khong tim thay bo mon nao !'
+            ], 404);
         }
         $boMon->khoa;
         $lophocphan = BoMon::join('lop_hoc_phans', 'lop_hoc_phans.id_bo_mon', '=', 'bo_mons.id')
@@ -91,6 +97,7 @@ class BoMonController extends Controller
             ->where('bo_mons.id', $id)
             ->select('lop_hoc_phans.*', 'bo_mons.*', 'lops.*')->get();
         $response = [
+            'status' => true,
             'bomon' => $boMon,
             'lophocphan' => $lophocphan
         ];
@@ -119,7 +126,10 @@ class BoMonController extends Controller
     {
         $boMon = BoMon::find($id);
         if (empty($boMon)) {
-            return response()->json(['message' => 'khong tim thay bo mon nao !'], 404);
+            return response()->json([
+                'status' => false,
+                'message' => 'khong tim thay bo mon nao !'
+            ], 404);
         }
         $boMon->fill([
             'id_khoa' => $request->input('id_khoa'),
@@ -132,6 +142,7 @@ class BoMonController extends Controller
         $lophocphan = BoMon::join('lop_hoc_phans', 'lop_hoc_phans.id_bo_mon', '=', 'bo_mons.id')
             ->where('lop_hoc_phans.id_bo_mon', $boMon->lophocphan)->get();
         $response = [
+            'status' => true,
             'message' => 'chinh sua thanh cong !',
             'bomon' => $boMon,
             'lophocphan' => $lophocphan
@@ -149,7 +160,10 @@ class BoMonController extends Controller
     {
         $boMon = BoMon::find($id);
         if (empty($boMon)) {
-            return response()->json(['message' => 'khong tim thay bo mon nao !'], 404);
+            return response()->json([
+                'status' => false,
+                'message' => 'khong tim thay bo mon nao !'
+            ], 404);
         }
         $boMon->delete();
         $lstBoMon = BoMon::all();
@@ -160,6 +174,7 @@ class BoMonController extends Controller
         }
 
         $response = [
+            'status' => true,
             'message' => 'xoa thanh cong !',
             'bomon' => $lstBoMon,
             'lophoaphan' => $lophocphan

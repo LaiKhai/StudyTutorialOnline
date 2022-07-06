@@ -17,6 +17,7 @@ class LoaiBaiVietController extends Controller
     {
         $lstLoaiBaiViet = LoaiBaiViet::all();
         $response = [
+            'status' => true,
             'loaibaiviet' => $lstLoaiBaiViet
         ];
         return response()->json($response, 200);
@@ -49,12 +50,14 @@ class LoaiBaiVietController extends Controller
         if ($validator->fails()) {
             if (!empty($validator->errors())) {
                 $response['data'] = $validator->errors();
+                $response['status'] = false;
             }
             $response['message'] = 'Vaidator Error';
             return response()->json($response, 404);
         }
         $loaiBaiViet = LoaiBaiViet::create($input);
         $response = [
+            'status' => true,
             'message' => 'them thanh cong !',
             'loaibaiviet' => $loaiBaiViet
         ];
@@ -71,9 +74,13 @@ class LoaiBaiVietController extends Controller
     {
         $loaiBaiViet = LoaiBaiViet::find($id);
         if (empty($loaiBaiViet)) {
-            return response()->json(['message' => 'khong tim thay loai bai viet nao !'], 404);
+            return response()->json([
+                'status' => false,
+                'message' => 'khong tim thay loai bai viet nao !'
+            ], 404);
         }
         $response = [
+            'status' => true,
             'loaibaiviet' => $loaiBaiViet
         ];
         return response()->json($response, 200);
@@ -101,7 +108,10 @@ class LoaiBaiVietController extends Controller
     {
         $loaiBaiViet = LoaiBaiViet::find($id);
         if (empty($loaiBaiViet)) {
-            return response()->json(['message' => 'khong tim thay loai bai viet !'], 404);
+            return response()->json([
+                'status' => false,
+                'message' => 'khong tim thay loai bai viet !'
+            ], 404);
         }
         $loaiBaiViet->fill([
             'ten_loai' => $request->input('ten_loai'),
@@ -109,6 +119,7 @@ class LoaiBaiVietController extends Controller
         ]);
         $loaiBaiViet->save();
         $response = [
+            'status' => true,
             'message' => 'chinh sua thanh cong !',
             'loaibaiviet' => $loaiBaiViet
         ];
@@ -125,10 +136,14 @@ class LoaiBaiVietController extends Controller
     {
         $loaiBaiViet = LoaiBaiViet::find($id);
         if (empty($loaiBaiViet)) {
-            return response()->json(['message' => 'khong tim thay loai bai viet nao !'], 404);
+            return response()->json([
+                'status' => false,
+                'message' => 'khong tim thay loai bai viet nao !'
+            ], 404);
         }
         $loaiBaiViet->delete();
         $response = [
+            'status' => true,
             'message' => 'xoa thanh cong !',
             'loaibaiviet' => $loaiBaiViet
         ];

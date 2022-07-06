@@ -3,8 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\BaiViet;
-use App\Models\File;
 use App\Models\CheckFile;
+use App\Models\File;
 use App\Models\SinhVien;
 use App\Models\GiangVien;
 use Illuminate\Http\Request;
@@ -21,13 +21,6 @@ class BaiVietController extends Controller
         } else {
             $sinhVien->avt = '/assets/images/no_image.png';
         }
-    }
-    public function file(BaiViet $BaiViet)
-    {
-       $checkfile=CheckFile::all()->where('id_bai_viet','=',$BaiViet->id);
-       $response = ['file'=> $checkfile];
-       return $response;
-
     }
     public function FixImgGV(GiangVien $giangVien)
     {
@@ -49,18 +42,30 @@ class BaiVietController extends Controller
         foreach ($lstBaiViet as $item) {
             $item->lophocphan;
             $item->loaibaiviet;
-            $item->sinhvien;
-            $item->giangvien;
-            $item->files;
+            $item->checkfile;
+            if ($item->sinhvien != null) {
+                $lstBaiViet = BaiViet::leftJoin('lop_hoc_phans', 'bai_viets.id_lop_hoc_phan', '=', 'lop_hoc_phans.id')
+                    ->leftJoin('loai_bai_viets', 'bai_viets.id_loai_bai_viet', '=', 'loai_bai_viets.id')
+                    ->leftJoin('sinh_viens', 'bai_viets.id_sinh_vien', '=', 'sinh_viens.id')
+                    ->leftJoin('check_files', 'check_files.id_bai_viet', '=', 'bai_viets.id')
+                    ->leftJoin('files', 'check_files.id_file', '=', 'files.id')
+                    ->orderBy('bai_viets.created_at', 'DESC')
+                    ->select('lop_hoc_phans.id as idLopHocPhan', 'bai_viets.*', 'bai_viets.id as idBaiViet', 'bai_viets.noi_dung as noidungBaiViet', 'loai_bai_viets.*', 'loai_bai_viets.id as idLoaiBaiViet', 'sinh_viens.*', 'sinh_viens.id as idSinhVien', 'files.*', 'files.id as idFile')
+                    ->get();
+            } else if ($item->giangvien != null) {
+                $lstBaiViet = BaiViet::leftJoin('lop_hoc_phans', 'bai_viets.id_lop_hoc_phan', '=', 'lop_hoc_phans.id')
+                    ->leftJoin('loai_bai_viets', 'bai_viets.id_loai_bai_viet', '=', 'loai_bai_viets.id')
+                    ->leftJoin('giang_viens', 'bai_viets.id_giang_vien', '=', 'giang_viens.id')
+                    ->leftJoin('check_files', 'check_files.id_bai_viet', '=', 'bai_viets.id')
+                    ->leftJoin('files', 'check_files.id_file', '=', 'files.id')
+                    ->orderBy('bai_viets.created_at', 'DESC')
+                    ->select('lop_hoc_phans.*', 'lop_hoc_phans.id as idLopHocPhan', 'bai_viets.*', 'bai_viets.id as idBaiViet', 'bai_viets.noi_dung as noidungBaiViet', 'loai_bai_viets.*', 'loai_bai_viets.id as idLoaiBaiViet', 'sinh_viens.*', 'giang_viens.id as idGiangVien', 'files.*', 'files.id as idFile')
+                    ->get();
+            }
         }
-        $response = [
-            'status'=>true,
-            'message' => 'them thanh cong !',
-            'baiviet' => $lstBaiViet,
-        
-        ];
         return response()->json([
-            'baiviet' => $response,
+            'status' => true,
+            'baiviet' => $lstBaiViet,
         ], 200);
     }
 
@@ -96,23 +101,28 @@ class BaiVietController extends Controller
         if ($validator->fails()) {
             if (!empty($validator->errors())) {
                 $response['data'] = $validator->errors();
+                $response['status'] = false;
             }
             $response['message'] = 'Vaidator Error';
             return response()->json($response, 404);
         }
         $baiViet = BaiViet::create($input);
+        $inputcheckfile['id_bai_viet'] = $baiViet->id;
+        $inputcheckfile['trang_thai'] = 1;
+        $inputfile['trang_thai'] = 1;
+        $files = $request->file('file');
         if ($request->hasFile('file')) {
-            $inputfile['noi_dung'] = $request->file('file')->store('assets/files/' . $request->file('file')->getClientOriginalName(), 'public');
-            $inputfile['loai_file'] = $request->file('file')->extension();
-            $inputfile['ten_file'] = $request->file('file')->getClientOriginalName();
-            $inputfile['trang_thai'] = 1;
-            $file = File::create($inputfile);
-
-            $inputcheckfile['id_bai_viet'] = $baiViet->id;
-            $inputcheckfile['id_file'] = $file->id;
-            $inputcheckfile['trang_thai'] = 1;
-            CheckFile::create($inputcheckfile);
+            foreach ($files as $itemFile) {
+                $path = $itemFile->store('assets/files/' . $itemFile->getClientOriginalName(), 'public');
+                $inputfile['noi_dung'] = $path;
+                $inputfile['loai_file'] = $itemFile->extension();
+                $inputfile['ten_file'] = $itemFile->getClientOriginalName();
+                $itemFile2 = File::create($inputfile);
+                $inputcheckfile['id_file'] = $itemFile2->id;
+                CheckFile::create($inputcheckfile);
+            }
         }
+
 
         $checkfile = CheckFile::join('bai_viets', 'check_files.id_bai_viet', '=', 'bai_viets.id')
             ->join('files', 'check_files.id_file', '=', 'files.id')
@@ -121,13 +131,14 @@ class BaiVietController extends Controller
             ->get();
         $baiViet->lophocphan;
         $baiViet->loaibaiviet;
-        $baiViet->checkfile;
+
         if ($baiViet->sinhvien != null) {
             $this->FixImg($baiViet->sinhvien);
         } else if ($baiViet->giangvien != null) {
             $this->FixImgGV($baiViet->giangvien);
         }
         $response = [
+            'status' => true,
             'message' => 'them thanh cong !',
             'baiviet' => $baiViet,
             'file' => $checkfile
@@ -145,7 +156,10 @@ class BaiVietController extends Controller
     {
         $baiViet = BaiViet::find($id);
         if (empty($baiViet)) {
-            return response()->json(['message' => 'khong tim thay bai viet !'], 404);
+            return response()->json([
+                'status' => false,
+                'message' => 'khong tim thay bai viet !'
+            ], 404);
         }
         $checkfile = CheckFile::join('bai_viets', 'check_files.id_bai_viet', '=', 'bai_viets.id')
             ->join('files', 'check_files.id_file', '=', 'files.id')
@@ -154,13 +168,13 @@ class BaiVietController extends Controller
             ->get();
         $baiViet->lophocphan;
         $baiViet->loaibaiviet;
-        $baiViet->checkfile;
         if ($baiViet->sinhvien != null) {
             $this->FixImg($baiViet->sinhvien);
         } else if ($baiViet->giangvien != null) {
             $this->FixImgGV($baiViet->giangvien);
         }
         $response = [
+            'status' => true,
             'baiviet' => $baiViet,
             'file' => $checkfile
         ];
@@ -189,7 +203,10 @@ class BaiVietController extends Controller
     {
         $baiViet = BaiViet::find($id);
         if (empty($baiViet)) {
-            return response()->json(['message' => 'khong tim thay bai viet !'], 404);
+            return response()->json([
+                'status' => false,
+                'message' => 'khong tim thay bai viet !'
+            ], 404);
         }
         $baiViet->fill([
             'id_lop_hoc_phan' => $request->input('id_lop_hoc_phan'),
@@ -202,10 +219,10 @@ class BaiVietController extends Controller
         $baiViet->save();
         $baiViet->lophocphan;
         $baiViet->loaibaiviet;
-        $baiViet->checkfile;
         $this->FixImg($baiViet->sinhvien);
         $this->FixImgGV($baiViet->giangvien);
         $response = [
+            'status' => true,
             'message' => 'chinh sua thanh cong !',
             'baiviet' => $baiViet
         ];
@@ -222,7 +239,10 @@ class BaiVietController extends Controller
     {
         $baiViet = BaiViet::find($id);
         if (empty($baiViet)) {
-            return response()->json(['message' => 'khong tim thay bai viet !']);
+            return response()->json([
+                'status' => false,
+                'message' => 'khong tim thay bai viet !'
+            ]);
         }
         $baiViet->delete();
         $lstBaiViet = BaiViet::all();
@@ -232,10 +252,9 @@ class BaiVietController extends Controller
             $item->checkfile;
             $item->sinhvien;
             $item->giangvien;
-            $item->files;
         }
         $response = [
-            'status'=>true,
+            'status' => true,
             'message' => 'xoa thanh cong !',
             'baiviet' => $lstBaiViet
         ];

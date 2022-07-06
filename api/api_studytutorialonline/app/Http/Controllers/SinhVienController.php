@@ -41,6 +41,7 @@ class SinhVienController extends Controller
         }
 
         $response = [
+            'status' => true,
             'user' => $sinhVien,
         ];
         return response()->json($response, 200);
@@ -74,6 +75,7 @@ class SinhVienController extends Controller
         if ($validator->fails()) {
             if (!empty($validator->errors())) {
                 $response['data'] = $validator->errors();
+                $response['status'] = false;
             }
             $response['message'] = 'Vaidator Error';
             return response()->json($response, 404);
@@ -90,6 +92,7 @@ class SinhVienController extends Controller
         $sinhVien->binhluan;
         $sinhVien->baiviet;
         $response = [
+            'status' => true,
             'message' => 'Dang ky sinh vien thanh cong !',
             'user' => $sinhVien
         ];
@@ -110,6 +113,7 @@ class SinhVienController extends Controller
         $sinhVien->traloi;
         $sinhVien->ctbaitap;
         $response = [
+            'status' => true,
             'user' => $sinhVien,
         ];
         return response()->json($response, 200);
@@ -126,7 +130,10 @@ class SinhVienController extends Controller
     {
         $sinhVien = SinhVien::find($id);
         if (empty($sinhVien)) {
-            return response()->json(['messsage' => 'khong tim thay sinh vien nao !'], 404);
+            return response()->json([
+                'status' => false,
+                'messsage' => 'khong tim thay sinh vien nao !'
+            ], 404);
         }
         $sinhVien->fill([
             'email' => $request->input('email'),
@@ -147,6 +154,7 @@ class SinhVienController extends Controller
         $sinhVien->binhluan;
         $sinhVien->baiviet;
         $response = [
+            'status' => true,
             'message' => 'chinh sua thanh cong !',
             'user' => $sinhVien
         ];
@@ -163,7 +171,10 @@ class SinhVienController extends Controller
     {
         $sinhVien = SinhVien::find($id);
         if (empty($sinhVien)) {
-            $response = ['message' => 'khong tim thay sinh vien nao !'];
+            $response = [
+                'status' => false,
+                'message' => 'khong tim thay sinh vien nao !'
+            ];
             return response()->json($response, 404);
         }
         $sinhVien->delete();
@@ -186,6 +197,7 @@ class SinhVienController extends Controller
             $this->FixImg($item);
         }
         $response = [
+            'status' => true,
             'message' => 'them thanh cong !',
             'sinhvien' => $lstSinhVien
         ];
@@ -213,6 +225,7 @@ class SinhVienController extends Controller
             ->where('ds_sinh_viens.id_sinh_vien', $id)
             ->select('ds_sinh_viens.id_sinh_vien', 'lop_hoc_phans.*', 'sinh_viens.ho_ten as ho_ten_sv', 'bo_mons.ten_mon_hoc', 'lops.ten_lop', 'giang_viens.ho_ten as hoten_giangvien')->get();
         $response = [
+            'status' => true,
             'lophocphan' => $lopHocPhan
         ];
         return response()->json($response, 200);
