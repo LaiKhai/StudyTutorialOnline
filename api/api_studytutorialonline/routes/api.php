@@ -55,7 +55,7 @@ Route::get('/listbaiviet/{id}', [LopHocPhanController::class, 'ListBaiViet']);
 Route::get('/listbaikiemtra/{id}', [LopHocPhanController::class, 'ListBaiKiemTra']);
 
 //Dowload file
-Route::get('/dowloadfile/{filename}', [FileController::class, 'dowloadFile']);
+Route::get('/dowloadfile/{id}', [FileController::class, 'dowloadFile']);
 
 Route::apiResource('chucvu', ChucVuController::class);
 Route::apiResource('sinhvien', SinhVienController::class);

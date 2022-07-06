@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\File;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Validator;
 
 class FileController extends Controller
@@ -161,19 +162,31 @@ class FileController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function dowloadFile($filename)
+    public function dowloadFile($id)
     {
 
-        // Check if file exists in app/storage/file folder
-        $file_path = storage_path() . '/assets/files/appstore.png/' . $filename;
-        if (file_exists($file_path)) {
-            // Send Download
-            return response()->download($file_path, $filename, [
-                'Content-Length: ' . filesize($file_path)
+        $file = File::find($id);
+        if (empty($file)) {
+            return response()->json([
+                'status' => false,
+                'message' => ' khong tim thay file nao !', 404
             ]);
+        }
+        $this->FixFile($file);
+        // $response = [
+        //     'file' => $file->noi_dung,
+        //     'tenfile' => $file->ten_file,
+        //     'loaifile' => $file->loai_file
+        // ];
+        // return response()->json($response, 200);
+        $filepath = public_path() . $file->noi_dung;
+        if (file_exists($filepath)) {
+            return response()->download($filepath, $file->ten_file);
         } else {
-            // Error
-            exit('Requested file does not exist on our server!');
+            return response()->json([
+                'status' => false,
+                'message' => ' duong dan khong ton tai !', 401
+            ]);
         }
     }
 }
