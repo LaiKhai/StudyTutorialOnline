@@ -181,7 +181,7 @@ class FileController extends Controller
         // return response()->json($response, 200);
         $filepath = public_path() . $file->noi_dung;
         if (file_exists($filepath)) {
-            return Response::download($filepath, $file->ten_file);
+            return response()->download($filepath, $file->ten_file);
         } else {
             return response()->json([
                 'status' => false,

@@ -15,4 +15,5 @@ Future<String?> getToken() async {
 const String baseUrl = 'http://210.2.86.140';
 const String loginUrl = baseUrl + '/api/admin';
 const String fetchClassObject = baseUrl + '/api/lop';
+const String fetchDepartmentObject = baseUrl + '/api/khoa';
 const String fetchStatisticalObject = baseUrl + '/api/thongke';
