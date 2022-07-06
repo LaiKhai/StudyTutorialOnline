@@ -19,7 +19,6 @@ class _Load_lopHPState extends State<Load_lopHP> {
     return FutureBuilder<lop_HP>(
       future: LopHocPhan.getLopHP(),
       builder: (context, snapshot) {
-        print(snapshot.data.toString());
         if (snapshot.hasData) {
           return SliverList(
               delegate: SliverChildBuilderDelegate((context, index) {

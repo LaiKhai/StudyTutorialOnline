@@ -3,6 +3,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:user_flutter/Model/BaiKtrta.dart';
 import 'package:user_flutter/Model/User_login.dart';
 import 'package:user_flutter/Model/bai_Viet.dart';
 import 'package:user_flutter/Model/cTiet_LopHP.dart';
@@ -11,6 +12,7 @@ import 'package:user_flutter/Model/home_data.dart';
 import 'package:user_flutter/Model/subject_assignment.dart';
 import 'package:user_flutter/Model/subject_stream.dart';
 import 'package:user_flutter/Model_View/Baiviet.dart';
+import 'package:user_flutter/Model_View/bai_Ktra.dart';
 import 'package:user_flutter/View/Widget/Bai_kiemtra/showdialog.dart';
 import 'package:user_flutter/View/Widget/Chi_tiet/Popup.dart';
 import 'package:user_flutter/View/Widget/Home/app_icon_buttton.dart';
@@ -75,6 +77,7 @@ class _SubjectViewState extends State<SubjectView> {
         id_Lop: widget.id_lopHp,
       ),
       AssignmentBody(
+          id_lop: widget.id_lopHp,
           assignments: assignments
               .where((item) => item.subjectId == subjects[1].id)
               .toList()),
@@ -293,16 +296,16 @@ class _StreamBodyState extends State<StreamBody> {
         const SizedBox(height: 16),
         Expanded(
             child: FutureBuilder<baiViets>(
-          future: BaiViet.getAllBaiViet(),
+          future: BaiViet.getAllBaiViet(widget.id_Lop),
           builder: ((context, snapshot) {
             if (snapshot.hasData) {
               return ListView.builder(
                 physics: const BouncingScrollPhysics(),
-                itemCount: snapshot.data!.baiviet!.length,
+                itemCount: snapshot.data!.data!.length,
                 itemBuilder: (ctx, index) {
                   // Stream item
                   return StreamItem(
-                    bv: snapshot.data!.baiviet![index],
+                    bv: snapshot.data!.data![index],
                   );
                 },
               );
@@ -318,8 +321,10 @@ class _StreamBodyState extends State<StreamBody> {
 
 class AssignmentBody extends StatelessWidget {
   final List<SubjectAssignment> assignments;
-
-  const AssignmentBody({Key? key, required this.assignments}) : super(key: key);
+  final int id_lop;
+  const AssignmentBody(
+      {Key? key, required this.assignments, required this.id_lop})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -331,15 +336,26 @@ class AssignmentBody extends StatelessWidget {
         ),
         const SizedBox(height: 16),
         Expanded(
-          child: ListView.builder(
-            physics: const BouncingScrollPhysics(),
-            itemCount: assignments.length,
-            itemBuilder: (ctx, index) {
-              final assignment = assignments[index];
+          child: FutureBuilder<Bai_Ktra_model>(
+            future: BaiKiemTraVM.Get_BKTra(id_lop),
+            builder: (context, snapshot) {
+              if (snapshot.hasData) {
+                Bai_Ktra_model ktra = snapshot.data!;
+                return ListView.builder(
+                  physics: const BouncingScrollPhysics(),
+                  itemCount: ktra.data!.baikiemtra!.length,
+                  itemBuilder: (ctx, index) {
+                    final assignment = assignments[0];
 
-              return AssignmentItem(
-                assignment: assignment,
-              );
+                    return AssignmentItem(
+                      assignment: assignment,
+                      baikiemtra: ktra.data!.baikiemtra![index],
+                    );
+                  },
+                );
+              } else {
+                return Loading();
+              }
             },
           ),
         ),

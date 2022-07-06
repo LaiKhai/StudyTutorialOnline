@@ -3,8 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\BaiViet;
-use App\Models\CheckFile;
 use App\Models\File;
+use App\Models\CheckFile;
 use App\Models\SinhVien;
 use App\Models\GiangVien;
 use Illuminate\Http\Request;
@@ -21,6 +21,13 @@ class BaiVietController extends Controller
         } else {
             $sinhVien->avt = '/assets/images/no_image.png';
         }
+    }
+    public function file(BaiViet $BaiViet)
+    {
+       $checkfile=CheckFile::all()->where('id_bai_viet','=',$BaiViet->id);
+       $response = ['file'=> $checkfile];
+       return $response;
+
     }
     public function FixImgGV(GiangVien $giangVien)
     {
@@ -42,12 +49,18 @@ class BaiVietController extends Controller
         foreach ($lstBaiViet as $item) {
             $item->lophocphan;
             $item->loaibaiviet;
-            $item->checkfile;
             $item->sinhvien;
             $item->giangvien;
+            $item->files;
         }
-        return response()->json([
+        $response = [
+            'status'=>true,
+            'message' => 'them thanh cong !',
             'baiviet' => $lstBaiViet,
+        
+        ];
+        return response()->json([
+            'baiviet' => $response,
         ], 200);
     }
 
@@ -108,7 +121,7 @@ class BaiVietController extends Controller
             ->get();
         $baiViet->lophocphan;
         $baiViet->loaibaiviet;
-
+        $baiViet->checkfile;
         if ($baiViet->sinhvien != null) {
             $this->FixImg($baiViet->sinhvien);
         } else if ($baiViet->giangvien != null) {
@@ -141,6 +154,7 @@ class BaiVietController extends Controller
             ->get();
         $baiViet->lophocphan;
         $baiViet->loaibaiviet;
+        $baiViet->checkfile;
         if ($baiViet->sinhvien != null) {
             $this->FixImg($baiViet->sinhvien);
         } else if ($baiViet->giangvien != null) {
@@ -188,6 +202,7 @@ class BaiVietController extends Controller
         $baiViet->save();
         $baiViet->lophocphan;
         $baiViet->loaibaiviet;
+        $baiViet->checkfile;
         $this->FixImg($baiViet->sinhvien);
         $this->FixImgGV($baiViet->giangvien);
         $response = [
@@ -217,8 +232,10 @@ class BaiVietController extends Controller
             $item->checkfile;
             $item->sinhvien;
             $item->giangvien;
+            $item->files;
         }
         $response = [
+            'status'=>true,
             'message' => 'xoa thanh cong !',
             'baiviet' => $lstBaiViet
         ];

@@ -1,118 +1,259 @@
-class baiViets {
-  List<Baiviet>? baiviet;
+// import 'package:user_flutter/View/common/constant/string.dart';
 
-  baiViets({this.baiviet});
+// class baiViets {
+//   bool? status;
+//   List<BaiViet_model>? list_baiviet;
+
+//   baiViets({this.status, this.list_baiviet});
+
+//   baiViets.fromJson(Map<String, dynamic> json) {
+//     status = json['status'];
+//     if (json['list_baiviet'] != null) {
+//       list_baiviet = <BaiViet_model>[];
+//       json['list_baiviet'].forEach((v) {
+//         list_baiviet!.add(new BaiViet_model.fromJson(v));
+//       });
+//     }
+//   }
+
+//   Map<String, dynamic> toJson() {
+//     final Map<String, dynamic> list_baiviet = new Map<String, dynamic>();
+//     list_baiviet['status'] = this.status;
+//     if (this.list_baiviet != null) {
+//       list_baiviet['list_baiviet'] =
+//           this.list_baiviet!.map((v) => v.toJson()).toList();
+//     }
+//     return list_baiviet;
+//   }
+// }
+
+// class BaiViet_model {
+//   int? id;
+//   int? idBoMon;
+//   int? idLop;
+//   String? avt;
+//   int? trangThai;
+//   String? createdAt;
+//   String? updatedAt;
+//   int? idLopHocPhan;
+//   int? idLoaiBaiViet;
+//   int? idSinhVien;
+//   int? idGiangVien;
+//   String? noiDung;
+//   String? noidungBaiViet;
+//   String? tenLoai;
+//   int? idKhoa;
+//   int? idChucVu;
+//   String? email;
+//   String? password;
+//   String? maSo;
+//   String? sdt;
+//   String? hoTen;
+//   String? ngaySinh;
+//   String? tenFile;
+//   String? loaiFile;
+
+//   BaiViet_model(
+//       {this.id,
+//       this.idBoMon,
+//       this.idLop,
+//       this.avt,
+//       this.trangThai,
+//       this.createdAt,
+//       this.updatedAt,
+//       this.idLopHocPhan,
+//       this.idLoaiBaiViet,
+//       this.idSinhVien,
+//       this.idGiangVien,
+//       this.noiDung,
+//       this.noidungBaiViet,
+//       this.tenLoai,
+//       this.idKhoa,
+//       this.idChucVu,
+//       this.email,
+//       this.password,
+//       this.maSo,
+//       this.sdt,
+//       this.hoTen,
+//       this.ngaySinh,
+//       this.tenFile,
+//       this.loaiFile});
+
+//   BaiViet_model.fromJson(Map<String, dynamic> json) {
+//     if (json['created_at'] != null) {
+//       createdAt = json['created_at'];
+//     } else {
+//       createdAt = '';
+//     }
+//     ;
+//     if (json['updated_at'] != null) {
+//       updatedAt = json['updated_at'];
+//     } else {
+//       updatedAt = '';
+//     }
+//     ;
+//     if (json['id_lop_hoc_phan'] != null) {
+//       idLopHocPhan = json['id_lop_hoc_phan'];
+//     } else {
+//       idLopHocPhan = 0;
+//     }
+//     ;
+//     if (json['id_loai_bai_viet'] != null) {
+//       idLoaiBaiViet = json['id_loai_bai_viet'];
+//     } else {
+//       idLoaiBaiViet = 0;
+//     }
+//     ;
+//     if (json['id_sinh_vien'] != null) {
+//       idSinhVien = json['id_sinh_vien'];
+//     } else {
+//       idSinhVien = 0;
+//     }
+//     ;
+//     if (json['id_giang_vien'] != null) {
+//       idGiangVien = json['id_giang_vien'];
+//     } else {
+//       idGiangVien = 0;
+//     }
+//     ;
+//     if (json['noi_dung'] != null) {
+//       noiDung = json['noi_dung'];
+//     } else {
+//       noiDung = '';
+//     }
+//     ;
+//     if (json['noidungBaiViet'] != null) {
+//       noidungBaiViet = json['noidungBaiViet'];
+//     } else {
+//       noidungBaiViet = '';
+//     }
+//     ;
+//     if (json['ten_loai'] != null) {
+//       tenLoai = json['ten_loai'];
+//     } else {
+//       tenLoai = '';
+//     }
+//     ;
+//     if (json['id_khoa'] != null) {
+//       idKhoa = json['id_khoa'];
+//     } else {
+//       idKhoa = 0;
+//     }
+//     ;
+//     if (json['id_chuc_vu'] != null) {
+//       idChucVu = json['id_chuc_vu'];
+//     } else {
+//       idChucVu = 0;
+//     }
+//     ;
+//     if (json['email'] != null) {
+//       email = json['email'];
+//     } else {
+//       email = '';
+//     }
+//     ;
+//     if (json['password'] != null) {
+//       password = json['password'];
+//     } else {
+//       password = '';
+//     }
+//     ;
+//     if (json['ma_so'] != null) {
+//       maSo = json['ma_so'];
+//     } else {
+//       maSo = '';
+//     }
+//     ;
+//     if (json['sdt'] != null) {
+//       sdt = json['sdt'];
+//     } else {
+//       sdt = '';
+//     }
+//     ;
+//     if (json['ho_ten'] != null) {
+//       hoTen = json['ho_ten'];
+//     } else {
+//       hoTen = '';
+//     }
+//     ;
+//     if (json['ngay_sinh'] != null) {
+//       ngaySinh = json['ngay_sinh'];
+//     } else {
+//       ngaySinh = '';
+//     }
+//     ;
+//     if (json['ten_file'] != null) {
+//       tenFile = json['ten_file'];
+//     } else {
+//       tenFile = '';
+//     }
+//     ;
+//     if (json['loai_file'] != null) {
+//       loaiFile = json['loai_file'];
+//     } else {
+//       loaiFile = '';
+//     }
+//     ;
+//   }
+
+//   Map<String, dynamic> toJson() {
+//     final Map<String, dynamic> list_baiviet = new Map<String, dynamic>();
+//     list_baiviet['id'] = this.id;
+//     list_baiviet['id_bo_mon'] = this.idBoMon;
+//     list_baiviet['id_lop'] = this.idLop;
+//     list_baiviet['avt'] = this.avt;
+//     list_baiviet['trang_thai'] = this.trangThai;
+//     list_baiviet['created_at'] = this.createdAt;
+//     list_baiviet['updated_at'] = this.updatedAt;
+//     list_baiviet['id_lop_hoc_phan'] = this.idLopHocPhan;
+//     list_baiviet['id_loai_bai_viet'] = this.idLoaiBaiViet;
+//     list_baiviet['id_sinh_vien'] = this.idSinhVien;
+//     list_baiviet['id_giang_vien'] = this.idGiangVien;
+//     list_baiviet['noi_dung'] = this.noiDung;
+//     list_baiviet['noidungBaiViet'] = this.noidungBaiViet;
+//     list_baiviet['ten_loai'] = this.tenLoai;
+//     list_baiviet['id_khoa'] = this.idKhoa;
+//     list_baiviet['id_chuc_vu'] = this.idChucVu;
+//     list_baiviet['email'] = this.email;
+//     list_baiviet['password'] = this.password;
+//     list_baiviet['ma_so'] = this.maSo;
+//     list_baiviet['sdt'] = this.sdt;
+//     list_baiviet['ho_ten'] = this.hoTen;
+//     list_baiviet['ngay_sinh'] = this.ngaySinh;
+//     list_baiviet['ten_file'] = this.tenFile;
+//     list_baiviet['loai_file'] = this.loaiFile;
+//     return list_baiviet;
+//   }
+// }
+import 'package:user_flutter/View/common/constant/string.dart';
+
+class baiViets {
+  bool? status;
+  List<Data>? data;
+
+  baiViets({this.status, this.data});
 
   baiViets.fromJson(Map<String, dynamic> json) {
-    if (json['baiviet'] != null) {
-      baiviet = <Baiviet>[];
-      json['baiviet'].forEach((v) {
-        baiviet!.add(new Baiviet.fromJson(v));
+    status = json['status'];
+    if (json['data'] != null) {
+      data = <Data>[];
+      json['data'].forEach((v) {
+        data!.add(new Data.fromJson(v));
       });
     }
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
-    if (this.baiviet != null) {
-      data['baiviet'] = this.baiviet!.map((v) => v.toJson()).toList();
+    data['status'] = this.status;
+    if (this.data != null) {
+      data['data'] = this.data!.map((v) => v.toJson()).toList();
     }
     return data;
   }
 }
 
-class Baiviet {
-  int? id;
-  int? idLopHocPhan;
-  int? idLoaiBaiViet;
-  int? idSinhVien;
-  int? idGiangVien;
-  String? noiDung;
-  int? trangThai;
-  DateTime? createdAt;
-  DateTime? updatedAt;
-  Lophocphan? lophocphan;
-  Loaibaiviet? loaibaiviet;
-  Sinhvien? sinhvien;
-  Giangvien? giangvien;
-
-  Baiviet(
-      {this.id,
-      this.idLopHocPhan,
-      this.idLoaiBaiViet,
-      this.idSinhVien,
-      this.idGiangVien,
-      this.noiDung,
-      this.trangThai,
-      this.createdAt,
-      this.updatedAt,
-      this.lophocphan,
-      this.loaibaiviet,
-      this.sinhvien,
-      this.giangvien});
-
-  Baiviet.fromJson(Map<String, dynamic> json) {
-    id = json['id'];
-    idLopHocPhan = json['id_lop_hoc_phan'];
-    idLoaiBaiViet = json['id_loai_bai_viet'];
-    if (json['id_sinh_vien'] == null) {
-      idSinhVien = 0;
-    } else {
-      idSinhVien = json['id_sinh_vien'];
-    }
-
-    if (json['id_giang_vien'] == null) {
-      idGiangVien = 0;
-    } else {
-      idGiangVien = json['id_giang_vien'];
-    }
-    noiDung = json['noi_dung'];
-    trangThai = json['trang_thai'];
-
-    createdAt = DateTime.parse(json['created_at']);
-    updatedAt = DateTime.parse(json['updated_at']);
-    lophocphan = json['lophocphan'] != null
-        ? new Lophocphan.fromJson(json['lophocphan'])
-        : null;
-    loaibaiviet = json['loaibaiviet'] != null
-        ? new Loaibaiviet.fromJson(json['loaibaiviet'])
-        : null;
-    sinhvien = json['sinhvien'] != null
-        ? new Sinhvien.fromJson(json['sinhvien'])
-        : null;
-    giangvien = json['giangvien'] != null
-        ? new Giangvien.fromJson(json['giangvien'])
-        : null;
-  }
-
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['id'] = this.id;
-    data['id_lop_hoc_phan'] = this.idLopHocPhan;
-    data['id_loai_bai_viet'] = this.idLoaiBaiViet;
-    data['id_sinh_vien'] = this.idSinhVien;
-    data['id_giang_vien'] = this.idGiangVien;
-    data['noi_dung'] = this.noiDung;
-    data['trang_thai'] = this.trangThai;
-    data['created_at'] = this.createdAt;
-    data['updated_at'] = this.updatedAt;
-    if (this.lophocphan != null) {
-      data['lophocphan'] = this.lophocphan!.toJson();
-    }
-    if (this.loaibaiviet != null) {
-      data['loaibaiviet'] = this.loaibaiviet!.toJson();
-    }
-    if (this.sinhvien != null) {
-      data['sinhvien'] = this.sinhvien!.toJson();
-    }
-    if (this.giangvien != null) {
-      data['giangvien'] = this.giangvien!.toJson();
-    }
-    return data;
-  }
-}
-
-class Lophocphan {
+class Data {
   int? id;
   int? idBoMon;
   int? idLop;
@@ -120,24 +261,79 @@ class Lophocphan {
   int? trangThai;
   String? createdAt;
   String? updatedAt;
+  int? idLopHocPhan;
+  int? idLoaiBaiViet;
+  int? idSinhVien;
+  int? idGiangVien;
+  String? noiDung;
+  String? noidungBaiViet;
+  String? tenLoai;
+  int? idKhoa;
+  int? idChucVu;
+  String? email;
+  String? password;
+  String? maSo;
+  String? sdt;
+  String? hoTen;
+  String? ngaySinh;
+  String? tenFile;
+  String? loaiFile;
 
-  Lophocphan(
+  Data(
       {this.id,
       this.idBoMon,
       this.idLop,
       this.avt,
       this.trangThai,
       this.createdAt,
-      this.updatedAt});
+      this.updatedAt,
+      this.idLopHocPhan,
+      this.idLoaiBaiViet,
+      this.idSinhVien,
+      this.idGiangVien,
+      this.noiDung,
+      this.noidungBaiViet,
+      this.tenLoai,
+      this.idKhoa,
+      this.idChucVu,
+      this.email,
+      this.password,
+      this.maSo,
+      this.sdt,
+      this.hoTen,
+      this.ngaySinh,
+      this.tenFile,
+      this.loaiFile});
 
-  Lophocphan.fromJson(Map<String, dynamic> json) {
+  Data.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     idBoMon = json['id_bo_mon'];
     idLop = json['id_lop'];
-    avt = json['avt'];
+    if (json['avt'] != null) {  
+      avt = Link + json['avt'];
+    } else {
+      avt = Link + '/assets/images/no_image.png';
+    } 
     trangThai = json['trang_thai'];
     createdAt = json['created_at'];
     updatedAt = json['updated_at'];
+    idLopHocPhan = json['id_lop_hoc_phan'];
+    idLoaiBaiViet = json['id_loai_bai_viet'];
+    idSinhVien = json['id_sinh_vien'];
+    idGiangVien = json['id_giang_vien'];
+    noiDung = json['noi_dung'];
+    noidungBaiViet = json['noidungBaiViet'];
+    tenLoai = json['ten_loai'];
+    idKhoa = json['id_khoa'];
+    idChucVu = json['id_chuc_vu'];
+    email = json['email'];
+    password = json['password'];
+    maSo = json['ma_so'];
+    sdt = json['sdt'];
+    hoTen = json['ho_ten'];
+    ngaySinh = json['ngay_sinh'];
+    tenFile = json['ten_file'];
+    loaiFile = json['loai_file'];
   }
 
   Map<String, dynamic> toJson() {
@@ -149,192 +345,23 @@ class Lophocphan {
     data['trang_thai'] = this.trangThai;
     data['created_at'] = this.createdAt;
     data['updated_at'] = this.updatedAt;
-    return data;
-  }
-}
-
-class Loaibaiviet {
-  int? id;
-  String? tenLoai;
-  int? trangThai;
-  String? createdAt;
-  String? updatedAt;
-
-  Loaibaiviet(
-      {this.id, this.tenLoai, this.trangThai, this.createdAt, this.updatedAt});
-
-  Loaibaiviet.fromJson(Map<String, dynamic> json) {
-    id = json['id'];
-    tenLoai = json['ten_loai'];
-    trangThai = json['trang_thai'];
-    createdAt = json['created_at'];
-    updatedAt = json['updated_at'];
-  }
-
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['id'] = this.id;
+    data['id_lop_hoc_phan'] = this.idLopHocPhan;
+    data['id_loai_bai_viet'] = this.idLoaiBaiViet;
+    data['id_sinh_vien'] = this.idSinhVien;
+    data['id_giang_vien'] = this.idGiangVien;
+    data['noi_dung'] = this.noiDung;
+    data['noidungBaiViet'] = this.noidungBaiViet;
     data['ten_loai'] = this.tenLoai;
-    data['trang_thai'] = this.trangThai;
-    data['created_at'] = this.createdAt;
-    data['updated_at'] = this.updatedAt;
-    return data;
-  }
-}
-
-class Sinhvien {
-  int? id;
-  int? idKhoa;
-  int? idChucVu;
-  int? idLop;
-  String? email;
-  String? password;
-  String? avt;
-  String? maSo;
-  String? sdt;
-  String? hoTen;
-  String? ngaySinh;
-  int? trangThai;
-  String? createdAt;
-  String? updatedAt;
-
-  Sinhvien(
-      {this.id,
-      this.idKhoa,
-      this.idChucVu,
-      this.idLop,
-      this.email,
-      this.password,
-      this.avt,
-      this.maSo,
-      this.sdt,
-      this.hoTen,
-      this.ngaySinh,
-      this.trangThai,
-      this.createdAt,
-      this.updatedAt});
-
-  Sinhvien.fromJson(Map<String, dynamic> json) {
-    id = json['id'];
-    if (json['id_khoa'] == null) {
-      idKhoa = 0;
-    } else
-      idKhoa = json['id_khoa'];
-    if (json['id_chuc_vu'] == null) {
-      idChucVu = 0;
-    } else
-      idChucVu = json['id_chuc_vu'];
-    if (json['id_lop'] == null) {
-      idLop = 0;
-    } else {
-      idLop = json['id_lop'];
-    }
-    email = json['email'];
-    password = json['password'];
-    if (json['avt'] == null) {
-      avt = '/assets/images/no_image.png';
-    } else
-      avt = json['avt'];
-    maSo = json['ma_so'];
-    sdt = json['sdt'];
-    hoTen = json['ho_ten'];
-    ngaySinh = json['ngay_sinh'];
-    trangThai = json['trang_thai'];
-    createdAt = json['created_at'];
-    updatedAt = json['updated_at'];
-  }
-
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['id'] = this.id;
     data['id_khoa'] = this.idKhoa;
     data['id_chuc_vu'] = this.idChucVu;
-    data['id_lop'] = this.idLop;
     data['email'] = this.email;
     data['password'] = this.password;
-    data['avt'] = this.avt;
     data['ma_so'] = this.maSo;
     data['sdt'] = this.sdt;
     data['ho_ten'] = this.hoTen;
     data['ngay_sinh'] = this.ngaySinh;
-    data['trang_thai'] = this.trangThai;
-    data['created_at'] = this.createdAt;
-    data['updated_at'] = this.updatedAt;
-    return data;
-  }
-}
-
-class Giangvien {
-  int? id;
-  int? idKhoa;
-  int? idChucVu;
-  int? idLop;
-  String? email;
-  String? password;
-  String? avt;
-  String? maSo;
-  String? sdt;
-  String? hoTen;
-  String? ngaySinh;
-  int? trangThai;
-  String? createdAt;
-  String? updatedAt;
-
-  Giangvien(
-      {this.id,
-      this.idKhoa,
-      this.idChucVu,
-      this.idLop,
-      this.email,
-      this.password,
-      this.avt,
-      this.maSo,
-      this.sdt,
-      this.hoTen,
-      this.ngaySinh,
-      this.trangThai,
-      this.createdAt,
-      this.updatedAt});
-
-  Giangvien.fromJson(Map<String, dynamic> json) {
-    id = json['id'];
-    idKhoa = json['id_khoa'];
-    idChucVu = json['id_chuc_vu'];
-    if (json['id_lop'] == null) {
-      idLop = 0;
-    } else
-      idLop = json['id_lop'];
-    email = json['email'];
-    password = json['password'];
-    if (json['avt'] == null) {
-      avt = '/assets/images/no_image.png';
-    } else
-      avt = json['avt'];
-    maSo = json['ma_so'];
-    sdt = json['sdt'];
-    hoTen = json['ho_ten'];
-    ngaySinh = json['ngay_sinh'];
-    trangThai = json['trang_thai'];
-    createdAt = json['created_at'];
-    updatedAt = json['updated_at'];
-  }
-
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['id'] = this.id;
-    data['id_khoa'] = this.idKhoa;
-    data['id_chuc_vu'] = this.idChucVu;
-    data['id_lop'] = this.idLop;
-    data['email'] = this.email;
-    data['password'] = this.password;
-    data['avt'] = this.avt;
-    data['ma_so'] = this.maSo;
-    data['sdt'] = this.sdt;
-    data['ho_ten'] = this.hoTen;
-    data['ngay_sinh'] = this.ngaySinh;
-    data['trang_thai'] = this.trangThai;
-    data['created_at'] = this.createdAt;
-    data['updated_at'] = this.updatedAt;
+    data['ten_file'] = this.tenFile;
+    data['loai_file'] = this.loaiFile;
     return data;
   }
 }

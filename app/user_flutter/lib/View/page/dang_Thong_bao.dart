@@ -7,6 +7,7 @@ import 'package:user_flutter/View/Widget/Bai_kiemtra/Tra_loi.dart';
 import 'package:user_flutter/View/Widget/showNouti.dart';
 import 'package:user_flutter/View/common/constant/color.dart';
 import 'package:user_flutter/View/common/constant/dimen.dart';
+import 'package:user_flutter/View/controller/tao_bai.dart';
 
 class Dang_thong_bao extends StatefulWidget {
   int id_lop;
@@ -39,7 +40,8 @@ class _Dang_thong_baoState extends State<Dang_thong_bao> {
             InkWell(
               onTap: () {
                 
-                 BaiViet.postBaiViet(widget.id_lop, textController.text,context);
+                BaiViet.postBaiViet(
+                    widget.id_lop, textController.text, context);
               },
               child: Container(
                   margin: EdgeInsets.all(8.0),
@@ -158,7 +160,7 @@ class _Dang_thong_baoState extends State<Dang_thong_bao> {
               height: 0.5,
               color: US_APP_LINE,
             ),
-            Tra_Loi(),
+            const Tra_Loi(),
           ],
         ),
       ),

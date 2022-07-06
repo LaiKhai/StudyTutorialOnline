@@ -1,13 +1,20 @@
+import 'dart:convert';
+
 import 'package:easy_debounce/easy_debounce.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:user_flutter/Model/createBktra.dart';
+import 'package:user_flutter/Model/tao_CauHoi.dart';
+import 'package:user_flutter/Model_View/CauHoi.dart';
 import 'package:user_flutter/View/Widget/Form_tao.dart/Tao_tra_loi.dart';
 import 'package:user_flutter/View/common/constant/color.dart';
 import 'package:user_flutter/View/common/constant/dimen.dart';
 import 'package:user_flutter/View/common/constant/string.dart';
 import 'package:user_flutter/View/page/Bai_Ktra.dart';
+import 'package:user_flutter/tse.dart';
 
 class Tao_trac_nghiem extends StatefulWidget {
+  Crate_Bktra bktra;
   TextEditingController diemToiDaController = new TextEditingController();
   TextEditingController TieuDeController = new TextEditingController();
   TextEditingController MoTaController = new TextEditingController();
@@ -18,6 +25,7 @@ class Tao_trac_nghiem extends StatefulWidget {
       required this.MoTaController,
       required this.TieuDeController,
       this.SoLuong = 1,
+      required this.bktra,
       required this.diemToiDaController})
       : super(key: key);
   @override
@@ -25,6 +33,7 @@ class Tao_trac_nghiem extends StatefulWidget {
 }
 
 class _Tao_trac_nghiemState extends State<Tao_trac_nghiem> {
+  List<String> lst_dropdownValue = [];
   List<TextEditingController> Lst_Cauhoi = [];
   List<List<TextEditingController>> lst_Trl_TracNghiem = [];
   //Khi thay đổi giá trị tổng các giá trị khác sẽ thay đổi
@@ -87,14 +96,44 @@ class _Tao_trac_nghiemState extends State<Tao_trac_nghiem> {
       lst_Ctiet_Trl.add(CController);
       lst_Ctiet_Trl.add(DController);
       lst_Ctiet_Trl.add(DiemController);
+      lst_dropdownValue.add('A');
       setState(() {
         lst_Ctiet_Trl;
+        lst_dropdownValue;
       });
       lst_Trl_TracNghiem.add(lst_Ctiet_Trl);
     }
     setState(() {
       Lst_Cauhoi;
     });
+  }
+
+  Lay() {
+    Cauhoi_Ktra cauhoi_ktra = new Cauhoi_Ktra();
+    List<ListCauHoi> lst_cauhoi = [];
+    for (int i = 0; i < Lst_Cauhoi.length; i++) {
+      ListCauHoi lst = new ListCauHoi();
+      lst.idBaiKiemTra = widget.bktra.baikiemtra!.id;
+      lst.diem = double.parse(lst_Trl_TracNghiem[i][4].text);
+      lst.deBai = Lst_Cauhoi[i].text;
+      lst.dapAn1 = lst_Trl_TracNghiem[i][0].text;
+      lst.dapAn2 = lst_Trl_TracNghiem[i][1].text;
+      lst.dapAn3 = lst_Trl_TracNghiem[i][2].text;
+      lst.dapAn4 = lst_Trl_TracNghiem[i][3].text;
+      lst.dapAnDung = lst_dropdownValue[i];
+      lst.trangThai = 1;
+      setState(() {
+        lst;
+      });
+      lst_cauhoi.add(lst);
+      setState(() {
+        lst_cauhoi;
+      });
+    }
+
+    cauhoi_ktra.listCauHoi = lst_cauhoi;
+    CauHoi.taoCauHoi(
+        cauhoi_ktra, context, widget.bktra.baikiemtra!.idLopHocPhan!,widget.bktra);
   }
 
   TextEditingController controller = new TextEditingController();
@@ -126,18 +165,17 @@ class _Tao_trac_nghiemState extends State<Tao_trac_nghiem> {
             ),
           ),
           onPressed: () {
-            print('cau hoi: ' + Lst_Cauhoi.length.toString());
-            print('cau hoi:tra loi: ' + lst_Trl_TracNghiem.length.toString());
-            Navigator.push(
-              context,
-              MaterialPageRoute(
-                  builder: (context) => Bai_Ktra(
-                        tieuDe: widget.TieuDeController.text,
-                        moTa: widget.MoTaController.text,
-                        Lst_Cauhoi: Lst_Cauhoi,
-                        lst_Trl_TracNghiem: lst_Trl_TracNghiem,
-                      )),
-            );
+            Lay();
+            // Navigator.push(
+            //   context,
+            //   MaterialPageRoute(
+            //       builder: (context) => Bai_Ktra(
+            //             tieuDe: widget.TieuDeController.text,
+            //             moTa: widget.MoTaController.text,
+            //             Lst_Cauhoi: Lst_Cauhoi,
+            //             lst_Trl_TracNghiem: lst_Trl_TracNghiem,
+            //           )),
+            // );
           },
           tooltip: 'Increment',
           //foregroundColor: Colors.yellow,
@@ -257,7 +295,6 @@ class _Tao_trac_nghiemState extends State<Tao_trac_nghiem> {
                                     'textController',
                                     Duration(milliseconds: 2000),
                                     () => setState(() {
-                                      print('BÀi viết này vào');
                                       xetSo();
                                     }),
                                   ),
@@ -413,6 +450,52 @@ class _Tao_trac_nghiemState extends State<Tao_trac_nghiem> {
                         controller: lst_Trl_TracNghiem[index][2], name: 'C'),
                     Tao_Trloi_TN(
                         controller: lst_Trl_TracNghiem[index][3], name: 'D'),
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Row(
+                        children: [
+                          Text(
+                            'Đáp án đúng:',
+                            style: GoogleFonts.quicksand(
+                                color: Colors.black,
+                                fontWeight: FontWeight.bold,
+                                fontSize: 20),
+                          ),
+                          Container(
+                            decoration: BoxDecoration(
+                              border: Border.all(color: US_APP_COLOR, width: 2),
+                              borderRadius: BorderRadius.circular(8),
+                            ),
+                            padding:
+                                const EdgeInsets.only(left: 8.0, right: 8.0),
+                            child: DropdownButton<String>(
+                              value: lst_dropdownValue[index],
+                              elevation: 16,
+                              style: GoogleFonts.quicksand(
+                                  color: Colors.black,
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 18),
+                              onChanged: (String? newValue) {
+                                setState(() {
+                                  lst_dropdownValue[index] = newValue!;
+                                });
+                              },
+                              items: <String>[
+                                'A',
+                                'B',
+                                'C',
+                                'D'
+                              ].map<DropdownMenuItem<String>>((String value) {
+                                return DropdownMenuItem<String>(
+                                  value: value,
+                                  child: Text(value),
+                                );
+                              }).toList(),
+                            ),
+                          ),
+                        ],
+                      ),
+                    )
                   ],
                 ),
               );
@@ -440,6 +523,7 @@ class _Tao_trac_nghiemState extends State<Tao_trac_nghiem> {
                   lst_Ctiet_Trl.add(CController);
                   lst_Ctiet_Trl.add(DController);
                   lst_Ctiet_Trl.add(DiemController);
+                  lst_dropdownValue.add('A');
                   setState(() {
                     item++;
                     cauHoi;

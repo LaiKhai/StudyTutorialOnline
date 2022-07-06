@@ -4,6 +4,7 @@ import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:user_flutter/View/common/constant/color.dart';
+import 'package:user_flutter/View/controller/tao_bai.dart';
 
 class Tra_Loi extends StatefulWidget {
   const Tra_Loi({Key? key}) : super(key: key);
@@ -13,7 +14,6 @@ class Tra_Loi extends StatefulWidget {
 }
 
 class _Tra_LoiState extends State<Tra_Loi> {
-  List<File> listFile = [];
   chonAnh() async {
     FilePickerResult? result = await FilePicker.platform.pickFiles(
         type: FileType.custom,
@@ -73,6 +73,11 @@ class _Tra_LoiState extends State<Tra_Loi> {
               scrollDirection: Axis.vertical,
               itemCount: listFile.length,
               itemBuilder: (context, index) {
+                List<String> lst_path = listFile[index].path.split('/');
+                List<String> lst_duoi =
+                    lst_path[lst_path.length - 1].split('.');
+                String name = lst_path[lst_path.length - 1];
+                String duoi = lst_duoi[lst_duoi.length - 1];
                 return Padding(
                   padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 8),
                   child: Container(
@@ -96,7 +101,7 @@ class _Tra_LoiState extends State<Tra_Loi> {
                             child: Container(
                               color: Color(0xFF57636C),
                               child: Center(
-                                  child: Text('.docss',
+                                  child: Text('.' + duoi,
                                       style: GoogleFonts.quicksand(
                                           fontWeight: FontWeight.bold,
                                           color: AppColor.grey2,
@@ -115,12 +120,13 @@ class _Tra_LoiState extends State<Tra_Loi> {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Text(
-                                    'Item Name',
+                                    name,
                                     style: GoogleFonts.quicksand(
                                       color: Color(0xFF14181B),
                                       fontSize: 16,
                                       fontWeight: FontWeight.w500,
                                     ),
+                                    overflow: TextOverflow.ellipsis,
                                   ),
                                   Expanded(
                                     child: Padding(
@@ -144,7 +150,7 @@ class _Tra_LoiState extends State<Tra_Loi> {
                               onTap: () {
                                 listFile.removeAt(index);
                                 setState(() {
-                                  listFile; 
+                                  listFile;
                                 });
                               },
                               child: Icon(

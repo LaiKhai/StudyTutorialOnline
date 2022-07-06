@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
+import 'package:user_flutter/Model/User_login.dart';
+import 'package:user_flutter/Model/createBktra.dart';
+import 'package:user_flutter/Model_View/bai_Ktra.dart';
 import 'package:user_flutter/View/Widget/Home/app_icon_buttton.dart';
 import 'package:user_flutter/View/common/constant/color.dart';
 import 'package:user_flutter/View/common/constant/dimen.dart';
@@ -21,11 +24,20 @@ class Thong_tin extends StatefulWidget {
 class _Thong_tinState extends State<Thong_tin> {
   TextEditingController tieuDeController = new TextEditingController(text: '');
 // ignore: unnecessary_new
-TextEditingController soCauhoiController = new TextEditingController(text: '1');
+  TextEditingController soCauhoiController =
+      new TextEditingController(text: '1');
 // ignore: unnecessary_new
-TextEditingController huongDanController = new TextEditingController(text: '');
+  TextEditingController huongDanController =
+      new TextEditingController(text: '');
 // ignore: unnecessary_new
-TextEditingController diemToiDaController = new TextEditingController(text: '');
+  TextEditingController diemToiDaController =
+      new TextEditingController(text: '');
+  taoBKtra(String tieuDe, String noiDung, String idLop, String soLuong,
+      String Diem, String idGvien) {
+    BaiKiemTraVM.Create_BKTra(tieuDe, noiDung, int.parse(idLop),
+        int.parse(soLuong), int.parse(Diem), user.user!.id!, context);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -319,16 +331,13 @@ TextEditingController diemToiDaController = new TextEditingController(text: '');
                                 huongDanController;
                                 diemToiDaController;
                               });
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => Tao_trac_nghiem(
-                                          TieuDeController: tieuDeController,
-                                          MoTaController: huongDanController,
-                                          SoLuong: int.parse(
-                                              soCauhoiController.text),diemToiDaController: diemToiDaController,
-                                        )),
-                              );
+                              taoBKtra(
+                                  tieuDeController.text,
+                                  huongDanController.text,
+                                  widget.lop_HP.id!.toString(),
+                                  soCauhoiController.text,
+                                  diemToiDaController.text,
+                                  user.user!.id!.toString());
                             },
                           ),
                         ],

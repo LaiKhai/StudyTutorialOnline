@@ -6,33 +6,38 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 import 'package:user_flutter/Model/bai_Viet.dart';
 import 'package:user_flutter/Model/model_reing/model_bV.dart';
-import 'package:user_flutter/Model/subject_stream.dart';
 import 'package:user_flutter/View/Widget/Home/stream_type.dart';
 import 'package:user_flutter/View/common/constant/color.dart';
-import 'package:user_flutter/View/common/constant/string.dart';
 import 'package:user_flutter/View/page/Chi_tiet_bai_tap.dart';
 
 class StreamItem extends StatelessWidget {
-  final Baiviet bv;
+  final Data bv;
   StreamItem({Key? key, required this.bv}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     bViet baiviet;
-    if (bv.giangvien != null) {
+    if (bv.idGiangVien != 0 || bv.idGiangVien != null) {
+      if (bv.hoTen == null) {
+        bv.hoTen = 'Duy lỗi';
+      }
+      if (bv.createdAt == null) {
+        bv.createdAt = DateTime.now().toString();
+      }
+      ;
       // ignore: unnecessary_new
       baiviet = new bViet(
-          Ng_viet: bv.giangvien!.hoTen!,
-          NoiDung: bv.noiDung!,
-          avt: bv.giangvien!.avt!,
-          time_viet: bv.createdAt!,
+          Ng_viet: bv.hoTen!,
+          NoiDung: bv.noidungBaiViet!,
+          avt: bv.avt!,
+          time_viet: DateTime.parse(bv.createdAt!),
           Type: 1);
     } else {
       baiviet = new bViet(
-          Ng_viet: bv.sinhvien!.hoTen!,
+          Ng_viet: bv.hoTen!,
           NoiDung: bv.noiDung!,
-          avt: bv.sinhvien!.avt!,
-          time_viet: bv.createdAt!,
+          avt: bv.avt!,
+          time_viet: DateTime.parse(bv.createdAt!),
           Type: 1);
     }
     return Container(
@@ -76,7 +81,7 @@ class StreamItem extends StatelessWidget {
                   //   height: 24,
                   // ),
                   CircleAvatar(
-                    backgroundImage: NetworkImage(Link + baiviet.avt),
+                    backgroundImage: NetworkImage(baiviet.avt),
                   ),
                   const SizedBox(width: 16),
                   Expanded(
