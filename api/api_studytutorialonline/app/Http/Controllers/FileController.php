@@ -161,14 +161,14 @@ class FileController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function dowloadFile(Request $request)
+    public function dowloadFile($filename)
     {
 
         // Check if file exists in app/storage/file folder
-        $file_path = storage_path() . '/file/' . $request;
+        $file_path = storage_path() . '/assets/files/appstore.png/' . $filename;
         if (file_exists($file_path)) {
             // Send Download
-            return response()->download($file_path, $request, [
+            return response()->download($file_path, $filename, [
                 'Content-Length: ' . filesize($file_path)
             ]);
         } else {
