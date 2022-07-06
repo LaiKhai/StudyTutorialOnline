@@ -53,7 +53,7 @@ Route::get('/lophocphanwithgiangvien/{id}', [GiangVienController::class, 'lophoc
 //lấy danh sách bài viết theo lớp học phần
 Route::get('/listbaiviet/{id}', [LopHocPhanController::class, 'ListBaiViet']);
 //lấy danh sách bài viết theo lớp học phần
-Route::get('/listbaikiemtra/{id}', [LopHocPhanController::class, 'ListBaiKiemTra']);
+Route::post('/listbaikiemtra/{id}', [LopHocPhanController::class, 'ListBaiKiemTra']);
 
 //Dowload file
 Route::get('/dowloadfile/{id}', [FileController::class, 'dowloadFile']);

@@ -258,8 +258,9 @@ class LopHocPhanController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function ListBaiKiemTra($id)
+    public function ListBaiKiemTra(Request $request, $id)
     {
+        $trangthai = $request->input('trang_thai');
         $lopHocPhan = LopHocPhan::find($id);
         if (empty($lopHocPhan)) {
             return response()->json([
@@ -268,13 +269,12 @@ class LopHocPhanController extends Controller
             ], 404);
         }
         $baikiemtra = BaiKiemTra::join('lop_hoc_phans', 'bai_kiem_tras.id_lop_hoc_phan', '=', 'lop_hoc_phans.id')
-            ->where([['bai_kiem_tras.id_lop_hoc_phan', $id], ['bai_kiem_tras.trang_thai', 2]])
+            ->where([['bai_kiem_tras.id_lop_hoc_phan', $id], ['bai_kiem_tras.trang_thai', $trangthai]])
             ->select('lop_hoc_phans.*', 'bai_kiem_tras.*')
             ->get();
 
         $response = [
             'status' => true,
-            'trang_thai' => 1,
             'data' => $baikiemtra
         ];
         return response()->json($response, 200);
