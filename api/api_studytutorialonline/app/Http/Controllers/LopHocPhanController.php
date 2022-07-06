@@ -232,30 +232,17 @@ class LopHocPhanController extends Controller
                 'data' => []
             ], 404);
         }
-        foreach ($lopHocPhan->baiviet as $item) {
-            if ($item->sinhvien != null) {
-                $baiViet = BaiViet::leftJoin('lop_hoc_phans', 'bai_viets.id_lop_hoc_phan', '=', 'lop_hoc_phans.id')
-                    ->leftJoin('loai_bai_viets', 'bai_viets.id_loai_bai_viet', '=', 'loai_bai_viets.id')
-                    ->leftJoin('sinh_viens', 'bai_viets.id_sinh_vien', '=', 'sinh_viens.id')
-                    ->leftJoin('check_files', 'check_files.id_bai_viet', '=', 'bai_viets.id')
-                    ->leftJoin('files', 'check_files.id_file', '=', 'files.id')
-                    ->where('lop_hoc_phans.id', $id)
-                    ->whereNotNull('files.noi_dung')
-                    ->orderBy('bai_viets.created_at', 'DESC')
-                    ->select('lop_hoc_phans.id as idLopHocPhan', 'bai_viets.*', 'bai_viets.id as idBaiViet', 'bai_viets.noi_dung as noidungBaiViet', 'loai_bai_viets.*', 'loai_bai_viets.id as idLoaiBaiViet', 'sinh_viens.*', 'sinh_viens.id as idSinhVien', 'files.*', 'files.id as idFile')
-                    ->get();
-            } else if ($item->giangvien != null) {
-                $baiViet = BaiViet::leftJoin('lop_hoc_phans', 'bai_viets.id_lop_hoc_phan', '=', 'lop_hoc_phans.id')
-                    ->leftJoin('loai_bai_viets', 'bai_viets.id_loai_bai_viet', '=', 'loai_bai_viets.id')
-                    ->leftJoin('giang_viens', 'bai_viets.id_giang_vien', '=', 'giang_viens.id')
-                    ->leftJoin('check_files', 'check_files.id_bai_viet', '=', 'bai_viets.id')
-                    ->leftJoin('files', 'check_files.id_file', '=', 'files.id')
-                    ->where('lop_hoc_phans.id', $id)
-                    ->orderBy('bai_viets.created_at', 'DESC')
-                    ->select('lop_hoc_phans.*', 'lop_hoc_phans.id as idLopHocPhan', 'bai_viets.*', 'bai_viets.id as idBaiViet', 'bai_viets.noi_dung as noidungBaiViet', 'loai_bai_viets.*', 'loai_bai_viets.id as idLoaiBaiViet', 'giang_viens.*', 'giang_viens.id as idGiangVien', 'files.*', 'files.id as idFile')
-                    ->get();
-            }
+        $baiViet = BaiViet::where('id_lop_hoc_phan', '=', $id)->get();
+        foreach ($baiViet as $item) {
+            $item->lophocphan;
+            $item->loaibaiviet;
+            $item->checkfile;
+            $item->files;
+            $item->sinhvien;
+            $item->giangvien;
         }
+
+
 
         $response = [
             'status' => true,
