@@ -15,9 +15,9 @@ class ThongKeController extends Controller
         $giangvien = GiangVien::count();
         $lop = Lop::count();
         $response = [
-            'sinhvien' => $sinhVien,
-            'giangvien' => $giangvien,
-            'lop' => $lop
+            'sinhvien' => "$sinhVien",
+            'giangvien' => "$giangvien",
+            'lop' => "$lop"
         ];
         return response()->json($response, 200);
     }

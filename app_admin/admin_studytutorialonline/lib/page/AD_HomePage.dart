@@ -47,7 +47,7 @@ class _HomePageState extends State<HomePage> {
                 ))
           ],
         ),
-        body: FutureBuilder<List<Statistical>>(
+        body: FutureBuilder<Statistical>(
           future: StatisticalProvider.fetchObject(),
           builder: (context, snapshot) {
             if (snapshot.hasError) {
@@ -165,7 +165,7 @@ class _HomePageState extends State<HomePage> {
                             children: [
                               Container(
                                 child: Text(
-                                  '1k5',
+                                  snapshot.data!.sinhvien.toString(),
                                   style: ggTextStyle(
                                       30, FontWeight.bold, AppColor.theme),
                                 ),
@@ -196,7 +196,7 @@ class _HomePageState extends State<HomePage> {
                             children: [
                               Container(
                                 child: Text(
-                                  '28',
+                                  snapshot.data!.giangvien.toString(),
                                   style: ggTextStyle(
                                       30, FontWeight.bold, AppColor.theme),
                                 ),
@@ -227,7 +227,7 @@ class _HomePageState extends State<HomePage> {
                             children: [
                               Container(
                                 child: Text(
-                                  '144',
+                                  snapshot.data!.lop.toString(),
                                   style: ggTextStyle(
                                       30, FontWeight.bold, AppColor.theme),
                                 ),
