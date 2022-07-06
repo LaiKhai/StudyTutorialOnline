@@ -69,28 +69,29 @@ class _NavigationdrawerwidgetState extends State<Navigationdrawerwidget> {
                     ),
                     CircleAvatar(
                       backgroundImage: NetworkImage(
-                          'https://kenh14cdn.com/2020/3/23/photo-1-15849581918401652775824.jpg'),
+                        baseUrl + us.avt,
+                      ),
                       radius: 60,
                     ),
                     SizedBox(
                       height: 30,
                     ),
                     Text(
-                      'Lai Khai',
+                      us.ho_ten,
                       style: ggTextStyle(20, FontWeight.bold, AppColor.white),
                     ),
                     SizedBox(
                       height: 10,
                     ),
                     Text(
-                      'lhkhai@caothang.edu.vn',
+                      us.email,
                       style: ggTextStyle(13, FontWeight.normal, AppColor.white),
                     ),
                     SizedBox(
                       height: 10,
                     ),
                     Text(
-                      'Giảng viên',
+                      us.chuc_vu,
                       style: TextStyle(
                           fontSize: 13,
                           fontWeight: FontWeight.bold,
@@ -119,7 +120,7 @@ class _NavigationdrawerwidgetState extends State<Navigationdrawerwidget> {
                   left: 20,
                   bottom: 10,
                   right: 0),
-              const Divider(
+              Divider(
                   thickness: 1, indent: 20, endIndent: 20, color: Colors.white),
               ButtonWidget(
                   icon: Icons.cast_for_education_rounded,
@@ -149,7 +150,7 @@ class _NavigationdrawerwidgetState extends State<Navigationdrawerwidget> {
                   left: 20,
                   bottom: 10,
                   right: 0),
-              const Divider(
+              Divider(
                   thickness: 1, indent: 20, endIndent: 20, color: Colors.white),
               ButtonWidget(
                   icon: Icons.co_present_rounded,
@@ -177,7 +178,7 @@ class _NavigationdrawerwidgetState extends State<Navigationdrawerwidget> {
                   left: 20,
                   bottom: 10,
                   right: 0),
-              const Divider(
+              Divider(
                   thickness: 1, indent: 20, endIndent: 20, color: Colors.white),
               ButtonWidget(
                   icon: Icons.face_sharp,

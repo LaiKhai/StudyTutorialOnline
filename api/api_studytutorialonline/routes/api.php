@@ -17,6 +17,7 @@ use App\Http\Controllers\LoaiBaiVietController;
 use App\Http\Controllers\DSSinhVienController;
 use App\Http\Controllers\DSGiangVienController;
 use App\Http\Controllers\FileController;
+use App\Http\Controllers\ThongKeController;
 use App\Models\DS_GiangVien;
 
 /*
@@ -56,6 +57,9 @@ Route::get('/listbaikiemtra/{id}', [LopHocPhanController::class, 'ListBaiKiemTra
 
 //Dowload file
 Route::get('/dowloadfile/{id}', [FileController::class, 'dowloadFile']);
+
+//Thống kê sinh viên, giảng viên, lớp
+Route::get('/thongke', [ThongKeController::class, 'ThongKe']);
 
 Route::apiResource('chucvu', ChucVuController::class);
 Route::apiResource('sinhvien', SinhVienController::class);
