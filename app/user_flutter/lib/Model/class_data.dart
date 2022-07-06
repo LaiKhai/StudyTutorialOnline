@@ -1,9 +1,7 @@
-
-
-
 import 'package:user_flutter/Model/student.dart';
 import 'package:user_flutter/Model/subject_assignment.dart';
 import 'package:user_flutter/Model/subject_stream.dart';
+
 final List<Student> students = [
   const Student(
     id: 1,
@@ -48,7 +46,7 @@ final List<SubjectStream> streams = [
     id: 1,
     title: "2D Sprite",
     postedAt: DateTime.now().subtract(const Duration(days: 5)),
-    type: SubjectStreamType.material,
+    type: SubjectStreamType.notification,
     subjectId: 1,
   ),
   SubjectStream(
@@ -62,14 +60,14 @@ final List<SubjectStream> streams = [
     id: 3,
     title: "Image Manipulation",
     postedAt: DateTime.now().subtract(const Duration(days: 8)),
-    type: SubjectStreamType.material,
+    type: SubjectStreamType.notification,
     subjectId: 1,
   ),
   SubjectStream(
     id: 4,
     title: "Colors & Shadow",
     postedAt: DateTime.now().subtract(const Duration(days: 7)),
-    type: SubjectStreamType.material,
+    type: SubjectStreamType.notification,
     subjectId: 1,
   ),
   SubjectStream(
@@ -83,21 +81,21 @@ final List<SubjectStream> streams = [
     id: 6,
     title: "Wireshark",
     postedAt: DateTime.now().subtract(const Duration(days: 6)),
-    type: SubjectStreamType.material,
+    type: SubjectStreamType.notification,
     subjectId: 2,
   ),
   SubjectStream(
     id: 7,
     title: "DDOS",
     postedAt: DateTime.now().subtract(const Duration(days: 2)),
-    type: SubjectStreamType.material,
+    type: SubjectStreamType.notification,
     subjectId: 2,
   ),
   SubjectStream(
     id: 8,
     title: "Fintech",
     postedAt: DateTime.now().subtract(const Duration(days: 3)),
-    type: SubjectStreamType.material,
+    type: SubjectStreamType.notification,
     subjectId: 3,
   ),
   SubjectStream(
@@ -111,14 +109,14 @@ final List<SubjectStream> streams = [
     id: 10,
     title: "Project Budgetting",
     postedAt: DateTime.now().subtract(const Duration(days: 6)),
-    type: SubjectStreamType.material,
+    type: SubjectStreamType.notification,
     subjectId: 3,
   ),
   SubjectStream(
     id: 11,
     title: "Intent",
     postedAt: DateTime.now().subtract(const Duration(days: 4)),
-    type: SubjectStreamType.material,
+    type: SubjectStreamType.notification,
     subjectId: 4,
   ),
   SubjectStream(

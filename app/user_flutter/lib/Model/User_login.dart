@@ -58,8 +58,14 @@ class User {
 
   User.fromJson(Map<String, dynamic> json) {
     id = json['id'];
-    idKhoa = json['id_khoa'];
-    idChucVu = json['id_chuc_vu'];
+    if (json['id_khoa'] == null) {
+      idKhoa = 0;
+    } else
+      idKhoa = json['id_khoa'];
+    if (json['id_chuc_vu'] == null) {
+      idChucVu = 0;
+    } else
+      idChucVu = json['id_chuc_vu'];
     if (json['id_lop'] == null) {
       idLop = 0;
     } else {

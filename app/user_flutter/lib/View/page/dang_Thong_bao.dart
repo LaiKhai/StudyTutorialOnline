@@ -1,10 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:user_flutter/Model/User_login.dart';
+import 'package:user_flutter/Model_View/Baiviet.dart';
 import 'package:user_flutter/View/Widget/Bai_kiemtra/Tra_loi.dart';
+import 'package:user_flutter/View/Widget/showNouti.dart';
 import 'package:user_flutter/View/common/constant/color.dart';
+import 'package:user_flutter/View/common/constant/dimen.dart';
+import 'package:user_flutter/View/controller/tao_bai.dart';
 
 class Dang_thong_bao extends StatefulWidget {
-  const Dang_thong_bao({Key? key}) : super(key: key);
+  int id_lop;
+  Dang_thong_bao({Key? key, required this.id_lop}) : super(key: key);
 
   @override
   State<Dang_thong_bao> createState() => _Dang_thong_baoState();
@@ -30,13 +37,31 @@ class _Dang_thong_baoState extends State<Dang_thong_bao> {
                 color: Colors.black,
               )),
           actions: [
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: TextButton(
-                  style: TextButton.styleFrom(backgroundColor: US_APP_COLOR),
-                  onPressed: () {},
-                  child: Text('Đăng',
-                      style: GoogleFonts.quicksand(color: US_APP_WHITE))),
+            InkWell(
+              onTap: () {
+                
+                BaiViet.postBaiViet(
+                    widget.id_lop, textController.text, context);
+              },
+              child: Container(
+                  margin: EdgeInsets.all(8.0),
+                  width: getWidthSize(context) * 1 / 7,
+                  decoration: BoxDecoration(
+                    color: US_APP_COLOR,
+                    boxShadow: [
+                      BoxShadow(
+                        blurRadius: 4,
+                        color: Color(0x34090F13),
+                        offset: Offset(0, 2),
+                      )
+                    ],
+                    borderRadius: BorderRadius.circular(12),
+                  ),
+                  child: Center(
+                    child: Text('Đăng',
+                        style: GoogleFonts.quicksand(
+                            color: Colors.white, fontWeight: FontWeight.w500)),
+                  )),
             )
           ],
         ),
@@ -63,7 +88,7 @@ class _Dang_thong_baoState extends State<Dang_thong_bao> {
                         shape: BoxShape.circle,
                       ),
                       child: Image.network(
-                        'https://static.nike.com/a/images/t_PDP_864_v1/f_auto,b_rgb:f5f5f5/bd297a54-27c5-43bf-889e-ee04ccf81e8b/therma-mens-full-zip-training-hoodie-DwfKtF.png',
+                        user.user!.avt!,
                         fit: BoxFit.cover,
                       ),
                     ),
@@ -77,12 +102,14 @@ class _Dang_thong_baoState extends State<Dang_thong_bao> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        'Andres Franchellis',
-                        style: GoogleFonts.quicksand(color: Colors.grey),
+                        user.user!.hoTen!,
+                        style: GoogleFonts.quicksand(
+                            color: Colors.grey, fontWeight: FontWeight.w700),
                       ),
                       Text(
-                        '@andresfrans',
-                        style: GoogleFonts.quicksand(color: Colors.grey),
+                        user.user!.email!,
+                        style: GoogleFonts.quicksand(
+                            color: Colors.grey, fontWeight: FontWeight.w700),
                       ),
                     ],
                   ),
@@ -100,39 +127,40 @@ class _Dang_thong_baoState extends State<Dang_thong_bao> {
               controller: textController,
               maxLines: null,
               obscureText: false,
-              decoration: const InputDecoration(
-                hintText: 'nội dung chính',
-                enabledBorder: UnderlineInputBorder(
-                  borderSide: BorderSide(
-                    color: Color(0x00000000),
-                    width: 1,
+              decoration: InputDecoration(
+                  hintText: 'nội dung chính',
+                  enabledBorder: UnderlineInputBorder(
+                    borderSide: BorderSide(
+                      color: Color(0x00000000),
+                      width: 1,
+                    ),
+                    borderRadius: BorderRadius.only(
+                      topLeft: Radius.circular(4.0),
+                      topRight: Radius.circular(4.0),
+                    ),
                   ),
-                  borderRadius: BorderRadius.only(
-                    topLeft: Radius.circular(4.0),
-                    topRight: Radius.circular(4.0),
+                  focusedBorder: UnderlineInputBorder(
+                    borderSide: BorderSide(
+                      color: Color(0x00000000),
+                      width: 1,
+                    ),
+                    borderRadius: BorderRadius.only(
+                      topLeft: Radius.circular(4.0),
+                      topRight: Radius.circular(4.0),
+                    ),
                   ),
-                ),
-                focusedBorder: UnderlineInputBorder(
-                  borderSide: BorderSide(
-                    color: Color(0x00000000),
-                    width: 1,
-                  ),
-                  borderRadius: BorderRadius.only(
-                    topLeft: Radius.circular(4.0),
-                    topRight: Radius.circular(4.0),
-                  ),
-                ),
-                prefixIcon: Icon(
-                  Icons.ten_mp,
-                ),
-              ),
+                  prefixIcon: SvgPicture.asset(
+                    'assets/icons/edit.svg',
+                    fit: BoxFit.none,
+                    color: US_APP_COLOR_2,
+                  )),
             ),
             Container(
               width: double.infinity,
               height: 0.5,
               color: US_APP_LINE,
             ),
-            Tra_Loi(),
+            const Tra_Loi(),
           ],
         ),
       ),

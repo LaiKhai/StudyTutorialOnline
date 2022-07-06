@@ -30,7 +30,8 @@ class US_Login_Screen extends StatelessWidget {
             height: getHeightSize(context),
             width: getWidthSize(context),
             child: US_TextField_Login(),
-          )
+          ),
+          Text('phiên bản 2')
         ],
       ),
     ));

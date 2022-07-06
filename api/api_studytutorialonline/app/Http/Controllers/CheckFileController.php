@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\CheckFile;
+use App\Models\BaiViet;
 use App\Http\Requests\StoreCheckFileRequest;
 use App\Http\Requests\UpdateCheckFileRequest;
 

@@ -1,6 +1,7 @@
 <?php
 
-namespace Database\Seeders;Illuminate\Support\Facades\DB;
+namespace Database\Seeders;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Database\Seeder;
 
 class BaiVietSeeder extends Seeder

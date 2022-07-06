@@ -3,14 +3,19 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import 'package:intl/intl.dart';
+import 'package:user_flutter/Model/BaiKtrta.dart';
 import 'package:user_flutter/Model/subject_assignment.dart';
+import 'package:user_flutter/View/Widget/Bai_kiemtra/Tra_loi.dart';
 import 'package:user_flutter/View/Widget/Home/assignment_status.dart';
 import 'package:user_flutter/View/common/constant/color.dart';
+import 'package:user_flutter/View/page/Bai_Ktra.dart';
+import 'package:user_flutter/View/page/Chi_tiet_bai_tap.dart';
 
 class AssignmentItem extends StatelessWidget {
   final SubjectAssignment assignment;
-
-  const AssignmentItem({Key? key, required this.assignment}) : super(key: key);
+  final Baikiemtra_model baikiemtra;
+  AssignmentItem({Key? key, required this.assignment, required this.baikiemtra})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -30,63 +35,75 @@ class AssignmentItem extends StatelessWidget {
       ),
       child: Column(
         children: [
-          Container(
-            padding: const EdgeInsets.all(12),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Row(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    SvgPicture.asset(
-                      "assets/icons/assignment.svg",
-                      color: AppColor.white,
-                      width: 24,
-                      height: 24,
-                    ),
-                    const SizedBox(width: 16),
-                    Expanded(
-                      child: Column(
-                        mainAxisSize: MainAxisSize.min,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            assignment.title,
-                            style: GoogleFonts.quicksand(
-                              color: AppColor.white,
-                              fontWeight: FontWeight.w600,
+          InkWell(
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) => Bai_Ktra(
+                          id: baikiemtra.id!,
+                        )),
+              );
+            },
+            child: Container(
+              padding: const EdgeInsets.all(12),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Row(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      SvgPicture.asset(
+                        "assets/icons/assignment.svg",
+                        color: AppColor.white,
+                        width: 24,
+                        height: 24,
+                      ),
+                      const SizedBox(width: 16),
+                      Expanded(
+                        child: Column(
+                          mainAxisSize: MainAxisSize.min,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              baikiemtra.tieuDe!,
+                              style: GoogleFonts.quicksand(
+                                color: AppColor.white,
+                                fontWeight: FontWeight.w600,
+                              ),
                             ),
-                          ),
-                          const SizedBox(height: 4),
-                          Text(
-                            "Due at " +
-                                DateFormat("MMM dd").format(assignment.dueAt),
-                            style: GoogleFonts.quicksand(
-                              color: AppColor.grey,
-                              fontSize: 12,
+                            const SizedBox(height: 4),
+                            Text(
+                              "Due at " +
+                                  DateFormat("MMM dd")
+                                      .format(baikiemtra.createdAt!),
+                              style: GoogleFonts.quicksand(
+                                color: AppColor.grey,
+                                fontSize: 12,
+                              ),
                             ),
-                          ),
-                        ],
+                          ],
+                        ),
+                      ),
+                      const SizedBox(width: 16),
+                      AssignmentStatus(type: assignment.type),
+                    ],
+                  ),
+                  const SizedBox(height: 8),
+                  Padding(
+                    padding: const EdgeInsets.only(left: 40),
+                    child: Text(
+                      baikiemtra.noiDung!,
+                      maxLines: 3,
+                      overflow: TextOverflow.ellipsis,
+                      style: GoogleFonts.quicksand(
+                        color: AppColor.grey,
+                        fontSize: 12,
                       ),
                     ),
-                    const SizedBox(width: 16),
-                    AssignmentStatus(type: assignment.type),
-                  ],
-                ),
-                const SizedBox(height: 8),
-                Padding(
-                  padding: const EdgeInsets.only(left: 40),
-                  child: Text(
-                    assignment.description,
-                    maxLines: 3,
-                    overflow: TextOverflow.ellipsis,
-                    style: GoogleFonts.quicksand(
-                      color: AppColor.grey,
-                      fontSize: 12,
-                    ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
           ),
           InkWell(
@@ -96,7 +113,9 @@ class AssignmentItem extends StatelessWidget {
               bottomLeft: Radius.circular(15),
               bottomRight: Radius.circular(15),
             ),
-            onTap: () {},
+            onTap: () {
+              print('object');
+            },
             child: Container(
               padding: const EdgeInsets.all(12),
               decoration: const BoxDecoration(

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:user_flutter/View/page/us_login_screen.dart';
 
 import '../Widget/Navi/navigation_drawer_widget.dart';
 import '../common/constant/color.dart';
@@ -14,6 +15,14 @@ class Cai_Dat_Page extends StatefulWidget {
 
 class _Cai_Dat_PageState extends State<Cai_Dat_Page> {
   @override
+  dangXuat() async {
+    final SharedPreferences sharedPref = await SharedPreferences.getInstance();
+    sharedPref.clear();
+    Navigator.of(context).pushAndRemoveUntil(
+        MaterialPageRoute(builder: (context) => US_Login_Screen()),
+        (route) => false);
+  }
+
   Widget build(BuildContext context) {
     return SafeArea(
         child: Scaffold(
@@ -83,8 +92,8 @@ class _Cai_Dat_PageState extends State<Cai_Dat_Page> {
               decoration: BoxDecoration(
                   color: AppColor.theme,
                   borderRadius: BorderRadius.circular(25.0)),
-              padding:
-                  const EdgeInsets.only(left: 20, bottom: 40, top: 10, right: 20),
+              padding: const EdgeInsets.only(
+                  left: 20, bottom: 40, top: 10, right: 20),
               child: Column(
                 children: [
                   ListTile(
@@ -201,7 +210,9 @@ class _Cai_Dat_PageState extends State<Cai_Dat_Page> {
             SizedBox(
               width: double.infinity,
               child: TextButton(
-                onPressed: () {},
+                onPressed: () {
+                  dangXuat();
+                },
                 child: Text("Đăng xuất",
                     style: GoogleFonts.quicksand(
                         fontWeight: FontWeight.bold,
