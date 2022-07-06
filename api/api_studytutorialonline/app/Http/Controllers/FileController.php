@@ -169,8 +169,8 @@ class FileController extends Controller
         if (empty($file)) {
             return response()->json([
                 'status' => false,
-                'message' => ' khong tim thay file nao !', 404
-            ]);
+                'message' => ' khong tim thay file nao !'
+            ], 404);
         }
         $this->FixFile($file);
         // $response = [
