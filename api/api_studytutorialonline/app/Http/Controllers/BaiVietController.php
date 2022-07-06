@@ -43,25 +43,9 @@ class BaiVietController extends Controller
             $item->lophocphan;
             $item->loaibaiviet;
             $item->checkfile;
-            if ($item->sinhvien != null) {
-                $lstBaiViet = BaiViet::leftJoin('lop_hoc_phans', 'bai_viets.id_lop_hoc_phan', '=', 'lop_hoc_phans.id')
-                    ->leftJoin('loai_bai_viets', 'bai_viets.id_loai_bai_viet', '=', 'loai_bai_viets.id')
-                    ->leftJoin('sinh_viens', 'bai_viets.id_sinh_vien', '=', 'sinh_viens.id')
-                    ->leftJoin('check_files', 'check_files.id_bai_viet', '=', 'bai_viets.id')
-                    ->leftJoin('files', 'check_files.id_file', '=', 'files.id')
-                    ->orderBy('bai_viets.created_at', 'DESC')
-                    ->select('lop_hoc_phans.id as idLopHocPhan', 'bai_viets.*', 'bai_viets.id as idBaiViet', 'bai_viets.noi_dung as noidungBaiViet', 'loai_bai_viets.*', 'loai_bai_viets.id as idLoaiBaiViet', 'sinh_viens.*', 'sinh_viens.id as idSinhVien', 'files.*', 'files.id as idFile')
-                    ->get();
-            } else if ($item->giangvien != null) {
-                $lstBaiViet = BaiViet::leftJoin('lop_hoc_phans', 'bai_viets.id_lop_hoc_phan', '=', 'lop_hoc_phans.id')
-                    ->leftJoin('loai_bai_viets', 'bai_viets.id_loai_bai_viet', '=', 'loai_bai_viets.id')
-                    ->leftJoin('giang_viens', 'bai_viets.id_giang_vien', '=', 'giang_viens.id')
-                    ->leftJoin('check_files', 'check_files.id_bai_viet', '=', 'bai_viets.id')
-                    ->leftJoin('files', 'check_files.id_file', '=', 'files.id')
-                    ->orderBy('bai_viets.created_at', 'DESC')
-                    ->select('lop_hoc_phans.*', 'lop_hoc_phans.id as idLopHocPhan', 'bai_viets.*', 'bai_viets.id as idBaiViet', 'bai_viets.noi_dung as noidungBaiViet', 'loai_bai_viets.*', 'loai_bai_viets.id as idLoaiBaiViet', 'sinh_viens.*', 'giang_viens.id as idGiangVien', 'files.*', 'files.id as idFile')
-                    ->get();
-            }
+            $item->files;
+            $item->sinhvien;
+            $item->giangvien;
         }
         return response()->json([
             'status' => true,
