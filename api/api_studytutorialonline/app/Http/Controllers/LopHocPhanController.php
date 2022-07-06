@@ -240,8 +240,9 @@ class LopHocPhanController extends Controller
                     ->leftJoin('check_files', 'check_files.id_bai_viet', '=', 'bai_viets.id')
                     ->leftJoin('files', 'check_files.id_file', '=', 'files.id')
                     ->where('lop_hoc_phans.id', $id)
+                    ->whereNotNull('files.noi_dung')
                     ->orderBy('bai_viets.created_at', 'DESC')
-                    ->select('lop_hoc_phans.*', 'bai_viets.*', 'bai_viets.noi_dung as noidungBaiViet', 'loai_bai_viets.*', 'sinh_viens.*', 'files.*')
+                    ->select('lop_hoc_phans.id as idLopHocPhan', 'bai_viets.*', 'bai_viets.id as idBaiViet', 'bai_viets.noi_dung as noidungBaiViet', 'loai_bai_viets.*', 'loai_bai_viets.id as idLoaiBaiViet', 'sinh_viens.*', 'sinh_viens.id as idSinhVien', 'files.*', 'files.id as idFile')
                     ->get();
             } else if ($item->giangvien != null) {
                 $baiViet = BaiViet::leftJoin('lop_hoc_phans', 'bai_viets.id_lop_hoc_phan', '=', 'lop_hoc_phans.id')
@@ -251,7 +252,7 @@ class LopHocPhanController extends Controller
                     ->leftJoin('files', 'check_files.id_file', '=', 'files.id')
                     ->where('lop_hoc_phans.id', $id)
                     ->orderBy('bai_viets.created_at', 'DESC')
-                    ->select('lop_hoc_phans.*', 'bai_viets.*', 'loai_bai_viets.*', 'giang_viens.*', 'files.*')
+                    ->select('lop_hoc_phans.*', 'lop_hoc_phans.id as idLopHocPhan', 'bai_viets.*', 'bai_viets.id as idBaiViet', 'bai_viets.noi_dung as noidungBaiViet', 'loai_bai_viets.*', 'loai_bai_viets.id as idLoaiBaiViet', 'giang_viens.*', 'giang_viens.id as idGiangVien', 'files.*', 'files.id as idFile')
                     ->get();
             }
         }

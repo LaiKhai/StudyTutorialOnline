@@ -161,24 +161,19 @@ class FileController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function dowloadFile(Request $request, $id)
+    public function dowloadFile(Request $request)
     {
-        $file = File::find($id);
-        if (empty($file)) {
-            $response = [
-                'status' => false,
-                'message' => 'khong tim thay file nao !'
-            ];
-            return response()->json($response, 404);
+
+        // Check if file exists in app/storage/file folder
+        $file_path = storage_path() . '/file/' . $request;
+        if (file_exists($file_path)) {
+            // Send Download
+            return response()->download($file_path, $request, [
+                'Content-Length: ' . filesize($file_path)
+            ]);
+        } else {
+            // Error
+            exit('Requested file does not exist on our server!');
         }
-        $this->FixFile($file);
-        return response()->download('http://127.0.0.1:8000/storage/app/public/assets/files/appstore.png/1Grf23XSmhMwtKg0i6C3PVv41wvo4IGd5hUtfCqk.png', 'filename.jpg');
-        // if (Storage::disk('public')->exists($file->noi_dung)) {
-        //     $this->FixFile($file);
-        //     return Storage::dowload($request->getSchemeAndHttpHost() . $file->noi_dung);
-        // } else {
-        //     $response = ['message' => 'khong the tai file !'];
-        //     return response()->json($response, 404);
-        // }
     }
 }
