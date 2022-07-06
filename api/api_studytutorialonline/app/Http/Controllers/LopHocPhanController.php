@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\BaiViet;
 use App\Models\DS_GiangVien;
+use App\Models\BaiKiemTra;
 use App\Models\DS_SinhVien;
 use App\Models\LopHocPhan;
 use App\Models\CheckFile;
@@ -232,7 +233,7 @@ class LopHocPhanController extends Controller
                 'data' => []
             ], 404);
         }
-        $baiViet = BaiViet::where('id_lop_hoc_phan', '=', $id)->get();
+        $baiViet = BaiViet::where('id_lop_hoc_phan', '=', $id)->orderBy('created_at', 'DESC')->get();
         foreach ($baiViet as $item) {
             $item->lophocphan;
             $item->loaibaiviet;
@@ -266,10 +267,15 @@ class LopHocPhanController extends Controller
                 'data' => []
             ], 404);
         }
-        $lopHocPhan->baikiemtra;
+        $baikiemtra = BaiKiemTra::join('lop_hoc_phans', 'bai_kiem_tras.id_lop_hoc_phan', '=', 'lop_hoc_phans.id')
+            ->where([['bai_kiem_tras.id_lop_hoc_phan', $id], ['bai_kiem_tras.trang_thai', 2]])
+            ->select('lop_hoc_phans.*', 'bai_kiem_tras.*')
+            ->get();
+
         $response = [
             'status' => true,
-            'data' => $lopHocPhan
+            'trang_thai' => 1,
+            'data' => $baikiemtra
         ];
         return response()->json($response, 200);
     }
