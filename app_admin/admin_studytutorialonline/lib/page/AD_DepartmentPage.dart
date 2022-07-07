@@ -2,6 +2,7 @@ import 'package:admin_studytutorialonline/common/contrains/color.dart';
 import 'package:admin_studytutorialonline/common/contrains/dimen.dart';
 import 'package:admin_studytutorialonline/common/contrains/string.dart';
 import 'package:admin_studytutorialonline/data/Department.dart';
+import 'package:admin_studytutorialonline/page/AD_CreateDepartmentPage.dart';
 import 'package:admin_studytutorialonline/provider/Department/DepartmentProvider.dart';
 import 'package:flutter/material.dart';
 
@@ -89,9 +90,18 @@ class _DepartmentPageState extends State<DepartmentPage> {
             );
           },
         ),
-        floatingActionButton: FloatingActionButton(
-            child: new Icon(Icons.add),
-            backgroundColor: new Color(0xFFE57373),
-            onPressed: () {}));
+        floatingActionButton: Container(
+          width: 70,
+          height: 70,
+          child: FloatingActionButton(
+              child: new Icon(Icons.add),
+              backgroundColor: AppColor.theme,
+              onPressed: () {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (ctx) => CreateDepartmentPage()));
+              }),
+        ));
   }
 }

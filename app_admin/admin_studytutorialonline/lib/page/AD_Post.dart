@@ -3,6 +3,8 @@ import 'package:admin_studytutorialonline/common/contrains/dimen.dart';
 import 'package:admin_studytutorialonline/common/contrains/string.dart';
 import 'package:flutter/material.dart';
 
+import '../widget/InputForm.dart';
+
 class PostPage extends StatefulWidget {
   const PostPage({Key? key}) : super(key: key);
 
@@ -26,7 +28,8 @@ class _PostPageState extends State<PostPage> {
         height: getHeightSize(context),
         child: Column(children: [
           Container(
-            padding: EdgeInsets.fromLTRB(30, 20, 0, 0),
+            padding:
+                EdgeInsets.fromLTRB(getWidthSize(context) * 0.05, 20, 0, 0),
             width: getWidthSize(context),
             child: Text(
               'Thông Báo',
@@ -34,10 +37,90 @@ class _PostPageState extends State<PostPage> {
             ),
           ),
           Container(
-            margin: EdgeInsets.fromLTRB(10, 20, 10, 20),
+            margin: EdgeInsets.fromLTRB(getWidthSize(context) * 0.05, 20,
+                getWidthSize(context) * 0.05, 20),
             height: 5,
             width: getWidthSize(context),
             color: AppColor.theme,
+          ),
+          FormInput(
+              title: 'Tiêu đề',
+              hinttext: 'nhập tiêu đề...',
+              labeltext: 'tiêu đề',
+              preIcon: Icons.turned_in_outlined),
+          FormInput(
+              title: 'Loại bài viết',
+              hinttext: 'nhập loại bài viết...',
+              labeltext: 'Loại bài viết',
+              preIcon: Icons.menu_book_outlined),
+          Container(
+            margin: EdgeInsets.fromLTRB(getWidthSize(context) * 0.05, 10,
+                getWidthSize(context) * 0.05, 10),
+            width: getWidthSize(context),
+            child: Text(
+              'Nội dung',
+              style: ggTextStyle(13, FontWeight.bold, AppColor.black),
+            ),
+          ),
+          Expanded(
+              child: Container(
+            margin: EdgeInsets.fromLTRB(getWidthSize(context) * 0.05, 3,
+                getWidthSize(context) * 0.05, 20),
+            width: getWidthSize(context),
+            child: TextField(
+              maxLines: null,
+              expands: true,
+              decoration: InputDecoration(
+                border: new OutlineInputBorder(
+                    borderSide: new BorderSide(color: AppColor.theme)),
+              ),
+            ),
+          )),
+          Container(
+            margin: EdgeInsets.fromLTRB(getWidthSize(context) * 0.06, 0,
+                getWidthSize(context) * 0.06, 10),
+            width: getWidthSize(context),
+            child: Row(
+              children: [
+                Container(
+                    width: getWidthSize(context) * 0.4,
+                    height: getHeightSize(context) * 0.06,
+                    child: TextButton(
+                      child: Text(
+                        'Hủy',
+                        style: ggTextStyle(20, FontWeight.bold, AppColor.black),
+                      ),
+                      onPressed: () {},
+                      style: ButtonStyle(
+                          shape:
+                              MaterialStateProperty.all<RoundedRectangleBorder>(
+                                  RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(10),
+                                      side: BorderSide(
+                                          color: AppColor.black, width: 2)))),
+                    )),
+                Container(
+                    margin: EdgeInsets.fromLTRB(
+                        getWidthSize(context) * 0.08, 0, 0, 0),
+                    width: getWidthSize(context) * 0.4,
+                    height: getHeightSize(context) * 0.06,
+                    child: ElevatedButton(
+                      child: Text(
+                        'Đăng',
+                        style: ggTextStyle(20, FontWeight.bold, AppColor.white),
+                      ),
+                      onPressed: () {},
+                      style: ButtonStyle(
+                          backgroundColor:
+                              MaterialStateProperty.all<Color>(AppColor.theme),
+                          shape:
+                              MaterialStateProperty.all<RoundedRectangleBorder>(
+                                  RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(10),
+                          ))),
+                    ))
+              ],
+            ),
           )
         ]),
       )),
