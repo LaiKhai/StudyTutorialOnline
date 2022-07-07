@@ -1,4 +1,5 @@
 import 'package:admin_studytutorialonline/data/ClassRoom.dart';
+import 'package:admin_studytutorialonline/page/AD_CreateClass.dart';
 import 'package:admin_studytutorialonline/provider/ClassRoom/ClassRoomProvider.dart';
 import 'package:admin_studytutorialonline/widget/ClassPage/AD_ClassList.dart';
 import 'package:flutter/material.dart';
@@ -83,7 +84,10 @@ class _ClassPageState extends State<ClassPage> {
         ),
         floatingActionButton: FloatingActionButton(
             child: new Icon(Icons.add),
-            backgroundColor: new Color(0xFFE57373),
-            onPressed: () {}));
+            backgroundColor: AppColor.theme,
+            onPressed: () {
+              Navigator.push(context,
+                  MaterialPageRoute(builder: ((context) => CreateClass())));
+            }));
   }
 }

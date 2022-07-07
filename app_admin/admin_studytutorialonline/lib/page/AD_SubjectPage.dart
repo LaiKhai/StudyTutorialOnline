@@ -1,4 +1,5 @@
 import 'package:admin_studytutorialonline/common/contrains/string.dart';
+import 'package:admin_studytutorialonline/page/AD_CreateSubject.dart';
 import 'package:admin_studytutorialonline/widget/Subject/AD_SubjectCard.dart';
 import 'package:flutter/material.dart';
 
@@ -73,7 +74,10 @@ class _SubjectPageState extends State<SubjectPage> {
         ),
         floatingActionButton: FloatingActionButton(
             child: new Icon(Icons.add),
-            backgroundColor: new Color(0xFFE57373),
-            onPressed: () {}));
+            backgroundColor: AppColor.theme,
+            onPressed: () {
+              Navigator.push(context,
+                  MaterialPageRoute(builder: (context) => CreateSubject()));
+            }));
   }
 }

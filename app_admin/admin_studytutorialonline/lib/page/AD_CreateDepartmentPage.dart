@@ -1,3 +1,4 @@
+import 'package:admin_studytutorialonline/provider/Department/DepartmentProvider.dart';
 import 'package:flutter/material.dart';
 
 import '../common/contrains/color.dart';
@@ -12,6 +13,7 @@ class CreateDepartmentPage extends StatefulWidget {
 }
 
 class _CreateDepartmentPageState extends State<CreateDepartmentPage> {
+  TextEditingController _tenkhoaController = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -42,6 +44,86 @@ class _CreateDepartmentPageState extends State<CreateDepartmentPage> {
             width: getWidthSize(context),
             color: AppColor.theme,
           ),
+          Container(
+            child: Column(
+              children: [
+                Container(
+                  margin: EdgeInsets.fromLTRB(getWidthSize(context) * 0.05, 10,
+                      getWidthSize(context) * 0.05, 10),
+                  width: getWidthSize(context),
+                  child: Text(
+                    'Tên Khoa',
+                    style: ggTextStyle(13, FontWeight.bold, AppColor.black),
+                  ),
+                ),
+                Container(
+                  margin: EdgeInsets.fromLTRB(getWidthSize(context) * 0.05, 5,
+                      getWidthSize(context) * 0.05, 20),
+                  child: TextField(
+                      controller: _tenkhoaController,
+                      decoration: InputDecoration(
+                          prefixIcon: Icon(Icons.cast_for_education),
+                          hintText: 'Nhập tên khoa...',
+                          border: new OutlineInputBorder(
+                              borderSide:
+                                  new BorderSide(color: AppColor.theme)),
+                          labelText: 'Tên Khoa')),
+                ),
+                Container(
+                  margin: EdgeInsets.fromLTRB(getWidthSize(context) * 0.06, 10,
+                      getWidthSize(context) * 0.06, 10),
+                  width: getWidthSize(context),
+                  child: Row(
+                    children: [
+                      Container(
+                          width: getWidthSize(context) * 0.4,
+                          height: getHeightSize(context) * 0.06,
+                          child: TextButton(
+                            child: Text(
+                              'Hủy',
+                              style: ggTextStyle(
+                                  20, FontWeight.bold, AppColor.black),
+                            ),
+                            onPressed: () {},
+                            style: ButtonStyle(
+                                shape: MaterialStateProperty.all<
+                                        RoundedRectangleBorder>(
+                                    RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.circular(10),
+                                        side: BorderSide(
+                                            color: AppColor.black, width: 1)))),
+                          )),
+                      Container(
+                          margin: EdgeInsets.fromLTRB(
+                              getWidthSize(context) * 0.08, 0, 0, 0),
+                          width: getWidthSize(context) * 0.4,
+                          height: getHeightSize(context) * 0.06,
+                          child: ElevatedButton(
+                            child: Text(
+                              'Thêm',
+                              style: ggTextStyle(
+                                  20, FontWeight.bold, AppColor.white),
+                            ),
+                            onPressed: () {
+                              DepartmentProvider.createDepartment(
+                                  context, _tenkhoaController.text);
+                            },
+                            style: ButtonStyle(
+                                backgroundColor:
+                                    MaterialStateProperty.all<Color>(
+                                        AppColor.theme),
+                                shape: MaterialStateProperty.all<
+                                        RoundedRectangleBorder>(
+                                    RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(10),
+                                ))),
+                          ))
+                    ],
+                  ),
+                )
+              ],
+            ),
+          )
         ]),
       )),
     );

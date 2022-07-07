@@ -1,3 +1,4 @@
+import 'package:admin_studytutorialonline/page/AD_CreateTeacher.dart';
 import 'package:admin_studytutorialonline/widget/TeacherPage/AD_TeacherCard.dart';
 import 'package:flutter/material.dart';
 
@@ -76,7 +77,10 @@ class _TeacherPageState extends State<TeacherPage> {
         ),
         floatingActionButton: FloatingActionButton(
             child: new Icon(Icons.add),
-            backgroundColor: new Color(0xFFE57373),
-            onPressed: () {}));
+            backgroundColor: AppColor.theme,
+            onPressed: () {
+              Navigator.push(context,
+                  MaterialPageRoute(builder: ((context) => CreateTeacher())));
+            }));
   }
 }
