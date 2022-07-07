@@ -1,4 +1,9 @@
+import 'dart:convert';
+
+import 'package:admin_studytutorialonline/data/Department.dart';
+import 'package:admin_studytutorialonline/provider/ClassPart/ClassPartProvider.dart';
 import 'package:admin_studytutorialonline/widget/ClassPart/AD_ClassPartList.dart';
+import 'package:admin_studytutorialonline/widget/DepartmentPage/AD_DepartmentList.dart';
 import 'package:flutter/material.dart';
 
 import '../common/contrains/color.dart';
@@ -6,6 +11,8 @@ import '../common/contrains/dimen.dart';
 import '../common/contrains/string.dart';
 import '../data/User.dart';
 import '../widget/Drawer/Navigation_Drawer.dart';
+
+import 'package:http/http.dart' as http;
 
 class ClassPartPage extends StatefulWidget {
   final User us;
@@ -17,7 +24,9 @@ class ClassPartPage extends StatefulWidget {
 
 class _ClassPartPageState extends State<ClassPartPage> {
   final User us;
+  final lstItem = [];
   _ClassPartPageState({required this.us});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -55,6 +64,12 @@ class _ClassPartPageState extends State<ClassPartPage> {
                 'Lớp Học Phần',
                 style: ggTextStyle(30, FontWeight.bold, AppColor.white),
               )),
+            ),
+            Container(
+              margin: EdgeInsets.fromLTRB(10, 10, 10, 0),
+              color: Colors.amber,
+              width: getWidthSize(context),
+              height: getHeightSize(context) * 0.1,
             ),
             Container(
               padding: const EdgeInsets.all(20),
