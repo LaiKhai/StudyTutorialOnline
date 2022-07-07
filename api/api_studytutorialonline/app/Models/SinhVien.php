@@ -17,13 +17,15 @@ class SinhVien extends Model
     protected $table = 'sinh_viens';
     protected $fillable = [
         'id',
+        'id_khoa',
+        'id_chuc_vu',
         'id_lop',
         'email',
         'password',
-        'ho_ten',
         'avt',
         'ma_so',
         'sdt',
+        'ho_ten',
         'ngay_sinh',
         'trang_thai'
     ];

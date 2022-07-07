@@ -230,4 +230,25 @@ class SinhVienController extends Controller
         ];
         return response()->json($response, 200);
     }
+
+    public function lstSinhVienwithKhoa(Request $request)
+    {
+        $khoa = $request->input('khoa');
+        $sinhVien = DS_SinhVien::join('lop_hoc_phans', 'ds_sinh_viens.id_lop_hoc_phan', '=', 'lop_hoc_phans.id')
+            ->join('sinh_viens', 'ds_sinh_viens.id_sinh_vien', '=', 'sinh_viens.id')
+            ->join('bo_mons', 'lop_hoc_phans.id_bo_mon', '=', 'bo_mons.id')
+            ->join('khoas', 'bo_mons.id_khoa', '=', 'khoas.id')
+            ->where('khoas.ten_khoa', 'like', '%' . $khoa . '%')
+            ->select('sinh_viens.*', 'khoas.ten_khoa')->get();
+        if (empty($sinhVien)) {
+            return response()->json([
+                'status' => false,
+                'message' => 'khong tim thay lop nao !'
+            ], 404);
+        }
+        $response = [
+            'sinhvien' => $sinhVien
+        ];
+        return response()->json($response, 200);
+    }
 }

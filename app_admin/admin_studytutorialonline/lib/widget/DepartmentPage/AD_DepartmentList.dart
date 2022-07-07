@@ -21,37 +21,27 @@ class _DepartmentListState extends State<DepartmentList> {
   Widget build(BuildContext context) {
     return Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
       Container(
-        height: getHeightSize(context) * 0.15,
+        margin: EdgeInsets.fromLTRB(20, 0, 20, 0),
+        height: getHeightSize(context),
         child: ListView.builder(
             itemCount: lstDepartment.length,
-            itemBuilder: (context, index) => Card(
-                semanticContainer: true,
-                margin: EdgeInsets.all(6),
-                child: ListTile(
-                    title: Container(
-                      margin: EdgeInsets.all(5),
-                      child: Text('Công nghệ thông tin',
-                          style:
-                              ggTextStyle(20, FontWeight.bold, AppColor.theme)),
-                    ),
-                    subtitle: Container(
-                      margin: EdgeInsets.all(5),
-                      child: Row(
-                        //mainAxisAlignment: MainAxisAlignment.start,
-                        children: [
-                          Icon(
-                            Icons.person,
-                            size: 15,
-                          ),
-                          SizedBox(
-                            width: 5,
-                          ),
-                          Text('Nguyễn Viết ZDung',
+            itemBuilder: (context, index) => Container(
+                  margin: EdgeInsets.fromLTRB(0, 0, 0, 10),
+                  height: 100,
+                  child: Card(
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(10)),
+                      semanticContainer: true,
+                      margin: EdgeInsets.all(6),
+                      child: ListTile(
+                        title: Container(
+                          margin: EdgeInsets.all(5),
+                          child: Text(lstDepartment[index].tenkhoa,
                               style: ggTextStyle(
-                                  12, FontWeight.bold, AppColor.black)),
-                        ],
-                      ),
-                    )))),
+                                  20, FontWeight.bold, AppColor.theme)),
+                        ),
+                      )),
+                )),
       )
     ]);
   }

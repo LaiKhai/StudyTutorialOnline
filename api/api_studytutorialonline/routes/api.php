@@ -61,6 +61,15 @@ Route::get('/dowloadfile/{id}', [FileController::class, 'dowloadFile']);
 //Thống kê sinh viên, giảng viên, lớp
 Route::get('/thongke', [ThongKeController::class, 'ThongKe']);
 
+//lấy lớp học phần theo khoa
+Route::post('/lophocphanwithkhoa', [LopHocPhanController::class, 'lstLopHocPhanwithKhoa']);
+//lấy lớp theo khoa
+Route::post('/lopwithkhoa', [LopController::class, 'lopwithKhoa']);
+//lấy bộ môn theo khoa
+Route::get('/bomonwithkhoa/{id}', [BoMonController::class, 'bomonwithkhoa']);
+//lấy sinh viên theo khoa
+Route::post('/lstSinhVienwithKhoa', [SinhVienController::class, 'lstSinhVienwithKhoa']);
+
 Route::apiResource('chucvu', ChucVuController::class);
 Route::apiResource('sinhvien', SinhVienController::class);
 Route::apiResource('giangvien', GiangVienController::class);

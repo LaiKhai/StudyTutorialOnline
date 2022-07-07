@@ -279,4 +279,29 @@ class LopHocPhanController extends Controller
         ];
         return response()->json($response, 200);
     }
+
+    /**
+     * Display the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function lstLopHocPhanwithKhoa(Request $request)
+    {
+        $khoa = $request->input('khoa');
+        $lopHocPhan = LopHocPhan::join('bo_mons', 'lop_hoc_phans.id_bo_mon', '=', 'bo_mons.id')
+            ->join('khoas', 'bo_mons.id_khoa', '=', 'khoas.id')
+            ->where('khoas.ten_khoa', 'like', '%' . $khoa . '%')
+            ->select('lop_hoc_phans.*', 'bo_mons.*', 'khoas.ten_khoa')->get();
+        if (empty($lopHocPhan)) {
+            return response()->json([
+                'status' => false,
+                'message' => 'khong tim thay lop hoc phan nao !'
+            ], 404);
+        }
+        $response = [
+            'lophocphan' => $lopHocPhan
+        ];
+        return response()->json($response, 200);
+    }
 }

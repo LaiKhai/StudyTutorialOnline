@@ -1,7 +1,7 @@
 class Statistical {
-  final int sinhvien;
-  final int giangvien;
-  final int lop;
+  final String sinhvien;
+  final String giangvien;
+  final String lop;
   Statistical(this.sinhvien, this.giangvien, this.lop);
   Statistical.fromJson(Map<String, dynamic> json)
       : sinhvien = json['sinhvien'],

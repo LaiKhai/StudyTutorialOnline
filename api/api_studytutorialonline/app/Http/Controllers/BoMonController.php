@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\BoMon;
+use App\Models\Khoa;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
@@ -178,6 +179,16 @@ class BoMonController extends Controller
             'message' => 'xoa thanh cong !',
             'bomon' => $lstBoMon,
             'lophoaphan' => $lophocphan
+        ];
+        return response()->json($response, 200);
+    }
+
+    public function bomonwithkhoa($id)
+    {
+        $khoa = Khoa::find($id);
+        $khoa->bomon;
+        $response = [
+            'khoa' => $khoa
         ];
         return response()->json($response, 200);
     }

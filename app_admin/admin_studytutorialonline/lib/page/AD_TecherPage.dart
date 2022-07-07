@@ -31,11 +31,13 @@ class _TeacherPageState extends State<TeacherPage> {
           actions: [
             Container(
                 margin: EdgeInsets.fromLTRB(0, 10, 5, 0),
-                width: 60,
-                decoration:
-                    BoxDecoration(borderRadius: BorderRadius.circular(30)),
+                width: 45,
                 child: ClipRRect(
-                  child: Image.asset('assets/images/no_image.png'),
+                  borderRadius: BorderRadius.circular(90),
+                  child: Image.network(
+                    baseUrl + us.avt,
+                    fit: BoxFit.cover,
+                  ),
                 ))
           ],
         ),
