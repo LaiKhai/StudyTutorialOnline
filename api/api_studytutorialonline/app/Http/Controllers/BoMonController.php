@@ -192,4 +192,17 @@ class BoMonController extends Controller
         ];
         return response()->json($response, 200);
     }
+    public function search(Request $request)
+    {
+        $searchInput = $request->input('search');
+        $bomon = BoMon::join('khoas', 'bo_mons.id_khoa', '=', 'khoas.id')
+            ->where('ten_khoa', 'like', '%' . $searchInput . '%')
+            ->orWhere('ten_mon_hoc', 'like', '%' . $searchInput . '%')
+            ->select('bo_mons.*', 'khoas.ten_khoa')
+            ->get();
+        $response = [
+            'data' => $bomon
+        ];
+        return response()->json($response, 200);
+    }
 }

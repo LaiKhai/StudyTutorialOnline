@@ -19,6 +19,7 @@ use App\Http\Controllers\DSGiangVienController;
 use App\Http\Controllers\FileController;
 use App\Http\Controllers\ThongKeController;
 use App\Models\DS_GiangVien;
+use Database\Factories\BoMonFactory;
 
 /*
 |--------------------------------------------------------------------------
@@ -101,3 +102,12 @@ Route::post('taoCauTraLoi', [BaiKiemTraController::class, 'taoCauTraloi']);
 
 //Bắt đầu kiểm tra
 Route::post('batdauKT', [BaiKiemTraController::class, 'batdauKT']);
+
+//Tìm kiếm
+//Tìm kiếm Khoa
+Route::post('/searchKhoa', [KhoaController::class, 'search']);
+Route::post('/searchLop', [LopController::class, 'search']);
+Route::post('/searchLopHocPhan', [LopHocPhanController::class, 'search']);
+Route::post('/searchBoMon', [BoMonController::class, 'search']);
+Route::post('/searchSinhVien', [SinhVienController::class, 'search']);
+Route::post('/searchGiangVien', [GiangVienController::class, 'search']);

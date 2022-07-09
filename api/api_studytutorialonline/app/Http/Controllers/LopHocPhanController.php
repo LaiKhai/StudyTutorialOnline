@@ -304,4 +304,27 @@ class LopHocPhanController extends Controller
         ];
         return response()->json($response, 200);
     }
+
+    public function search(Request $request)
+    {
+        $searchInput = $request->input('search');
+        $lopHocPhan = LopHocPhan::join('bo_mons', 'lop_hoc_phans.id_bo_mon', '=', 'bo_mons.id')
+            ->join('lops', 'lop_hoc_phans.id_lop', '=', 'lops.id')
+            ->where('ten_mon_hoc', 'like', '%' . $searchInput . '%')
+            ->orWhere('ten_lop', 'like', '%' . $searchInput . '%')
+            ->select('lop_hoc_phans.*')
+            ->get();
+        foreach ($lopHocPhan as $item) {
+            $item->lop;
+            $item->baikiemtra;
+            $item->bomon;
+            $item->baitap;
+            $item->baiviet;
+            $this->FixImg($item);
+        }
+        $response = [
+            'data' => $lopHocPhan
+        ];
+        return response()->json($response, 200);
+    }
 }

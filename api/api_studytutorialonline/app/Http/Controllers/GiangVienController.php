@@ -249,4 +249,27 @@ class GiangVienController extends Controller
         ];
         return response()->json($response, 200);
     }
+
+    public function search(Request $request)
+    {
+        $searchInput = $request->input('search');
+        $giangVien = GiangVien::join('khoas', 'giang_viens.id_khoa', '=', 'khoas.id')
+            ->where('ten_khoa', 'like', '%' . $searchInput . '%')
+            ->orWhere('email', 'like', '%' . $searchInput . '%')
+            ->orWhere('ma_so', 'like', '%' . $searchInput . '%')
+            ->orWhere('ho_ten', 'like', '%' . $searchInput . '%')
+            ->get();
+        foreach ($giangVien as $item) {
+            $item->khoa;
+            $item->chucvu;
+            $item->baikiemtra;
+            $item->lop;
+            $item->baiviet;
+            $this->FixImg($item);
+        }
+        $response = [
+            'data' => $giangVien
+        ];
+        return response()->json($response, 200);
+    }
 }

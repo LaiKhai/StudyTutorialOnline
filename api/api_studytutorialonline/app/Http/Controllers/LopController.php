@@ -211,4 +211,27 @@ class LopController extends Controller
         ];
         return response()->json($response, 200);
     }
+
+    public function search(Request $request)
+    {
+        $searchInput = $request->input('search');
+        $lop = Lop::join('giang_viens', 'lops.id_giangvien', '=', 'giang_viens.id')
+            ->where(
+                'ten_lop',
+                'like',
+                '%' . $searchInput . '%'
+
+            )
+            ->orWhere('nien_khoa', 'like', '%' . $searchInput . '%')
+            ->orWhere('giang_viens.ho_ten', 'like', '%' . $searchInput . '%')
+            ->select('lops.*')
+            ->get();
+        foreach ($lop as $item) {
+            $item->giangvien;
+        }
+        $response = [
+            'data' => $lop
+        ];
+        return response()->json($response, 200);
+    }
 }

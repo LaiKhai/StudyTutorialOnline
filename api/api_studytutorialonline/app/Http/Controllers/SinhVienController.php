@@ -251,4 +251,27 @@ class SinhVienController extends Controller
         ];
         return response()->json($response, 200);
     }
+
+    public function search(Request $request)
+    {
+        $searchInput = $request->input('search');
+        $sinhVien = SinhVien::join('lops', 'sinh_viens.id_lop', '=', 'lops.id')
+            ->where('ten_lop', 'like', '%' . $searchInput . '%')
+            ->orWhere('email', 'like', '%' . $searchInput . '%')
+            ->orWhere('ma_so', 'like', '%' . $searchInput . '%')
+            ->orWhere('ho_ten', 'like', '%' . $searchInput . '%')
+            ->get();
+        foreach ($sinhVien as $item) {
+            $item->lop;
+            $item->ctbaitap;
+            $item->traloi;
+            $item->binhluan;
+            $item->baiviet;
+            $this->FixImg($item);
+        }
+        $response = [
+            'data' => $sinhVien
+        ];
+        return response()->json($response, 200);
+    }
 }

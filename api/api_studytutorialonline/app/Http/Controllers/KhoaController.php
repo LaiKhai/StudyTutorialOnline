@@ -151,4 +151,22 @@ class KhoaController extends Controller
         ];
         return response()->json($response, 200);
     }
+
+    public function search(Request $request)
+    {
+        $searchInput = $request->input('search');
+        $khoa = Khoa::where('ten_khoa', 'like', '%' . $searchInput . '%')->get();
+        if (empty($khoa)) {
+            return response()->json([
+                'status' => false,
+                'message' => 'khong co ket qua !',
+                'data' => []
+            ]);
+        }
+        $response = [
+            'status' => true,
+            'data' => $khoa
+        ];
+        return response()->json($response, 200);
+    }
 }
