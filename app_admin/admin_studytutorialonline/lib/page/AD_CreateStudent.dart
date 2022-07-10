@@ -1,20 +1,19 @@
-import 'package:admin_studytutorialonline/common/contrains/dimen.dart';
-import 'package:admin_studytutorialonline/provider/Teacher/TeacherDateTimePicker.dart';
-import 'package:admin_studytutorialonline/widget/InputForm.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
 import '../common/contrains/color.dart';
+import '../common/contrains/dimen.dart';
 import '../common/contrains/string.dart';
+import '../widget/InputForm.dart';
 
-class CreateTeacher extends StatefulWidget {
-  const CreateTeacher({Key? key}) : super(key: key);
+class CreateStudentPage extends StatefulWidget {
+  const CreateStudentPage({Key? key}) : super(key: key);
 
   @override
-  State<CreateTeacher> createState() => _CreateTeacherState();
+  State<CreateStudentPage> createState() => _CreateStudentPageState();
 }
 
-class _CreateTeacherState extends State<CreateTeacher> {
+class _CreateStudentPageState extends State<CreateStudentPage> {
   DateTime _date = DateTime.now();
   DateFormat _dateFormat = DateFormat('yyyy-MM-dd');
   Future<void> _selectedDate(BuildContext context) async {
@@ -52,7 +51,7 @@ class _CreateTeacherState extends State<CreateTeacher> {
                             getWidthSize(context) * 0.05, 20, 0, 0),
                         width: getWidthSize(context),
                         child: Text(
-                          'Tạo Tài Khoản Giảng Viên',
+                          'Tạo Tài Khoản Sinh Viên',
                           style:
                               ggTextStyle(30, FontWeight.bold, AppColor.theme),
                         ),
@@ -83,7 +82,7 @@ class _CreateTeacherState extends State<CreateTeacher> {
                           labeltext: 'Họ tên',
                           preIcon: Icons.person),
                       FormInput(
-                          title: 'Mã số giảng viên',
+                          title: 'Mã số sinh viên',
                           hinttext: 'Nhập mã số...',
                           labeltext: 'Mã số',
                           preIcon: Icons.info_rounded),

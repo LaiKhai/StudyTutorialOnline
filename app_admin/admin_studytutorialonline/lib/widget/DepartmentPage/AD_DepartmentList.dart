@@ -19,15 +19,13 @@ class _DepartmentListState extends State<DepartmentList> {
   _DepartmentListState({required this.lstDepartment});
   @override
   Widget build(BuildContext context) {
-    return Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-      Container(
+    return Container(
         margin: EdgeInsets.fromLTRB(20, 0, 20, 0),
-        height: getHeightSize(context),
+        height: getHeightSize(context) * 0.6,
         child: ListView.builder(
             itemCount: lstDepartment.length,
             itemBuilder: (context, index) => Container(
-                  margin: EdgeInsets.fromLTRB(0, 0, 0, 10),
-                  height: 100,
+                  height: getHeightSize(context) * 0.1,
                   child: Card(
                       shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(10)),
@@ -41,8 +39,6 @@ class _DepartmentListState extends State<DepartmentList> {
                                   20, FontWeight.bold, AppColor.theme)),
                         ),
                       )),
-                )),
-      )
-    ]);
+                )));
   }
 }

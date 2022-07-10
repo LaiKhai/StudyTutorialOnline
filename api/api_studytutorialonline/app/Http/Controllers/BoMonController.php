@@ -183,15 +183,6 @@ class BoMonController extends Controller
         return response()->json($response, 200);
     }
 
-    public function bomonwithkhoa($id)
-    {
-        $khoa = Khoa::find($id);
-        $khoa->bomon;
-        $response = [
-            'khoa' => $khoa
-        ];
-        return response()->json($response, 200);
-    }
     public function search(Request $request)
     {
         $searchInput = $request->input('search');

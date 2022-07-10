@@ -49,40 +49,48 @@ class _DepartmentPageState extends State<DepartmentPage> {
                 child: Text('có lỗi xảy ra !'),
               );
             } else if (snapshot.hasData) {
-              return SingleChildScrollView(
-                child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Container(
-                        height: getHeightSize(context) * 0.2,
-                        decoration: const BoxDecoration(
-                            borderRadius: BorderRadius.only(
-                                bottomLeft: Radius.circular(30),
-                                bottomRight: Radius.circular(30)),
-                            color: AppColor.theme),
-                        child: const Center(
-                            child: Text(
-                          'Khoa',
-                          style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 32,
-                              fontWeight: FontWeight.w600),
-                        )),
-                      ),
-                      Container(
-                        padding: const EdgeInsets.all(20),
-                        child: const Text(
-                          'Danh sách các thông báo',
-                          style: TextStyle(
-                              color: AppColor.grey,
-                              fontSize: 16,
-                              fontWeight: FontWeight.w600),
-                        ),
-                      ),
-                      DepartmentList(
-                        lstDepartment: snapshot.data!,
-                      ),
+              return CustomScrollView(
+                key: centerKey,
+                slivers: [
+                  SliverList(
+                    key: centerKey,
+                    delegate: SliverChildListDelegate([
+                      Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Container(
+                              height: getHeightSize(context) * 0.2,
+                              decoration: const BoxDecoration(
+                                  borderRadius: BorderRadius.only(
+                                      bottomLeft: Radius.circular(30),
+                                      bottomRight: Radius.circular(30)),
+                                  color: AppColor.theme),
+                              child: const Center(
+                                  child: Text(
+                                'Khoa',
+                                style: TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 32,
+                                    fontWeight: FontWeight.w600),
+                              )),
+                            ),
+                            Container(
+                              padding: const EdgeInsets.all(20),
+                              child: const Text(
+                                'Danh sách các thông báo',
+                                style: TextStyle(
+                                    color: AppColor.grey,
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.w600),
+                              ),
+                            ),
+                            DepartmentList(
+                              lstDepartment: snapshot.data!,
+                            ),
+                          ]),
                     ]),
+                  )
+                ],
               );
             }
             return Center(
@@ -100,7 +108,9 @@ class _DepartmentPageState extends State<DepartmentPage> {
                 Navigator.push(
                     context,
                     MaterialPageRoute(
-                        builder: (ctx) => CreateDepartmentPage()));
+                        builder: (ctx) => CreateDepartmentPage(
+                              us: us,
+                            )));
               }),
         ));
   }

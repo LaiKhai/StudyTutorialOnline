@@ -26,7 +26,7 @@ class DepartmentProvider {
   }
 
   static Future<void> createDepartment(
-      BuildContext context, String tenkhoa) async {
+      BuildContext context, String tenkhoa, User us) async {
     String url = createDepartmentUrl;
     Map body = {
       'ten_khoa': tenkhoa,
@@ -58,7 +58,11 @@ class DepartmentProvider {
               actions: [
                 TextButton(
                     onPressed: () {
-                      Navigator.pop(context);
+                      Navigator.pushAndRemoveUntil(
+                          context,
+                          MaterialPageRoute(
+                              builder: (ctx) => DepartmentPage(us: us)),
+                          (route) => false);
                     },
                     child: Text('Quay lại danh sách khoa',
                         style:

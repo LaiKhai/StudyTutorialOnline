@@ -24,7 +24,6 @@ class ClassPartPage extends StatefulWidget {
 
 class _ClassPartPageState extends State<ClassPartPage> {
   final User us;
-  final lstItem = [];
   _ClassPartPageState({required this.us});
 
   @override

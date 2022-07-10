@@ -4,16 +4,21 @@ import 'package:flutter/material.dart';
 import '../common/contrains/color.dart';
 import '../common/contrains/dimen.dart';
 import '../common/contrains/string.dart';
+import '../data/User.dart';
 
 class CreateDepartmentPage extends StatefulWidget {
-  const CreateDepartmentPage({Key? key}) : super(key: key);
+  final User us;
+  const CreateDepartmentPage({Key? key, required this.us}) : super(key: key);
 
   @override
-  State<CreateDepartmentPage> createState() => _CreateDepartmentPageState();
+  State<CreateDepartmentPage> createState() =>
+      _CreateDepartmentPageState(us: us);
 }
 
 class _CreateDepartmentPageState extends State<CreateDepartmentPage> {
   TextEditingController _tenkhoaController = TextEditingController();
+  final User us;
+  _CreateDepartmentPageState({required this.us});
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -106,7 +111,7 @@ class _CreateDepartmentPageState extends State<CreateDepartmentPage> {
                             ),
                             onPressed: () {
                               DepartmentProvider.createDepartment(
-                                  context, _tenkhoaController.text);
+                                  context, _tenkhoaController.text, us);
                             },
                             style: ButtonStyle(
                                 backgroundColor:

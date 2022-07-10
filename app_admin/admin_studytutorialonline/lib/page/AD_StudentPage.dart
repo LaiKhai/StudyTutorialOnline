@@ -1,3 +1,4 @@
+import 'package:admin_studytutorialonline/page/AD_CreateStudent.dart';
 import 'package:admin_studytutorialonline/widget/StudentPage/AD_StudentCard.dart';
 import 'package:flutter/material.dart';
 
@@ -73,7 +74,10 @@ class _StudentPageState extends State<StudentPage> {
         ),
         floatingActionButton: FloatingActionButton(
             child: new Icon(Icons.add),
-            backgroundColor: new Color(0xFFE57373),
-            onPressed: () {}));
+            backgroundColor: AppColor.theme,
+            onPressed: () {
+              Navigator.push(context,
+                  MaterialPageRoute(builder: (ctx) => CreateStudentPage()));
+            }));
   }
 }
