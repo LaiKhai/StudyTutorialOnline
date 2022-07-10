@@ -154,11 +154,13 @@ class _ClassPartPageState extends State<ClassPartPage> {
                             shrinkWrap: true,
                             itemCount: snapshot.data.length,
                             itemBuilder: (context, index) {
-                              var lstsubject = snapshot.data[index];
+                              var lstClassPart = snapshot.data[index];
                               return Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     Container(
+                                        padding:
+                                            EdgeInsets.fromLTRB(10, 0, 10, 0),
                                         height: getHeightSize(context) * 0.15,
                                         child: Card(
                                             semanticContainer: true,
@@ -166,7 +168,9 @@ class _ClassPartPageState extends State<ClassPartPage> {
                                             child: ListTile(
                                                 title: Container(
                                                   margin: EdgeInsets.all(5),
-                                                  child: Text('Mạng Máy Tính',
+                                                  child: Text(
+                                                      lstClassPart[
+                                                          'ten_mon_hoc'],
                                                       style: ggTextStyle(
                                                           20,
                                                           FontWeight.bold,
@@ -174,44 +178,29 @@ class _ClassPartPageState extends State<ClassPartPage> {
                                                 ),
                                                 subtitle: Container(
                                                   margin: EdgeInsets.all(5),
-                                                  child: Row(
+                                                  child: Column(
                                                     //mainAxisAlignment: MainAxisAlignment.start,
                                                     children: [
                                                       Container(
-                                                        child: Row(children: [
-                                                          Container(
-                                                            child: Icon(
-                                                              Icons.book_sharp,
-                                                              size: 15,
-                                                            ),
-                                                          ),
-                                                          Container(
-                                                            child: Text(
-                                                                'CĐ TH 19PMA',
-                                                                style: ggTextStyle(
-                                                                    12,
-                                                                    FontWeight
-                                                                        .bold,
-                                                                    AppColor
-                                                                        .black)),
-                                                          )
-                                                        ]),
-                                                      ),
-                                                      Container(
                                                         padding:
-                                                            EdgeInsets.only(
-                                                                left: 5),
+                                                            EdgeInsets.fromLTRB(
+                                                                0, 2, 5, 5),
                                                         child: Row(
                                                           children: [
                                                             Container(
                                                               child: Icon(
-                                                                Icons.person,
+                                                                Icons
+                                                                    .cast_for_education,
                                                                 size: 20,
                                                               ),
                                                             ),
                                                             Container(
+                                                              padding: EdgeInsets
+                                                                  .only(
+                                                                      left: 5),
                                                               child: Text(
-                                                                "65",
+                                                                lstClassPart[
+                                                                    'ten_khoa'],
                                                                 style: ggTextStyle(
                                                                     12,
                                                                     FontWeight
@@ -222,7 +211,31 @@ class _ClassPartPageState extends State<ClassPartPage> {
                                                             )
                                                           ],
                                                         ),
-                                                      )
+                                                      ),
+                                                      Container(
+                                                        child: Row(children: [
+                                                          Container(
+                                                            padding: EdgeInsets
+                                                                .fromLTRB(
+                                                                    0, 2, 5, 5),
+                                                            child: Icon(
+                                                              Icons.book_sharp,
+                                                              size: 20,
+                                                            ),
+                                                          ),
+                                                          Container(
+                                                            child: Text(
+                                                                lstClassPart[
+                                                                    'ten_lop'],
+                                                                style: ggTextStyle(
+                                                                    12,
+                                                                    FontWeight
+                                                                        .bold,
+                                                                    AppColor
+                                                                        .black)),
+                                                          )
+                                                        ]),
+                                                      ),
                                                     ],
                                                   ),
                                                 ))))

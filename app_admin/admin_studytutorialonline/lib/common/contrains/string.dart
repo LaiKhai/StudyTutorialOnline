@@ -19,6 +19,11 @@ const String fetchClassObject = baseUrl + '/api/lop';
 const String fetchDepartmentObject = baseUrl + '/api/khoa';
 const String fetchStatisticalObject = baseUrl + '/api/thongke';
 const String createDepartmentUrl = baseUrl + '/api/khoa';
+
+//Lay lop, lophocphan, bomon, sinhvien, giangvien theo khoa
 const String getSubjectwithDepartment = baseUrl + '/api/searchBoMon';
 const String getClasswithDepartment = baseUrl + '/api/searchLopwithKhoa';
 const String getClassPartwithDepartment = baseUrl + '/api/lophocphanwithkhoa';
+const String getTeacherwithDepartment =
+    baseUrl + '/api/searchGiangVienwithKhoa';
+const String getStudentwithDepartment = baseUrl + '/api/searchSinhVienwithKhoa';
