@@ -234,4 +234,19 @@ class LopController extends Controller
         ];
         return response()->json($response, 200);
     }
+
+    public function searchLopwithKhoa(Request $request)
+    {
+        $searchInput = $request->input('searchLop');
+        $lopHocPhan = LopHocPhan::join('bo_mons', 'lop_hoc_phans.id_bo_mon', '=', 'bo_mons.id')
+            ->join('khoas', 'bo_mons.id_khoa', '=', 'khoas.id')
+            ->join('lops', 'lop_hoc_phans.id_lop', '=', 'lops.id')
+            ->join('giang_viens', 'lops.id_giangvien', '=', 'giang_viens.id')
+            ->where('khoas.ten_khoa', 'like', '%' . $searchInput . '%')
+            ->select('lops.*', 'giang_viens.ho_ten')->distinct()->get();
+        $response = [
+            'data' => $lopHocPhan
+        ];
+        return response()->json($response, 200);
+    }
 }

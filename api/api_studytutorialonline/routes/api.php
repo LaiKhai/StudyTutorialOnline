@@ -111,3 +111,6 @@ Route::post('/searchLopHocPhan', [LopHocPhanController::class, 'search']);
 Route::post('/searchBoMon', [BoMonController::class, 'search']);
 Route::post('/searchSinhVien', [SinhVienController::class, 'search']);
 Route::post('/searchGiangVien', [GiangVienController::class, 'search']);
+Route::post('/searchLopwithKhoa', [LopController::class, 'searchLopwithKhoa']);
+Route::post('/searchGiangVienwithKhoa', [GiangVienController::class, 'searchGiangVienwithKhoa']);
+Route::post('/searchSinhVienwithKhoa', [SinhVienController::class, 'searchSinhVienwithKhoa']);
