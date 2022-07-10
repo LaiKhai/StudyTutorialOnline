@@ -283,7 +283,7 @@ class SinhVienController extends Controller
             ->join('lops', 'lop_hoc_phans.id_lop', '=', 'lops.id')
             ->join('sinh_viens', 'sinh_viens.id_lop', '=', 'lops.id')
             ->where('khoas.ten_khoa', 'like', '%' . $searchInput . '%')
-            ->select('lops.*', 'sinh_viens.ho_ten')->distinct()->get();
+            ->select('sinh_viens.*', 'lops.*')->distinct()->get();
         $response = [
             'data' => $lopHocPhan
         ];
