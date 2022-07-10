@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:admin_studytutorialonline/data/ClassRoom.dart';
 import 'package:admin_studytutorialonline/page/AD_CreateClass.dart';
 import 'package:admin_studytutorialonline/provider/ClassRoom/ClassRoomProvider.dart';
@@ -9,6 +11,7 @@ import '../common/contrains/dimen.dart';
 import '../common/contrains/string.dart';
 import '../data/User.dart';
 import '../widget/Drawer/Navigation_Drawer.dart';
+import 'package:http/http.dart' as http;
 
 class ClassPage extends StatefulWidget {
   final User us;
@@ -19,8 +22,44 @@ class ClassPage extends StatefulWidget {
 }
 
 class _ClassPageState extends State<ClassPage> {
+  String? selectedValue;
+  List departmentItemList = [];
+  Future getAllDepartment() async {
+    var response = await http.get(Uri.parse(fetchDepartmentObject));
+    if (response.statusCode == 200) {
+      var jsonData = json.decode(response.body)['khoa'];
+      setState(() {
+        departmentItemList = jsonData;
+      });
+    }
+    print(departmentItemList);
+  }
+
+  Future getAllClasswithDepartment() async {
+    String? token = await getToken();
+    var response = await http.post(Uri.parse(getClasswithDepartment),
+        headers: <String, String>{
+          'Accept': 'application/json',
+          'Authorization': 'Bearer ${token!}'
+        },
+        body: {
+          'searchLop': selectedValue
+        });
+    if (response.statusCode == 200) {
+      var classObject = json.decode(response.body)['data'];
+      return classObject;
+    }
+  }
+
   final User us;
   _ClassPageState({required this.us});
+
+  @override
+  void initState() {
+    super.initState();
+    getAllDepartment();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -41,46 +80,162 @@ class _ClassPageState extends State<ClassPage> {
                 ))
           ],
         ),
-        body: FutureBuilder<List<ClassRoom>>(
-          future: ClassRoomProvider.fetchObject(),
-          builder: (context, snapshot) {
-            if (snapshot.hasError) {
-              return Text('Có lỗi xảy ra !');
-            } else if (snapshot.hasData) {
-              return SingleChildScrollView(
-                child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Container(
-                        height: getHeightSize(context) * 0.2,
-                        decoration: const BoxDecoration(
-                            borderRadius: BorderRadius.only(
-                                bottomLeft: Radius.circular(30),
-                                bottomRight: Radius.circular(30)),
-                            color: AppColor.theme),
-                        child: Center(
+        body: SingleChildScrollView(
+          child:
+              Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+            Container(
+              height: getHeightSize(context) * 0.2,
+              decoration: const BoxDecoration(
+                  borderRadius: BorderRadius.only(
+                      bottomLeft: Radius.circular(30),
+                      bottomRight: Radius.circular(30)),
+                  color: AppColor.theme),
+              child: Center(
+                  child: Text(
+                'Lớp',
+                style: ggTextStyle(30, FontWeight.bold, AppColor.white),
+              )),
+            ),
+            Container(
+              padding: const EdgeInsets.all(20),
+              child: Text(
+                'Lớp thuộc Khoa',
+                style: ggTextStyle(13, FontWeight.bold, AppColor.grey),
+              ),
+            ),
+            Container(
+              margin: EdgeInsets.fromLTRB(getWidthSize(context) * 0.05, 15,
+                  getWidthSize(context) * 0.05, 10),
+              width: getWidthSize(context),
+              height: getHeightSize(context) * 0.07,
+              child: DropdownButton(
+                value: selectedValue,
+                isExpanded: true,
+                hint: Text('Chọn Khoa...'),
+                items: departmentItemList.map((department) {
+                  return DropdownMenuItem(
+                    value: department['ten_khoa'],
+                    child: Text(department['ten_khoa']),
+                  );
+                }).toList(),
+                onChanged: (value) {
+                  setState(() {
+                    selectedValue = value as String?;
+                  });
+                },
+              ),
+            ),
+            Container(
+              padding: const EdgeInsets.all(20),
+              child: Text(
+                'Danh sách các thông báo',
+                style: ggTextStyle(13, FontWeight.bold, AppColor.grey),
+              ),
+            ),
+            selectedValue != null
+                ? FutureBuilder(
+                    future: getAllClasswithDepartment(),
+                    builder: (context, AsyncSnapshot snapshot) {
+                      if (snapshot.hasData) {
+                        if (snapshot.data?.length == 0) {
+                          return Center(
                             child: Text(
-                          'Lớp',
-                          style:
-                              ggTextStyle(30, FontWeight.bold, AppColor.white),
-                        )),
-                      ),
-                      Container(
-                        padding: const EdgeInsets.all(20),
-                        child: Text(
-                          'Danh sách các thông báo',
-                          style:
-                              ggTextStyle(13, FontWeight.bold, AppColor.grey),
-                        ),
-                      ),
-                      ClassList(lstClass: snapshot.data!),
-                    ]),
-              );
-            }
-            return Center(
-              child: CircularProgressIndicator(),
-            );
-          },
+                              'Hiện tại chưa có bộ môn nào',
+                              style: ggTextStyle(
+                                  12, FontWeight.normal, AppColor.grey),
+                            ),
+                          );
+                        }
+                        return ListView.builder(
+                            scrollDirection: Axis.vertical,
+                            shrinkWrap: true,
+                            itemCount: snapshot.data.length,
+                            itemBuilder: (context, index) {
+                              var lstClass = snapshot.data[index];
+                              return Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Card(
+                                        shape: RoundedRectangleBorder(
+                                            borderRadius:
+                                                BorderRadius.circular(10)),
+                                        semanticContainer: true,
+                                        margin:
+                                            EdgeInsets.fromLTRB(20, 0, 20, 20),
+                                        child: ListTile(
+                                            title: Container(
+                                              margin: EdgeInsets.all(5),
+                                              child: Text(lstClass['ten_lop'],
+                                                  style: ggTextStyle(
+                                                      20,
+                                                      FontWeight.bold,
+                                                      AppColor.theme)),
+                                            ),
+                                            subtitle: Container(
+                                              margin: EdgeInsets.fromLTRB(
+                                                  0, 0, 0, 8),
+                                              child: Row(
+                                                //mainAxisAlignment: MainAxisAlignment.start,
+                                                children: [
+                                                  Container(
+                                                    margin: EdgeInsets.only(
+                                                        right: 10),
+                                                    child: Row(children: [
+                                                      Container(
+                                                        child: Icon(
+                                                          Icons.man_rounded,
+                                                          size: 15,
+                                                        ),
+                                                      ),
+                                                      Container(
+                                                        child: Text(
+                                                            lstClass['ho_ten'],
+                                                            style: ggTextStyle(
+                                                                12,
+                                                                FontWeight.bold,
+                                                                AppColor
+                                                                    .black)),
+                                                      )
+                                                    ]),
+                                                  ),
+                                                  Container(
+                                                    child: Row(
+                                                      children: [
+                                                        Container(
+                                                            child: Icon(Icons
+                                                                .domain_verification_outlined)),
+                                                        Container(
+                                                          child: Text(
+                                                            lstClass[
+                                                                'nien_khoa'],
+                                                            style: ggTextStyle(
+                                                                12,
+                                                                FontWeight.bold,
+                                                                AppColor.black),
+                                                          ),
+                                                        )
+                                                      ],
+                                                    ),
+                                                  )
+                                                ],
+                                              ),
+                                            )))
+                                  ]);
+                            });
+                      } else if (snapshot.hasError) {
+                        return Center(
+                          child: Text('Có lỗi xảy ra'),
+                        );
+                      }
+                      return CircularProgressIndicator();
+                    })
+                : Center(
+                    child: Text(
+                      'Hãy chọn khoa mà bạn muốn xem...',
+                      style: ggTextStyle(12, FontWeight.normal, AppColor.grey),
+                    ),
+                  ),
+          ]),
         ),
         floatingActionButton: FloatingActionButton(
             child: new Icon(Icons.add),

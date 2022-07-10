@@ -32,7 +32,6 @@ class _SubjectPageState extends State<SubjectPage> {
         departmentItemList = jsonData;
       });
     }
-    print(departmentItemList);
   }
 
   Future getAllubjectwithDepartment() async {

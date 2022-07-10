@@ -291,8 +291,9 @@ class LopHocPhanController extends Controller
         $khoa = $request->input('khoa');
         $lopHocPhan = LopHocPhan::join('bo_mons', 'lop_hoc_phans.id_bo_mon', '=', 'bo_mons.id')
             ->join('khoas', 'bo_mons.id_khoa', '=', 'khoas.id')
+            ->join('lops', 'lop_hoc_phans.id_lop', '=', 'lops.id')
             ->where('khoas.ten_khoa', 'like', '%' . $khoa . '%')
-            ->select('lop_hoc_phans.*', 'bo_mons.*', 'khoas.ten_khoa')->get();
+            ->select('lop_hoc_phans.*', 'bo_mons.*', 'khoas.ten_khoa', 'lops.ten_lop')->get();
         if (empty($lopHocPhan)) {
             return response()->json([
                 'status' => false,
