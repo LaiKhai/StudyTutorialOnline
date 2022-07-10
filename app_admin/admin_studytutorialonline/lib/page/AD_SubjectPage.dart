@@ -146,6 +146,7 @@ class _SubjectPageState extends State<SubjectPage> {
                           );
                         }
                         return ListView.builder(
+                            physics: NeverScrollableScrollPhysics(),
                             scrollDirection: Axis.vertical,
                             shrinkWrap: true,
                             itemCount: snapshot.data.length,

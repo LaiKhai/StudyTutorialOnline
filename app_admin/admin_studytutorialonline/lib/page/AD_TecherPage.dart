@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:admin_studytutorialonline/page/AD_CreateTeacher.dart';
 import 'package:admin_studytutorialonline/widget/TeacherPage/AD_TeacherCard.dart';
 import 'package:flutter/material.dart';
@@ -8,6 +10,7 @@ import '../common/contrains/string.dart';
 import '../data/User.dart';
 import '../widget/Drawer/Navigation_Drawer.dart';
 import '../widget/StudentPage/AD_StudentCard.dart';
+import 'package:http/http.dart' as http;
 
 class TeacherPage extends StatefulWidget {
   final User us;
@@ -18,8 +21,43 @@ class TeacherPage extends StatefulWidget {
 }
 
 class _TeacherPageState extends State<TeacherPage> {
+  String? selectedValue;
+  List departmentItemList = [];
+  Future getAllDepartment() async {
+    var response = await http.get(Uri.parse(fetchDepartmentObject));
+    if (response.statusCode == 200) {
+      var jsonData = json.decode(response.body)['khoa'];
+      setState(() {
+        departmentItemList = jsonData;
+      });
+    }
+  }
+
+  Future getAllTeacherwithDepartment() async {
+    String? token = await getToken();
+    var response = await http.post(Uri.parse(getTeacherwithDepartment),
+        headers: <String, String>{
+          'Accept': 'application/json',
+          'Authorization': 'Bearer ${token!}'
+        },
+        body: {
+          'search': selectedValue
+        });
+    if (response.statusCode == 200) {
+      var teacherObject = json.decode(response.body)['data'];
+      return teacherObject;
+    }
+  }
+
   final User us;
   _TeacherPageState({required this.us});
+
+  @override
+  void initState() {
+    super.initState();
+    getAllDepartment();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -61,18 +99,190 @@ class _TeacherPageState extends State<TeacherPage> {
             Container(
               padding: const EdgeInsets.all(20),
               child: Text(
+                'Giảng viên thuộc Khoa',
+                style: ggTextStyle(13, FontWeight.bold, AppColor.grey),
+              ),
+            ),
+            Container(
+              margin: EdgeInsets.fromLTRB(getWidthSize(context) * 0.05, 15,
+                  getWidthSize(context) * 0.05, 10),
+              width: getWidthSize(context),
+              height: getHeightSize(context) * 0.07,
+              child: DropdownButton(
+                value: selectedValue,
+                isExpanded: true,
+                hint: Text('Chọn Khoa...'),
+                items: departmentItemList.map((department) {
+                  return DropdownMenuItem(
+                    value: department['ten_khoa'],
+                    child: Text(department['ten_khoa']),
+                  );
+                }).toList(),
+                onChanged: (value) {
+                  setState(() {
+                    selectedValue = value as String?;
+                  });
+                },
+              ),
+            ),
+            Container(
+              padding: const EdgeInsets.all(20),
+              child: Text(
                 'Danh sách các thông báo',
                 style: ggTextStyle(13, FontWeight.bold, AppColor.grey),
               ),
             ),
-            SizedBox(
-              height: 10,
-            ),
-            TeacherCard(),
-            const SizedBox(
-              height: 10,
-            ),
-            TeacherCard(),
+            selectedValue != null
+                ? FutureBuilder(
+                    future: getAllTeacherwithDepartment(),
+                    builder: (context, AsyncSnapshot snapshot) {
+                      if (snapshot.hasData) {
+                        if (snapshot.data?.length == 0) {
+                          return Center(
+                            child: Text(
+                              'Hiện tại chưa có giảng viên nào',
+                              style: ggTextStyle(
+                                  12, FontWeight.normal, AppColor.grey),
+                            ),
+                          );
+                        }
+                        return ListView.builder(
+                            physics: NeverScrollableScrollPhysics(),
+                            scrollDirection: Axis.vertical,
+                            shrinkWrap: true,
+                            itemCount: snapshot.data.length,
+                            itemBuilder: (context, index) {
+                              var lstTeacher = snapshot.data[index];
+                              return Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Container(
+                                        padding:
+                                            EdgeInsets.fromLTRB(10, 0, 10, 0),
+                                        height: getHeightSize(context) * 0.14,
+                                        child: Card(
+                                            semanticContainer: true,
+                                            margin: EdgeInsets.all(6),
+                                            child: ListTile(
+                                                leading: Container(
+                                                    height:
+                                                        getHeightSize(context) *
+                                                            0.3,
+                                                    width:
+                                                        getWidthSize(context) *
+                                                            0.2,
+                                                    child: ClipRRect(
+                                                        child: Image.asset(
+                                                      'assets/images/no_image.png',
+                                                      width: 300,
+                                                      height: 300,
+                                                    ))),
+                                                title: Container(
+                                                  margin: EdgeInsets.fromLTRB(
+                                                      5, 5, 5, 0),
+                                                  child: Text(
+                                                      lstTeacher['ho_ten'],
+                                                      style: ggTextStyle(
+                                                          20,
+                                                          FontWeight.bold,
+                                                          AppColor.theme)),
+                                                ),
+                                                subtitle: Container(
+                                                    margin: EdgeInsets.fromLTRB(
+                                                        5, 0, 5, 0),
+                                                    child: Column(
+                                                      children: [
+                                                        Container(
+                                                          margin: EdgeInsets
+                                                              .fromLTRB(
+                                                                  0, 0, 3, 8),
+                                                          child: Row(
+                                                            children: [
+                                                              Container(
+                                                                padding:
+                                                                    EdgeInsets
+                                                                        .fromLTRB(
+                                                                            0,
+                                                                            8,
+                                                                            2,
+                                                                            0),
+                                                                child: Icon(
+                                                                  Icons
+                                                                      .person_pin_sharp,
+                                                                  size: 15,
+                                                                ),
+                                                              ),
+                                                              Container(
+                                                                padding:
+                                                                    EdgeInsets
+                                                                        .fromLTRB(
+                                                                            0,
+                                                                            8,
+                                                                            2,
+                                                                            0),
+                                                                child: Text(
+                                                                  lstTeacher[
+                                                                      'ma_so'],
+                                                                  style: ggTextStyle(
+                                                                      12,
+                                                                      FontWeight
+                                                                          .bold,
+                                                                      AppColor
+                                                                          .black),
+                                                                ),
+                                                              )
+                                                            ],
+                                                          ),
+                                                        ),
+                                                        Container(
+                                                          margin: EdgeInsets
+                                                              .fromLTRB(
+                                                                  0, 4, 5, 0),
+                                                          child: Row(
+                                                            //mainAxisAlignment: MainAxisAlignment.start,
+                                                            children: [
+                                                              Container(
+                                                                padding: EdgeInsets
+                                                                    .only(
+                                                                        right:
+                                                                            5),
+                                                                child: Icon(
+                                                                  Icons
+                                                                      .cast_for_education,
+                                                                  size: 15,
+                                                                ),
+                                                              ),
+                                                              Container(
+                                                                child: Text(
+                                                                    lstTeacher[
+                                                                        'ten_khoa'],
+                                                                    style: ggTextStyle(
+                                                                        12,
+                                                                        FontWeight
+                                                                            .bold,
+                                                                        AppColor
+                                                                            .black)),
+                                                              ),
+                                                            ],
+                                                          ),
+                                                        )
+                                                      ],
+                                                    )))))
+                                  ]);
+                            });
+                      } else if (snapshot.hasError) {
+                        return Center(
+                          child: Text('Có lỗi xảy ra'),
+                        );
+                      }
+                      return CircularProgressIndicator();
+                    })
+                : Center(
+                    child: Text(
+                      'Hãy chọn khoa mà bạn muốn xem...',
+                      style: ggTextStyle(12, FontWeight.normal, AppColor.grey),
+                    ),
+                  ),
           ]),
         ),
         floatingActionButton: FloatingActionButton(
