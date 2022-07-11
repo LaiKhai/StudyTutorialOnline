@@ -270,7 +270,10 @@ class LopHocPhanController extends Controller
         }
         if($trangthai==1){
             $baikiemtra = BaiKiemTra::join('lop_hoc_phans', 'bai_kiem_tras.id_lop_hoc_phan', '=', 'lop_hoc_phans.id')
-            ->where([['bai_kiem_tras.id_lop_hoc_phan', $id], ['bai_kiem_tras.trang_thai', 1], ['bai_kiem_tras.trang_thai', 3], ['bai_kiem_tras.trang_thai', 4]])
+            ->where([['bai_kiem_tras.id_lop_hoc_phan', $id]])
+            ->where ([['bai_kiem_tras.trang_thai', 1]])
+            ->orWhere([['bai_kiem_tras.trang_thai', 3]]) 
+            ->orWhere([['bai_kiem_tras.trang_thai', 4]])          
             ->select('lop_hoc_phans.*', 'bai_kiem_tras.*')
             ->get();
         }else{
