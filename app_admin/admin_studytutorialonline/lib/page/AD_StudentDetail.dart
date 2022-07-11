@@ -70,35 +70,35 @@ class _StudentDetailState extends State<StudentDetail> {
                               isRead: true,
                               txtController: _emailController,
                               title: 'Email',
-                              hinttext: 'Nhập email...',
+                              hinttext: student.email,
                               labeltext: student.email,
                               preIcon: Icons.email),
                           FormInput(
                               isRead: true,
                               txtController: _passController,
                               title: 'Password',
-                              hinttext: 'Nhập password...',
+                              hinttext: student.password,
                               labeltext: student.password,
                               preIcon: Icons.password_rounded),
                           FormInput(
                               isRead: true,
                               txtController: _nameController,
                               title: 'Họ tên',
-                              hinttext: 'Nhập họ tên...',
+                              hinttext: student.ho_ten,
                               labeltext: student.ho_ten,
                               preIcon: Icons.person),
                           FormInput(
                               isRead: true,
                               txtController: _masoController,
                               title: 'Mã số sinh viên',
-                              hinttext: 'Nhập mã số...',
+                              hinttext: student.ma_so,
                               labeltext: student.ma_so,
                               preIcon: Icons.info_rounded),
                           FormInput(
                               isRead: true,
                               txtController: _phoneController,
                               title: 'Số điện thoại',
-                              hinttext: 'Nhập số điện thoại...',
+                              hinttext: student.sdt,
                               labeltext: student.sdt,
                               preIcon: Icons.phone),
                           Container(
@@ -125,7 +125,7 @@ class _StudentDetailState extends State<StudentDetail> {
                                 onTap: () {},
                                 decoration: InputDecoration(
                                     prefixIcon: Icon(Icons.date_range),
-                                    hintText: "22/07/2001",
+                                    hintText: student.ngay_sinh,
                                     border: new OutlineInputBorder(
                                         borderSide: new BorderSide(
                                             color: AppColor.theme)),
@@ -141,41 +141,74 @@ class _StudentDetailState extends State<StudentDetail> {
                             child: Row(
                               children: [
                                 Container(
-                                    width: getWidthSize(context) * 0.4,
-                                    height: getHeightSize(context) * 0.06,
-                                    child: TextButton(
-                                      child: Text(
-                                        'Hủy',
-                                        style: ggTextStyle(20, FontWeight.bold,
-                                            AppColor.black),
-                                      ),
-                                      onPressed: () {},
-                                      style: ButtonStyle(
-                                          shape: MaterialStateProperty.all<
-                                                  RoundedRectangleBorder>(
-                                              RoundedRectangleBorder(
-                                                  borderRadius:
-                                                      BorderRadius.circular(10),
-                                                  side: BorderSide(
-                                                      color: AppColor.black,
-                                                      width: 1)))),
-                                    )),
-                                Container(
-                                    margin: EdgeInsets.fromLTRB(
-                                        getWidthSize(context) * 0.08, 0, 0, 0),
-                                    width: getWidthSize(context) * 0.4,
+                                    margin: EdgeInsets.fromLTRB(2, 10, 0, 0),
+                                    width: getWidthSize(context) * 0.86,
                                     height: getHeightSize(context) * 0.06,
                                     child: ElevatedButton(
                                       child: Text(
-                                        'Thêm',
+                                        'Xóa',
                                         style: ggTextStyle(20, FontWeight.bold,
                                             AppColor.white),
                                       ),
-                                      onPressed: () {},
+                                      onPressed: () {
+                                        showDialog(
+                                            context: context,
+                                            builder: (BuildContext context) {
+                                              return AlertDialog(
+                                                content: Text(
+                                                    'Bạn có chắc muốn xóa ${student.ho_ten}',
+                                                    style: ggTextStyle(
+                                                        13,
+                                                        FontWeight.bold,
+                                                        AppColor.black)),
+                                                title: Row(
+                                                  children: [
+                                                    Icon(
+                                                      Icons.warning_rounded,
+                                                      color: AppColor.theme,
+                                                    ),
+                                                    SizedBox(
+                                                      width: 10,
+                                                    ),
+                                                    Text('Thông báo',
+                                                        style: ggTextStyle(
+                                                            13,
+                                                            FontWeight.bold,
+                                                            AppColor.black))
+                                                  ],
+                                                ),
+                                                actions: [
+                                                  Container(
+                                                    child: TextButton(
+                                                        onPressed: () {
+                                                          Navigator.pop(
+                                                              context);
+                                                        },
+                                                        child: Text('Không',
+                                                            style: ggTextStyle(
+                                                                13,
+                                                                FontWeight.bold,
+                                                                AppColor
+                                                                    .black))),
+                                                  ),
+                                                  Container(
+                                                    child: TextButton(
+                                                        onPressed: () {},
+                                                        child: Text('Có',
+                                                            style: ggTextStyle(
+                                                                13,
+                                                                FontWeight.bold,
+                                                                AppColor
+                                                                    .black))),
+                                                  )
+                                                ],
+                                              );
+                                            });
+                                      },
                                       style: ButtonStyle(
                                           backgroundColor:
                                               MaterialStateProperty.all<Color>(
-                                                  AppColor.theme),
+                                                  AppColor.red),
                                           shape: MaterialStateProperty.all<
                                                   RoundedRectangleBorder>(
                                               RoundedRectangleBorder(

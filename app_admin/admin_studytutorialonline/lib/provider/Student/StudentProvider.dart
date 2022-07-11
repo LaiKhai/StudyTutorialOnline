@@ -11,7 +11,7 @@ class StudentProvider {
   static Future<Student?> subjectDetail(BuildContext context, int id) async {
     String? token = await getToken();
     final response = await http
-        .get(Uri.parse(detailSubjectObject + id.toString()), headers: {
+        .get(Uri.parse(detailStudentObject + id.toString()), headers: {
       'Accept': 'application/json',
       'Authorization': 'Bearer ${token!}'
     });

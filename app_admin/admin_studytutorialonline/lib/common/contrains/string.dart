@@ -31,3 +31,6 @@ const String getStudentwithDepartment = baseUrl + '/api/searchSinhVienwithKhoa';
 //Tao bomon
 const String createSubjectObject = baseUrl + '/api/bomon';
 const String detailSubjectObject = baseUrl + '/api/bomon/';
+
+// chi tiet sinh vien
+const String detailStudentObject = baseUrl + '/api/sinhvien/';
