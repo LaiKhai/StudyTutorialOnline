@@ -89,11 +89,11 @@ class BoMonController extends Controller
                 'message' => 'khong tim thay bo mon nao !'
             ], 404);
         }
-        $boMon->khoa;
         $lophocphan = BoMon::join('lop_hoc_phans', 'lop_hoc_phans.id_bo_mon', '=', 'bo_mons.id')
             ->join('lops', 'lop_hoc_phans.id_lop', '=', 'lops.id')
+            ->join('khoas', 'bo_mons.id_khoa', '=', 'khoas.id')
             ->where('bo_mons.id', $id)
-            ->select('lop_hoc_phans.*', 'bo_mons.*', 'lops.*')->get();
+            ->select('lop_hoc_phans.*', 'bo_mons.*', 'lops.*', 'khoas.ten_khoa')->get();
         $response = [
             'status' => true,
             'bomon' => $boMon,

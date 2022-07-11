@@ -10,7 +10,7 @@ class Subject {
   Subject.fromJson(Map<String, dynamic> json)
       : id = json['id'],
         ten_mon_hoc = json['ten_mon_hoc'],
-        loai_mon_hoc = json['loai_mon_hoc'],
-        ten_khoa = json['khoa']['ten_khoa'],
+        loai_mon_hoc = json['loai_mon_hoc'].toString(),
+        ten_khoa = json['ten_khoa'],
         trang_thai = json['trang_thai'];
 }

@@ -46,8 +46,10 @@ class _SubjectPageState extends State<SubjectPage> {
           'search': selectedValue
         });
     if (response.statusCode == 200) {
-      var subjectObject = Subject.fromJson(json.decode(response.body)['data']);
-      return subjectObject;
+      var subjectObject =
+          jsonDecode(response.body)['data'].cast<Map<String, dynamic>>();
+      return subjectObject.map<Subject>((e) => Subject.fromJson(e)).toList();
+      ;
     }
   }
 
@@ -152,7 +154,7 @@ class _SubjectPageState extends State<SubjectPage> {
                             shrinkWrap: true,
                             itemCount: snapshot.data.length,
                             itemBuilder: (context, index) {
-                              var lstsubject = snapshot.data[index];
+                              Subject lstsubject = snapshot.data[index];
                               return Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
@@ -171,14 +173,14 @@ class _SubjectPageState extends State<SubjectPage> {
                                                           builder: ((context) =>
                                                               SubjectDetail(
                                                                 subID:
-                                                                    lstsubject[
-                                                                        'id'],
+                                                                    lstsubject
+                                                                        .id,
                                                               ))));
                                                 },
                                                 title: Container(
                                                   margin: EdgeInsets.all(5),
                                                   child: Text(
-                                                      lstsubject['ten_mon_hoc'],
+                                                      lstsubject.ten_mon_hoc,
                                                       style: ggTextStyle(
                                                           20,
                                                           FontWeight.bold,
@@ -203,8 +205,8 @@ class _SubjectPageState extends State<SubjectPage> {
                                                             ),
                                                             Container(
                                                               child: Text(
-                                                                  lstsubject[
-                                                                      'ten_khoa'],
+                                                                  lstsubject
+                                                                      .ten_khoa,
                                                                   style: ggTextStyle(
                                                                       12,
                                                                       FontWeight
@@ -226,8 +228,8 @@ class _SubjectPageState extends State<SubjectPage> {
                                                                 size: 15,
                                                               ),
                                                             ),
-                                                            if (lstsubject[
-                                                                    'loai_mon_hoc'] ==
+                                                            if (lstsubject
+                                                                    .loai_mon_hoc ==
                                                                 1)
                                                               Container(
                                                                 child: Text(
@@ -240,8 +242,8 @@ class _SubjectPageState extends State<SubjectPage> {
                                                                           .black),
                                                                 ),
                                                               )
-                                                            else if (lstsubject[
-                                                                    'loai_mon_hoc'] ==
+                                                            else if (lstsubject
+                                                                    .loai_mon_hoc ==
                                                                 2)
                                                               Container(
                                                                 child: Text(
@@ -254,8 +256,8 @@ class _SubjectPageState extends State<SubjectPage> {
                                                                           .black),
                                                                 ),
                                                               )
-                                                            else if (lstsubject[
-                                                                    'loai_mon_hoc'] ==
+                                                            else if (lstsubject
+                                                                    .loai_mon_hoc ==
                                                                 3)
                                                               Container(
                                                                 child: Text(
