@@ -66,13 +66,10 @@ class BoMonController extends Controller
         }
         $boMon = BoMon::create($input);
         $boMon->khoa;
-        $lophocphan = BoMon::join('lop_hoc_phans', 'lop_hoc_phans.id_bo_mon', '=', 'bo_mons.id')
-            ->where('lop_hoc_phans.id_bo_mon', $boMon->lophocphan)->get();
         $response = [
             'status' => true,
             'message' => 'them thanh cong bo mon !',
-            'bomon' => $boMon,
-            'lophocphan' => $lophocphan
+            'bomon' => $boMon
         ];
         return response()->json($response, 200);
     }

@@ -1,9 +1,12 @@
+import 'dart:convert';
+
 import 'package:admin_studytutorialonline/widget/InputForm.dart';
 import 'package:flutter/material.dart';
 
 import '../common/contrains/color.dart';
 import '../common/contrains/dimen.dart';
 import '../common/contrains/string.dart';
+import 'package:http/http.dart' as http;
 
 class CreateSubject extends StatefulWidget {
   const CreateSubject({Key? key}) : super(key: key);
@@ -13,10 +16,32 @@ class CreateSubject extends StatefulWidget {
 }
 
 class _CreateSubjectState extends State<CreateSubject> {
-  final item = ['item 1', 'item 2', 'item 3', 'item 4'];
-  final item2 = ['Lí Thuyết', 'Thực Hành', 'Module'];
-  String? value;
-  String? value2;
+  String? selectedValue;
+  List departmentItemList = [];
+  Future getAllDepartment() async {
+    var response = await http.get(Uri.parse(fetchDepartmentObject));
+    if (response.statusCode == 200) {
+      var jsonData = json.decode(response.body)['khoa'];
+      setState(() {
+        departmentItemList = jsonData;
+      });
+    }
+    print(departmentItemList);
+  }
+
+  final List item2 = [
+    {'value': 1, 'key': 'Lý Thuyết'},
+    {'value': 2, 'key': 'Thực Hành'},
+    {'value': 3, 'key': 'Module'}
+  ];
+  int? value2;
+
+  @override
+  void initState() {
+    super.initState();
+    getAllDepartment();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -57,15 +82,27 @@ class _CreateSubjectState extends State<CreateSubject> {
                     ),
                   ),
                   Container(
-                      margin: EdgeInsets.fromLTRB(getWidthSize(context) * 0.05,
-                          5, getWidthSize(context) * 0.05, 20),
-                      child: DropdownButton<String>(
-                        isExpanded: true,
-                        value: value,
-                        items: item.map(buildItem).toList(),
-                        onChanged: (value) =>
-                            setState(() => this.value = value),
-                      )),
+                    margin: EdgeInsets.fromLTRB(getWidthSize(context) * 0.05,
+                        15, getWidthSize(context) * 0.05, 10),
+                    width: getWidthSize(context),
+                    height: getHeightSize(context) * 0.07,
+                    child: DropdownButton(
+                      value: selectedValue,
+                      isExpanded: true,
+                      hint: Text('Chọn Khoa...'),
+                      items: departmentItemList.map((department) {
+                        return DropdownMenuItem(
+                          value: department['ten_khoa'],
+                          child: Text(department['ten_khoa']),
+                        );
+                      }).toList(),
+                      onChanged: (value) {
+                        setState(() {
+                          selectedValue = value as String?;
+                        });
+                      },
+                    ),
+                  ),
                   FormInput(
                       title: 'Bộ môn',
                       hinttext: 'Nhập bộ môn...',
@@ -81,15 +118,27 @@ class _CreateSubjectState extends State<CreateSubject> {
                     ),
                   ),
                   Container(
-                      margin: EdgeInsets.fromLTRB(getWidthSize(context) * 0.05,
-                          10, getWidthSize(context) * 0.05, 20),
-                      child: DropdownButton<String>(
-                        isExpanded: true,
-                        value: value2,
-                        items: item2.map(buildItem2).toList(),
-                        onChanged: (value2) =>
-                            setState(() => this.value2 = value2),
-                      )),
+                    margin: EdgeInsets.fromLTRB(getWidthSize(context) * 0.05,
+                        15, getWidthSize(context) * 0.05, 10),
+                    width: getWidthSize(context),
+                    height: getHeightSize(context) * 0.07,
+                    child: DropdownButton(
+                      value: value2,
+                      isExpanded: true,
+                      hint: Text('Chọn loại môn học...'),
+                      items: item2.map((item) {
+                        return DropdownMenuItem(
+                          value: item['value'],
+                          child: Text(item['key'].toString()),
+                        );
+                      }).toList(),
+                      onChanged: (value) {
+                        setState(() {
+                          value2 = value as int?;
+                        });
+                      },
+                    ),
+                  ),
                   Container(
                     margin: EdgeInsets.fromLTRB(getWidthSize(context) * 0.06,
                         10, getWidthSize(context) * 0.06, 10),

@@ -27,3 +27,6 @@ const String getClassPartwithDepartment = baseUrl + '/api/lophocphanwithkhoa';
 const String getTeacherwithDepartment =
     baseUrl + '/api/searchGiangVienwithKhoa';
 const String getStudentwithDepartment = baseUrl + '/api/searchSinhVienwithKhoa';
+
+//Tao bomon
+const String createSubjectObject = baseUrl + '/api/bomon';

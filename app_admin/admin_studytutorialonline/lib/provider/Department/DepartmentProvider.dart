@@ -27,12 +27,17 @@ class DepartmentProvider {
 
   static Future<void> createDepartment(
       BuildContext context, String tenkhoa, User us) async {
+    String? token = await getToken();
     String url = createDepartmentUrl;
     Map body = {
       'ten_khoa': tenkhoa,
     };
     var response = await http.post(Uri.parse(url),
-        headers: <String, String>{'Accept': 'application/json'}, body: body);
+        headers: <String, String>{
+          'Accept': 'application/json',
+          'Authorization': 'Bearer ${token!}'
+        },
+        body: body);
     if (response.statusCode == 200) {
       final jsonResponse =
           Department.fromJson(json.decode(response.body)['khoa']);
