@@ -9,6 +9,7 @@ import 'package:user_flutter/Model/bai_Viet.dart';
 import 'package:user_flutter/Model/cTiet_LopHP.dart';
 import 'package:user_flutter/Model/class_data.dart';
 import 'package:user_flutter/Model/home_data.dart';
+import 'package:user_flutter/Model/listBaiKtra_model.dart';
 import 'package:user_flutter/Model/subject_assignment.dart';
 import 'package:user_flutter/Model/subject_stream.dart';
 import 'package:user_flutter/Model_View/Baiviet.dart';
@@ -336,20 +337,20 @@ class AssignmentBody extends StatelessWidget {
         ),
         const SizedBox(height: 16),
         Expanded(
-          child: FutureBuilder<Bai_Ktra_model>(
+          child: FutureBuilder<List_Ktra_model>(
             future: BaiKiemTraVM.Get_BKTra(id_lop),
             builder: (context, snapshot) {
               if (snapshot.hasData) {
-                Bai_Ktra_model ktra = snapshot.data!;
+                List_Ktra_model ktra = snapshot.data!;
                 return ListView.builder(
                   physics: const BouncingScrollPhysics(),
-                  itemCount: ktra.data!.baikiemtra!.length,
+                  itemCount: ktra.data!.length,
                   itemBuilder: (ctx, index) {
                     final assignment = assignments[0];
 
                     return AssignmentItem(
                       assignment: assignment,
-                      baikiemtra: ktra.data!.baikiemtra![index],
+                      baikiemtra: ktra.data![index],
                     );
                   },
                 );

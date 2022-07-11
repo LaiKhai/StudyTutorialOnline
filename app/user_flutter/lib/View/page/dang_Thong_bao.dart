@@ -11,6 +11,7 @@ import 'package:user_flutter/View/controller/tao_bai.dart';
 
 class Dang_thong_bao extends StatefulWidget {
   int id_lop;
+
   Dang_thong_bao({Key? key, required this.id_lop}) : super(key: key);
 
   @override
@@ -18,6 +19,7 @@ class Dang_thong_bao extends StatefulWidget {
 }
 
 class _Dang_thong_baoState extends State<Dang_thong_bao> {
+  bool switchListTileValue = false;
   TextEditingController textController = new TextEditingController();
   @override
   Widget build(BuildContext context) {
@@ -39,9 +41,14 @@ class _Dang_thong_baoState extends State<Dang_thong_bao> {
           actions: [
             InkWell(
               onTap: () {
-                
+                int loai = 1;
+                if (switchListTileValue == true) {
+                  loai = 2;
+                } else {
+                  loai = 1;
+                }
                 BaiViet.postBaiViet(
-                    widget.id_lop, textController.text, context);
+                    widget.id_lop, textController.text, context, loai);
               },
               child: Container(
                   margin: EdgeInsets.all(8.0),
@@ -60,7 +67,7 @@ class _Dang_thong_baoState extends State<Dang_thong_bao> {
                   child: Center(
                     child: Text('Đăng',
                         style: GoogleFonts.quicksand(
-                            color: Colors.white, fontWeight: FontWeight.w500)),
+                            color: Colors.white, fontWeight: FontWeight.w800)),
                   )),
             )
           ],
@@ -128,8 +135,9 @@ class _Dang_thong_baoState extends State<Dang_thong_bao> {
               maxLines: null,
               obscureText: false,
               decoration: InputDecoration(
+                  hintStyle: GoogleFonts.quicksand(fontSize: 20),
                   hintText: 'nội dung chính',
-                  enabledBorder: UnderlineInputBorder(
+                  enabledBorder: const UnderlineInputBorder(
                     borderSide: BorderSide(
                       color: Color(0x00000000),
                       width: 1,
@@ -139,7 +147,7 @@ class _Dang_thong_baoState extends State<Dang_thong_bao> {
                       topRight: Radius.circular(4.0),
                     ),
                   ),
-                  focusedBorder: UnderlineInputBorder(
+                  focusedBorder: const UnderlineInputBorder(
                     borderSide: BorderSide(
                       color: Color(0x00000000),
                       width: 1,
@@ -153,13 +161,29 @@ class _Dang_thong_baoState extends State<Dang_thong_bao> {
                     'assets/icons/edit.svg',
                     fit: BoxFit.none,
                     color: US_APP_COLOR_2,
-                  )),
+                  ),
+                  filled: true),
+              style: GoogleFonts.quicksand(fontSize: 14),
             ),
             Container(
               width: double.infinity,
               height: 0.5,
               color: US_APP_LINE,
             ),
+            SwitchListTile(
+              controlAffinity: ListTileControlAffinity.leading,
+              activeColor: US_APP_COLOR,
+              activeTrackColor: US_APP_COLOR_2,
+              value: switchListTileValue,
+              title: Text(
+                'Dạng câu hỏi',
+                style: GoogleFonts.quicksand(
+                    fontSize: 20, fontWeight: FontWeight.w600),
+              ),
+              onChanged: (newValue) =>
+                  setState(() => switchListTileValue = newValue),
+            ),
+
             const Tra_Loi(),
           ],
         ),
