@@ -4,6 +4,7 @@ import 'package:google_fonts/google_fonts.dart';
 
 import 'package:intl/intl.dart';
 import 'package:user_flutter/Model/BaiKtrta.dart';
+import 'package:user_flutter/Model/listBaiKtra_model.dart';
 import 'package:user_flutter/Model/subject_assignment.dart';
 import 'package:user_flutter/View/Widget/Bai_kiemtra/Tra_loi.dart';
 import 'package:user_flutter/View/Widget/Home/assignment_status.dart';
@@ -13,7 +14,7 @@ import 'package:user_flutter/View/page/Chi_tiet_bai_tap.dart';
 
 class AssignmentItem extends StatelessWidget {
   final SubjectAssignment assignment;
-  final Baikiemtra_model baikiemtra;
+  final BaiKtra_model baikiemtra;
   AssignmentItem({Key? key, required this.assignment, required this.baikiemtra})
       : super(key: key);
 
@@ -75,8 +76,8 @@ class AssignmentItem extends StatelessWidget {
                             const SizedBox(height: 4),
                             Text(
                               "Due at " +
-                                  DateFormat("MMM dd")
-                                      .format(baikiemtra.createdAt!),
+                                  DateFormat("MMM dd").format(
+                                      DateTime.parse(baikiemtra.createdAt!)),
                               style: GoogleFonts.quicksand(
                                 color: AppColor.grey,
                                 fontSize: 12,

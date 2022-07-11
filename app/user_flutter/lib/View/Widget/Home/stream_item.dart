@@ -6,8 +6,11 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 import 'package:user_flutter/Model/bai_Viet.dart';
 import 'package:user_flutter/Model/model_reing/model_bV.dart';
+import 'package:user_flutter/View/Widget/Home/show_File.dart';
 import 'package:user_flutter/View/Widget/Home/stream_type.dart';
 import 'package:user_flutter/View/common/constant/color.dart';
+import 'package:user_flutter/View/common/constant/dimen.dart';
+import 'package:user_flutter/View/common/constant/string.dart';
 import 'package:user_flutter/View/page/Chi_tiet_bai_tap.dart';
 
 class StreamItem extends StatelessWidget {
@@ -17,28 +20,20 @@ class StreamItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     bViet baiviet;
-    if (bv.idGiangVien != 0 || bv.idGiangVien != null) {
-      if (bv.hoTen == null) {
-        bv.hoTen = 'Duy lỗi';
-      }
-      if (bv.createdAt == null) {
-        bv.createdAt = DateTime.now().toString();
-      }
-      ;
-      // ignore: unnecessary_new
+    if (bv.idGiangVien != null) {
       baiviet = new bViet(
-          Ng_viet: bv.hoTen!,
-          NoiDung: bv.noidungBaiViet!,
-          avt: bv.avt!,
+          Ng_viet: bv.giangvien!.hoTen!,
+          NoiDung: bv.noiDung!,
+          avt: bv.giangvien!.avt!,
           time_viet: DateTime.parse(bv.createdAt!),
-          Type: 1);
+          Type: bv.idLoaiBaiViet!);
     } else {
       baiviet = new bViet(
-          Ng_viet: bv.hoTen!,
+          Ng_viet: bv.sinhvien!.hoTen!,
           NoiDung: bv.noiDung!,
-          avt: bv.avt!,
+          avt: bv.sinhvien!.avt!,
           time_viet: DateTime.parse(bv.createdAt!),
-          Type: 1);
+          Type: bv.idLoaiBaiViet!);
     }
     return Container(
       margin: const EdgeInsets.symmetric(vertical: 8),
@@ -117,6 +112,87 @@ class StreamItem extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.all(12),
             child: Text(baiviet.NoiDung),
+          ),
+          SizedBox(
+            height: bv.files!.length == 0
+                ? 0 * (getHeightSize(context) / 10)
+                : (getHeightSize(context) / 10) * (bv.files!.length + 0.4),
+            child: ListView.builder(
+                itemCount: bv.files!.length,
+                physics: NeverScrollableScrollPhysics(),
+                itemBuilder: ((context, index) {
+                  Files file = bv.files![index];
+                  return InkWell(
+                    onTap: () {
+                      print('object');
+                    },
+                    child: Container(
+                      width: getWidthSize(context) * 0.2 / 5,
+                      height: getHeightSize(context) / 10,
+                      margin: EdgeInsets.only(left: 10.0, bottom: 10.0),
+                      decoration: BoxDecoration(
+                        border: Border.all(
+                          color: US_APP_LINE,
+                          width: 1,
+                        ),
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      child: Row(
+                        crossAxisAlignment: CrossAxisAlignment.end,
+                        children: [
+                          InkWell(
+                            onTap: () {},
+                            child: Container(
+                              width: getWidthSize(context) / 5,
+                              height: getWidthSize(context) / 4.5,
+                              decoration: const BoxDecoration(
+                                color: AppColor.grey,
+                                borderRadius: BorderRadius.only(
+                                    topLeft: Radius.circular(10),
+                                    bottomLeft: Radius.circular(10)),
+                              ),
+                              child: Center(child: ShowFile(file: file)),
+                            ),
+                          ),
+                          Container(
+                            height: getHeightSize(context) / 10,
+                            color: US_APP_LINE,
+                            width: 1,
+                          ),
+                          Container(
+                            padding: EdgeInsets.only(left: 10),
+                            height: getWidthSize(context) / 4.5,
+                            width: getWidthSize(context) * 2.8 / 5,
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  file.tenFile!,
+                                  style: GoogleFonts.quicksand(
+                                    color: const Color(0xFF57636C),
+                                    fontSize: 15,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                  overflow: TextOverflow.ellipsis,
+                                ),
+                                Text(
+                                  file.loaiFile!,
+                                  style: GoogleFonts.quicksand(
+                                    color: const Color(0xFF57636C),
+                                    fontSize: 15,
+                                    fontWeight: FontWeight.normal,
+                                  ),
+                                  overflow: TextOverflow.ellipsis,
+                                ),
+                              ],
+                            ),
+                          )
+                        ],
+                      ),
+                    ),
+                  );
+                })),
           ),
           Container(
             height: 1,

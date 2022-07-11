@@ -6,39 +6,47 @@ import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:user_flutter/Model/BaiKtrta.dart';
 import 'package:user_flutter/Model/createBktra.dart';
+import 'package:user_flutter/Model/listBaiKtra_model.dart';
 import 'package:user_flutter/Model_View/login.dart';
 import 'package:user_flutter/View/common/constant/string.dart';
 import 'package:user_flutter/View/page/Form_tao_Bktra.dart';
 
 class BaiKiemTraVM {
-  static Future<Bai_Ktra_model> Get_BKTra(int id_lop) async {
+  static Future<List_Ktra_model> Get_BKTra(int id_lop) async {
     String url = getBaiktra + id_lop.toString();
     String token = await Login.getToken();
-    final response = await http.get(Uri.parse(url), headers: {
-      'Authorization': 'Bearer $token',
-      'Accept': 'application/json'
-    });
+    Map body = {'trang_thai': '1'};
+    print(url);
+    var response = await http.post(Uri.parse(url),
+        headers: <String, String>{
+          'Accept': 'application/json',
+          'Authorization': 'Bearer $token',
+        },
+        body: body);
+    print(response.body);
     if (response.statusCode == 200) {
-      final jsonResponse = Bai_Ktra_model.fromJson(json.decode(response.body));
+      final jsonResponse = List_Ktra_model.fromJson(json.decode(response.body));
       try {
         return jsonResponse;
       } catch (e) {
-        return new Bai_Ktra_model();
+        return new List_Ktra_model();
       }
     } else {
-      return new Bai_Ktra_model();
+      return new List_Ktra_model();
     }
   }
 
   static Future<CT_Bai_Ktra_model> Show_BKTra(int id_bkta) async {
     String url = urlBaiktra + id_bkta.toString();
     String token = await Login.getToken();
-    final response = await http.get(Uri.parse(url), headers: {
-      'Authorization': 'Bearer $token',
-      'Accept': 'application/json'
-    });
+
+    final response = await http.get(
+      Uri.parse(url),
+      headers: {'Authorization': 'Bearer $token', 'Accept': 'application/json'},
+    );
     if (response.statusCode == 200) {
-      final jsonResponse = CT_Bai_Ktra_model.fromJson(json.decode(response.body));
+      final jsonResponse =
+          CT_Bai_Ktra_model.fromJson(json.decode(response.body));
       try {
         return jsonResponse;
       } catch (e) {
@@ -49,7 +57,6 @@ class BaiKiemTraVM {
     }
   }
 
-  
   static Future<bool> Create_BKTra(String tieuDe, String noiDung, int idLop,
       int soLuong, int Diem, int idGvien, BuildContext context) async {
     String url = postBktra;

@@ -34,7 +34,7 @@ class BaiViet {
   }
 
   static Future<bool> postBaiViet(
-      int id_lopHp, String noidung, BuildContext context) async {
+      int id_lopHp, String noidung, BuildContext context,int loaiThongBao) async {
     Dio dio = new Dio();
     var lst = [];
     if (listFile.length != 0) {
@@ -52,7 +52,7 @@ class BaiViet {
       // ignore: unnecessary_new, unused_local_variable
       formData = new FormData.fromMap({
         'id_lop_hoc_phan': id_lopHp.toString(),
-        'id_loai_bai_viet': '1',
+        'id_loai_bai_viet': loaiThongBao.toString(),
         'id_sinh_vien': user.user!.id.toString(),
         'id_giang_vien': '',
         'noi_dung': noidung,

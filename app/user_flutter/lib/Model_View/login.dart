@@ -27,8 +27,10 @@ class Login {
   static Future<User_login> getUs() async {
     final SharedPreferences sharedPref = await SharedPreferences.getInstance();
     String? user_login = sharedPref.getString('user_login');
-
-    final us = User_login.fromJson(json.decode(user_login!));
+    if (user_login == null) {
+      return new User_login();
+    }
+    final us = User_login.fromJson(json.decode(user_login ));
     user = us;
     return us;
   }

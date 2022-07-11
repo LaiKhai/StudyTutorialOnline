@@ -35,14 +35,15 @@ class BaiVietController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index($id)
     {
-        $lstBaiViet = BaiViet::all();
+        $lstBaiViet = BaiViet::all()->where('id_lop_hoc_phan','=',$id);
 
         foreach ($lstBaiViet as $item) {
             $item->lophocphan;
             $item->loaibaiviet;
             $item->checkfile;
+            $item->files;
             if ($item->sinhvien != null) {
                 $lstBaiViet = BaiViet::leftJoin('lop_hoc_phans', 'bai_viets.id_lop_hoc_phan', '=', 'lop_hoc_phans.id')
                     ->leftJoin('loai_bai_viets', 'bai_viets.id_loai_bai_viet', '=', 'loai_bai_viets.id')
