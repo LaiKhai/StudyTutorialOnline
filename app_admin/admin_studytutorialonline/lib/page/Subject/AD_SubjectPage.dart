@@ -5,6 +5,7 @@ import 'package:admin_studytutorialonline/data/Department.dart';
 import 'package:admin_studytutorialonline/page/Subject/AD_CreateSubject.dart';
 import 'package:admin_studytutorialonline/page/Subject/AD_CreateSubject.dart';
 import 'package:admin_studytutorialonline/page/Subject/AD_SubjectDetail.dart';
+import 'package:admin_studytutorialonline/page/Subject/AD_SubjectSetting.dart';
 import 'package:admin_studytutorialonline/widget/Subject/AD_SubjectCard.dart';
 import 'package:flutter/material.dart';
 
@@ -156,137 +157,156 @@ class _SubjectPageState extends State<SubjectPage> {
                             itemCount: snapshot.data.length,
                             itemBuilder: (context, index) {
                               Subject lstsubject = snapshot.data[index];
-                              return Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Container(
-                                        padding:
-                                            EdgeInsets.fromLTRB(10, 0, 10, 0),
-                                        height: getHeightSize(context) * 0.1,
-                                        child: Card(
-                                            semanticContainer: true,
-                                            margin: EdgeInsets.all(6),
-                                            child: ListTile(
-                                                trailing: Container(
-                                                  width: 30,
-                                                  height: 30,
-                                                  child: IconButton(
-                                                    icon: Icon(
-                                                      Icons.settings,
-                                                      size: 20,
+                              if (lstsubject.trang_thai != "0") {
+                                return Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Container(
+                                          padding:
+                                              EdgeInsets.fromLTRB(10, 0, 10, 0),
+                                          height: getHeightSize(context) * 0.1,
+                                          child: Card(
+                                              semanticContainer: true,
+                                              margin: EdgeInsets.all(6),
+                                              child: ListTile(
+                                                  trailing: Container(
+                                                    width: 30,
+                                                    height: 30,
+                                                    child: IconButton(
+                                                      icon: Icon(
+                                                        Icons.settings,
+                                                        size: 20,
+                                                      ),
+                                                      onPressed: () {
+                                                        Navigator.push(
+                                                            context,
+                                                            MaterialPageRoute(
+                                                                builder:
+                                                                    (context) =>
+                                                                        SubjectSetting(
+                                                                          subjectId:
+                                                                              lstsubject.id,
+                                                                          us: us,
+                                                                        )));
+                                                      },
                                                     ),
-                                                    onPressed: () {},
                                                   ),
-                                                ),
-                                                onTap: () {
-                                                  Navigator.push(
-                                                      context,
-                                                      MaterialPageRoute(
-                                                          builder: ((context) =>
-                                                              SubjectDetail(
-                                                                subID:
-                                                                    lstsubject
-                                                                        .id,
-                                                              ))));
-                                                },
-                                                title: Container(
-                                                  margin: EdgeInsets.all(5),
-                                                  child: Text(
-                                                      lstsubject.ten_mon_hoc,
-                                                      style: ggTextStyle(
-                                                          20,
-                                                          FontWeight.bold,
-                                                          AppColor.theme)),
-                                                ),
-                                                subtitle: Container(
+                                                  onTap: () {
+                                                    Navigator.push(
+                                                        context,
+                                                        MaterialPageRoute(
+                                                            builder: ((context) =>
+                                                                SubjectDetail(
+                                                                  subID:
+                                                                      lstsubject
+                                                                          .id,
+                                                                  us: us,
+                                                                ))));
+                                                  },
+                                                  title: Container(
                                                     margin: EdgeInsets.all(5),
-                                                    child: Column(
-                                                      children: [
-                                                        Row(
-                                                          //mainAxisAlignment: MainAxisAlignment.start,
-                                                          children: [
-                                                            Container(
-                                                              padding: EdgeInsets
-                                                                  .only(
-                                                                      right: 5),
-                                                              child: Icon(
-                                                                Icons
-                                                                    .cast_for_education,
-                                                                size: 15,
+                                                    child: Text(
+                                                        lstsubject.ten_mon_hoc,
+                                                        style: ggTextStyle(
+                                                            20,
+                                                            FontWeight.bold,
+                                                            AppColor.theme)),
+                                                  ),
+                                                  subtitle: Container(
+                                                      margin: EdgeInsets.all(5),
+                                                      child: Column(
+                                                        children: [
+                                                          Row(
+                                                            //mainAxisAlignment: MainAxisAlignment.start,
+                                                            children: [
+                                                              Container(
+                                                                padding: EdgeInsets
+                                                                    .only(
+                                                                        right:
+                                                                            5),
+                                                                child: Icon(
+                                                                  Icons
+                                                                      .cast_for_education,
+                                                                  size: 15,
+                                                                ),
                                                               ),
-                                                            ),
-                                                            Container(
-                                                              child: Text(
-                                                                  lstsubject
-                                                                      .ten_khoa,
-                                                                  style: ggTextStyle(
-                                                                      12,
-                                                                      FontWeight
-                                                                          .bold,
-                                                                      AppColor
-                                                                          .black)),
-                                                            ),
-                                                            Container(
-                                                              padding:
-                                                                  EdgeInsets
-                                                                      .fromLTRB(
-                                                                          10,
-                                                                          0,
-                                                                          2,
-                                                                          0),
-                                                              child: Icon(
-                                                                Icons
-                                                                    .book_outlined,
-                                                                size: 15,
+                                                              Container(
+                                                                child: Text(
+                                                                    lstsubject
+                                                                        .ten_khoa,
+                                                                    style: ggTextStyle(
+                                                                        12,
+                                                                        FontWeight
+                                                                            .bold,
+                                                                        AppColor
+                                                                            .black)),
                                                               ),
-                                                            ),
-                                                            if (lstsubject
-                                                                    .loai_mon_hoc ==
-                                                                "1")
                                                               Container(
-                                                                child: Text(
-                                                                  'Lí Thuyết',
-                                                                  style: ggTextStyle(
-                                                                      12,
-                                                                      FontWeight
-                                                                          .bold,
-                                                                      AppColor
-                                                                          .black),
+                                                                padding:
+                                                                    EdgeInsets
+                                                                        .fromLTRB(
+                                                                            10,
+                                                                            0,
+                                                                            2,
+                                                                            0),
+                                                                child: Icon(
+                                                                  Icons
+                                                                      .book_outlined,
+                                                                  size: 15,
                                                                 ),
-                                                              )
-                                                            else if (lstsubject
-                                                                    .loai_mon_hoc ==
-                                                                "2")
-                                                              Container(
-                                                                child: Text(
-                                                                  'Thực Hành',
-                                                                  style: ggTextStyle(
-                                                                      12,
-                                                                      FontWeight
-                                                                          .bold,
-                                                                      AppColor
-                                                                          .black),
-                                                                ),
-                                                              )
-                                                            else if (lstsubject
-                                                                    .loai_mon_hoc ==
-                                                                "3")
-                                                              Container(
-                                                                child: Text(
-                                                                  'Thực Hành',
-                                                                  style: ggTextStyle(
-                                                                      12,
-                                                                      FontWeight
-                                                                          .bold,
-                                                                      AppColor
-                                                                          .black),
-                                                                ),
-                                                              )
-                                                          ],
-                                                        ),
-                                                      ],
-                                                    )))))
-                                  ]);
+                                                              ),
+                                                              if (lstsubject
+                                                                      .loai_mon_hoc ==
+                                                                  "1")
+                                                                Container(
+                                                                  child: Text(
+                                                                    'Lí Thuyết',
+                                                                    style: ggTextStyle(
+                                                                        12,
+                                                                        FontWeight
+                                                                            .bold,
+                                                                        AppColor
+                                                                            .black),
+                                                                  ),
+                                                                )
+                                                              else if (lstsubject
+                                                                      .loai_mon_hoc ==
+                                                                  "2")
+                                                                Container(
+                                                                  child: Text(
+                                                                    'Thực Hành',
+                                                                    style: ggTextStyle(
+                                                                        12,
+                                                                        FontWeight
+                                                                            .bold,
+                                                                        AppColor
+                                                                            .black),
+                                                                  ),
+                                                                )
+                                                              else if (lstsubject
+                                                                      .loai_mon_hoc ==
+                                                                  "3")
+                                                                Container(
+                                                                  child: Text(
+                                                                    'Thực Hành',
+                                                                    style: ggTextStyle(
+                                                                        12,
+                                                                        FontWeight
+                                                                            .bold,
+                                                                        AppColor
+                                                                            .black),
+                                                                  ),
+                                                                )
+                                                            ],
+                                                          ),
+                                                        ],
+                                                      )))))
+                                    ]);
+                              }
+                              return Center(
+                                child: Text(''),
+                              );
                             });
                       } else if (snapshot.hasError) {
                         return Center(

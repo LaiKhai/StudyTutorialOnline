@@ -13,6 +13,8 @@ class CreateClass extends StatefulWidget {
 }
 
 class _CreateClassState extends State<CreateClass> {
+  TextEditingController _tenlopController = TextEditingController();
+  TextEditingController _nienkhoaController = TextEditingController();
   final item = ['Giảng Viên A', 'Giảng Viên B', 'Giảng Viên C'];
   String? value;
   @override
@@ -65,11 +67,15 @@ class _CreateClassState extends State<CreateClass> {
                             setState(() => this.value = value),
                       )),
                   FormInput(
+                      isRead: false,
+                      txtController: _tenlopController,
                       title: 'Tên Lớp',
                       hinttext: 'Nhập tên lớp...',
                       labeltext: 'Tên lớp',
                       preIcon: Icons.home_repair_service_rounded),
                   FormInput(
+                      isRead: false,
+                      txtController: _nienkhoaController,
                       title: 'Niên khóa',
                       hinttext: "2019...",
                       labeltext: 'Niên khóa',

@@ -112,6 +112,7 @@ class SinhVienController extends Controller
         $this->FixImg($sinhVien);
         $sinhVien->traloi;
         $sinhVien->ctbaitap;
+        $sinhVien->lop;
         $response = [
             'status' => true,
             'user' => $sinhVien,

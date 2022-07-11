@@ -14,6 +14,11 @@ class CreateStudentPage extends StatefulWidget {
 }
 
 class _CreateStudentPageState extends State<CreateStudentPage> {
+  TextEditingController _emailController = TextEditingController();
+  TextEditingController _passController = TextEditingController();
+  TextEditingController _phoneController = TextEditingController();
+  TextEditingController _nameController = TextEditingController();
+  TextEditingController _masoController = TextEditingController();
   DateTime _date = DateTime.now();
   DateFormat _dateFormat = DateFormat('yyyy-MM-dd');
   Future<void> _selectedDate(BuildContext context) async {
@@ -67,26 +72,36 @@ class _CreateStudentPageState extends State<CreateStudentPage> {
                         color: AppColor.theme,
                       ),
                       FormInput(
+                          isRead: false,
+                          txtController: _emailController,
                           title: 'Email',
                           hinttext: 'Nhập email...',
                           labeltext: 'Email',
                           preIcon: Icons.email),
                       FormInput(
+                          isRead: false,
+                          txtController: _passController,
                           title: 'Password',
                           hinttext: 'Nhập password...',
                           labeltext: 'password',
                           preIcon: Icons.password_rounded),
                       FormInput(
+                          isRead: false,
+                          txtController: _nameController,
                           title: 'Họ tên',
                           hinttext: 'Nhập họ tên...',
                           labeltext: 'Họ tên',
                           preIcon: Icons.person),
                       FormInput(
+                          isRead: false,
+                          txtController: _masoController,
                           title: 'Mã số sinh viên',
                           hinttext: 'Nhập mã số...',
                           labeltext: 'Mã số',
                           preIcon: Icons.info_rounded),
                       FormInput(
+                          isRead: false,
+                          txtController: _phoneController,
                           title: 'Số điện thoại',
                           hinttext: 'Nhập số điện thoại...',
                           labeltext: 'Số điện thoại',

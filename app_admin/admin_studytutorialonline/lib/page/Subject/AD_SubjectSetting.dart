@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:admin_studytutorialonline/provider/Subject/SubjectProvider.dart';
 import 'package:flutter/material.dart';
 
 import '../../common/contrains/color.dart';
@@ -7,14 +8,41 @@ import '../../common/contrains/dimen.dart';
 import '../../common/contrains/string.dart';
 import 'package:http/http.dart' as http;
 
+import '../../data/Subject.dart';
+import '../../data/User.dart';
+
 class SubjectSetting extends StatefulWidget {
-  const SubjectSetting({Key? key}) : super(key: key);
+  final int subjectId;
+  final User us;
+  const SubjectSetting({Key? key, required this.subjectId, required this.us})
+      : super(key: key);
 
   @override
-  State<SubjectSetting> createState() => _SubjectSettingState();
+  State<SubjectSetting> createState() =>
+      _SubjectSettingState(subjectId: subjectId, us: us);
 }
 
 class _SubjectSettingState extends State<SubjectSetting> {
+  final User us;
+  TextEditingController _tenmonhocController = TextEditingController();
+  Text loaiMonHoc(String subjectObject) {
+    if (subjectObject == "1") {
+      return Text(
+        'Lý Thuyết',
+        style: ggTextStyle(13, FontWeight.bold, AppColor.grey),
+      );
+    } else if (subjectObject == "2") {
+      return Text('Thực Hành',
+          style: ggTextStyle(13, FontWeight.bold, AppColor.grey));
+    } else if (subjectObject == "3") {
+      return Text('Module',
+          style: ggTextStyle(13, FontWeight.bold, AppColor.grey));
+    }
+    return Text('Không có loại môn học nào...');
+  }
+
+  final int subjectId;
+  _SubjectSettingState({required this.subjectId, required this.us});
   int? selectedValue;
   List departmentItemList = [];
   Future getAllDepartment() async {
@@ -49,62 +77,41 @@ class _SubjectSettingState extends State<SubjectSetting> {
           iconTheme: IconThemeData(color: AppColor.theme),
           backgroundColor: AppColor.white,
         ),
-        body: SingleChildScrollView(
-            child: Container(
-                color: AppColor.white,
-                width: getWidthSize(context),
-                height: getHeightSize(context),
-                child: Column(children: [
-                  Container(
-                    padding: EdgeInsets.fromLTRB(
-                        getWidthSize(context) * 0.05, 20, 0, 0),
-                    width: getWidthSize(context),
-                    child: Text(
-                      'Tạo Bộ Môn',
-                      style: ggTextStyle(40, FontWeight.bold, AppColor.theme),
-                    ),
-                  ),
-                  Container(
-                    margin: EdgeInsets.fromLTRB(getWidthSize(context) * 0.05,
-                        20, getWidthSize(context) * 0.05, 20),
-                    height: 5,
-                    width: getWidthSize(context),
-                    color: AppColor.theme,
-                  ),
-                  Container(
-                    margin: EdgeInsets.fromLTRB(getWidthSize(context) * 0.05,
-                        10, getWidthSize(context) * 0.05, 10),
-                    width: getWidthSize(context),
-                    child: Text(
-                      'Tên Khoa',
-                      style: ggTextStyle(13, FontWeight.bold, AppColor.black),
-                    ),
-                  ),
-                  Container(
-                    margin: EdgeInsets.fromLTRB(getWidthSize(context) * 0.05,
-                        15, getWidthSize(context) * 0.05, 10),
-                    width: getWidthSize(context),
-                    height: getHeightSize(context) * 0.07,
-                    child: DropdownButton(
-                      value: selectedValue,
-                      isExpanded: true,
-                      hint: Text('Chọn Khoa...'),
-                      items: departmentItemList.map((department) {
-                        return DropdownMenuItem(
-                          value: department['id'],
-                          child: Text(department['ten_khoa']),
-                        );
-                      }).toList(),
-                      onChanged: (value) {
-                        setState(() {
-                          selectedValue = value as int?;
-                        });
-                      },
-                    ),
-                  ),
-                  Container(
-                    child: Column(
-                      children: [
+        body: FutureBuilder<Subject?>(
+          future: SubjectProvider.subjectDetail(context, subjectId),
+          builder: ((context, snapshot) {
+            if (snapshot.hasError) {
+              return Center(
+                child: Text('Có lỗi xảy ra !'),
+              );
+            } else if (snapshot.hasData) {
+              Subject subjectObject = snapshot.data!;
+              return SingleChildScrollView(
+                  child: Container(
+                      color: AppColor.white,
+                      width: getWidthSize(context),
+                      height: getHeightSize(context),
+                      child: Column(children: [
+                        Container(
+                          padding: EdgeInsets.fromLTRB(
+                              getWidthSize(context) * 0.05, 20, 0, 0),
+                          width: getWidthSize(context),
+                          child: Text(
+                            'Chỉnh sửa bộ môn',
+                            style: ggTextStyle(
+                                40, FontWeight.bold, AppColor.theme),
+                          ),
+                        ),
+                        Container(
+                          margin: EdgeInsets.fromLTRB(
+                              getWidthSize(context) * 0.05,
+                              20,
+                              getWidthSize(context) * 0.05,
+                              20),
+                          height: 5,
+                          width: getWidthSize(context),
+                          color: AppColor.theme,
+                        ),
                         Container(
                           margin: EdgeInsets.fromLTRB(
                               getWidthSize(context) * 0.05,
@@ -113,7 +120,7 @@ class _SubjectSettingState extends State<SubjectSetting> {
                               10),
                           width: getWidthSize(context),
                           child: Text(
-                            'Tên bộ môn',
+                            'Tên Khoa',
                             style: ggTextStyle(
                                 13, FontWeight.bold, AppColor.black),
                           ),
@@ -121,103 +128,176 @@ class _SubjectSettingState extends State<SubjectSetting> {
                         Container(
                           margin: EdgeInsets.fromLTRB(
                               getWidthSize(context) * 0.05,
-                              5,
+                              15,
                               getWidthSize(context) * 0.05,
-                              20),
-                          child: TextField(
-                              decoration: InputDecoration(
-                                  prefixIcon: Icon(Icons.book),
-                                  hintText: 'Nhập tên bộ môn...',
-                                  border: new OutlineInputBorder(
-                                      borderSide: new BorderSide(
-                                          color: AppColor.theme)),
-                                  labelText: 'Tên bộ môn')),
-                        )
-                      ],
-                    ),
-                  ),
-                  Container(
-                    margin: EdgeInsets.fromLTRB(getWidthSize(context) * 0.05,
-                        10, getWidthSize(context) * 0.05, 10),
-                    width: getWidthSize(context),
-                    child: Text(
-                      'Loại môn học',
-                      style: ggTextStyle(13, FontWeight.bold, AppColor.black),
-                    ),
-                  ),
-                  Container(
-                    margin: EdgeInsets.fromLTRB(getWidthSize(context) * 0.05,
-                        15, getWidthSize(context) * 0.05, 10),
-                    width: getWidthSize(context),
-                    height: getHeightSize(context) * 0.07,
-                    child: DropdownButton(
-                      value: value2,
-                      isExpanded: true,
-                      hint: Text('Chọn loại môn học...'),
-                      items: item2.map((item) {
-                        return DropdownMenuItem(
-                          value: item['value'],
-                          child: Text(item['key'].toString()),
-                        );
-                      }).toList(),
-                      onChanged: (value) {
-                        setState(() {
-                          value2 = value as int?;
-                        });
-                      },
-                    ),
-                  ),
-                  Container(
-                    margin: EdgeInsets.fromLTRB(getWidthSize(context) * 0.06,
-                        10, getWidthSize(context) * 0.06, 10),
-                    width: getWidthSize(context),
-                    child: Row(
-                      children: [
+                              10),
+                          width: getWidthSize(context),
+                          height: getHeightSize(context) * 0.07,
+                          child: DropdownButton(
+                            value: selectedValue,
+                            isExpanded: true,
+                            hint: Text(
+                              subjectObject.ten_khoa,
+                              style: ggTextStyle(
+                                  13, FontWeight.bold, AppColor.grey),
+                            ),
+                            items: departmentItemList.map((department) {
+                              return DropdownMenuItem(
+                                value: department['id'],
+                                child: Text(department['ten_khoa']),
+                              );
+                            }).toList(),
+                            onChanged: (value) {
+                              setState(() {
+                                selectedValue = value as int?;
+                              });
+                            },
+                          ),
+                        ),
                         Container(
-                            width: getWidthSize(context) * 0.4,
-                            height: getHeightSize(context) * 0.06,
-                            child: TextButton(
-                              child: Text(
-                                'Hủy',
-                                style: ggTextStyle(
-                                    20, FontWeight.bold, AppColor.black),
+                          child: Column(
+                            children: [
+                              Container(
+                                margin: EdgeInsets.fromLTRB(
+                                    getWidthSize(context) * 0.05,
+                                    10,
+                                    getWidthSize(context) * 0.05,
+                                    10),
+                                width: getWidthSize(context),
+                                child: Text(
+                                  'Tên bộ môn',
+                                  style: ggTextStyle(
+                                      13, FontWeight.bold, AppColor.black),
+                                ),
                               ),
-                              onPressed: () {},
-                              style: ButtonStyle(
-                                  shape: MaterialStateProperty.all<
-                                          RoundedRectangleBorder>(
-                                      RoundedRectangleBorder(
+                              Container(
+                                margin: EdgeInsets.fromLTRB(
+                                    getWidthSize(context) * 0.05,
+                                    5,
+                                    getWidthSize(context) * 0.05,
+                                    20),
+                                child: TextField(
+                                    controller: _tenmonhocController,
+                                    decoration: InputDecoration(
+                                      prefixIcon: Icon(Icons.book),
+                                      hintText: subjectObject.ten_mon_hoc,
+                                      border: new OutlineInputBorder(
+                                          borderSide: new BorderSide(
+                                              color: AppColor.theme)),
+                                    )),
+                              )
+                            ],
+                          ),
+                        ),
+                        Container(
+                          margin: EdgeInsets.fromLTRB(
+                              getWidthSize(context) * 0.05,
+                              10,
+                              getWidthSize(context) * 0.05,
+                              10),
+                          width: getWidthSize(context),
+                          child: Text(
+                            'Loại môn học',
+                            style: ggTextStyle(
+                                13, FontWeight.bold, AppColor.black),
+                          ),
+                        ),
+                        Container(
+                          margin: EdgeInsets.fromLTRB(
+                              getWidthSize(context) * 0.05,
+                              15,
+                              getWidthSize(context) * 0.05,
+                              10),
+                          width: getWidthSize(context),
+                          height: getHeightSize(context) * 0.07,
+                          child: DropdownButton(
+                            value: value2,
+                            isExpanded: true,
+                            hint: loaiMonHoc(subjectObject.loai_mon_hoc),
+                            items: item2.map((item) {
+                              return DropdownMenuItem(
+                                value: item['value'],
+                                child: Text(item['key'].toString()),
+                              );
+                            }).toList(),
+                            onChanged: (value) {
+                              setState(() {
+                                value2 = value as int?;
+                              });
+                            },
+                          ),
+                        ),
+                        Container(
+                          margin: EdgeInsets.fromLTRB(
+                              getWidthSize(context) * 0.06,
+                              10,
+                              getWidthSize(context) * 0.06,
+                              10),
+                          width: getWidthSize(context),
+                          child: Row(
+                            children: [
+                              Container(
+                                  width: getWidthSize(context) * 0.4,
+                                  height: getHeightSize(context) * 0.06,
+                                  child: TextButton(
+                                    child: Text(
+                                      'Quay lại',
+                                      style: ggTextStyle(
+                                          20, FontWeight.bold, AppColor.black),
+                                    ),
+                                    onPressed: () {
+                                      Navigator.pop(context);
+                                    },
+                                    style: ButtonStyle(
+                                        shape: MaterialStateProperty.all<
+                                                RoundedRectangleBorder>(
+                                            RoundedRectangleBorder(
+                                                borderRadius:
+                                                    BorderRadius.circular(10),
+                                                side: BorderSide(
+                                                    color: AppColor.black,
+                                                    width: 1)))),
+                                  )),
+                              Container(
+                                  margin: EdgeInsets.fromLTRB(
+                                      getWidthSize(context) * 0.08, 0, 0, 0),
+                                  width: getWidthSize(context) * 0.4,
+                                  height: getHeightSize(context) * 0.06,
+                                  child: ElevatedButton(
+                                    child: Text(
+                                      'Sửa',
+                                      style: ggTextStyle(
+                                          20, FontWeight.bold, AppColor.white),
+                                    ),
+                                    onPressed: () {
+                                      SubjectProvider.updateSubject(
+                                          context,
+                                          selectedValue.toString(),
+                                          _tenmonhocController.text,
+                                          value2.toString(),
+                                          us,
+                                          subjectId);
+                                    },
+                                    style: ButtonStyle(
+                                        backgroundColor:
+                                            MaterialStateProperty.all<Color>(
+                                                AppColor.theme),
+                                        shape: MaterialStateProperty.all<
+                                                RoundedRectangleBorder>(
+                                            RoundedRectangleBorder(
                                           borderRadius:
                                               BorderRadius.circular(10),
-                                          side: BorderSide(
-                                              color: AppColor.black,
-                                              width: 1)))),
-                            )),
-                        Container(
-                            margin: EdgeInsets.fromLTRB(
-                                getWidthSize(context) * 0.08, 0, 0, 0),
-                            width: getWidthSize(context) * 0.4,
-                            height: getHeightSize(context) * 0.06,
-                            child: ElevatedButton(
-                              child: Text(
-                                'Thêm',
-                                style: ggTextStyle(
-                                    20, FontWeight.bold, AppColor.white),
-                              ),
-                              onPressed: () {},
-                              style: ButtonStyle(
-                                  backgroundColor:
-                                      MaterialStateProperty.all<Color>(
-                                          AppColor.theme),
-                                  shape: MaterialStateProperty.all<
-                                          RoundedRectangleBorder>(
-                                      RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(10),
-                                  ))),
-                            ))
-                      ],
-                    ),
-                  )
-                ]))));
+                                        ))),
+                                  ))
+                            ],
+                          ),
+                        )
+                      ])));
+            }
+            return Center(
+              child: CircularProgressIndicator(),
+            );
+          }),
+        ));
   }
 }

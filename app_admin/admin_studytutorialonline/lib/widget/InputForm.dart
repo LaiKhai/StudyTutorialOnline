@@ -9,12 +9,16 @@ class FormInput extends StatelessWidget {
   final String hinttext;
   final String labeltext;
   final IconData preIcon;
+  final bool isRead;
+  final TextEditingController txtController;
   const FormInput(
       {Key? key,
       required this.title,
       required this.hinttext,
       required this.labeltext,
-      required this.preIcon})
+      required this.preIcon,
+      required this.txtController,
+      required this.isRead})
       : super(key: key);
 
   @override
@@ -35,6 +39,8 @@ class FormInput extends StatelessWidget {
             margin: EdgeInsets.fromLTRB(getWidthSize(context) * 0.05, 5,
                 getWidthSize(context) * 0.05, 20),
             child: TextField(
+                readOnly: isRead,
+                controller: txtController,
                 decoration: InputDecoration(
                     prefixIcon: Icon(preIcon),
                     hintText: hinttext,

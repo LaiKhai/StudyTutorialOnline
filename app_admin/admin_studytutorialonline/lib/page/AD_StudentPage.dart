@@ -1,6 +1,8 @@
 import 'dart:convert';
 
+import 'package:admin_studytutorialonline/data/Student.dart';
 import 'package:admin_studytutorialonline/page/AD_CreateStudent.dart';
+import 'package:admin_studytutorialonline/page/AD_StudentDetail.dart';
 import 'package:admin_studytutorialonline/widget/StudentPage/AD_StudentCard.dart';
 import 'package:flutter/material.dart';
 
@@ -43,8 +45,9 @@ class _StudentPageState extends State<StudentPage> {
           'search': selectedValue
         });
     if (response.statusCode == 200) {
-      var studentObject = json.decode(response.body)['data'];
-      return studentObject;
+      var studentObject =
+          jsonDecode(response.body)['data'].cast<Map<String, dynamic>>();
+      return studentObject.map<Student>((e) => Student.fromJson(e)).toList();
     }
   }
 
@@ -149,7 +152,7 @@ class _StudentPageState extends State<StudentPage> {
                             physics: NeverScrollableScrollPhysics(),
                             itemCount: snapshot.data.length,
                             itemBuilder: (context, index) {
-                              var lstStudent = snapshot.data[index];
+                              Student lstStudent = snapshot.data[index];
                               return Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
@@ -161,6 +164,16 @@ class _StudentPageState extends State<StudentPage> {
                                             semanticContainer: true,
                                             margin: EdgeInsets.all(6),
                                             child: ListTile(
+                                                onTap: () {
+                                                  Navigator.push(
+                                                      context,
+                                                      MaterialPageRoute(
+                                                          builder: (context) =>
+                                                              StudentDetail(
+                                                                  studentId:
+                                                                      lstStudent
+                                                                          .id)));
+                                                },
                                                 leading: Container(
                                                     height:
                                                         getHeightSize(context) *
@@ -176,8 +189,7 @@ class _StudentPageState extends State<StudentPage> {
                                                     ))),
                                                 title: Container(
                                                   margin: EdgeInsets.all(5),
-                                                  child: Text(
-                                                      lstStudent['ho_ten'],
+                                                  child: Text(lstStudent.ho_ten,
                                                       style: ggTextStyle(
                                                           20,
                                                           FontWeight.bold,
@@ -202,8 +214,8 @@ class _StudentPageState extends State<StudentPage> {
                                                             ),
                                                             Container(
                                                               child: Text(
-                                                                  lstStudent[
-                                                                      'ten_lop'],
+                                                                  lstStudent
+                                                                      .id_lop,
                                                                   style: ggTextStyle(
                                                                       12,
                                                                       FontWeight
@@ -227,8 +239,8 @@ class _StudentPageState extends State<StudentPage> {
                                                             ),
                                                             Container(
                                                               child: Text(
-                                                                lstStudent[
-                                                                    'nien_khoa'],
+                                                                lstStudent
+                                                                    .ngay_sinh,
                                                                 style: ggTextStyle(
                                                                     12,
                                                                     FontWeight
