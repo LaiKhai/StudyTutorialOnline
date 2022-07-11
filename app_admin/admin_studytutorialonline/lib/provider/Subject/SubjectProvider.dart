@@ -2,7 +2,7 @@ import 'dart:convert';
 
 import 'package:admin_studytutorialonline/common/contrains/string.dart';
 import 'package:admin_studytutorialonline/data/Subject.dart';
-import 'package:admin_studytutorialonline/page/AD_SubjectPage.dart';
+import 'package:admin_studytutorialonline/page/Subject/AD_SubjectPage.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;

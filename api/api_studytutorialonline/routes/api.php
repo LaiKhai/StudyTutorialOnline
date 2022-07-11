@@ -18,6 +18,7 @@ use App\Http\Controllers\DSSinhVienController;
 use App\Http\Controllers\DSGiangVienController;
 use App\Http\Controllers\FileController;
 use App\Http\Controllers\ThongKeController;
+use App\Http\Controllers\TraLoiController;
 use App\Models\DS_GiangVien;
 use Database\Factories\BoMonFactory;
 
@@ -88,6 +89,7 @@ Route::apiResource('loaibaiviet', LoaiBaiVietController::class);
 Route::apiResource('baiviet', BaiVietController::class);
 Route::apiResource('file', FileController::class);
 Route::apiResource('dsgv', DS_GiangVien::class);
+Route::apiResource('traloi', TraLoiController::class);
 Route::middleware(['auth:sanctum'])->group(function () {
 });
 

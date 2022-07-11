@@ -2,16 +2,17 @@ import 'dart:convert';
 
 import 'package:admin_studytutorialonline/common/contrains/string.dart';
 import 'package:admin_studytutorialonline/data/Department.dart';
-import 'package:admin_studytutorialonline/page/AD_CreateSubject.dart';
-import 'package:admin_studytutorialonline/page/AD_SubjectDetail.dart';
+import 'package:admin_studytutorialonline/page/Subject/AD_CreateSubject.dart';
+import 'package:admin_studytutorialonline/page/Subject/AD_CreateSubject.dart';
+import 'package:admin_studytutorialonline/page/Subject/AD_SubjectDetail.dart';
 import 'package:admin_studytutorialonline/widget/Subject/AD_SubjectCard.dart';
 import 'package:flutter/material.dart';
 
-import '../common/contrains/color.dart';
-import '../common/contrains/dimen.dart';
-import '../data/Subject.dart';
-import '../data/User.dart';
-import '../widget/Drawer/Navigation_Drawer.dart';
+import '../../common/contrains/color.dart';
+import '../../common/contrains/dimen.dart';
+import '../../data/Subject.dart';
+import '../../data/User.dart';
+import '../../widget/Drawer/Navigation_Drawer.dart';
 import 'package:http/http.dart' as http;
 
 class SubjectPage extends StatefulWidget {
@@ -166,6 +167,17 @@ class _SubjectPageState extends State<SubjectPage> {
                                             semanticContainer: true,
                                             margin: EdgeInsets.all(6),
                                             child: ListTile(
+                                                trailing: Container(
+                                                  width: 30,
+                                                  height: 30,
+                                                  child: IconButton(
+                                                    icon: Icon(
+                                                      Icons.settings,
+                                                      size: 20,
+                                                    ),
+                                                    onPressed: () {},
+                                                  ),
+                                                ),
                                                 onTap: () {
                                                   Navigator.push(
                                                       context,
@@ -230,7 +242,7 @@ class _SubjectPageState extends State<SubjectPage> {
                                                             ),
                                                             if (lstsubject
                                                                     .loai_mon_hoc ==
-                                                                1)
+                                                                "1")
                                                               Container(
                                                                 child: Text(
                                                                   'Lí Thuyết',
@@ -244,7 +256,7 @@ class _SubjectPageState extends State<SubjectPage> {
                                                               )
                                                             else if (lstsubject
                                                                     .loai_mon_hoc ==
-                                                                2)
+                                                                "2")
                                                               Container(
                                                                 child: Text(
                                                                   'Thực Hành',
@@ -258,7 +270,7 @@ class _SubjectPageState extends State<SubjectPage> {
                                                               )
                                                             else if (lstsubject
                                                                     .loai_mon_hoc ==
-                                                                3)
+                                                                "3")
                                                               Container(
                                                                 child: Text(
                                                                   'Thực Hành',

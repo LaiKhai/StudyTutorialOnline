@@ -2,9 +2,9 @@ import 'package:admin_studytutorialonline/data/Subject.dart';
 import 'package:admin_studytutorialonline/provider/Subject/SubjectProvider.dart';
 import 'package:flutter/material.dart';
 
-import '../common/contrains/color.dart';
-import '../common/contrains/dimen.dart';
-import '../common/contrains/string.dart';
+import '../../common/contrains/color.dart';
+import '../../common/contrains/dimen.dart';
+import '../../common/contrains/string.dart';
 
 class SubjectDetail extends StatefulWidget {
   final int subID;
@@ -160,33 +160,12 @@ class _SubjectDetailState extends State<SubjectDetail> {
                           child: Row(
                             children: [
                               Container(
-                                  width: getWidthSize(context) * 0.4,
-                                  height: getHeightSize(context) * 0.06,
-                                  child: TextButton(
-                                    child: Text(
-                                      'Xóa',
-                                      style: ggTextStyle(
-                                          20, FontWeight.bold, AppColor.black),
-                                    ),
-                                    onPressed: () {},
-                                    style: ButtonStyle(
-                                        shape: MaterialStateProperty.all<
-                                                RoundedRectangleBorder>(
-                                            RoundedRectangleBorder(
-                                                borderRadius:
-                                                    BorderRadius.circular(10),
-                                                side: BorderSide(
-                                                    color: AppColor.black,
-                                                    width: 2)))),
-                                  )),
-                              Container(
-                                  margin: EdgeInsets.fromLTRB(
-                                      getWidthSize(context) * 0.08, 0, 0, 0),
-                                  width: getWidthSize(context) * 0.4,
+                                  margin: EdgeInsets.fromLTRB(2, 10, 0, 0),
+                                  width: getWidthSize(context) * 0.86,
                                   height: getHeightSize(context) * 0.06,
                                   child: ElevatedButton(
                                     child: Text(
-                                      'Chỉnh sửa',
+                                      'Xóa',
                                       style: ggTextStyle(
                                           20, FontWeight.bold, AppColor.white),
                                     ),
@@ -194,14 +173,14 @@ class _SubjectDetailState extends State<SubjectDetail> {
                                     style: ButtonStyle(
                                         backgroundColor:
                                             MaterialStateProperty.all<Color>(
-                                                AppColor.theme),
+                                                AppColor.red),
                                         shape: MaterialStateProperty.all<
                                                 RoundedRectangleBorder>(
                                             RoundedRectangleBorder(
                                           borderRadius:
                                               BorderRadius.circular(10),
                                         ))),
-                                  )),
+                                  ))
                             ],
                           ),
                         )

@@ -7,7 +7,7 @@ import 'package:admin_studytutorialonline/page/AD_ClassPart.dart';
 import 'package:admin_studytutorialonline/page/AD_DepartmentPage.dart';
 import 'package:admin_studytutorialonline/page/AD_HomePage.dart';
 import 'package:admin_studytutorialonline/page/AD_StudentPage.dart';
-import 'package:admin_studytutorialonline/page/AD_SubjectPage.dart';
+import 'package:admin_studytutorialonline/page/Subject/AD_SubjectPage.dart';
 import 'package:admin_studytutorialonline/page/AD_TecherPage.dart';
 import 'package:admin_studytutorialonline/widget/ClassPart/AD_ClassPartList.dart';
 import 'package:admin_studytutorialonline/widget/DepartmentPage/AD_DepartmentList.dart';

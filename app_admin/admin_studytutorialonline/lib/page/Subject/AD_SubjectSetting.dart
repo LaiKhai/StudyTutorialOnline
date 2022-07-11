@@ -1,29 +1,20 @@
 import 'dart:convert';
 
-import 'package:admin_studytutorialonline/data/Subject.dart';
-import 'package:admin_studytutorialonline/provider/Subject/SubjectProvider.dart';
-import 'package:admin_studytutorialonline/widget/InputForm.dart';
 import 'package:flutter/material.dart';
 
-import '../common/contrains/color.dart';
-import '../common/contrains/dimen.dart';
-import '../common/contrains/string.dart';
+import '../../common/contrains/color.dart';
+import '../../common/contrains/dimen.dart';
+import '../../common/contrains/string.dart';
 import 'package:http/http.dart' as http;
 
-import '../data/User.dart';
-
-class CreateSubject extends StatefulWidget {
-  final User us;
-  const CreateSubject({Key? key, required this.us}) : super(key: key);
+class SubjectSetting extends StatefulWidget {
+  const SubjectSetting({Key? key}) : super(key: key);
 
   @override
-  State<CreateSubject> createState() => _CreateSubjectState(us: us);
+  State<SubjectSetting> createState() => _SubjectSettingState();
 }
 
-class _CreateSubjectState extends State<CreateSubject> {
-  final User us;
-  _CreateSubjectState({required this.us});
-  TextEditingController _tenBoMonController = TextEditingController();
+class _SubjectSettingState extends State<SubjectSetting> {
   int? selectedValue;
   List departmentItemList = [];
   Future getAllDepartment() async {
@@ -134,7 +125,6 @@ class _CreateSubjectState extends State<CreateSubject> {
                               getWidthSize(context) * 0.05,
                               20),
                           child: TextField(
-                              controller: _tenBoMonController,
                               decoration: InputDecoration(
                                   prefixIcon: Icon(Icons.book),
                                   hintText: 'Nhập tên bộ môn...',
@@ -214,58 +204,7 @@ class _CreateSubjectState extends State<CreateSubject> {
                                 style: ggTextStyle(
                                     20, FontWeight.bold, AppColor.white),
                               ),
-                              onPressed: () {
-                                if (selectedValue != null &&
-                                    value2 != null &&
-                                    _tenBoMonController.text != null) {
-                                  SubjectProvider.createSubject(
-                                      context,
-                                      selectedValue.toString(),
-                                      _tenBoMonController.text,
-                                      value2.toString(),
-                                      us);
-                                } else {
-                                  showDialog(
-                                      context: context,
-                                      builder: (BuildContext context) {
-                                        return AlertDialog(
-                                          content: Text(
-                                              'Yêu cầu điền đầy đủ thông tin !',
-                                              style: ggTextStyle(
-                                                  13,
-                                                  FontWeight.bold,
-                                                  AppColor.black)),
-                                          title: Row(
-                                            children: [
-                                              Icon(
-                                                Icons.warning_rounded,
-                                                color: AppColor.theme,
-                                              ),
-                                              SizedBox(
-                                                width: 10,
-                                              ),
-                                              Text('Thông báo',
-                                                  style: ggTextStyle(
-                                                      13,
-                                                      FontWeight.bold,
-                                                      AppColor.black))
-                                            ],
-                                          ),
-                                          actions: [
-                                            TextButton(
-                                                onPressed: () {
-                                                  Navigator.pop(context);
-                                                },
-                                                child: Text('Quay lại',
-                                                    style: ggTextStyle(
-                                                        13,
-                                                        FontWeight.bold,
-                                                        AppColor.black)))
-                                          ],
-                                        );
-                                      });
-                                }
-                              },
+                              onPressed: () {},
                               style: ButtonStyle(
                                   backgroundColor:
                                       MaterialStateProperty.all<Color>(
