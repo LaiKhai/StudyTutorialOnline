@@ -215,7 +215,7 @@ class _StudentPageState extends State<StudentPage> {
                                                             Container(
                                                               child: Text(
                                                                   lstStudent
-                                                                      .id_lop,
+                                                                      .ten_lop,
                                                                   style: ggTextStyle(
                                                                       12,
                                                                       FontWeight
@@ -240,7 +240,7 @@ class _StudentPageState extends State<StudentPage> {
                                                             Container(
                                                               child: Text(
                                                                 lstStudent
-                                                                    .ngay_sinh,
+                                                                    .nien_khoa,
                                                                 style: ggTextStyle(
                                                                     12,
                                                                     FontWeight

@@ -108,11 +108,11 @@ class SinhVienController extends Controller
      */
     public function show($id)
     {
-        $sinhVien = SinhVien::find($id);
+        $sinhVien = SinhVien::join('lops', 'sinh_viens.id_lop', '=', 'lops.id')
+            ->where('sinh_viens.id', $id)
+            ->select('sinh_viens.*', 'lops.*')
+            ->first();
         $this->FixImg($sinhVien);
-        $sinhVien->traloi;
-        $sinhVien->ctbaitap;
-        $sinhVien->lop;
         $response = [
             'status' => true,
             'user' => $sinhVien,
