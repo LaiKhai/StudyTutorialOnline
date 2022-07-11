@@ -82,7 +82,12 @@ class BoMonController extends Controller
      */
     public function show($id)
     {
-        $boMon = BoMon::find($id);
+
+
+        $boMon = BoMon::join('khoas', 'bo_mons.id_khoa', '=', 'khoas.id')
+            ->where('bo_mons.id', $id)
+            ->select('bo_mons.*', 'khoas.ten_khoa')
+            ->first();
         if (empty($boMon)) {
             return response()->json([
                 'status' => false,
