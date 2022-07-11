@@ -1,5 +1,7 @@
 import 'dart:convert';
 
+import 'package:admin_studytutorialonline/data/Subject.dart';
+import 'package:admin_studytutorialonline/provider/Subject/SubjectProvider.dart';
 import 'package:admin_studytutorialonline/widget/InputForm.dart';
 import 'package:flutter/material.dart';
 
@@ -8,15 +10,21 @@ import '../common/contrains/dimen.dart';
 import '../common/contrains/string.dart';
 import 'package:http/http.dart' as http;
 
+import '../data/User.dart';
+
 class CreateSubject extends StatefulWidget {
-  const CreateSubject({Key? key}) : super(key: key);
+  final User us;
+  const CreateSubject({Key? key, required this.us}) : super(key: key);
 
   @override
-  State<CreateSubject> createState() => _CreateSubjectState();
+  State<CreateSubject> createState() => _CreateSubjectState(us: us);
 }
 
 class _CreateSubjectState extends State<CreateSubject> {
-  String? selectedValue;
+  final User us;
+  _CreateSubjectState({required this.us});
+  TextEditingController _tenBoMonController = TextEditingController();
+  int? selectedValue;
   List departmentItemList = [];
   Future getAllDepartment() async {
     var response = await http.get(Uri.parse(fetchDepartmentObject));
@@ -92,22 +100,52 @@ class _CreateSubjectState extends State<CreateSubject> {
                       hint: Text('Chọn Khoa...'),
                       items: departmentItemList.map((department) {
                         return DropdownMenuItem(
-                          value: department['ten_khoa'],
+                          value: department['id'],
                           child: Text(department['ten_khoa']),
                         );
                       }).toList(),
                       onChanged: (value) {
                         setState(() {
-                          selectedValue = value as String?;
+                          selectedValue = value as int?;
                         });
                       },
                     ),
                   ),
-                  FormInput(
-                      title: 'Bộ môn',
-                      hinttext: 'Nhập bộ môn...',
-                      labeltext: 'Bộ môn',
-                      preIcon: Icons.book),
+                  Container(
+                    child: Column(
+                      children: [
+                        Container(
+                          margin: EdgeInsets.fromLTRB(
+                              getWidthSize(context) * 0.05,
+                              10,
+                              getWidthSize(context) * 0.05,
+                              10),
+                          width: getWidthSize(context),
+                          child: Text(
+                            'Tên bộ môn',
+                            style: ggTextStyle(
+                                13, FontWeight.bold, AppColor.black),
+                          ),
+                        ),
+                        Container(
+                          margin: EdgeInsets.fromLTRB(
+                              getWidthSize(context) * 0.05,
+                              5,
+                              getWidthSize(context) * 0.05,
+                              20),
+                          child: TextField(
+                              controller: _tenBoMonController,
+                              decoration: InputDecoration(
+                                  prefixIcon: Icon(Icons.book),
+                                  hintText: 'Nhập tên bộ môn...',
+                                  border: new OutlineInputBorder(
+                                      borderSide: new BorderSide(
+                                          color: AppColor.theme)),
+                                  labelText: 'Tên bộ môn')),
+                        )
+                      ],
+                    ),
+                  ),
                   Container(
                     margin: EdgeInsets.fromLTRB(getWidthSize(context) * 0.05,
                         10, getWidthSize(context) * 0.05, 10),
@@ -176,7 +214,58 @@ class _CreateSubjectState extends State<CreateSubject> {
                                 style: ggTextStyle(
                                     20, FontWeight.bold, AppColor.white),
                               ),
-                              onPressed: () {},
+                              onPressed: () {
+                                if (selectedValue != null &&
+                                    value2 != null &&
+                                    _tenBoMonController.text != null) {
+                                  SubjectProvider.createSubject(
+                                      context,
+                                      selectedValue.toString(),
+                                      _tenBoMonController.text,
+                                      value2.toString(),
+                                      us);
+                                } else {
+                                  showDialog(
+                                      context: context,
+                                      builder: (BuildContext context) {
+                                        return AlertDialog(
+                                          content: Text(
+                                              'Yêu cầu điền đầy đủ thông tin !',
+                                              style: ggTextStyle(
+                                                  13,
+                                                  FontWeight.bold,
+                                                  AppColor.black)),
+                                          title: Row(
+                                            children: [
+                                              Icon(
+                                                Icons.warning_rounded,
+                                                color: AppColor.theme,
+                                              ),
+                                              SizedBox(
+                                                width: 10,
+                                              ),
+                                              Text('Thông báo',
+                                                  style: ggTextStyle(
+                                                      13,
+                                                      FontWeight.bold,
+                                                      AppColor.black))
+                                            ],
+                                          ),
+                                          actions: [
+                                            TextButton(
+                                                onPressed: () {
+                                                  Navigator.pop(context);
+                                                },
+                                                child: Text('Quay lại',
+                                                    style: ggTextStyle(
+                                                        13,
+                                                        FontWeight.bold,
+                                                        AppColor.black)))
+                                          ],
+                                        );
+                                      });
+                                }
+                              },
                               style: ButtonStyle(
                                   backgroundColor:
                                       MaterialStateProperty.all<Color>(
@@ -193,17 +282,3 @@ class _CreateSubjectState extends State<CreateSubject> {
                 ]))));
   }
 }
-
-DropdownMenuItem<String> buildItem(String item) => DropdownMenuItem(
-    value: item,
-    child: Text(
-      item,
-      style: ggTextStyle(15, FontWeight.w600, AppColor.black),
-    ));
-
-DropdownMenuItem<String> buildItem2(String item2) => DropdownMenuItem(
-    value: item2,
-    child: Text(
-      item2,
-      style: ggTextStyle(15, FontWeight.w600, AppColor.black),
-    ));

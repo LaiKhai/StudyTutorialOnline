@@ -1,7 +1,7 @@
 class Subject {
   final int id;
   final String ten_mon_hoc;
-  final int loai_mon_hoc;
+  final String loai_mon_hoc;
   final String ten_khoa;
   final int trang_thai;
   Subject(this.id, this.ten_mon_hoc, this.loai_mon_hoc, this.ten_khoa,
@@ -11,6 +11,6 @@ class Subject {
       : id = json['id'],
         ten_mon_hoc = json['ten_mon_hoc'],
         loai_mon_hoc = json['loai_mon_hoc'],
-        ten_khoa = json['ten_khoa'],
+        ten_khoa = json['khoa']['ten_khoa'],
         trang_thai = json['trang_thai'];
 }
