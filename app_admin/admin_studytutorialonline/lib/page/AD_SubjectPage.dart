@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:admin_studytutorialonline/common/contrains/string.dart';
 import 'package:admin_studytutorialonline/data/Department.dart';
 import 'package:admin_studytutorialonline/page/AD_CreateSubject.dart';
+import 'package:admin_studytutorialonline/page/AD_SubjectDetail.dart';
 import 'package:admin_studytutorialonline/widget/Subject/AD_SubjectCard.dart';
 import 'package:flutter/material.dart';
 
@@ -45,7 +46,7 @@ class _SubjectPageState extends State<SubjectPage> {
           'search': selectedValue
         });
     if (response.statusCode == 200) {
-      var subjectObject = json.decode(response.body)['data'];
+      var subjectObject = Subject.fromJson(json.decode(response.body)['data']);
       return subjectObject;
     }
   }
@@ -163,6 +164,17 @@ class _SubjectPageState extends State<SubjectPage> {
                                             semanticContainer: true,
                                             margin: EdgeInsets.all(6),
                                             child: ListTile(
+                                                onTap: () {
+                                                  Navigator.push(
+                                                      context,
+                                                      MaterialPageRoute(
+                                                          builder: ((context) =>
+                                                              SubjectDetail(
+                                                                subID:
+                                                                    lstsubject[
+                                                                        'id'],
+                                                              ))));
+                                                },
                                                 title: Container(
                                                   margin: EdgeInsets.all(5),
                                                   child: Text(
@@ -267,7 +279,9 @@ class _SubjectPageState extends State<SubjectPage> {
                           child: Text('Có lỗi xảy ra'),
                         );
                       }
-                      return CircularProgressIndicator();
+                      return Center(
+                        child: CircularProgressIndicator(),
+                      );
                     })
                 : Center(
                     child: Text(
@@ -281,8 +295,10 @@ class _SubjectPageState extends State<SubjectPage> {
             child: new Icon(Icons.add),
             backgroundColor: AppColor.theme,
             onPressed: () {
-              Navigator.push(context,
-                  MaterialPageRoute(builder: (context) => CreateSubject()));
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => CreateSubject(us: us)));
             }));
   }
 }
