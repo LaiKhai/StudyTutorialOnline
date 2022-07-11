@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\BoMon;
+use App\Models\Khoa;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
@@ -65,13 +66,10 @@ class BoMonController extends Controller
         }
         $boMon = BoMon::create($input);
         $boMon->khoa;
-        $lophocphan = BoMon::join('lop_hoc_phans', 'lop_hoc_phans.id_bo_mon', '=', 'bo_mons.id')
-            ->where('lop_hoc_phans.id_bo_mon', $boMon->lophocphan)->get();
         $response = [
             'status' => true,
             'message' => 'them thanh cong bo mon !',
-            'bomon' => $boMon,
-            'lophocphan' => $lophocphan
+            'bomon' => $boMon
         ];
         return response()->json($response, 200);
     }
@@ -178,6 +176,20 @@ class BoMonController extends Controller
             'message' => 'xoa thanh cong !',
             'bomon' => $lstBoMon,
             'lophoaphan' => $lophocphan
+        ];
+        return response()->json($response, 200);
+    }
+
+    public function search(Request $request)
+    {
+        $searchInput = $request->input('search');
+        $bomon = BoMon::join('khoas', 'bo_mons.id_khoa', '=', 'khoas.id')
+            ->where('ten_khoa', 'like', '%' . $searchInput . '%')
+            ->orWhere('ten_mon_hoc', 'like', '%' . $searchInput . '%')
+            ->select('bo_mons.*', 'khoas.ten_khoa')
+            ->get();
+        $response = [
+            'data' => $bomon
         ];
         return response()->json($response, 200);
     }

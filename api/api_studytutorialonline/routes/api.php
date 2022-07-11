@@ -17,7 +17,9 @@ use App\Http\Controllers\LoaiBaiVietController;
 use App\Http\Controllers\DSSinhVienController;
 use App\Http\Controllers\DSGiangVienController;
 use App\Http\Controllers\FileController;
+use App\Http\Controllers\ThongKeController;
 use App\Models\DS_GiangVien;
+use Database\Factories\BoMonFactory;
 
 /*
 |--------------------------------------------------------------------------
@@ -52,10 +54,22 @@ Route::get('/lophocphanwithgiangvien/{id}', [GiangVienController::class, 'lophoc
 //lấy danh sách bài viết theo lớp học phần
 Route::get('/listbaiviet/{id}', [LopHocPhanController::class, 'ListBaiViet']);
 //lấy danh sách bài viết theo lớp học phần
-Route::get('/listbaikiemtra/{id}', [LopHocPhanController::class, 'ListBaiKiemTra']);
+Route::post('/listbaikiemtra/{id}', [LopHocPhanController::class, 'ListBaiKiemTra']);
 
 //Dowload file
 Route::get('/dowloadfile/{id}', [FileController::class, 'dowloadFile']);
+
+//Thống kê sinh viên, giảng viên, lớp
+Route::get('/thongke', [ThongKeController::class, 'ThongKe']);
+
+//lấy lớp học phần theo khoa
+Route::post('/lophocphanwithkhoa', [LopHocPhanController::class, 'lstLopHocPhanwithKhoa']);
+//lấy lớp theo khoa
+Route::post('/lopwithkhoa', [LopController::class, 'lopwithKhoa']);
+//lấy bộ môn theo khoa
+Route::get('/bomonwithkhoa/{id}', [BoMonController::class, 'bomonwithkhoa']);
+//lấy sinh viên theo khoa
+Route::post('/lstSinhVienwithKhoa', [SinhVienController::class, 'lstSinhVienwithKhoa']);
 
 Route::apiResource('chucvu', ChucVuController::class);
 Route::apiResource('sinhvien', SinhVienController::class);
@@ -88,3 +102,15 @@ Route::post('taoCauTraLoi', [BaiKiemTraController::class, 'taoCauTraloi']);
 
 //Bắt đầu kiểm tra
 Route::post('batdauKT', [BaiKiemTraController::class, 'batdauKT']);
+
+//Tìm kiếm
+//Tìm kiếm Khoa
+Route::post('/searchKhoa', [KhoaController::class, 'search']);
+Route::post('/searchLop', [LopController::class, 'search']);
+Route::post('/searchLopHocPhan', [LopHocPhanController::class, 'search']);
+Route::post('/searchBoMon', [BoMonController::class, 'search']);
+Route::post('/searchSinhVien', [SinhVienController::class, 'search']);
+Route::post('/searchGiangVien', [GiangVienController::class, 'search']);
+Route::post('/searchLopwithKhoa', [LopController::class, 'searchLopwithKhoa']);
+Route::post('/searchGiangVienwithKhoa', [GiangVienController::class, 'searchGiangVienwithKhoa']);
+Route::post('/searchSinhVienwithKhoa', [SinhVienController::class, 'searchSinhVienwithKhoa']);

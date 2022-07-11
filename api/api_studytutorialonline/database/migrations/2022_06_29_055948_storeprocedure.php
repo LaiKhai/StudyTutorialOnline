@@ -35,10 +35,10 @@ class Storeprocedure extends Migration
         where id_bai_kiem_tra = id_bai_ktra and ds_sinh_viens.id_lop_hoc_phan=id_lop_hphan; 
         END';
 
-        $taoBaiKT = 'CREATE PROCEDURE `tao_Bai_Ktra`(IN `tg_ket_thuc` DATETIME, IN `id_lop_hoc_phan` INT,IN `sl_cau_hoi` INT, IN `id_giang_vien` INT, IN `tieu_de` VARCHAR(255), IN `noi_dung` VARCHAR(255)) 
+        $taoBaiKT = 'CREATE PROCEDURE `tao_Bai_Ktra`(IN `tg_ket_thuc` DATETIME, IN `id_lop_hoc_phan` INT,IN `sl_cau_hoi` INT, IN `id_giang_vien` INT, IN `tieu_de` VARCHAR(255), IN `noi_dung` VARCHAR(255), IN `trang_thai` INT) 
         BEGIN
         INSERT INTO `bai_kiem_tras`(`id_lop_hoc_phan`, `id_giang_vien`, `sl_cau_hoi`, `tieu_de`, `noi_dung`, `tg_bat_dau`, `trang_thai`, `created_at`)
-        VALUES (id_lop_hoc_phan,id_giang_vien,sl_cau_hoi,tieu_de,noi_dung,NOW(),1,NOW()); 
+        VALUES (id_lop_hoc_phan,id_giang_vien,sl_cau_hoi,tieu_de,noi_dung,NOW(),trang_thai,NOW()); 
         END';
 
         $taoCauHoi = "CREATE PROCEDURE `tao_cau_hoi`(IN `id_bai_kiem_tra` INT, IN `de_bai` VARCHAR(255), IN `dap_an_1` VARCHAR(255), IN `dap_an_2` VARCHAR(255), IN `dap_an_3` VARCHAR(255), IN `dap_an_4` VARCHAR(255), IN `dap_an_dung` VARCHAR(255),IN `diem` INT) 

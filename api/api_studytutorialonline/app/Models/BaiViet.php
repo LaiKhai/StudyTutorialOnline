@@ -45,6 +45,6 @@ class BaiViet extends Model
     }
     public function files()
     {
-        return $this->belongsToMany('App\Models\File','check_files','id_bai_viet','id_file');
+        return $this->belongsToMany('App\Models\File', 'check_files', 'id_bai_viet', 'id_file');
     }
 }

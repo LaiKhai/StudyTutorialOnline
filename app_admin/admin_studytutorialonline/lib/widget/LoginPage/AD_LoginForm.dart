@@ -96,7 +96,7 @@ class _LoginFormState extends State<LoginForm> {
                         },
                       ),
                       prefixIcon: Icon(
-                        Icons.email,
+                        Icons.lock,
                         color: Color(0xFFC56464),
                         //size: 25,
                       ),

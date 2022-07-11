@@ -206,13 +206,14 @@ class BaiKiemTraController extends Controller
     public function taoBaiKT(Request $request)
     {
 
-        DB::select('call tao_Bai_Ktra(?,?,?,?,?,?)', [
+        DB::select('call tao_Bai_Ktra(?,?,?,?,?,?,?)', [
             $request->input('tg_ket_thuc'),
             $request->input('id_lop_hoc_phan'),
             $request->input('sl_cau_hoi'),
             $request->input('id_giang_vien'),
             $request->input('tieu_de'),
             $request->input('noi_dung'),
+            $request->input('trang_thai'),
         ]);
         $idbaiKiemTra = BaiKiemTra::max('id');
         $baiKiemTra = BaiKiemTra::find($idbaiKiemTra);

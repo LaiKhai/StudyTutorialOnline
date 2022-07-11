@@ -230,4 +230,63 @@ class SinhVienController extends Controller
         ];
         return response()->json($response, 200);
     }
+
+    public function lstSinhVienwithKhoa(Request $request)
+    {
+        $khoa = $request->input('khoa');
+        $sinhVien = DS_SinhVien::join('lop_hoc_phans', 'ds_sinh_viens.id_lop_hoc_phan', '=', 'lop_hoc_phans.id')
+            ->join('sinh_viens', 'ds_sinh_viens.id_sinh_vien', '=', 'sinh_viens.id')
+            ->join('bo_mons', 'lop_hoc_phans.id_bo_mon', '=', 'bo_mons.id')
+            ->join('khoas', 'bo_mons.id_khoa', '=', 'khoas.id')
+            ->where('khoas.ten_khoa', 'like', '%' . $khoa . '%')
+            ->select('sinh_viens.*', 'khoas.ten_khoa')->get();
+        if (empty($sinhVien)) {
+            return response()->json([
+                'status' => false,
+                'message' => 'khong tim thay lop nao !'
+            ], 404);
+        }
+        $response = [
+            'sinhvien' => $sinhVien
+        ];
+        return response()->json($response, 200);
+    }
+
+    public function search(Request $request)
+    {
+        $searchInput = $request->input('search');
+        $sinhVien = SinhVien::join('lops', 'sinh_viens.id_lop', '=', 'lops.id')
+            ->where('ten_lop', 'like', '%' . $searchInput . '%')
+            ->orWhere('email', 'like', '%' . $searchInput . '%')
+            ->orWhere('ma_so', 'like', '%' . $searchInput . '%')
+            ->orWhere('ho_ten', 'like', '%' . $searchInput . '%')
+            ->get();
+        foreach ($sinhVien as $item) {
+            $item->lop;
+            $item->ctbaitap;
+            $item->traloi;
+            $item->binhluan;
+            $item->baiviet;
+            $this->FixImg($item);
+        }
+        $response = [
+            'data' => $sinhVien
+        ];
+        return response()->json($response, 200);
+    }
+
+    public function searchSinhVienwithKhoa(Request $request)
+    {
+        $searchInput = $request->input('searchSV');
+        $lopHocPhan = LopHocPhan::join('bo_mons', 'lop_hoc_phans.id_bo_mon', '=', 'bo_mons.id')
+            ->join('khoas', 'bo_mons.id_khoa', '=', 'khoas.id')
+            ->join('lops', 'lop_hoc_phans.id_lop', '=', 'lops.id')
+            ->join('sinh_viens', 'sinh_viens.id_lop', '=', 'lops.id')
+            ->where('khoas.ten_khoa', 'like', '%' . $searchInput . '%')
+            ->select('sinh_viens.*', 'lops.*')->distinct()->get();
+        $response = [
+            'data' => $lopHocPhan
+        ];
+        return response()->json($response, 200);
+    }
 }

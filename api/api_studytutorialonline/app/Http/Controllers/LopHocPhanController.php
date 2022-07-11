@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\BaiViet;
 use App\Models\DS_GiangVien;
+use App\Models\BaiKiemTra;
 use App\Models\DS_SinhVien;
 use App\Models\LopHocPhan;
 use App\Models\CheckFile;
@@ -232,30 +233,17 @@ class LopHocPhanController extends Controller
                 'data' => []
             ], 404);
         }
-        foreach ($lopHocPhan->baiviet as $item) {
-            if ($item->sinhvien != null) {
-                $baiViet = BaiViet::leftJoin('lop_hoc_phans', 'bai_viets.id_lop_hoc_phan', '=', 'lop_hoc_phans.id')
-                    ->leftJoin('loai_bai_viets', 'bai_viets.id_loai_bai_viet', '=', 'loai_bai_viets.id')
-                    ->leftJoin('sinh_viens', 'bai_viets.id_sinh_vien', '=', 'sinh_viens.id')
-                    ->leftJoin('check_files', 'check_files.id_bai_viet', '=', 'bai_viets.id')
-                    ->leftJoin('files', 'check_files.id_file', '=', 'files.id')
-                    ->where('lop_hoc_phans.id', $id)
-                    ->whereNotNull('files.noi_dung')
-                    ->orderBy('bai_viets.created_at', 'DESC')
-                    ->select('lop_hoc_phans.id as idLopHocPhan', 'bai_viets.*', 'bai_viets.id as idBaiViet', 'bai_viets.noi_dung as noidungBaiViet', 'loai_bai_viets.*', 'loai_bai_viets.id as idLoaiBaiViet', 'sinh_viens.*', 'sinh_viens.id as idSinhVien', 'files.*', 'files.id as idFile')
-                    ->get();
-            } else if ($item->giangvien != null) {
-                $baiViet = BaiViet::leftJoin('lop_hoc_phans', 'bai_viets.id_lop_hoc_phan', '=', 'lop_hoc_phans.id')
-                    ->leftJoin('loai_bai_viets', 'bai_viets.id_loai_bai_viet', '=', 'loai_bai_viets.id')
-                    ->leftJoin('giang_viens', 'bai_viets.id_giang_vien', '=', 'giang_viens.id')
-                    ->leftJoin('check_files', 'check_files.id_bai_viet', '=', 'bai_viets.id')
-                    ->leftJoin('files', 'check_files.id_file', '=', 'files.id')
-                    ->where('lop_hoc_phans.id', $id)
-                    ->orderBy('bai_viets.created_at', 'DESC')
-                    ->select('lop_hoc_phans.*', 'lop_hoc_phans.id as idLopHocPhan', 'bai_viets.*', 'bai_viets.id as idBaiViet', 'bai_viets.noi_dung as noidungBaiViet', 'loai_bai_viets.*', 'loai_bai_viets.id as idLoaiBaiViet', 'giang_viens.*', 'giang_viens.id as idGiangVien', 'files.*', 'files.id as idFile')
-                    ->get();
-            }
+        $baiViet = BaiViet::where('id_lop_hoc_phan', '=', $id)->orderBy('created_at', 'DESC')->get();
+        foreach ($baiViet as $item) {
+            $item->lophocphan;
+            $item->loaibaiviet;
+            $item->checkfile;
+            $item->files;
+            $item->sinhvien;
+            $item->giangvien;
         }
+
+
 
         $response = [
             'status' => true,
@@ -270,8 +258,9 @@ class LopHocPhanController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function ListBaiKiemTra($id)
+    public function ListBaiKiemTra(Request $request, $id)
     {
+        $trangthai = $request->input('trang_thai');
         $lopHocPhan = LopHocPhan::find($id);
         if (empty($lopHocPhan)) {
             return response()->json([
@@ -279,9 +268,62 @@ class LopHocPhanController extends Controller
                 'data' => []
             ], 404);
         }
-        $lopHocPhan->baikiemtra;
+        $baikiemtra = BaiKiemTra::join('lop_hoc_phans', 'bai_kiem_tras.id_lop_hoc_phan', '=', 'lop_hoc_phans.id')
+            ->where([['bai_kiem_tras.id_lop_hoc_phan', $id], ['bai_kiem_tras.trang_thai', $trangthai]])
+            ->select('lop_hoc_phans.*', 'bai_kiem_tras.*')
+            ->get();
+
         $response = [
             'status' => true,
+            'data' => $baikiemtra
+        ];
+        return response()->json($response, 200);
+    }
+
+    /**
+     * Display the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function lstLopHocPhanwithKhoa(Request $request)
+    {
+        $khoa = $request->input('khoa');
+        $lopHocPhan = LopHocPhan::join('bo_mons', 'lop_hoc_phans.id_bo_mon', '=', 'bo_mons.id')
+            ->join('khoas', 'bo_mons.id_khoa', '=', 'khoas.id')
+            ->join('lops', 'lop_hoc_phans.id_lop', '=', 'lops.id')
+            ->where('khoas.ten_khoa', 'like', '%' . $khoa . '%')
+            ->select('lop_hoc_phans.*', 'bo_mons.*', 'khoas.ten_khoa', 'lops.ten_lop')->get();
+        if (empty($lopHocPhan)) {
+            return response()->json([
+                'status' => false,
+                'message' => 'khong tim thay lop hoc phan nao !'
+            ], 404);
+        }
+        $response = [
+            'lophocphan' => $lopHocPhan
+        ];
+        return response()->json($response, 200);
+    }
+
+    public function search(Request $request)
+    {
+        $searchInput = $request->input('search');
+        $lopHocPhan = LopHocPhan::join('bo_mons', 'lop_hoc_phans.id_bo_mon', '=', 'bo_mons.id')
+            ->join('lops', 'lop_hoc_phans.id_lop', '=', 'lops.id')
+            ->where('ten_mon_hoc', 'like', '%' . $searchInput . '%')
+            ->orWhere('ten_lop', 'like', '%' . $searchInput . '%')
+            ->select('lop_hoc_phans.*')
+            ->get();
+        foreach ($lopHocPhan as $item) {
+            $item->lop;
+            $item->baikiemtra;
+            $item->bomon;
+            $item->baitap;
+            $item->baiviet;
+            $this->FixImg($item);
+        }
+        $response = [
             'data' => $lopHocPhan
         ];
         return response()->json($response, 200);
