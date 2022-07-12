@@ -280,11 +280,10 @@ class _StudentPageState extends State<StudentPage> {
                                                         ],
                                                       )))))
                                     ]);
-                              } else {
-                                return Center(
-                                  child: Text(''),
-                                );
                               }
+                              return Center(
+                                child: Text(''),
+                              );
                             });
                       } else if (snapshot.hasError) {
                         return Center(
