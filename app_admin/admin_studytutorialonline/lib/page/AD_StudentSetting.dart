@@ -40,8 +40,8 @@ class _StudentSettingState extends State<StudentSetting> {
                   child: Text('Có lỗi xảy ra !'),
                 );
               } else if (snapshot.hasData) {
-                Student student = snapshot.data!;
-                if (student.trang_thai != "0") {
+                SinhVien student = snapshot.data!.sinhvien![0];
+                if (student.trangThai != "0") {
                   return SingleChildScrollView(
                     child: Container(
                         color: AppColor.white,
@@ -51,7 +51,7 @@ class _StudentSettingState extends State<StudentSetting> {
                                 getWidthSize(context) * 0.05, 20, 0, 0),
                             width: getWidthSize(context),
                             child: Text(
-                              student.ho_ten,
+                              student.hoTen!,
                               style: ggTextStyle(
                                   30, FontWeight.bold, AppColor.theme),
                             ),
@@ -70,36 +70,36 @@ class _StudentSettingState extends State<StudentSetting> {
                               isRead: false,
                               txtController: _emailController,
                               title: 'Email',
-                              hinttext: student.email,
-                              labeltext: student.email,
+                              hinttext: student.email!,
+                              labeltext: student.email!,
                               preIcon: Icons.email),
                           FormInput(
                               isRead: false,
                               txtController: _passController,
                               title: 'Password',
-                              hinttext: student.password,
-                              labeltext: student.password,
+                              hinttext: student.password!,
+                              labeltext: student.password!,
                               preIcon: Icons.password_rounded),
                           FormInput(
                               isRead: false,
                               txtController: _nameController,
                               title: 'Họ tên',
-                              hinttext: student.ho_ten,
-                              labeltext: student.ho_ten,
+                              hinttext: student.hoTen!,
+                              labeltext: student.hoTen!,
                               preIcon: Icons.person),
                           FormInput(
                               isRead: false,
                               txtController: _masoController,
                               title: 'Mã số sinh viên',
-                              hinttext: student.ma_so,
-                              labeltext: student.ma_so,
+                              hinttext: student.maSo!,
+                              labeltext: student.maSo!,
                               preIcon: Icons.info_rounded),
                           FormInput(
                               isRead: false,
                               txtController: _phoneController,
                               title: 'Số điện thoại',
-                              hinttext: student.sdt,
-                              labeltext: student.sdt,
+                              hinttext: student.sdt!,
+                              labeltext: student.sdt!,
                               preIcon: Icons.phone),
                           Container(
                             margin: EdgeInsets.fromLTRB(
@@ -125,11 +125,11 @@ class _StudentSettingState extends State<StudentSetting> {
                                 onTap: () {},
                                 decoration: InputDecoration(
                                     prefixIcon: Icon(Icons.date_range),
-                                    hintText: student.ngay_sinh,
+                                    hintText: student.ngaySinh!,
                                     border: new OutlineInputBorder(
                                         borderSide: new BorderSide(
                                             color: AppColor.theme)),
-                                    labelText: student.ngay_sinh)),
+                                    labelText: student.ngaySinh!)),
                           ),
                           Container(
                             margin: EdgeInsets.fromLTRB(

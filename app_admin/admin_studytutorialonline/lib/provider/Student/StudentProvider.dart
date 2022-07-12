@@ -19,7 +19,7 @@ class StudentProvider {
       'Authorization': 'Bearer ${token!}'
     });
     if (response.statusCode == 200) {
-      var jsonData = Student.fromJson(json.decode(response.body)['user']);
+      var jsonData = Student.fromJson(json.decode(response.body));
       return jsonData;
     } else {
       showDialog(
@@ -56,7 +56,7 @@ class StudentProvider {
     return null;
   }
 
-  static Future<void> deleteStudent(
+  static Future<Student?> deleteStudent(
       BuildContext context,
       String id_lop,
       String email,
@@ -85,7 +85,7 @@ class StudentProvider {
         },
         body: body);
     if (response.statusCode == 200) {
-      final jsonResponse = Student.fromJson(json.decode(response.body)['user']);
+      final jsonResponse = Student.fromJson(json.decode(response.body));
       showDialog(
           context: context,
           builder: (BuildContext context) {

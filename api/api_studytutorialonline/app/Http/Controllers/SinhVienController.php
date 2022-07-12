@@ -149,14 +149,12 @@ class SinhVienController extends Controller
             $sinhVien['avt'] = $request->file('avt')->store('assets/images/avatar/' . $sinhVien['id'], 'public');
         }
         $sinhVien->save();
-        $sinhVien->lop;
-        $sinhVien->ctbaitap;
-        $sinhVien->traloi;
-        $sinhVien->binhluan;
-        $sinhVien->baiviet;
+        $sinhVien = SinhVien::join('lops', 'sinh_viens.id_lop', '=', 'lops.id')
+            ->where('sinh_viens.id', $id)
+            ->select('sinh_viens.*', 'lops.ten_lop', 'lops.nien_khoa')
+            ->get();
         $response = [
             'status' => true,
-            'message' => 'chinh sua thanh cong !',
             'user' => $sinhVien
         ];
         return response()->json($response, 200);

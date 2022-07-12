@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:admin_studytutorialonline/data/Student.dart';
+import 'package:admin_studytutorialonline/data/Students.dart';
 import 'package:admin_studytutorialonline/page/AD_CreateStudent.dart';
 import 'package:admin_studytutorialonline/page/AD_StudentDetail.dart';
 import 'package:admin_studytutorialonline/page/AD_StudentSetting.dart';
@@ -35,7 +36,7 @@ class _StudentPageState extends State<StudentPage> {
     }
   }
 
-  Future getAllStudentwithDepartment() async {
+  Future<Students> getAllStudentwithDepartment() async {
     String? token = await getToken();
     var response = await http.post(Uri.parse(getStudentwithDepartment),
         headers: <String, String>{
@@ -45,10 +46,12 @@ class _StudentPageState extends State<StudentPage> {
         body: {
           'search': selectedValue
         });
+    print(response.body);
     if (response.statusCode == 200) {
-      var studentObject =
-          jsonDecode(response.body)['data'].cast<Map<String, dynamic>>();
-      return studentObject.map<Student>((e) => Student.fromJson(e)).toList();
+      var studentObject = Students.fromJson(json.decode(response.body));
+      return studentObject;
+    } else {
+      return new Students();
     }
   }
 
@@ -134,11 +137,11 @@ class _StudentPageState extends State<StudentPage> {
               ),
             ),
             selectedValue != null
-                ? FutureBuilder(
+                ? FutureBuilder<Students>(
                     future: getAllStudentwithDepartment(),
-                    builder: (context, AsyncSnapshot snapshot) {
+                    builder: (context, snapshot) {
                       if (snapshot.hasData) {
-                        if (snapshot.data?.length == 0) {
+                        if (snapshot.data!.only_student!.length == 0) {
                           return Center(
                             child: Text(
                               'Hiện tại chưa có sinh viên nào',
@@ -151,10 +154,11 @@ class _StudentPageState extends State<StudentPage> {
                             scrollDirection: Axis.vertical,
                             shrinkWrap: true,
                             physics: NeverScrollableScrollPhysics(),
-                            itemCount: snapshot.data.length,
+                            itemCount: snapshot.data!.only_student!.length,
                             itemBuilder: (context, index) {
-                              Student lstStudent = snapshot.data[index];
-                              if (lstStudent.trang_thai != 0) {
+                              Only_Student student =
+                                  snapshot.data!.only_student![index];
+                              if (student.trangThai != 0) {
                                 return Column(
                                     crossAxisAlignment:
                                         CrossAxisAlignment.start,
@@ -175,8 +179,8 @@ class _StudentPageState extends State<StudentPage> {
                                                               builder: (context) =>
                                                                   StudentSetting(
                                                                       studentId:
-                                                                          lstStudent
-                                                                              .id)));
+                                                                          student
+                                                                              .id!)));
                                                     },
                                                     icon: Icon(
                                                       Icons.settings,
@@ -190,8 +194,8 @@ class _StudentPageState extends State<StudentPage> {
                                                             builder: (context) =>
                                                                 StudentDetail(
                                                                   studentId:
-                                                                      lstStudent
-                                                                          .id,
+                                                                      student
+                                                                          .id!,
                                                                   us: us,
                                                                 )));
                                                   },
@@ -210,8 +214,7 @@ class _StudentPageState extends State<StudentPage> {
                                                       ))),
                                                   title: Container(
                                                     margin: EdgeInsets.all(5),
-                                                    child: Text(
-                                                        lstStudent.ho_ten,
+                                                    child: Text(student.hoTen!,
                                                         style: ggTextStyle(
                                                             20,
                                                             FontWeight.bold,
@@ -237,8 +240,8 @@ class _StudentPageState extends State<StudentPage> {
                                                               ),
                                                               Container(
                                                                 child: Text(
-                                                                    lstStudent
-                                                                        .ten_lop!,
+                                                                    student
+                                                                        .tenLop!,
                                                                     style: ggTextStyle(
                                                                         12,
                                                                         FontWeight
@@ -262,8 +265,8 @@ class _StudentPageState extends State<StudentPage> {
                                                               ),
                                                               Container(
                                                                 child: Text(
-                                                                  lstStudent
-                                                                      .nien_khoa!,
+                                                                  student
+                                                                      .nienKhoa!,
                                                                   style: ggTextStyle(
                                                                       12,
                                                                       FontWeight
