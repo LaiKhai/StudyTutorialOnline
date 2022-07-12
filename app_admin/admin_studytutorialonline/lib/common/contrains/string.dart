@@ -32,7 +32,10 @@ const String getStudentwithDepartment = baseUrl + '/api/searchSinhVienwithKhoa';
 const String createSubjectObject = baseUrl + '/api/bomon';
 const String detailSubjectObject = baseUrl + '/api/bomon/';
 
-// chi tiet sinh vien
+// sinh vien
 const String detailStudentObject = baseUrl + '/api/sinhvien/';
 const String deleteStudentObject = baseUrl + '/api/sinhvien/';
 const String createStudentObject = baseUrl + '/api/sinhvien';
+
+//
+const String detailTeacherObject = baseUrl + '/api/giangvien/';

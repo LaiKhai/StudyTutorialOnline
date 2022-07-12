@@ -37,7 +37,7 @@ class _StudentDetailState extends State<StudentDetail> {
           backgroundColor: AppColor.white,
         ),
         body: FutureBuilder<Student?>(
-            future: StudentProvider.subjectDetail(context, studentId),
+            future: StudentProvider.studentDetail(context, studentId),
             builder: (context, snapshot) {
               if (snapshot.hasError) {
                 return Center(

@@ -11,7 +11,7 @@ import 'package:http/http.dart' as http;
 import '../../data/User.dart';
 
 class StudentProvider {
-  static Future<Student?> subjectDetail(BuildContext context, int id) async {
+  static Future<Student?> studentDetail(BuildContext context, int id) async {
     String? token = await getToken();
     final response = await http
         .get(Uri.parse(detailStudentObject + id.toString()), headers: {

@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:admin_studytutorialonline/data/Teachers.dart';
 import 'package:admin_studytutorialonline/page/Teacher/AD_CreateTeacher.dart';
 import 'package:admin_studytutorialonline/widget/TeacherPage/AD_TeacherCard.dart';
 import 'package:flutter/material.dart';
@@ -33,7 +34,7 @@ class _TeacherPageState extends State<TeacherPage> {
     }
   }
 
-  Future getAllTeacherwithDepartment() async {
+  Future<Teachers> getAllTeacherwithDepartment() async {
     String? token = await getToken();
     var response = await http.post(Uri.parse(getTeacherwithDepartment),
         headers: <String, String>{
@@ -44,8 +45,10 @@ class _TeacherPageState extends State<TeacherPage> {
           'search': selectedValue
         });
     if (response.statusCode == 200) {
-      var teacherObject = json.decode(response.body)['data'];
+      var teacherObject = Teachers.fromJson(json.decode(response.body));
       return teacherObject;
+    } else {
+      return new Teachers();
     }
   }
 
@@ -133,11 +136,11 @@ class _TeacherPageState extends State<TeacherPage> {
               ),
             ),
             selectedValue != null
-                ? FutureBuilder(
+                ? FutureBuilder<Teachers>(
                     future: getAllTeacherwithDepartment(),
-                    builder: (context, AsyncSnapshot snapshot) {
+                    builder: (context, snapshot) {
                       if (snapshot.hasData) {
-                        if (snapshot.data?.length == 0) {
+                        if (snapshot.data!.lstgiangvien!.length == 0) {
                           return Center(
                             child: Text(
                               'Hiện tại chưa có giảng viên nào',
@@ -150,9 +153,10 @@ class _TeacherPageState extends State<TeacherPage> {
                             physics: NeverScrollableScrollPhysics(),
                             scrollDirection: Axis.vertical,
                             shrinkWrap: true,
-                            itemCount: snapshot.data.length,
+                            itemCount: snapshot.data!.lstgiangvien!.length,
                             itemBuilder: (context, index) {
-                              var lstTeacher = snapshot.data[index];
+                              var lstTeacher =
+                                  snapshot.data!.lstgiangvien![index];
                               return Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
@@ -180,8 +184,7 @@ class _TeacherPageState extends State<TeacherPage> {
                                                 title: Container(
                                                   margin: EdgeInsets.fromLTRB(
                                                       5, 5, 5, 0),
-                                                  child: Text(
-                                                      lstTeacher['ho_ten'],
+                                                  child: Text(lstTeacher.hoTen!,
                                                       style: ggTextStyle(
                                                           20,
                                                           FontWeight.bold,
@@ -221,8 +224,8 @@ class _TeacherPageState extends State<TeacherPage> {
                                                                             2,
                                                                             0),
                                                                 child: Text(
-                                                                  lstTeacher[
-                                                                      'ma_so'],
+                                                                  lstTeacher
+                                                                      .maSo!,
                                                                   style: ggTextStyle(
                                                                       12,
                                                                       FontWeight
@@ -254,8 +257,8 @@ class _TeacherPageState extends State<TeacherPage> {
                                                               ),
                                                               Container(
                                                                 child: Text(
-                                                                    lstTeacher[
-                                                                        'ten_khoa'],
+                                                                    lstTeacher
+                                                                        .tenKhoa!,
                                                                     style: ggTextStyle(
                                                                         12,
                                                                         FontWeight
