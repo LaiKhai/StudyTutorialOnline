@@ -1,3 +1,10 @@
+import 'package:admin_studytutorialonline/data/Teacher.dart';
+import 'package:admin_studytutorialonline/data/Teachers.dart';
+import 'package:admin_studytutorialonline/data/model_duy/Khoas_model.dart';
+import 'package:admin_studytutorialonline/data/model_duy/giangVien_model.dart';
+import 'package:admin_studytutorialonline/provider/ClassPart/ClassPartProvider.dart';
+import 'package:admin_studytutorialonline/provider/Department/DepartmentProvider.dart';
+import 'package:admin_studytutorialonline/provider/Teacher/TeacherProvider.dart';
 import 'package:admin_studytutorialonline/widget/InputForm.dart';
 import 'package:flutter/material.dart';
 
@@ -14,9 +21,35 @@ class CreateClass extends StatefulWidget {
 
 class _CreateClassState extends State<CreateClass> {
   TextEditingController _tenlopController = TextEditingController();
-  TextEditingController _nienkhoaController = TextEditingController();
-  final item = ['Giảng Viên A', 'Giảng Viên B', 'Giảng Viên C'];
-  String? value;
+  TextEditingController _nienkhoaController =
+      TextEditingController(text: DateTime.now().year.toString());
+  List<Khoa> khoas = [];
+  Khoa? value1;
+  List<GiangVien_model> teachers = [];
+  GiangVien_model? value2;
+  getBanDau() async {
+    Khoas lst = await DepartmentProvider.getAllKhoa();
+
+    if (TeacherProvider.getAllGiangVien() != null) {
+      final teachers_model = await TeacherProvider.getAllGiangVien();
+
+      setState(() {
+        teachers = teachers_model!.user!;
+      });
+    }
+
+    setState(() {
+      khoas = lst.khoa!;
+    });
+  }
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    getBanDau();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -52,19 +85,19 @@ class _CreateClassState extends State<CreateClass> {
                         20, getWidthSize(context) * 0.05, 10),
                     width: getWidthSize(context),
                     child: Text(
-                      'Tên Khoa',
+                      'Giảng Viên Chủ Nhiệm',
                       style: ggTextStyle(13, FontWeight.bold, AppColor.black),
                     ),
                   ),
                   Container(
                       margin: EdgeInsets.fromLTRB(getWidthSize(context) * 0.05,
                           5, getWidthSize(context) * 0.05, 10),
-                      child: DropdownButton<String>(
+                      child: DropdownButton<GiangVien_model>(
                         isExpanded: true,
-                        value: value,
-                        items: item.map(buildItem).toList(),
+                        value: value2,
+                        items: teachers.map(buildItem2).toList(),
                         onChanged: (value) =>
-                            setState(() => this.value = value),
+                            setState(() => this.value2 = value),
                       )),
                   FormInput(
                       isRead: false,
@@ -117,7 +150,99 @@ class _CreateClassState extends State<CreateClass> {
                                 style: ggTextStyle(
                                     20, FontWeight.bold, AppColor.white),
                               ),
-                              onPressed: () {},
+                              onPressed: () {
+                                if (value2 == null) {
+                                  showDialog(
+                                      context: context,
+                                      builder: (BuildContext context) {
+                                        return AlertDialog(
+                                          content: Text(
+                                              'Hãy chọn giảng viên chủ nhiệm trước!',
+                                              style: ggTextStyle(
+                                                  13,
+                                                  FontWeight.bold,
+                                                  AppColor.black)),
+                                          title: Row(
+                                            children: [
+                                              Icon(
+                                                Icons.warning_rounded,
+                                                color: AppColor.theme,
+                                              ),
+                                              SizedBox(
+                                                width: 10,
+                                              ),
+                                              Text('Thông báo',
+                                                  style: ggTextStyle(
+                                                      13,
+                                                      FontWeight.bold,
+                                                      AppColor.black))
+                                            ],
+                                          ),
+                                          actions: [
+                                            TextButton(
+                                                onPressed: () {
+                                                  Navigator.pop(context);
+                                                },
+                                                child: Text('OK',
+                                                    style: ggTextStyle(
+                                                        13,
+                                                        FontWeight.bold,
+                                                        AppColor.black)))
+                                          ],
+                                        );
+                                      });
+                                }
+                                if (_tenlopController.text == '' ||
+                                    _nienkhoaController.text == '') {
+                                  showDialog(
+                                      context: context,
+                                      builder: (BuildContext context) {
+                                        return AlertDialog(
+                                          content: Text(
+                                              'Hãy điền đầy đủ thông tin!',
+                                              style: ggTextStyle(
+                                                  13,
+                                                  FontWeight.bold,
+                                                  AppColor.black)),
+                                          title: Row(
+                                            children: [
+                                              Icon(
+                                                Icons.warning_rounded,
+                                                color: AppColor.theme,
+                                              ),
+                                              SizedBox(
+                                                width: 10,
+                                              ),
+                                              Text('Thông báo',
+                                                  style: ggTextStyle(
+                                                      13,
+                                                      FontWeight.bold,
+                                                      AppColor.black))
+                                            ],
+                                          ),
+                                          actions: [
+                                            TextButton(
+                                                onPressed: () {
+                                                  Navigator.pop(context);
+                                                },
+                                                child: Text('OK',
+                                                    style: ggTextStyle(
+                                                        13,
+                                                        FontWeight.bold,
+                                                        AppColor.black)))
+                                          ],
+                                        );
+                                      });
+                                }
+                                if (value2 != null &&
+                                    _tenlopController.text != '' &&
+                                    _nienkhoaController.text != '') {
+                                  ClassPartProvider.postClass(context,
+                                      value2!.id.toString(),
+                                      _tenlopController.text,
+                                      _nienkhoaController.text);
+                                }
+                              },
                               style: ButtonStyle(
                                   backgroundColor:
                                       MaterialStateProperty.all<Color>(
@@ -135,9 +260,16 @@ class _CreateClassState extends State<CreateClass> {
   }
 }
 
-DropdownMenuItem<String> buildItem(String item) => DropdownMenuItem(
+DropdownMenuItem<Khoa> buildItem(Khoa item) => DropdownMenuItem(
     value: item,
     child: Text(
-      item,
+      item.tenKhoa!,
       style: ggTextStyle(15, FontWeight.w600, AppColor.black),
     ));
+DropdownMenuItem<GiangVien_model> buildItem2(GiangVien_model item) =>
+    DropdownMenuItem(
+        value: item,
+        child: Text(
+          item.hoTen!,
+          style: ggTextStyle(15, FontWeight.w600, AppColor.black),
+        ));

@@ -74,7 +74,7 @@ class GiangVien {
     sdt = json['sdt'];
     hoTen = json['ho_ten'];
     ngaySinh = json['ngay_sinh'];
-    trangThai = json['trang_thai'];
+    trangThai = json['trang_thai'].toString();
     createdAt = json['created_at'];
     updatedAt = json['updated_at'];
     khoa = json['khoa'] != null ? new Khoa.fromJson(json['khoa']) : null;

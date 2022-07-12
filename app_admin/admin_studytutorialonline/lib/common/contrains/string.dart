@@ -41,3 +41,4 @@ const String createStudentObject = baseUrl + '/api/sinhvien';
 const String detailTeacherObject = baseUrl + '/api/giangvien/';
 const String updateTeacherObject = baseUrl + '/api/giangvien/';
 const String deleteTeacherObject = baseUrl + '/api/giangvien/';
+const String getallGiangVien = baseUrl + '/api/giangvien';
