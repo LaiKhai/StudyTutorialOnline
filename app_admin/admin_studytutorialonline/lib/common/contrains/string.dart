@@ -51,3 +51,5 @@ const String getAllposts = baseUrl + '/api/baiviet';
 
 //lop hoc phan
 const String createClassPartObject = baseUrl + '/api/lophocphan';
+const String classPartDetail = baseUrl + '/api/lophocphan/';
+const String updateClassPartObject = baseUrl + '/api/lophocphan/';

@@ -1,6 +1,8 @@
 import 'dart:convert';
 
+import 'package:admin_studytutorialonline/data/ClassParts.dart';
 import 'package:admin_studytutorialonline/data/Department.dart';
+import 'package:admin_studytutorialonline/page/AD_ClassPartDetail.dart';
 import 'package:admin_studytutorialonline/page/AD_CreateClassPart.dart';
 import 'package:admin_studytutorialonline/provider/ClassPart/ClassPartProvider.dart';
 import 'package:admin_studytutorialonline/widget/ClassPart/AD_ClassPartList.dart';
@@ -36,7 +38,7 @@ class _ClassPartPageState extends State<ClassPartPage> {
     }
   }
 
-  Future getAllClassPartwithDepartment() async {
+  Future<ClassParts> getAllClassPartwithDepartment() async {
     String? token = await getToken();
     var response = await http.post(Uri.parse(getClassPartwithDepartment),
         headers: <String, String>{
@@ -47,8 +49,10 @@ class _ClassPartPageState extends State<ClassPartPage> {
           'khoa': selectedValue
         });
     if (response.statusCode == 200) {
-      var classpartObject = json.decode(response.body)['lophocphan'];
-      return classpartObject;
+      var teacherObject = ClassParts.fromJson(json.decode(response.body));
+      return teacherObject;
+    } else {
+      return new ClassParts();
     }
   }
 
@@ -137,11 +141,11 @@ class _ClassPartPageState extends State<ClassPartPage> {
               ),
             ),
             selectedValue != null
-                ? FutureBuilder(
+                ? FutureBuilder<ClassParts>(
                     future: getAllClassPartwithDepartment(),
-                    builder: (context, AsyncSnapshot snapshot) {
+                    builder: (context, snapshot) {
                       if (snapshot.hasData) {
-                        if (snapshot.data?.length == 0) {
+                        if (snapshot.data!.lophocphan!.length == 0) {
                           return Center(
                             child: Text(
                               'Hiện tại chưa có bộ môn nào',
@@ -154,94 +158,119 @@ class _ClassPartPageState extends State<ClassPartPage> {
                             physics: NeverScrollableScrollPhysics(),
                             scrollDirection: Axis.vertical,
                             shrinkWrap: true,
-                            itemCount: snapshot.data.length,
+                            itemCount: snapshot.data!.lophocphan!.length,
                             itemBuilder: (context, index) {
-                              var lstClassPart = snapshot.data[index];
-                              return Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Container(
-                                        padding:
-                                            EdgeInsets.fromLTRB(10, 0, 10, 0),
-                                        height: getHeightSize(context) * 0.15,
-                                        child: Card(
-                                            semanticContainer: true,
-                                            margin: EdgeInsets.all(6),
-                                            child: ListTile(
-                                                title: Container(
-                                                  margin: EdgeInsets.all(5),
-                                                  child: Text(
-                                                      lstClassPart[
-                                                          'ten_mon_hoc'],
-                                                      style: ggTextStyle(
-                                                          20,
-                                                          FontWeight.bold,
-                                                          AppColor.theme)),
-                                                ),
-                                                subtitle: Container(
-                                                  margin: EdgeInsets.all(5),
-                                                  child: Column(
-                                                    //mainAxisAlignment: MainAxisAlignment.start,
-                                                    children: [
-                                                      Container(
-                                                        padding:
-                                                            EdgeInsets.fromLTRB(
-                                                                0, 2, 5, 5),
-                                                        child: Row(
-                                                          children: [
+                              var lstClassPart =
+                                  snapshot.data!.lophocphan![index];
+                              if (lstClassPart.trangThai != 0) {
+                                return Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Container(
+                                          padding:
+                                              EdgeInsets.fromLTRB(10, 0, 10, 0),
+                                          height: getHeightSize(context) * 0.15,
+                                          child: Card(
+                                              semanticContainer: true,
+                                              margin: EdgeInsets.all(6),
+                                              child: ListTile(
+                                                  onTap: () {
+                                                    Navigator.push(
+                                                        context,
+                                                        MaterialPageRoute(
+                                                            builder: (context) =>
+                                                                ClassPartDetail(
+                                                                    us: us,
+                                                                    classpartID:
+                                                                        lstClassPart
+                                                                            .id!)));
+                                                  },
+                                                  title: Container(
+                                                    margin: EdgeInsets.all(5),
+                                                    child: Text(
+                                                        lstClassPart.tenMonHoc
+                                                            .toString(),
+                                                        style: ggTextStyle(
+                                                            20,
+                                                            FontWeight.bold,
+                                                            AppColor.theme)),
+                                                  ),
+                                                  subtitle: Container(
+                                                    margin: EdgeInsets.all(5),
+                                                    child: Column(
+                                                      //mainAxisAlignment: MainAxisAlignment.start,
+                                                      children: [
+                                                        Container(
+                                                          padding: EdgeInsets
+                                                              .fromLTRB(
+                                                                  0, 2, 5, 5),
+                                                          child: Row(
+                                                            children: [
+                                                              Container(
+                                                                child: Icon(
+                                                                  Icons
+                                                                      .cast_for_education,
+                                                                  size: 20,
+                                                                ),
+                                                              ),
+                                                              Container(
+                                                                padding: EdgeInsets
+                                                                    .only(
+                                                                        left:
+                                                                            5),
+                                                                child: Text(
+                                                                  selectedValue
+                                                                      .toString(),
+                                                                  style: ggTextStyle(
+                                                                      12,
+                                                                      FontWeight
+                                                                          .bold,
+                                                                      AppColor
+                                                                          .black),
+                                                                ),
+                                                              )
+                                                            ],
+                                                          ),
+                                                        ),
+                                                        Container(
+                                                          child: Row(children: [
                                                             Container(
+                                                              padding:
+                                                                  EdgeInsets
+                                                                      .fromLTRB(
+                                                                          0,
+                                                                          2,
+                                                                          5,
+                                                                          5),
                                                               child: Icon(
                                                                 Icons
-                                                                    .cast_for_education,
+                                                                    .book_sharp,
                                                                 size: 20,
                                                               ),
                                                             ),
                                                             Container(
-                                                              padding: EdgeInsets
-                                                                  .only(
-                                                                      left: 5),
                                                               child: Text(
-                                                                lstClassPart[
-                                                                    'ten_khoa'],
-                                                                style: ggTextStyle(
-                                                                    12,
-                                                                    FontWeight
-                                                                        .bold,
-                                                                    AppColor
-                                                                        .black),
-                                                              ),
+                                                                  lstClassPart
+                                                                      .tenLop
+                                                                      .toString(),
+                                                                  style: ggTextStyle(
+                                                                      12,
+                                                                      FontWeight
+                                                                          .bold,
+                                                                      AppColor
+                                                                          .black)),
                                                             )
-                                                          ],
+                                                          ]),
                                                         ),
-                                                      ),
-                                                      Container(
-                                                        child: Row(children: [
-                                                          Container(
-                                                            padding: EdgeInsets
-                                                                .fromLTRB(
-                                                                    0, 2, 5, 5),
-                                                            child: Icon(
-                                                              Icons.book_sharp,
-                                                              size: 20,
-                                                            ),
-                                                          ),
-                                                          Container(
-                                                            child: Text(
-                                                                lstClassPart[
-                                                                    'ten_lop'],
-                                                                style: ggTextStyle(
-                                                                    12,
-                                                                    FontWeight
-                                                                        .bold,
-                                                                    AppColor
-                                                                        .black)),
-                                                          )
-                                                        ]),
-                                                      ),
-                                                    ],
-                                                  ),
-                                                ))))
-                                  ]);
+                                                      ],
+                                                    ),
+                                                  ))))
+                                    ]);
+                              }
+                              return Center(
+                                child: Text(''),
+                              );
                             });
                       } else if (snapshot.hasError) {
                         return Center(
