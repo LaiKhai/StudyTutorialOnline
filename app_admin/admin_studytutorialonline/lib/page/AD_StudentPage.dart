@@ -178,9 +178,11 @@ class _StudentPageState extends State<StudentPage> {
                                                           MaterialPageRoute(
                                                               builder: (context) =>
                                                                   StudentSetting(
-                                                                      studentId:
-                                                                          student
-                                                                              .id!)));
+                                                                    studentId:
+                                                                        student
+                                                                            .id!,
+                                                                    us: us,
+                                                                  )));
                                                     },
                                                     icon: Icon(
                                                       Icons.settings,

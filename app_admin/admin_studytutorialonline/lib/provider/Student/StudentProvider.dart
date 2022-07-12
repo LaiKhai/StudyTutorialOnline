@@ -193,7 +193,7 @@ class StudentProvider {
     }
   }
 
-  static Future<void> updateStudent(
+  static Future<Student?> updateStudent(
       BuildContext context,
       String id_lop,
       String email,
@@ -222,7 +222,7 @@ class StudentProvider {
         },
         body: body);
     if (response.statusCode == 200) {
-      final jsonResponse = Student.fromJson(json.decode(response.body)['user']);
+      final jsonResponse = Student.fromJson(json.decode(response.body));
       showDialog(
           context: context,
           builder: (BuildContext context) {

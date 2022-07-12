@@ -1,29 +1,51 @@
 import 'package:admin_studytutorialonline/provider/Student/StudentProvider.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 import '../common/contrains/color.dart';
 import '../common/contrains/dimen.dart';
 import '../common/contrains/string.dart';
 import '../data/Student.dart';
+import '../data/User.dart';
 import '../widget/InputForm.dart';
 
 class StudentSetting extends StatefulWidget {
   final int studentId;
-  const StudentSetting({Key? key, required this.studentId}) : super(key: key);
+  final User us;
+  const StudentSetting({Key? key, required this.studentId, required this.us})
+      : super(key: key);
 
   @override
   State<StudentSetting> createState() =>
-      _StudentSettingState(studentId: studentId);
+      _StudentSettingState(studentId: studentId, us: us);
 }
 
 class _StudentSettingState extends State<StudentSetting> {
+  final User us;
   final int studentId;
-  _StudentSettingState({required this.studentId});
+  _StudentSettingState({required this.studentId, required this.us});
   TextEditingController _emailController = TextEditingController();
   TextEditingController _passController = TextEditingController();
   TextEditingController _phoneController = TextEditingController();
   TextEditingController _nameController = TextEditingController();
   TextEditingController _masoController = TextEditingController();
+  TextEditingController _ngaysinhController = TextEditingController();
+
+  DateTime _date = DateTime.now();
+  DateFormat _dateFormat = DateFormat('yyyy-MM-dd');
+  Future<void> _selectedDate(BuildContext context) async {
+    DateTime? _datetime = await showDatePicker(
+        context: context,
+        initialDate: _date,
+        firstDate: DateTime(1947),
+        lastDate: DateTime(2030));
+    if (_datetime != null && _datetime != _date) {
+      setState(() {
+        _date = _datetime;
+      });
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -121,15 +143,20 @@ class _StudentSettingState extends State<StudentSetting> {
                                 getWidthSize(context) * 0.05,
                                 20),
                             child: TextFormField(
+                                controller: _ngaysinhController,
                                 readOnly: true,
-                                onTap: () {},
+                                onTap: () {
+                                  setState(() {
+                                    _selectedDate(context);
+                                  });
+                                },
                                 decoration: InputDecoration(
                                     prefixIcon: Icon(Icons.date_range),
-                                    hintText: student.ngaySinh!,
+                                    hintText: _dateFormat.format(_date),
                                     border: new OutlineInputBorder(
                                         borderSide: new BorderSide(
                                             color: AppColor.theme)),
-                                    labelText: student.ngaySinh!)),
+                                    labelText: student.ngaySinh)),
                           ),
                           Container(
                             margin: EdgeInsets.fromLTRB(
@@ -150,7 +177,87 @@ class _StudentSettingState extends State<StudentSetting> {
                                         style: ggTextStyle(20, FontWeight.bold,
                                             AppColor.white),
                                       ),
-                                      onPressed: () {},
+                                      onPressed: () {
+                                        if (_emailController.text == "") {
+                                          _emailController.text =
+                                              student.email!;
+                                        } else if (_passController.text == "") {
+                                          _passController.text =
+                                              student.password!;
+                                        } else if (_phoneController.text ==
+                                            "") {
+                                          _phoneController.text = student.sdt!;
+                                        } else if (_nameController.text == "") {
+                                          _nameController.text = student.hoTen!;
+                                        } else if (_masoController.text == "") {
+                                          _masoController.text = student.maSo!;
+                                        } else if (_ngaysinhController.text ==
+                                            "") {
+                                          _ngaysinhController.text =
+                                              student.ngaySinh!;
+                                        } else if (_emailController.text !=
+                                                "" &&
+                                            _passController.text != "" &&
+                                            _masoController.text != "" &&
+                                            _phoneController.text != "" &&
+                                            _nameController.text != "" &&
+                                            _ngaysinhController.text != "") {
+                                          StudentProvider.updateStudent(
+                                              context,
+                                              student.idLop.toString(),
+                                              _emailController.text,
+                                              _passController.text,
+                                              _masoController.text,
+                                              _phoneController.text,
+                                              _nameController.text,
+                                              _ngaysinhController.text,
+                                              us,
+                                              studentId);
+                                        } else {
+                                          showDialog(
+                                              context: context,
+                                              builder: (BuildContext context) {
+                                                return AlertDialog(
+                                                  content: Text(
+                                                      'Yêu cầu điền đầy đủ thông tin',
+                                                      style: ggTextStyle(
+                                                          13,
+                                                          FontWeight.bold,
+                                                          AppColor.black)),
+                                                  title: Row(
+                                                    children: [
+                                                      Icon(
+                                                        Icons.warning_rounded,
+                                                        color: AppColor.theme,
+                                                      ),
+                                                      SizedBox(
+                                                        width: 10,
+                                                      ),
+                                                      Text('Thông báo',
+                                                          style: ggTextStyle(
+                                                              13,
+                                                              FontWeight.bold,
+                                                              AppColor.black))
+                                                    ],
+                                                  ),
+                                                  actions: [
+                                                    TextButton(
+                                                        onPressed: () {
+                                                          Navigator.pop(
+                                                              context);
+                                                        },
+                                                        child: Text(
+                                                            'Quay lại danh sách bộ môn',
+                                                            style: ggTextStyle(
+                                                                13,
+                                                                FontWeight.bold,
+                                                                AppColor
+                                                                    .black)))
+                                                  ],
+                                                );
+                                              });
+                                        }
+                                      },
                                       style: ButtonStyle(
                                           backgroundColor:
                                               MaterialStateProperty.all<Color>(
