@@ -194,8 +194,7 @@ class GiangVienController extends Controller
         $giangVien->baiviet;
         $response = [
             'status' => true,
-            'message' => 'chinh sua thanh cong !',
-            'lophocphan' => $giangVien
+            'user' => $giangVien
         ];
         return response()->json($response, 200);
     }
@@ -275,14 +274,12 @@ class GiangVienController extends Controller
     public function searchGiangVienwithKhoa(Request $request)
     {
         $searchInput = $request->input('searchGV');
-        $lopHocPhan = LopHocPhan::join('bo_mons', 'lop_hoc_phans.id_bo_mon', '=', 'bo_mons.id')
-            ->join('khoas', 'bo_mons.id_khoa', '=', 'khoas.id')
-            ->join('lops', 'lop_hoc_phans.id_lop', '=', 'lops.id')
-            ->join('giang_viens', 'lops.id_giangvien', '=', 'giang_viens.id')
+        $giangvien = GiangVien::join('khoas', 'giang_viens.id_khoa', '=', 'khoas.id')
             ->where('khoas.ten_khoa', 'like', '%' . $searchInput . '%')
-            ->select('giang_viens.*', 'khoas.ten_khoa')->distinct()->get();
+            ->select('giang_viens.*', 'khoas.ten_khoa')
+            ->get();
         $response = [
-            'data' => $lopHocPhan
+            'data' => $giangvien
         ];
         return response()->json($response, 200);
     }

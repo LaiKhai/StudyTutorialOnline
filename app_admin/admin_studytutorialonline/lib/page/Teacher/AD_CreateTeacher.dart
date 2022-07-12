@@ -1,19 +1,21 @@
+import 'package:admin_studytutorialonline/common/contrains/dimen.dart';
+import 'package:admin_studytutorialonline/provider/Teacher/TeacherDateTimePicker.dart';
+import 'package:admin_studytutorialonline/widget/InputForm.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
-import '../common/contrains/color.dart';
-import '../common/contrains/dimen.dart';
-import '../common/contrains/string.dart';
-import '../widget/InputForm.dart';
+import '../../common/contrains/color.dart';
+import '../../common/contrains/color.dart';
+import '../../common/contrains/string.dart';
 
-class CreateStudentPage extends StatefulWidget {
-  const CreateStudentPage({Key? key}) : super(key: key);
+class CreateTeacher extends StatefulWidget {
+  const CreateTeacher({Key? key}) : super(key: key);
 
   @override
-  State<CreateStudentPage> createState() => _CreateStudentPageState();
+  State<CreateTeacher> createState() => _CreateTeacherState();
 }
 
-class _CreateStudentPageState extends State<CreateStudentPage> {
+class _CreateTeacherState extends State<CreateTeacher> {
   TextEditingController _emailController = TextEditingController();
   TextEditingController _passController = TextEditingController();
   TextEditingController _phoneController = TextEditingController();
@@ -56,7 +58,7 @@ class _CreateStudentPageState extends State<CreateStudentPage> {
                             getWidthSize(context) * 0.05, 20, 0, 0),
                         width: getWidthSize(context),
                         child: Text(
-                          'Tạo Tài Khoản Sinh Viên',
+                          'Tạo Tài Khoản Giảng Viên',
                           style:
                               ggTextStyle(30, FontWeight.bold, AppColor.theme),
                         ),
@@ -95,7 +97,7 @@ class _CreateStudentPageState extends State<CreateStudentPage> {
                       FormInput(
                           isRead: false,
                           txtController: _masoController,
-                          title: 'Mã số sinh viên',
+                          title: 'Mã số giảng viên',
                           hinttext: 'Nhập mã số...',
                           labeltext: 'Mã số',
                           preIcon: Icons.info_rounded),

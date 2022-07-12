@@ -2,17 +2,17 @@ import 'dart:convert';
 
 import 'package:admin_studytutorialonline/data/Student.dart';
 import 'package:admin_studytutorialonline/data/Students.dart';
-import 'package:admin_studytutorialonline/page/AD_CreateStudent.dart';
-import 'package:admin_studytutorialonline/page/AD_StudentDetail.dart';
-import 'package:admin_studytutorialonline/page/AD_StudentSetting.dart';
+import 'package:admin_studytutorialonline/page/Student/AD_CreateStudent.dart';
+import 'package:admin_studytutorialonline/page/Student/AD_StudentDetail.dart';
+import 'package:admin_studytutorialonline/page/Student/AD_StudentSetting.dart';
 import 'package:admin_studytutorialonline/widget/StudentPage/AD_StudentCard.dart';
 import 'package:flutter/material.dart';
 
-import '../common/contrains/color.dart';
-import '../common/contrains/dimen.dart';
-import '../common/contrains/string.dart';
-import '../data/User.dart';
-import '../widget/Drawer/Navigation_Drawer.dart';
+import '../../common/contrains/color.dart';
+import '../../common/contrains/dimen.dart';
+import '../../common/contrains/string.dart';
+import '../../data/User.dart';
+import '../../widget/Drawer/Navigation_Drawer.dart';
 import 'package:http/http.dart' as http;
 
 class StudentPage extends StatefulWidget {
@@ -308,8 +308,12 @@ class _StudentPageState extends State<StudentPage> {
             child: new Icon(Icons.add),
             backgroundColor: AppColor.theme,
             onPressed: () {
-              Navigator.push(context,
-                  MaterialPageRoute(builder: (ctx) => CreateStudentPage()));
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (ctx) => CreateStudentPage(
+                            us: us,
+                          )));
             }));
   }
 }

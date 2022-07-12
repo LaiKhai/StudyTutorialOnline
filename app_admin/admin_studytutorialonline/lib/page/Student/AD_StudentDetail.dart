@@ -1,12 +1,12 @@
 import 'package:admin_studytutorialonline/provider/Student/StudentProvider.dart';
 import 'package:flutter/material.dart';
 
-import '../common/contrains/color.dart';
-import '../common/contrains/dimen.dart';
-import '../common/contrains/string.dart';
-import '../data/Student.dart';
-import '../data/User.dart';
-import '../widget/InputForm.dart';
+import '../../common/contrains/color.dart';
+import '../../common/contrains/dimen.dart';
+import '../../common/contrains/string.dart';
+import '../../data/Student.dart';
+import '../../data/User.dart';
+import '../../widget/InputForm.dart';
 
 class StudentDetail extends StatefulWidget {
   final int studentId;

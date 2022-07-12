@@ -35,3 +35,4 @@ const String detailSubjectObject = baseUrl + '/api/bomon/';
 // chi tiet sinh vien
 const String detailStudentObject = baseUrl + '/api/sinhvien/';
 const String deleteStudentObject = baseUrl + '/api/sinhvien/';
+const String createStudentObject = baseUrl + '/api/sinhvien';

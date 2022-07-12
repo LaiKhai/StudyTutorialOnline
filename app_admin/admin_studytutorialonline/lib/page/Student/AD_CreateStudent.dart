@@ -1,25 +1,48 @@
-import 'package:admin_studytutorialonline/common/contrains/dimen.dart';
-import 'package:admin_studytutorialonline/provider/Teacher/TeacherDateTimePicker.dart';
-import 'package:admin_studytutorialonline/widget/InputForm.dart';
+import 'dart:convert';
+
+import 'package:admin_studytutorialonline/data/Student.dart';
+import 'package:admin_studytutorialonline/provider/Student/StudentProvider.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
-import '../common/contrains/color.dart';
-import '../common/contrains/string.dart';
+import '../../common/contrains/color.dart';
+import '../../common/contrains/dimen.dart';
+import '../../common/contrains/string.dart';
+import '../../data/User.dart';
+import '../../widget/InputForm.dart';
+import 'package:http/http.dart' as http;
 
-class CreateTeacher extends StatefulWidget {
-  const CreateTeacher({Key? key}) : super(key: key);
+class CreateStudentPage extends StatefulWidget {
+  final User us;
+  const CreateStudentPage({Key? key, required this.us}) : super(key: key);
 
   @override
-  State<CreateTeacher> createState() => _CreateTeacherState();
+  State<CreateStudentPage> createState() => _CreateStudentPageState(us: us);
 }
 
-class _CreateTeacherState extends State<CreateTeacher> {
+class _CreateStudentPageState extends State<CreateStudentPage> {
+  final User us;
+  _CreateStudentPageState({required this.us});
   TextEditingController _emailController = TextEditingController();
   TextEditingController _passController = TextEditingController();
   TextEditingController _phoneController = TextEditingController();
   TextEditingController _nameController = TextEditingController();
   TextEditingController _masoController = TextEditingController();
+  TextEditingController _ngaysinhController = TextEditingController();
+
+  int? selectedValue;
+  List departmentItemList = [];
+  Future getAllDepartment() async {
+    var response = await http.get(Uri.parse(fetchClassObject));
+    if (response.statusCode == 200) {
+      var jsonData = json.decode(response.body)['lop'];
+      setState(() {
+        departmentItemList = jsonData;
+      });
+    }
+    print(departmentItemList);
+  }
+
   DateTime _date = DateTime.now();
   DateFormat _dateFormat = DateFormat('yyyy-MM-dd');
   Future<void> _selectedDate(BuildContext context) async {
@@ -33,6 +56,12 @@ class _CreateTeacherState extends State<CreateTeacher> {
         _date = _datetime;
       });
     }
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    getAllDepartment();
   }
 
   @override
@@ -57,7 +86,7 @@ class _CreateTeacherState extends State<CreateTeacher> {
                             getWidthSize(context) * 0.05, 20, 0, 0),
                         width: getWidthSize(context),
                         child: Text(
-                          'Tạo Tài Khoản Giảng Viên',
+                          'Tạo Tài Khoản Sinh Viên',
                           style:
                               ggTextStyle(30, FontWeight.bold, AppColor.theme),
                         ),
@@ -71,6 +100,44 @@ class _CreateTeacherState extends State<CreateTeacher> {
                         height: 5,
                         width: getWidthSize(context),
                         color: AppColor.theme,
+                      ),
+                      Container(
+                        margin: EdgeInsets.fromLTRB(
+                            getWidthSize(context) * 0.05,
+                            10,
+                            getWidthSize(context) * 0.05,
+                            10),
+                        width: getWidthSize(context),
+                        child: Text(
+                          'Tên lớp',
+                          style:
+                              ggTextStyle(13, FontWeight.bold, AppColor.black),
+                        ),
+                      ),
+                      Container(
+                        margin: EdgeInsets.fromLTRB(
+                            getWidthSize(context) * 0.05,
+                            15,
+                            getWidthSize(context) * 0.05,
+                            10),
+                        width: getWidthSize(context),
+                        height: getHeightSize(context) * 0.07,
+                        child: DropdownButton(
+                          value: selectedValue,
+                          isExpanded: true,
+                          hint: Text('Chọn lớp...'),
+                          items: departmentItemList.map((department) {
+                            return DropdownMenuItem(
+                              value: department['id'],
+                              child: Text(department['ten_lop']),
+                            );
+                          }).toList(),
+                          onChanged: (value) {
+                            setState(() {
+                              selectedValue = value as int?;
+                            });
+                          },
+                        ),
                       ),
                       FormInput(
                           isRead: false,
@@ -96,7 +163,7 @@ class _CreateTeacherState extends State<CreateTeacher> {
                       FormInput(
                           isRead: false,
                           txtController: _masoController,
-                          title: 'Mã số giảng viên',
+                          title: 'Mã số sinh viên',
                           hinttext: 'Nhập mã số...',
                           labeltext: 'Mã số',
                           preIcon: Icons.info_rounded),
@@ -181,7 +248,66 @@ class _CreateTeacherState extends State<CreateTeacher> {
                                     style: ggTextStyle(
                                         20, FontWeight.bold, AppColor.white),
                                   ),
-                                  onPressed: () {},
+                                  onPressed: () {
+                                    if (selectedValue != null &&
+                                        _emailController.text != "" &&
+                                        _passController.text != "" &&
+                                        _nameController.text != "" &&
+                                        _masoController.text != "" &&
+                                        _phoneController.text != "" &&
+                                        _dateFormat.format(_date) != "") {
+                                      StudentProvider.createStudent(
+                                          context,
+                                          selectedValue.toString(),
+                                          _emailController.text,
+                                          _passController.text,
+                                          _masoController.text,
+                                          _phoneController.text,
+                                          _nameController.text,
+                                          _dateFormat.format(_date),
+                                          us);
+                                    } else {
+                                      showDialog(
+                                          context: context,
+                                          builder: (BuildContext context) {
+                                            return AlertDialog(
+                                              content: Text(
+                                                  'Yêu cầu điền đầy đủ thông tin !',
+                                                  style: ggTextStyle(
+                                                      13,
+                                                      FontWeight.bold,
+                                                      AppColor.black)),
+                                              title: Row(
+                                                children: [
+                                                  Icon(
+                                                    Icons.warning_rounded,
+                                                    color: AppColor.theme,
+                                                  ),
+                                                  SizedBox(
+                                                    width: 10,
+                                                  ),
+                                                  Text('Thông báo',
+                                                      style: ggTextStyle(
+                                                          13,
+                                                          FontWeight.bold,
+                                                          AppColor.black))
+                                                ],
+                                              ),
+                                              actions: [
+                                                TextButton(
+                                                    onPressed: () {
+                                                      Navigator.pop(context);
+                                                    },
+                                                    child: Text('Quay lại',
+                                                        style: ggTextStyle(
+                                                            13,
+                                                            FontWeight.bold,
+                                                            AppColor.black)))
+                                              ],
+                                            );
+                                          });
+                                    }
+                                  },
                                   style: ButtonStyle(
                                       backgroundColor:
                                           MaterialStateProperty.all<Color>(
