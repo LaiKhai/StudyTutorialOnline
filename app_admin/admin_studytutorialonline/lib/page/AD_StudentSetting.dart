@@ -5,24 +5,20 @@ import '../common/contrains/color.dart';
 import '../common/contrains/dimen.dart';
 import '../common/contrains/string.dart';
 import '../data/Student.dart';
-import '../data/User.dart';
 import '../widget/InputForm.dart';
 
-class StudentDetail extends StatefulWidget {
+class StudentSetting extends StatefulWidget {
   final int studentId;
-  final User us;
-  const StudentDetail({Key? key, required this.studentId, required this.us})
-      : super(key: key);
+  const StudentSetting({Key? key, required this.studentId}) : super(key: key);
 
   @override
-  State<StudentDetail> createState() =>
-      _StudentDetailState(studentId: studentId, us: us);
+  State<StudentSetting> createState() =>
+      _StudentSettingState(studentId: studentId);
 }
 
-class _StudentDetailState extends State<StudentDetail> {
-  final User us;
+class _StudentSettingState extends State<StudentSetting> {
   final int studentId;
-  _StudentDetailState({required this.studentId, required this.us});
+  _StudentSettingState({required this.studentId});
   TextEditingController _emailController = TextEditingController();
   TextEditingController _passController = TextEditingController();
   TextEditingController _phoneController = TextEditingController();
@@ -71,35 +67,35 @@ class _StudentDetailState extends State<StudentDetail> {
                             color: AppColor.theme,
                           ),
                           FormInput(
-                              isRead: true,
+                              isRead: false,
                               txtController: _emailController,
                               title: 'Email',
                               hinttext: student.email,
                               labeltext: student.email,
                               preIcon: Icons.email),
                           FormInput(
-                              isRead: true,
+                              isRead: false,
                               txtController: _passController,
                               title: 'Password',
                               hinttext: student.password,
                               labeltext: student.password,
                               preIcon: Icons.password_rounded),
                           FormInput(
-                              isRead: true,
+                              isRead: false,
                               txtController: _nameController,
                               title: 'Họ tên',
                               hinttext: student.ho_ten,
                               labeltext: student.ho_ten,
                               preIcon: Icons.person),
                           FormInput(
-                              isRead: true,
+                              isRead: false,
                               txtController: _masoController,
                               title: 'Mã số sinh viên',
                               hinttext: student.ma_so,
                               labeltext: student.ma_so,
                               preIcon: Icons.info_rounded),
                           FormInput(
-                              isRead: true,
+                              isRead: false,
                               txtController: _phoneController,
                               title: 'Số điện thoại',
                               hinttext: student.sdt,
@@ -150,86 +146,15 @@ class _StudentDetailState extends State<StudentDetail> {
                                     height: getHeightSize(context) * 0.06,
                                     child: ElevatedButton(
                                       child: Text(
-                                        'Xóa',
+                                        'chỉnh sửa',
                                         style: ggTextStyle(20, FontWeight.bold,
                                             AppColor.white),
                                       ),
-                                      onPressed: () {
-                                        showDialog(
-                                            context: context,
-                                            builder: (BuildContext context) {
-                                              return AlertDialog(
-                                                content: Text(
-                                                    'Bạn có chắc muốn xóa ${student.ho_ten}',
-                                                    style: ggTextStyle(
-                                                        13,
-                                                        FontWeight.bold,
-                                                        AppColor.black)),
-                                                title: Row(
-                                                  children: [
-                                                    Icon(
-                                                      Icons.warning_rounded,
-                                                      color: AppColor.theme,
-                                                    ),
-                                                    SizedBox(
-                                                      width: 10,
-                                                    ),
-                                                    Text('Thông báo',
-                                                        style: ggTextStyle(
-                                                            13,
-                                                            FontWeight.bold,
-                                                            AppColor.black))
-                                                  ],
-                                                ),
-                                                actions: [
-                                                  Container(
-                                                    child: TextButton(
-                                                        onPressed: () {
-                                                          Navigator.pop(
-                                                              context);
-                                                        },
-                                                        child: Text('Không',
-                                                            style: ggTextStyle(
-                                                                13,
-                                                                FontWeight.bold,
-                                                                AppColor
-                                                                    .black))),
-                                                  ),
-                                                  Container(
-                                                    child: TextButton(
-                                                        onPressed: () {
-                                                          StudentProvider
-                                                              .deleteStudent(
-                                                                  context,
-                                                                  student
-                                                                      .id_lop,
-                                                                  student.email,
-                                                                  student
-                                                                      .password,
-                                                                  student.ma_so,
-                                                                  student.sdt,
-                                                                  student
-                                                                      .ho_ten,
-                                                                  student
-                                                                      .ngay_sinh,
-                                                                  us,
-                                                                  studentId);
-                                                        },
-                                                        child: Text('Có',
-                                                            style: ggTextStyle(
-                                                                13,
-                                                                FontWeight.bold,
-                                                                AppColor
-                                                                    .black))),
-                                                  )
-                                                ],
-                                              );
-                                            });
-                                      },
+                                      onPressed: () {},
                                       style: ButtonStyle(
                                           backgroundColor:
                                               MaterialStateProperty.all<Color>(
-                                                  AppColor.red),
+                                                  AppColor.theme),
                                           shape: MaterialStateProperty.all<
                                                   RoundedRectangleBorder>(
                                               RoundedRectangleBorder(

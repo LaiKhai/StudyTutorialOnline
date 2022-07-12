@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:admin_studytutorialonline/data/Student.dart';
 import 'package:admin_studytutorialonline/page/AD_CreateStudent.dart';
 import 'package:admin_studytutorialonline/page/AD_StudentDetail.dart';
+import 'package:admin_studytutorialonline/page/AD_StudentSetting.dart';
 import 'package:admin_studytutorialonline/widget/StudentPage/AD_StudentCard.dart';
 import 'package:flutter/material.dart';
 
@@ -153,107 +154,134 @@ class _StudentPageState extends State<StudentPage> {
                             itemCount: snapshot.data.length,
                             itemBuilder: (context, index) {
                               Student lstStudent = snapshot.data[index];
-                              return Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Container(
-                                        padding:
-                                            EdgeInsets.fromLTRB(10, 0, 10, 0),
-                                        height: getHeightSize(context) * 0.1,
-                                        child: Card(
-                                            semanticContainer: true,
-                                            margin: EdgeInsets.all(6),
-                                            child: ListTile(
-                                                onTap: () {
-                                                  Navigator.push(
-                                                      context,
-                                                      MaterialPageRoute(
-                                                          builder: (context) =>
-                                                              StudentDetail(
+                              if (lstStudent.trang_thai != 0) {
+                                return Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Container(
+                                          padding:
+                                              EdgeInsets.fromLTRB(10, 0, 10, 0),
+                                          height: getHeightSize(context) * 0.1,
+                                          child: Card(
+                                              semanticContainer: true,
+                                              margin: EdgeInsets.all(6),
+                                              child: ListTile(
+                                                  trailing: IconButton(
+                                                    onPressed: () {
+                                                      Navigator.push(
+                                                          context,
+                                                          MaterialPageRoute(
+                                                              builder: (context) =>
+                                                                  StudentSetting(
+                                                                      studentId:
+                                                                          lstStudent
+                                                                              .id)));
+                                                    },
+                                                    icon: Icon(
+                                                      Icons.settings,
+                                                      size: 20,
+                                                    ),
+                                                  ),
+                                                  onTap: () {
+                                                    Navigator.push(
+                                                        context,
+                                                        MaterialPageRoute(
+                                                            builder: (context) =>
+                                                                StudentDetail(
                                                                   studentId:
                                                                       lstStudent
-                                                                          .id)));
-                                                },
-                                                leading: Container(
-                                                    height:
-                                                        getHeightSize(context) *
-                                                            0.2,
-                                                    width:
-                                                        getWidthSize(context) *
-                                                            0.2,
-                                                    child: ClipRRect(
-                                                        child: Image.asset(
-                                                      'assets/images/no_image.png',
-                                                      width: 300,
-                                                      height: 300,
-                                                    ))),
-                                                title: Container(
-                                                  margin: EdgeInsets.all(5),
-                                                  child: Text(lstStudent.ho_ten,
-                                                      style: ggTextStyle(
-                                                          20,
-                                                          FontWeight.bold,
-                                                          AppColor.theme)),
-                                                ),
-                                                subtitle: Container(
+                                                                          .id,
+                                                                  us: us,
+                                                                )));
+                                                  },
+                                                  leading: Container(
+                                                      height: getHeightSize(
+                                                              context) *
+                                                          0.2,
+                                                      width: getWidthSize(
+                                                              context) *
+                                                          0.2,
+                                                      child: ClipRRect(
+                                                          child: Image.asset(
+                                                        'assets/images/no_image.png',
+                                                        width: 300,
+                                                        height: 300,
+                                                      ))),
+                                                  title: Container(
                                                     margin: EdgeInsets.all(5),
-                                                    child: Column(
-                                                      children: [
-                                                        Row(
-                                                          //mainAxisAlignment: MainAxisAlignment.start,
-                                                          children: [
-                                                            Container(
-                                                              padding: EdgeInsets
-                                                                  .only(
-                                                                      right: 5),
-                                                              child: Icon(
-                                                                Icons
-                                                                    .co_present_rounded,
-                                                                size: 15,
+                                                    child: Text(
+                                                        lstStudent.ho_ten,
+                                                        style: ggTextStyle(
+                                                            20,
+                                                            FontWeight.bold,
+                                                            AppColor.theme)),
+                                                  ),
+                                                  subtitle: Container(
+                                                      margin: EdgeInsets.all(5),
+                                                      child: Column(
+                                                        children: [
+                                                          Row(
+                                                            //mainAxisAlignment: MainAxisAlignment.start,
+                                                            children: [
+                                                              Container(
+                                                                padding: EdgeInsets
+                                                                    .only(
+                                                                        right:
+                                                                            5),
+                                                                child: Icon(
+                                                                  Icons
+                                                                      .co_present_rounded,
+                                                                  size: 15,
+                                                                ),
                                                               ),
-                                                            ),
-                                                            Container(
-                                                              child: Text(
+                                                              Container(
+                                                                child: Text(
+                                                                    lstStudent
+                                                                        .ten_lop!,
+                                                                    style: ggTextStyle(
+                                                                        12,
+                                                                        FontWeight
+                                                                            .bold,
+                                                                        AppColor
+                                                                            .black)),
+                                                              ),
+                                                              Container(
+                                                                padding:
+                                                                    EdgeInsets
+                                                                        .fromLTRB(
+                                                                            10,
+                                                                            0,
+                                                                            2,
+                                                                            0),
+                                                                child: Icon(
+                                                                  Icons
+                                                                      .date_range,
+                                                                  size: 15,
+                                                                ),
+                                                              ),
+                                                              Container(
+                                                                child: Text(
                                                                   lstStudent
-                                                                      .ten_lop,
+                                                                      .nien_khoa!,
                                                                   style: ggTextStyle(
                                                                       12,
                                                                       FontWeight
                                                                           .bold,
                                                                       AppColor
-                                                                          .black)),
-                                                            ),
-                                                            Container(
-                                                              padding:
-                                                                  EdgeInsets
-                                                                      .fromLTRB(
-                                                                          10,
-                                                                          0,
-                                                                          2,
-                                                                          0),
-                                                              child: Icon(
-                                                                Icons
-                                                                    .date_range,
-                                                                size: 15,
-                                                              ),
-                                                            ),
-                                                            Container(
-                                                              child: Text(
-                                                                lstStudent
-                                                                    .nien_khoa,
-                                                                style: ggTextStyle(
-                                                                    12,
-                                                                    FontWeight
-                                                                        .bold,
-                                                                    AppColor
-                                                                        .black),
-                                                              ),
-                                                            )
-                                                          ],
-                                                        ),
-                                                      ],
-                                                    )))))
-                                  ]);
+                                                                          .black),
+                                                                ),
+                                                              )
+                                                            ],
+                                                          ),
+                                                        ],
+                                                      )))))
+                                    ]);
+                              } else {
+                                return Center(
+                                  child: Text(''),
+                                );
+                              }
                             });
                       } else if (snapshot.hasError) {
                         return Center(

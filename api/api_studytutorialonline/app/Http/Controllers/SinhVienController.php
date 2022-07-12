@@ -110,9 +110,9 @@ class SinhVienController extends Controller
     {
         $sinhVien = SinhVien::join('lops', 'sinh_viens.id_lop', '=', 'lops.id')
             ->where('sinh_viens.id', $id)
-            ->select('sinh_viens.*', 'lops.*')
-            ->first();
-        $this->FixImg($sinhVien);
+            ->select('sinh_viens.*', 'lops.ten_lop', 'lops.nien_khoa')
+            ->get();
+        // $this->FixImg($sinhVien);
         $response = [
             'status' => true,
             'user' => $sinhVien,

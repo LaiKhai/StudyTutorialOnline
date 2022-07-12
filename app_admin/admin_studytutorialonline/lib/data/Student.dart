@@ -3,20 +3,18 @@ class Student {
   final String id_lop;
   final String email;
   final String password;
-  final String? avt;
   final String ma_so;
   final String sdt;
   final String ho_ten;
   final String ngay_sinh;
   final String trang_thai;
-  final String ten_lop;
-  final String nien_khoa;
+  final String? ten_lop;
+  final String? nien_khoa;
   Student(
       this.id,
       this.id_lop,
       this.email,
       this.password,
-      this.avt,
       this.ma_so,
       this.sdt,
       this.ho_ten,
@@ -30,7 +28,6 @@ class Student {
         id_lop = json['id_lop'].toString(),
         email = json['email'],
         password = json['password'],
-        avt = json['avt'],
         ma_so = json['ma_so'],
         sdt = json['sdt'],
         ho_ten = json['ho_ten'],
