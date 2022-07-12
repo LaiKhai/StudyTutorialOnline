@@ -108,4 +108,218 @@ class DepartmentProvider {
           });
     }
   }
+
+  static Future<void> deletedepartment(
+      BuildContext context, String tenkhoa, User us, int id) async {
+    String? token = await getToken();
+    Map body = {'ten_khoa': tenkhoa, 'trang_thai': "0"};
+    String url = deleteDepartment + id.toString();
+    var response = await http.put(Uri.parse(url),
+        headers: <String, String>{
+          'Accept': 'application/json',
+          'Authorization': 'Bearer ${token!}'
+        },
+        body: body);
+    if (response.statusCode == 200) {
+      final jsonResponse =
+          Department.fromJson(json.decode(response.body)['khoa']);
+      showDialog(
+          context: context,
+          builder: (BuildContext context) {
+            return AlertDialog(
+              content: Text('Xóa khoa thành công',
+                  style: ggTextStyle(13, FontWeight.bold, AppColor.black)),
+              title: Row(
+                children: [
+                  Icon(
+                    Icons.warning_rounded,
+                    color: AppColor.theme,
+                  ),
+                  SizedBox(
+                    width: 10,
+                  ),
+                  Text('Thông báo',
+                      style: ggTextStyle(13, FontWeight.bold, AppColor.black))
+                ],
+              ),
+              actions: [
+                TextButton(
+                    onPressed: () {
+                      Navigator.pushAndRemoveUntil(
+                          context,
+                          MaterialPageRoute(
+                              builder: (ctx) => DepartmentPage(
+                                    us: us,
+                                  )),
+                          (route) => false);
+                    },
+                    child: Text('Quay lại danh sách khoa',
+                        style:
+                            ggTextStyle(13, FontWeight.bold, AppColor.black)))
+              ],
+            );
+          });
+    } else {
+      showDialog(
+          context: context,
+          builder: (BuildContext context) {
+            return AlertDialog(
+              content: Text('Xóa khoa thất bại',
+                  style: ggTextStyle(13, FontWeight.bold, AppColor.black)),
+              title: Row(
+                children: [
+                  Icon(
+                    Icons.warning_rounded,
+                    color: AppColor.theme,
+                  ),
+                  SizedBox(
+                    width: 10,
+                  ),
+                  Text('Thông báo',
+                      style: ggTextStyle(13, FontWeight.bold, AppColor.black))
+                ],
+              ),
+              actions: [
+                TextButton(
+                    onPressed: () {
+                      Navigator.pop(context);
+                    },
+                    child: Text('Quay lại ',
+                        style:
+                            ggTextStyle(13, FontWeight.bold, AppColor.black)))
+              ],
+            );
+          });
+    }
+  }
+
+  static Future<Department?> departmentDetail(
+      BuildContext context, int id) async {
+    String? token = await getToken();
+    final response = await http.get(Uri.parse(detailDepartment + id.toString()),
+        headers: {
+          'Accept': 'application/json',
+          'Authorization': 'Bearer ${token!}'
+        });
+    if (response.statusCode == 200) {
+      var jsonData = Department.fromJson(json.decode(response.body)['khoa']);
+      return jsonData;
+    } else {
+      showDialog(
+          context: context,
+          builder: (BuildContext context) {
+            return AlertDialog(
+              content: Text('Có lỗi xảy ra !',
+                  style: ggTextStyle(13, FontWeight.bold, AppColor.black)),
+              title: Row(
+                children: [
+                  Icon(
+                    Icons.warning_rounded,
+                    color: AppColor.theme,
+                  ),
+                  SizedBox(
+                    width: 10,
+                  ),
+                  Text('Thông báo',
+                      style: ggTextStyle(13, FontWeight.bold, AppColor.black))
+                ],
+              ),
+              actions: [
+                TextButton(
+                    onPressed: () {
+                      Navigator.pop(context);
+                    },
+                    child: Text('Quay lại',
+                        style:
+                            ggTextStyle(13, FontWeight.bold, AppColor.black)))
+              ],
+            );
+          });
+    }
+    return null;
+  }
+
+  static Future<void> updateDepartment(
+      BuildContext context, String tenkhoa, User us, int id) async {
+    String? token = await getToken();
+    Map body = {'ten_khoa': tenkhoa, 'trang_thai': "1"};
+    String url = deleteDepartment + id.toString();
+    var response = await http.put(Uri.parse(url),
+        headers: <String, String>{
+          'Accept': 'application/json',
+          'Authorization': 'Bearer ${token!}'
+        },
+        body: body);
+    if (response.statusCode == 200) {
+      final jsonResponse =
+          Department.fromJson(json.decode(response.body)['khoa']);
+      showDialog(
+          context: context,
+          builder: (BuildContext context) {
+            return AlertDialog(
+              content: Text('Chỉnh sửa khoa thành công',
+                  style: ggTextStyle(13, FontWeight.bold, AppColor.black)),
+              title: Row(
+                children: [
+                  Icon(
+                    Icons.warning_rounded,
+                    color: AppColor.theme,
+                  ),
+                  SizedBox(
+                    width: 10,
+                  ),
+                  Text('Thông báo',
+                      style: ggTextStyle(13, FontWeight.bold, AppColor.black))
+                ],
+              ),
+              actions: [
+                TextButton(
+                    onPressed: () {
+                      Navigator.pushAndRemoveUntil(
+                          context,
+                          MaterialPageRoute(
+                              builder: (ctx) => DepartmentPage(
+                                    us: us,
+                                  )),
+                          (route) => false);
+                    },
+                    child: Text('Quay lại danh sách khoa',
+                        style:
+                            ggTextStyle(13, FontWeight.bold, AppColor.black)))
+              ],
+            );
+          });
+    } else {
+      showDialog(
+          context: context,
+          builder: (BuildContext context) {
+            return AlertDialog(
+              content: Text('Chỉnh sửa khoa thất bại',
+                  style: ggTextStyle(13, FontWeight.bold, AppColor.black)),
+              title: Row(
+                children: [
+                  Icon(
+                    Icons.warning_rounded,
+                    color: AppColor.theme,
+                  ),
+                  SizedBox(
+                    width: 10,
+                  ),
+                  Text('Thông báo',
+                      style: ggTextStyle(13, FontWeight.bold, AppColor.black))
+                ],
+              ),
+              actions: [
+                TextButton(
+                    onPressed: () {
+                      Navigator.pop(context);
+                    },
+                    child: Text('Quay lại ',
+                        style:
+                            ggTextStyle(13, FontWeight.bold, AppColor.black)))
+              ],
+            );
+          });
+    }
+  }
 }

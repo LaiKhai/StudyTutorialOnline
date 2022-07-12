@@ -1,8 +1,16 @@
+import 'dart:io';
+
 import 'package:admin_studytutorialonline/common/contrains/string.dart';
+import 'package:admin_studytutorialonline/data/ClassPart.dart';
+import 'package:admin_studytutorialonline/page/AD_ClassPart.dart';
+import 'package:file_picker/file_picker.dart';
+import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
+import '../../common/contrains/color.dart';
 import '../../data/Department.dart';
+import '../../data/User.dart';
 
 class ClassPartProvider {
   static List<Department> parseObject(String reponseBody) {
@@ -17,5 +25,91 @@ class ClassPartProvider {
       'Authorization': 'Bearer ${token!}'
     });
     return parseObject(response.body);
+  }
+
+  static Future<void> createClassPart(BuildContext context, String imgClassPart,
+      String id_bo_mon, String id_lop, User us) async {
+    String? token = await getToken();
+    String url = createClassPartObject;
+    Map body = {
+      'id_bo_mon': id_bo_mon,
+      'id_lop': id_lop,
+      'trang_thai': "1",
+      'avt': imgClassPart
+    };
+    var response = await http.post(Uri.parse(url),
+        headers: <String, String>{
+          'Accept': 'application/json',
+          'Authorization': 'Bearer ${token!}'
+        },
+        body: body);
+    if (response.statusCode == 200) {
+      final jsonResponse = ClassPart.fromJson(json.decode(response.body));
+      showDialog(
+          context: context,
+          builder: (BuildContext context) {
+            return AlertDialog(
+              content: Text('Thêm lớp học phần thành công',
+                  style: ggTextStyle(13, FontWeight.bold, AppColor.black)),
+              title: Row(
+                children: [
+                  Icon(
+                    Icons.warning_rounded,
+                    color: AppColor.theme,
+                  ),
+                  SizedBox(
+                    width: 10,
+                  ),
+                  Text('Thông báo',
+                      style: ggTextStyle(13, FontWeight.bold, AppColor.black))
+                ],
+              ),
+              actions: [
+                TextButton(
+                    onPressed: () {
+                      Navigator.pushAndRemoveUntil(
+                          context,
+                          MaterialPageRoute(
+                              builder: (ctx) => ClassPartPage(us: us)),
+                          (route) => false);
+                    },
+                    child: Text('Quay lại danh sách khoa',
+                        style:
+                            ggTextStyle(13, FontWeight.bold, AppColor.black)))
+              ],
+            );
+          });
+    } else {
+      showDialog(
+          context: context,
+          builder: (BuildContext context) {
+            return AlertDialog(
+              content: Text('Thêm lớp học phần thất bại!',
+                  style: ggTextStyle(13, FontWeight.bold, AppColor.black)),
+              title: Row(
+                children: [
+                  Icon(
+                    Icons.warning_rounded,
+                    color: AppColor.theme,
+                  ),
+                  SizedBox(
+                    width: 10,
+                  ),
+                  Text('Thông báo',
+                      style: ggTextStyle(13, FontWeight.bold, AppColor.black))
+                ],
+              ),
+              actions: [
+                TextButton(
+                    onPressed: () {
+                      Navigator.pop(context);
+                    },
+                    child: Text('OK',
+                        style:
+                            ggTextStyle(13, FontWeight.bold, AppColor.black)))
+              ],
+            );
+          });
+    }
   }
 }

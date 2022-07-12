@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:admin_studytutorialonline/data/Department.dart';
+import 'package:admin_studytutorialonline/page/AD_CreateClassPart.dart';
 import 'package:admin_studytutorialonline/provider/ClassPart/ClassPartProvider.dart';
 import 'package:admin_studytutorialonline/widget/ClassPart/AD_ClassPartList.dart';
 import 'package:admin_studytutorialonline/widget/DepartmentPage/AD_DepartmentList.dart';
@@ -43,7 +44,7 @@ class _ClassPartPageState extends State<ClassPartPage> {
           'Authorization': 'Bearer ${token!}'
         },
         body: {
-          'search': selectedValue
+          'khoa': selectedValue
         });
     if (response.statusCode == 200) {
       var classpartObject = json.decode(response.body)['lophocphan'];
@@ -259,7 +260,10 @@ class _ClassPartPageState extends State<ClassPartPage> {
         ),
         floatingActionButton: FloatingActionButton(
             child: new Icon(Icons.add),
-            backgroundColor: new Color(0xFFE57373),
-            onPressed: () {}));
+            backgroundColor: AppColor.theme,
+            onPressed: () {
+              Navigator.push(context,
+                  MaterialPageRoute(builder: (ctx) => CreateClassPart(us: us)));
+            }));
   }
 }

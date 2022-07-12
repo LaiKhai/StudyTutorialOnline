@@ -86,6 +86,7 @@ class _DepartmentPageState extends State<DepartmentPage> {
                             ),
                             DepartmentList(
                               lstDepartment: snapshot.data!,
+                              us: us,
                             ),
                           ]),
                     ]),
@@ -99,10 +100,15 @@ class _DepartmentPageState extends State<DepartmentPage> {
           },
         ),
         floatingActionButton: Container(
-          width: 70,
-          height: 70,
+          margin: EdgeInsets.fromLTRB(0, 0, getWidthSize(context) * 0.04,
+              getHeightSize(context) * 0.63),
+          width: 30,
+          height: 30,
           child: FloatingActionButton(
-              child: new Icon(Icons.add),
+              child: new Icon(
+                Icons.add,
+                size: 20,
+              ),
               backgroundColor: AppColor.theme,
               onPressed: () {
                 Navigator.push(

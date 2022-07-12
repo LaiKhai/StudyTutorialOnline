@@ -4,8 +4,10 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use App\Models\User;
 use App\Models\SinhVien;
 use App\Models\GiangVien;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Validation\ValidationException;
@@ -140,4 +142,18 @@ class AuthController extends Controller
             return response()->json($response, 200);
         }
     }
+
+    // public function logout()
+    // {
+    //     $user = Auth::user();
+    //     auth()->user()->token_get_all()->delete();
+    //     return response()->json(['message' => 'Logout Success']);
+    // }
+    // public function user()
+    // {
+    //     $response = [
+    //         "user" => auth()->user()
+    //     ];
+    //     return response()->json($response, 200);
+    // }
 }

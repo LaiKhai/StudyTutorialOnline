@@ -1,5 +1,7 @@
 import 'package:admin_studytutorialonline/common/contrains/color.dart';
+import 'package:admin_studytutorialonline/provider/LoginPage/LoginProvider.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class Button extends StatefulWidget {
   const Button({Key? key}) : super(key: key);
@@ -14,7 +16,9 @@ class _ButtonState extends State<Button> {
     return Container(
       padding: EdgeInsets.only(top: 70),
       child: GestureDetector(
-        onTap: () {},
+        onTap: () {
+          LoginProvider.logout(context);
+        },
         child: Container(
           width: 200,
           height: 50,

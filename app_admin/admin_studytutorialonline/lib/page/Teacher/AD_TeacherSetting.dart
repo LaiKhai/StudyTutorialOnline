@@ -208,13 +208,13 @@ class _TeacherSettingState extends State<TeacherSetting> {
                                           TeacherProvider.updateTeacher(
                                               context,
                                               giangviens.idKhoa,
-                                              giangviens.email.toString(),
-                                              giangviens.password.toString(),
-                                              giangviens.maSo.toString(),
-                                              giangviens.sdt.toString(),
-                                              giangviens.hoTen.toString(),
-                                              giangviens.ngaySinh.toString(),
-                                              giangviens.chucvu.toString(),
+                                              _emailController.text,
+                                              _passController.text,
+                                              _masoController.text,
+                                              _phoneController.text,
+                                              _nameController.text,
+                                              _ngaysinhController.text,
+                                              giangviens.idChucVu.toString(),
                                               us,
                                               teacherId);
                                         } else {

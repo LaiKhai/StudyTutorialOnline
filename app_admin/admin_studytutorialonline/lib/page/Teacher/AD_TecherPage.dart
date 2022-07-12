@@ -206,10 +206,10 @@ class _TeacherPageState extends State<TeacherPage> {
                                                   leading: Container(
                                                       height: getHeightSize(
                                                               context) *
-                                                          0.3,
+                                                          0.5,
                                                       width: getWidthSize(
                                                               context) *
-                                                          0.2,
+                                                          0.1,
                                                       child: ClipRRect(
                                                           child: Image.asset(
                                                         'assets/images/no_image.png',
@@ -218,18 +218,18 @@ class _TeacherPageState extends State<TeacherPage> {
                                                       ))),
                                                   title: Container(
                                                     margin: EdgeInsets.fromLTRB(
-                                                        5, 5, 5, 0),
+                                                        0, 5, 5, 0),
                                                     child: Text(
                                                         lstTeacher.hoTen!,
                                                         style: ggTextStyle(
-                                                            20,
+                                                            18,
                                                             FontWeight.bold,
                                                             AppColor.theme)),
                                                   ),
                                                   subtitle: Container(
                                                       margin:
                                                           EdgeInsets.fromLTRB(
-                                                              5, 0, 5, 0),
+                                                              0, 0, 5, 0),
                                                       child: Column(
                                                         children: [
                                                           Container(

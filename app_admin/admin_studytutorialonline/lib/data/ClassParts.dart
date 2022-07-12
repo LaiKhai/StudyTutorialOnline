@@ -1,97 +1,72 @@
-class Teacher {
+class ClassParts {
   bool? status;
-  GiangVien? giangvien;
+  List<Lophocphan>? lophocphan;
 
-  Teacher({this.status, this.giangvien});
+  ClassParts({this.status, this.lophocphan});
 
-  Teacher.fromJson(Map<String, dynamic> json) {
+  ClassParts.fromJson(Map<String, dynamic> json) {
     status = json['status'];
-    giangvien =
-        json['user'] != null ? new GiangVien.fromJson(json['user']) : null;
+    if (json['lophocphan'] != null) {
+      lophocphan = <Lophocphan>[];
+      json['lophocphan'].forEach((v) {
+        lophocphan!.add(new Lophocphan.fromJson(v));
+      });
+    }
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     data['status'] = this.status;
-    if (this.giangvien != null) {
-      data['user'] = this.giangvien!.toJson();
+    if (this.lophocphan != null) {
+      data['lophocphan'] = this.lophocphan!.map((v) => v.toJson()).toList();
     }
     return data;
   }
 }
 
-class GiangVien {
+class Lophocphan {
   int? id;
-  String? idKhoa;
-  String? idChucVu;
-  Null? idLop;
-  String? email;
-  String? password;
+  int? idBoMon;
+  int? idLop;
   String? avt;
-  String? maSo;
-  String? sdt;
-  String? hoTen;
-  String? ngaySinh;
-  String? trangThai;
+  int? trangThai;
   String? createdAt;
   String? updatedAt;
-  Khoa? khoa;
-  Chucvu? chucvu;
+  Lop? lop;
   List<Baikiemtra>? baikiemtra;
-  List<Lop>? lop;
+  Bomon? bomon;
   List<Baiviet>? baiviet;
 
-  GiangVien(
+  Lophocphan(
       {this.id,
-      this.idKhoa,
-      this.idChucVu,
+      this.idBoMon,
       this.idLop,
-      this.email,
-      this.password,
       this.avt,
-      this.maSo,
-      this.sdt,
-      this.hoTen,
-      this.ngaySinh,
       this.trangThai,
       this.createdAt,
       this.updatedAt,
-      this.khoa,
-      this.chucvu,
-      this.baikiemtra,
       this.lop,
+      this.baikiemtra,
+      this.bomon,
       this.baiviet});
 
-  GiangVien.fromJson(Map<String, dynamic> json) {
+  Lophocphan.fromJson(Map<String, dynamic> json) {
     id = json['id'];
-    idKhoa = json['id_khoa'].toString();
-    idChucVu = json['id_chuc_vu'].toString();
+    idBoMon = json['id_bo_mon'];
     idLop = json['id_lop'];
-    email = json['email'];
-    password = json['password'];
     avt = json['avt'];
-    maSo = json['ma_so'];
-    sdt = json['sdt'];
-    hoTen = json['ho_ten'];
-    ngaySinh = json['ngay_sinh'];
-    trangThai = json['trang_thai'].toString();
+    trangThai = json['trang_thai'];
     createdAt = json['created_at'];
     updatedAt = json['updated_at'];
-    khoa = json['khoa'] != null ? new Khoa.fromJson(json['khoa']) : null;
-    chucvu =
-        json['chucvu'] != null ? new Chucvu.fromJson(json['chucvu']) : null;
+    lop = json['lop'] != null ? new Lop.fromJson(json['lop']) : null;
     if (json['baikiemtra'] != null) {
       baikiemtra = <Baikiemtra>[];
       json['baikiemtra'].forEach((v) {
         baikiemtra!.add(new Baikiemtra.fromJson(v));
       });
     }
-    if (json['lop'] != null) {
-      lop = <Lop>[];
-      json['lop'].forEach((v) {
-        lop!.add(new Lop.fromJson(v));
-      });
-    }
+    bomon = json['bomon'] != null ? new Bomon.fromJson(json['bomon']) : null;
+
     if (json['baiviet'] != null) {
       baiviet = <Baiviet>[];
       json['baiviet'].forEach((v) {
@@ -103,31 +78,22 @@ class GiangVien {
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     data['id'] = this.id;
-    data['id_khoa'] = this.idKhoa;
-    data['id_chuc_vu'] = this.idChucVu;
+    data['id_bo_mon'] = this.idBoMon;
     data['id_lop'] = this.idLop;
-    data['email'] = this.email;
-    data['password'] = this.password;
     data['avt'] = this.avt;
-    data['ma_so'] = this.maSo;
-    data['sdt'] = this.sdt;
-    data['ho_ten'] = this.hoTen;
-    data['ngay_sinh'] = this.ngaySinh;
     data['trang_thai'] = this.trangThai;
     data['created_at'] = this.createdAt;
     data['updated_at'] = this.updatedAt;
-    if (this.khoa != null) {
-      data['khoa'] = this.khoa!.toJson();
-    }
-    if (this.chucvu != null) {
-      data['chucvu'] = this.chucvu!.toJson();
+    if (this.lop != null) {
+      data['lop'] = this.lop!.toJson();
     }
     if (this.baikiemtra != null) {
       data['baikiemtra'] = this.baikiemtra!.map((v) => v.toJson()).toList();
     }
-    if (this.lop != null) {
-      data['lop'] = this.lop!.map((v) => v.toJson()).toList();
+    if (this.bomon != null) {
+      data['bomon'] = this.bomon!.toJson();
     }
+
     if (this.baiviet != null) {
       data['baiviet'] = this.baiviet!.map((v) => v.toJson()).toList();
     }
@@ -135,51 +101,29 @@ class GiangVien {
   }
 }
 
-class Khoa {
+class Lop {
   int? id;
-  String? tenKhoa;
+  int? idGiangvien;
+  String? tenLop;
+  String? nienKhoa;
   int? trangThai;
-  String? createdAt;
-  String? updatedAt;
+  Null? createdAt;
+  Null? updatedAt;
 
-  Khoa({this.id, this.tenKhoa, this.trangThai, this.createdAt, this.updatedAt});
-
-  Khoa.fromJson(Map<String, dynamic> json) {
-    id = json['id'];
-    tenKhoa = json['ten_khoa'];
-    trangThai = json['trang_thai'];
-    createdAt = json['created_at'];
-    updatedAt = json['updated_at'];
-  }
-
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['id'] = this.id;
-    data['ten_khoa'] = this.tenKhoa;
-    data['trang_thai'] = this.trangThai;
-    data['created_at'] = this.createdAt;
-    data['updated_at'] = this.updatedAt;
-    return data;
-  }
-}
-
-class Chucvu {
-  int? id;
-  String? tenChucVu;
-  int? trangThai;
-  String? createdAt;
-  String? updatedAt;
-
-  Chucvu(
+  Lop(
       {this.id,
-      this.tenChucVu,
+      this.idGiangvien,
+      this.tenLop,
+      this.nienKhoa,
       this.trangThai,
       this.createdAt,
       this.updatedAt});
 
-  Chucvu.fromJson(Map<String, dynamic> json) {
+  Lop.fromJson(Map<String, dynamic> json) {
     id = json['id'];
-    tenChucVu = json['ten_chuc_vu'];
+    idGiangvien = json['id_giangvien'];
+    tenLop = json['ten_lop'];
+    nienKhoa = json['nien_khoa'];
     trangThai = json['trang_thai'];
     createdAt = json['created_at'];
     updatedAt = json['updated_at'];
@@ -188,7 +132,9 @@ class Chucvu {
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     data['id'] = this.id;
-    data['ten_chuc_vu'] = this.tenChucVu;
+    data['id_giangvien'] = this.idGiangvien;
+    data['ten_lop'] = this.tenLop;
+    data['nien_khoa'] = this.nienKhoa;
     data['trang_thai'] = this.trangThai;
     data['created_at'] = this.createdAt;
     data['updated_at'] = this.updatedAt;
@@ -257,29 +203,29 @@ class Baikiemtra {
   }
 }
 
-class Lop {
+class Bomon {
   int? id;
-  int? idGiangvien;
-  String? tenLop;
-  String? nienKhoa;
+  int? idKhoa;
+  String? tenMonHoc;
+  int? loaiMonHoc;
   int? trangThai;
-  String? createdAt;
+  Null? createdAt;
   String? updatedAt;
 
-  Lop(
+  Bomon(
       {this.id,
-      this.idGiangvien,
-      this.tenLop,
-      this.nienKhoa,
+      this.idKhoa,
+      this.tenMonHoc,
+      this.loaiMonHoc,
       this.trangThai,
       this.createdAt,
       this.updatedAt});
 
-  Lop.fromJson(Map<String, dynamic> json) {
+  Bomon.fromJson(Map<String, dynamic> json) {
     id = json['id'];
-    idGiangvien = json['id_giangvien'];
-    tenLop = json['ten_lop'];
-    nienKhoa = json['nien_khoa'];
+    idKhoa = json['id_khoa'];
+    tenMonHoc = json['ten_mon_hoc'];
+    loaiMonHoc = json['loai_mon_hoc'];
     trangThai = json['trang_thai'];
     createdAt = json['created_at'];
     updatedAt = json['updated_at'];
@@ -288,9 +234,9 @@ class Lop {
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     data['id'] = this.id;
-    data['id_giangvien'] = this.idGiangvien;
-    data['ten_lop'] = this.tenLop;
-    data['nien_khoa'] = this.nienKhoa;
+    data['id_khoa'] = this.idKhoa;
+    data['ten_mon_hoc'] = this.tenMonHoc;
+    data['loai_mon_hoc'] = this.loaiMonHoc;
     data['trang_thai'] = this.trangThai;
     data['created_at'] = this.createdAt;
     data['updated_at'] = this.updatedAt;

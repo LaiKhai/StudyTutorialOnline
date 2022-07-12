@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:admin_studytutorialonline/common/contrains/color.dart';
 import 'package:admin_studytutorialonline/page/AD_HomePage.dart';
+import 'package:admin_studytutorialonline/page/AD_LoginPage.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
@@ -129,5 +130,13 @@ class LoginProvider {
             );
           });
     }
+  }
+
+  static Future<void> logout(BuildContext context) async {
+    Future<String?> token = LoginProvider().getToken();
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.remove('token');
+    Navigator.pushAndRemoveUntil(context,
+        MaterialPageRoute(builder: (context) => LoginPage()), (route) => false);
   }
 }
