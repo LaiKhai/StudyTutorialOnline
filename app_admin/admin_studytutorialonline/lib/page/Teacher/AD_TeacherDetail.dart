@@ -37,7 +37,7 @@ class _TeacherDetailState extends State<TeacherDetail> {
           backgroundColor: AppColor.white,
         ),
         body: FutureBuilder<Teacher?>(
-            future: TeacherProvider.studentDetail(context, teacherID),
+            future: TeacherProvider.teacherDetail(context, teacherID),
             builder: (context, snapshot) {
               if (snapshot.hasError) {
                 return Center(
@@ -198,7 +198,7 @@ class _TeacherDetailState extends State<TeacherDetail> {
                                                   Container(
                                                     child: TextButton(
                                                         onPressed: () {
-                                                          TeacherProvider.deleteStudent(
+                                                          TeacherProvider.deleteTeacher(
                                                               context,
                                                               giangvien.idKhoa
                                                                   .toString(),

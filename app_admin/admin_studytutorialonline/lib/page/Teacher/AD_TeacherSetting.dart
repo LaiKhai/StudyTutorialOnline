@@ -1,9 +1,11 @@
+import 'package:admin_studytutorialonline/provider/Teacher/TeacherProvider.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
 import '../../common/contrains/color.dart';
 import '../../common/contrains/dimen.dart';
 import '../../common/contrains/string.dart';
+import '../../data/Teacher.dart';
 import '../../data/User.dart';
 import '../../widget/InputForm.dart';
 
@@ -52,16 +54,16 @@ class _TeacherSettingState extends State<TeacherSetting> {
           iconTheme: IconThemeData(color: AppColor.theme),
           backgroundColor: AppColor.white,
         ),
-        body: FutureBuilder<Student?>(
-            future: StudentProvider.studentDetail(context, studentId),
+        body: FutureBuilder<Teacher?>(
+            future: TeacherProvider.teacherDetail(context, teacherId),
             builder: (context, snapshot) {
               if (snapshot.hasError) {
                 return Center(
                   child: Text('Có lỗi xảy ra !'),
                 );
               } else if (snapshot.hasData) {
-                SinhVien student = snapshot.data!.sinhvien![0];
-                if (student.trangThai != "0") {
+                GiangVien giangviens = snapshot.data!.giangvien!;
+                if (giangviens.trangThai != "0") {
                   return SingleChildScrollView(
                     child: Container(
                         color: AppColor.white,
@@ -71,7 +73,7 @@ class _TeacherSettingState extends State<TeacherSetting> {
                                 getWidthSize(context) * 0.05, 20, 0, 0),
                             width: getWidthSize(context),
                             child: Text(
-                              student.hoTen!,
+                              giangviens.hoTen!,
                               style: ggTextStyle(
                                   30, FontWeight.bold, AppColor.theme),
                             ),
@@ -90,36 +92,36 @@ class _TeacherSettingState extends State<TeacherSetting> {
                               isRead: false,
                               txtController: _emailController,
                               title: 'Email',
-                              hinttext: student.email!,
-                              labeltext: student.email!,
+                              hinttext: giangviens.email!,
+                              labeltext: giangviens.email!,
                               preIcon: Icons.email),
                           FormInput(
                               isRead: false,
                               txtController: _passController,
                               title: 'Password',
-                              hinttext: student.password!,
-                              labeltext: student.password!,
+                              hinttext: giangviens.password!,
+                              labeltext: giangviens.password!,
                               preIcon: Icons.password_rounded),
                           FormInput(
                               isRead: false,
                               txtController: _nameController,
                               title: 'Họ tên',
-                              hinttext: student.hoTen!,
-                              labeltext: student.hoTen!,
+                              hinttext: giangviens.hoTen!,
+                              labeltext: giangviens.hoTen!,
                               preIcon: Icons.person),
                           FormInput(
                               isRead: false,
                               txtController: _masoController,
                               title: 'Mã số sinh viên',
-                              hinttext: student.maSo!,
-                              labeltext: student.maSo!,
+                              hinttext: giangviens.maSo!,
+                              labeltext: giangviens.maSo!,
                               preIcon: Icons.info_rounded),
                           FormInput(
                               isRead: false,
                               txtController: _phoneController,
                               title: 'Số điện thoại',
-                              hinttext: student.sdt!,
-                              labeltext: student.sdt!,
+                              hinttext: giangviens.sdt!,
+                              labeltext: giangviens.sdt!,
                               preIcon: Icons.phone),
                           Container(
                             margin: EdgeInsets.fromLTRB(
@@ -154,7 +156,7 @@ class _TeacherSettingState extends State<TeacherSetting> {
                                     border: new OutlineInputBorder(
                                         borderSide: new BorderSide(
                                             color: AppColor.theme)),
-                                    labelText: student.ngaySinh)),
+                                    labelText: giangviens.ngaySinh)),
                           ),
                           Container(
                             margin: EdgeInsets.fromLTRB(
@@ -178,21 +180,21 @@ class _TeacherSettingState extends State<TeacherSetting> {
                                       onPressed: () {
                                         if (_emailController.text == "") {
                                           _emailController.text =
-                                              student.email!;
+                                              giangviens.email!;
                                         } else if (_passController.text == "") {
                                           _passController.text =
-                                              student.password!;
+                                              giangviens.password!;
                                         } else if (_phoneController.text ==
                                             "") {
-                                          _phoneController.text = student.sdt!;
+                                          _phoneController.text = giangviens.sdt!;
                                         } else if (_nameController.text == "") {
-                                          _nameController.text = student.hoTen!;
+                                          _nameController.text = giangviens.hoTen!;
                                         } else if (_masoController.text == "") {
-                                          _masoController.text = student.maSo!;
+                                          _masoController.text = giangviens.maSo!;
                                         } else if (_ngaysinhController.text ==
                                             "") {
                                           _ngaysinhController.text =
-                                              student.ngaySinh!;
+                                              giangviens.ngaySinh!;
                                         } else if (_emailController.text !=
                                                 "" &&
                                             _passController.text != "" &&
@@ -200,17 +202,7 @@ class _TeacherSettingState extends State<TeacherSetting> {
                                             _phoneController.text != "" &&
                                             _nameController.text != "" &&
                                             _ngaysinhController.text != "") {
-                                          StudentProvider.updateStudent(
-                                              context,
-                                              student.idLop.toString(),
-                                              _emailController.text,
-                                              _passController.text,
-                                              _masoController.text,
-                                              _phoneController.text,
-                                              _nameController.text,
-                                              _ngaysinhController.text,
-                                              us,
-                                              studentId);
+                                          TeacherProvider.updateTeacher(context, giangviens.idKhoa, giangviens., password, ma_so, sdt, ho_ten, ngay_sinh, id_chuc_vu, us, id);
                                         } else {
                                           showDialog(
                                               context: context,
