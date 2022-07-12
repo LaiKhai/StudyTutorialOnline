@@ -5,25 +5,29 @@ import 'package:flutter/material.dart';
 import '../../common/contrains/color.dart';
 import '../../common/contrains/dimen.dart';
 import '../../common/contrains/string.dart';
+import '../../data/User.dart';
 import '../../widget/InputForm.dart';
 
 class TeacherDetail extends StatefulWidget {
   final int teacherID;
-  const TeacherDetail({Key? key, required this.teacherID}) : super(key: key);
+  final User us;
+  const TeacherDetail({Key? key, required this.teacherID, required this.us})
+      : super(key: key);
 
   @override
   State<TeacherDetail> createState() =>
-      _TeacherDetailState(teacherID: teacherID);
+      _TeacherDetailState(teacherID: teacherID, us: us);
 }
 
 class _TeacherDetailState extends State<TeacherDetail> {
+  final User us;
   TextEditingController _emailController = TextEditingController();
   TextEditingController _passController = TextEditingController();
   TextEditingController _phoneController = TextEditingController();
   TextEditingController _nameController = TextEditingController();
   TextEditingController _masoController = TextEditingController();
   final int teacherID;
-  _TeacherDetailState({required this.teacherID});
+  _TeacherDetailState({required this.teacherID, required this.us});
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -193,7 +197,28 @@ class _TeacherDetailState extends State<TeacherDetail> {
                                                   ),
                                                   Container(
                                                     child: TextButton(
-                                                        onPressed: () {},
+                                                        onPressed: () {
+                                                          TeacherProvider.deleteStudent(
+                                                              context,
+                                                              giangvien.idKhoa
+                                                                  .toString(),
+                                                              giangvien.email
+                                                                  .toString(),
+                                                              giangvien.password
+                                                                  .toString(),
+                                                              giangvien.maSo
+                                                                  .toString(),
+                                                              giangvien.sdt
+                                                                  .toString(),
+                                                              giangvien.hoTen
+                                                                  .toString(),
+                                                              giangvien.ngaySinh
+                                                                  .toString(),
+                                                              giangvien.idChucVu
+                                                                  .toString(),
+                                                              us,
+                                                              teacherID);
+                                                        },
                                                         child: Text('Có',
                                                             style: ggTextStyle(
                                                                 13,

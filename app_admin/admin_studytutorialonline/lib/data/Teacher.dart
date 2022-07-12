@@ -22,8 +22,8 @@ class Teacher {
 
 class GiangVien {
   int? id;
-  int? idKhoa;
-  int? idChucVu;
+  String? idKhoa;
+  String? idChucVu;
   Null? idLop;
   String? email;
   String? password;
@@ -32,8 +32,8 @@ class GiangVien {
   String? sdt;
   String? hoTen;
   String? ngaySinh;
-  int? trangThai;
-  Null? createdAt;
+  String? trangThai;
+  String? createdAt;
   String? updatedAt;
   Khoa? khoa;
   Chucvu? chucvu;
@@ -64,8 +64,8 @@ class GiangVien {
 
   GiangVien.fromJson(Map<String, dynamic> json) {
     id = json['id'];
-    idKhoa = json['id_khoa'];
-    idChucVu = json['id_chuc_vu'];
+    idKhoa = json['id_khoa'].toString();
+    idChucVu = json['id_chuc_vu'].toString();
     idLop = json['id_lop'];
     email = json['email'];
     password = json['password'];
@@ -139,8 +139,8 @@ class Khoa {
   int? id;
   String? tenKhoa;
   int? trangThai;
-  Null? createdAt;
-  Null? updatedAt;
+  String? createdAt;
+  String? updatedAt;
 
   Khoa({this.id, this.tenKhoa, this.trangThai, this.createdAt, this.updatedAt});
 
@@ -167,8 +167,8 @@ class Chucvu {
   int? id;
   String? tenChucVu;
   int? trangThai;
-  Null? createdAt;
-  Null? updatedAt;
+  String? createdAt;
+  String? updatedAt;
 
   Chucvu(
       {this.id,
@@ -263,8 +263,8 @@ class Lop {
   String? tenLop;
   String? nienKhoa;
   int? trangThai;
-  Null? createdAt;
-  Null? updatedAt;
+  String? createdAt;
+  String? updatedAt;
 
   Lop(
       {this.id,
@@ -302,7 +302,7 @@ class Baiviet {
   int? id;
   int? idLopHocPhan;
   int? idLoaiBaiViet;
-  Null? idSinhVien;
+  int? idSinhVien;
   int? idGiangVien;
   String? noiDung;
   int? trangThai;

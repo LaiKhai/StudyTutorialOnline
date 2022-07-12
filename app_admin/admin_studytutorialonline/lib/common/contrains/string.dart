@@ -37,5 +37,7 @@ const String detailStudentObject = baseUrl + '/api/sinhvien/';
 const String deleteStudentObject = baseUrl + '/api/sinhvien/';
 const String createStudentObject = baseUrl + '/api/sinhvien';
 
-//
+//giang vien
 const String detailTeacherObject = baseUrl + '/api/giangvien/';
+const String updateTeacherObject = baseUrl + '/api/giangvien/';
+const String deleteTeacherObject = baseUrl + '/api/giangvien/';

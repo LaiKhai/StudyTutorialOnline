@@ -109,7 +109,6 @@ class GiangVienController extends Controller
         $giangVien->baiviet;
         $response = [
             'status' => true,
-            'message' => 'Dang ky giang vien thanh cong !',
             'user' => $giangVien
         ];
 
