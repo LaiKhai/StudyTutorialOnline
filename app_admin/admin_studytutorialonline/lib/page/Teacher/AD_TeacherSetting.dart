@@ -186,11 +186,14 @@ class _TeacherSettingState extends State<TeacherSetting> {
                                               giangviens.password!;
                                         } else if (_phoneController.text ==
                                             "") {
-                                          _phoneController.text = giangviens.sdt!;
+                                          _phoneController.text =
+                                              giangviens.sdt!;
                                         } else if (_nameController.text == "") {
-                                          _nameController.text = giangviens.hoTen!;
+                                          _nameController.text =
+                                              giangviens.hoTen!;
                                         } else if (_masoController.text == "") {
-                                          _masoController.text = giangviens.maSo!;
+                                          _masoController.text =
+                                              giangviens.maSo!;
                                         } else if (_ngaysinhController.text ==
                                             "") {
                                           _ngaysinhController.text =
@@ -202,7 +205,18 @@ class _TeacherSettingState extends State<TeacherSetting> {
                                             _phoneController.text != "" &&
                                             _nameController.text != "" &&
                                             _ngaysinhController.text != "") {
-                                          TeacherProvider.updateTeacher(context, giangviens.idKhoa, giangviens., password, ma_so, sdt, ho_ten, ngay_sinh, id_chuc_vu, us, id);
+                                          TeacherProvider.updateTeacher(
+                                              context,
+                                              giangviens.idKhoa,
+                                              giangviens.email.toString(),
+                                              giangviens.password.toString(),
+                                              giangviens.maSo.toString(),
+                                              giangviens.sdt.toString(),
+                                              giangviens.hoTen.toString(),
+                                              giangviens.ngaySinh.toString(),
+                                              giangviens.chucvu.toString(),
+                                              us,
+                                              teacherId);
                                         } else {
                                           showDialog(
                                               context: context,

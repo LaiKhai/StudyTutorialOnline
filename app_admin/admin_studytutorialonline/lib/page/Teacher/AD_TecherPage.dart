@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:admin_studytutorialonline/data/Teachers.dart';
 import 'package:admin_studytutorialonline/page/Teacher/AD_CreateTeacher.dart';
 import 'package:admin_studytutorialonline/page/Teacher/AD_TeacherDetail.dart';
+import 'package:admin_studytutorialonline/page/Teacher/AD_TeacherSetting.dart';
 import 'package:admin_studytutorialonline/widget/TeacherPage/AD_TeacherCard.dart';
 import 'package:flutter/material.dart';
 
@@ -174,7 +175,16 @@ class _TeacherPageState extends State<TeacherPage> {
                                                   trailing: Expanded(
                                                     flex: 1,
                                                     child: IconButton(
-                                                      onPressed: () {},
+                                                      onPressed: () {
+                                                        Navigator.push(
+                                                            context,
+                                                            MaterialPageRoute(
+                                                                builder: (ctx) =>
+                                                                    TeacherSetting(
+                                                                        teacherId:
+                                                                            lstTeacher.id!,
+                                                                        us: us)));
+                                                      },
                                                       icon: Icon(
                                                         Icons.settings,
                                                         size: 20,
