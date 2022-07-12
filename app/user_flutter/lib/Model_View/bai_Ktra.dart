@@ -136,4 +136,29 @@ class BaiKiemTraVM {
     }
     return false;
   }
+
+  static Future<bool> traLoiMotCau(String dap_an, int id_cau_hoi,
+      int id_bai_viet, int id_cau_tra_loi) async {
+    String url = postTraLoi;
+    String token = await Login.getToken();
+    Map body = {
+      "dap_an": dap_an.toString(),
+      "id_cau_hoi": id_cau_hoi.toString(),
+      "id_bai_kiem_tra": id_bai_viet.toString(),
+      "id_cau_tra_loi": id_cau_tra_loi.toString(),
+    };
+    var response = await http.post(Uri.parse(url),
+        headers: <String, String>{
+          'Accept': 'application/json',
+          'Authorization': 'Bearer $token',
+        },
+        body: body);
+    Map<String, dynamic> map = json.decode(response.body);
+    List<dynamic> posts = map["status"];
+    print(posts);
+    if (response.statusCode == 200) {
+      return true;
+    }
+    return false;
+  }
 }

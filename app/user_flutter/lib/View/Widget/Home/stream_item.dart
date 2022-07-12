@@ -58,7 +58,7 @@ class StreamItem extends StatelessWidget {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                      builder: (context) => const Chi_tiet_Page()),
+                      builder: (context) =>  Chi_tiet_Page(baiviet: bv,)),
                 );
               }
             },

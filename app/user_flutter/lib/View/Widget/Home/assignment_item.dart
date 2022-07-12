@@ -3,14 +3,11 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import 'package:intl/intl.dart';
-import 'package:user_flutter/Model/BaiKtrta.dart';
 import 'package:user_flutter/Model/listBaiKtra_model.dart';
 import 'package:user_flutter/Model/subject_assignment.dart';
-import 'package:user_flutter/View/Widget/Bai_kiemtra/Tra_loi.dart';
 import 'package:user_flutter/View/Widget/Home/assignment_status.dart';
 import 'package:user_flutter/View/common/constant/color.dart';
 import 'package:user_flutter/View/page/Bai_Ktra.dart';
-import 'package:user_flutter/View/page/Chi_tiet_bai_tap.dart';
 
 class AssignmentItem extends StatelessWidget {
   final SubjectAssignment assignment;
@@ -55,10 +52,10 @@ class AssignmentItem extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
                       SvgPicture.asset(
-                        "assets/icons/assignment.svg",
+                        "assets/images/svg/test.svg",
                         color: AppColor.white,
-                        width: 24,
-                        height: 24,
+                        width: 30,
+                        height: 30,
                       ),
                       const SizedBox(width: 16),
                       Expanded(
@@ -69,6 +66,7 @@ class AssignmentItem extends StatelessWidget {
                             Text(
                               baikiemtra.tieuDe!,
                               style: GoogleFonts.quicksand(
+                                fontSize: 20,
                                 color: AppColor.white,
                                 fontWeight: FontWeight.w600,
                               ),
@@ -80,14 +78,14 @@ class AssignmentItem extends StatelessWidget {
                                       DateTime.parse(baikiemtra.createdAt!)),
                               style: GoogleFonts.quicksand(
                                 color: AppColor.grey,
-                                fontSize: 12,
+                                fontSize: 15,
                               ),
                             ),
                           ],
                         ),
                       ),
                       const SizedBox(width: 16),
-                      AssignmentStatus(type: assignment.type),
+                      AssignmentStatus(type: SubjectAssignmentType.turnedIn),
                     ],
                   ),
                   const SizedBox(height: 8),
@@ -99,7 +97,7 @@ class AssignmentItem extends StatelessWidget {
                       overflow: TextOverflow.ellipsis,
                       style: GoogleFonts.quicksand(
                         color: AppColor.grey,
-                        fontSize: 12,
+                        fontSize: 15,
                       ),
                     ),
                   ),

@@ -22,7 +22,9 @@ class AssignmentStatus extends StatelessWidget {
                   : AppColor.red)
               .withOpacity(0.25)),
       child: Text(
-        type == SubjectAssignmentType.turnedIn ? "Turned In" : "Missing",
+        type == SubjectAssignmentType.turnedIn
+            ? "Hoàn thành"
+            : "Chưa hoàn thành",
         style: GoogleFonts.quicksand(
           color: type == SubjectAssignmentType.turnedIn
               ? AppColor.green

@@ -2,21 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:user_flutter/Model/User_login.dart';
-import 'package:user_flutter/Model/home_data.dart';
-import 'package:user_flutter/Model_View/get_lopHp.dart';
 import 'package:user_flutter/Model_View/login.dart';
 import 'package:user_flutter/View/Widget/Home/load_Lop_HP.dart';
 import 'package:user_flutter/View/Widget/Home/thong_bao.dart';
 import 'package:user_flutter/View/Widget/Navi/navigation_drawer_widget.dart';
 import 'package:user_flutter/View/Widget/widget_loadin.dart';
 import 'package:user_flutter/View/common/constant/color.dart';
-import 'package:user_flutter/View/common/constant/string.dart';
 import '../Widget/Home/app_icon_buttton.dart';
 import '../Widget/Home/assignment_week.dart';
-import '../Widget/Home/subject_item.dart';
-import 'subject_view.dart';
 
 class HomeView extends StatefulWidget {
   HomeView({Key? key}) : super(key: key);
@@ -151,7 +145,7 @@ class _HomeViewState extends State<HomeView> {
                                         enabledBorder: OutlineInputBorder(
                                           borderRadius:
                                               BorderRadius.circular(8),
-                                          borderSide: BorderSide(
+                                          borderSide: const BorderSide(
                                             color: Color(0xFFdcdcdc),
                                             width: 1.5,
                                           ),

@@ -134,6 +134,9 @@ class Lophocphan {
     id = json['id'];
     idBoMon = json['id_bo_mon'];
     idLop = json['id_lop'];
+    if (json['avt'] == null) {
+      avt = '/assets/images/no_image.png';
+    }
     avt = json['avt'];
     trangThai = json['trang_thai'];
     createdAt = json['created_at'];
@@ -196,7 +199,6 @@ class Files {
   }
 }
 
-
 class Sinhvien {
   int? id;
   int? idKhoa;
@@ -234,7 +236,7 @@ class Sinhvien {
     if (avt == null) {
       avt = Link + '/assets/images/no_image.png';
     } else {
-      avt =Link+ json['avt'];
+      avt = Link + json['avt'];
     }
 
     maSo = json['ma_so'];
@@ -301,10 +303,10 @@ class Giangvien {
     idChucVu = json['id_chuc_vu'];
     email = json['email'];
     password = json['password'];
-   if (avt == null) {
+    if (avt == null) {
       avt = Link + '/assets/images/no_image.png';
     } else {
-      avt = Link+json['avt'];
+      avt = Link + json['avt'];
     }
 
     maSo = json['ma_so'];

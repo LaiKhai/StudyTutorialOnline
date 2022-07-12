@@ -177,9 +177,11 @@ class _Bai_KtraState extends State<Bai_Ktra> {
                                   groupValue: _verticalGroupValue[index],
                                   horizontalAlignment:
                                       MainAxisAlignment.spaceAround,
-                                  onChanged: (value) => setState(() {
-                                    _verticalGroupValue[index] = value!;
-                                  }),
+                                  onChanged: (value) {
+                                    setState(() {
+                                      _verticalGroupValue[index] = value!;
+                                    });
+                                  },
                                   items: _status,
                                   textStyle: GoogleFonts.quicksand(
                                       fontSize: 15,

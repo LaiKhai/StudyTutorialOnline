@@ -1,13 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:user_flutter/Model/bai_Viet.dart';
 import 'package:user_flutter/View/Widget/Bai_kiemtra/Tra_loi.dart';
+import 'package:user_flutter/View/Widget/Home/show_File.dart';
 import 'package:user_flutter/View/common/constant/color.dart';
 import 'package:user_flutter/View/common/constant/dimen.dart';
 
 import '../common/constant/string.dart';
 
 class Chi_tiet_Page extends StatefulWidget {
-  const Chi_tiet_Page({Key? key}) : super(key: key);
+  Data baiviet;
+  Chi_tiet_Page({Key? key, required this.baiviet}) : super(key: key);
 
   @override
   _Chi_tiet_PageState createState() => _Chi_tiet_PageState();
@@ -15,6 +18,22 @@ class Chi_tiet_Page extends StatefulWidget {
 
 class _Chi_tiet_PageState extends State<Chi_tiet_Page> {
   final scaffoldKey = GlobalKey<ScaffoldState>();
+  int dem = 0;
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+
+    if (widget.baiviet.files!.length % 2 != 0) {
+      setState(() {
+        dem = widget.baiviet.files!.length + 1;
+      });
+    } else {
+      setState(() {
+        dem = widget.baiviet.files!.length;
+      });
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -74,7 +93,7 @@ class _Chi_tiet_PageState extends State<Chi_tiet_Page> {
                   mainAxisSize: MainAxisSize.max,
                   children: [
                     Image.network(
-                      'https://www.w3schools.com/w3css/img_lights.jpg',
+                      '$Link${widget.baiviet.lophocphan!.avt!}',
                       width: MediaQuery.of(context).size.width,
                       height: 230,
                       fit: BoxFit.cover,
@@ -86,18 +105,18 @@ class _Chi_tiet_PageState extends State<Chi_tiet_Page> {
                   child: Row(
                     mainAxisSize: MainAxisSize.max,
                     children: [
-                      const Padding(
+                      Padding(
                         padding: EdgeInsets.all(10.0),
                         child: CircleAvatar(
                           backgroundImage: NetworkImage(
-                            'https://www.w3schools.com/w3css/img_forest.jpg',
+                            '${widget.baiviet.giangvien!.avt!}',
                           ),
                           radius: 25,
                         ),
                       ),
                       Expanded(
                         child: Text(
-                          'Tên bài tập',
+                          '${widget.baiviet.giangvien!.hoTen}',
                           style: GoogleFonts.quicksand(
                             color: const Color(0xFF57636C),
                             fontSize: 20,
@@ -157,89 +176,92 @@ class _Chi_tiet_PageState extends State<Chi_tiet_Page> {
                   color: AppColor.theme,
                   width: double.infinity,
                 ),
-                Padding(
-                    padding:
-                        const EdgeInsetsDirectional.fromSTEB(20, 12, 20, 0),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: [
-                        Text(
-                          'Tệp đính kèm',
-                          style: GoogleFonts.quicksand(
-                            color: const Color(0xFF57636C),
-                            fontSize: 20,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        )
-                      ],
-                    ))
+                if (widget.baiviet.files!.length != 0) ...[
+                  Padding(
+                      padding:
+                          const EdgeInsetsDirectional.fromSTEB(20, 12, 20, 0),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          Text(
+                            'Tệp đính kèm',
+                            style: GoogleFonts.quicksand(
+                              color: const Color(0xFF57636C),
+                              fontSize: 20,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          )
+                        ],
+                      ))
+                ]
               ],
             ),
           ])),
-          SliverToBoxAdapter(
-            child: Container(
-                padding: const EdgeInsets.only(left: 30, right: 30),
-                height: 90.0 * 8,
-                child: GridView.builder(
-                    physics: const NeverScrollableScrollPhysics(),
-                    padding: const EdgeInsets.only(top: 10),
-                    itemCount: 8,
-                    gridDelegate:
-                        const SliverGridDelegateWithFixedCrossAxisCount(
-                      crossAxisCount: 2,
-                      crossAxisSpacing: 00,
-                      mainAxisSpacing: 0,
-                      childAspectRatio: 1,
-                    ),
-                    itemBuilder: (BuildContext context, int index) {
-                      return Column(
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          InkWell(
-                            onTap: () {},
-                            child: Container(
-                              width: getWidthSize(context) / 3,
-                              height: getWidthSize(context) / 3,
-                              decoration: BoxDecoration(
-                                color: AppColor.grey,
-                                boxShadow: const [
-                                  BoxShadow(
-                                    blurRadius: 2,
-                                    color: Color(0xFF626262),
-                                    spreadRadius: 1,
-                                  )
-                                ],
-                                borderRadius: BorderRadius.circular(25),
-                              ),
-                              child: Center(
-                                child: Text(
-                                  '.doc',
-                                  style: GoogleFonts.quicksand(
-                                      color: AppColor.grey2,
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 25),
+          if (widget.baiviet.files!.length != 0) ...[
+            SliverToBoxAdapter(
+              child: Container(
+                  padding: const EdgeInsets.only(left: 30, right: 30),
+                  height: 90.0 * dem,
+                  child: GridView.builder(
+                      physics: const NeverScrollableScrollPhysics(),
+                      padding: const EdgeInsets.only(top: 10),
+                      itemCount: widget.baiviet.files!.length,
+                      gridDelegate:
+                          const SliverGridDelegateWithFixedCrossAxisCount(
+                        crossAxisCount: 2,
+                        crossAxisSpacing: 00,
+                        mainAxisSpacing: 0,
+                        childAspectRatio: 1,
+                      ),
+                      itemBuilder: (BuildContext context, int index) {
+                        Files file = widget.baiviet.files![index];
+                        return Column(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            InkWell(
+                              onTap: () {},
+                              child: Container(
+                                width: getWidthSize(context) / 3,
+                                height: getWidthSize(context) / 3,
+                                decoration: BoxDecoration(
+                                  color: AppColor.grey,
+                                  boxShadow: const [
+                                    BoxShadow(
+                                      blurRadius: 2,
+                                      color: Color(0xFF626262),
+                                      spreadRadius: 1,
+                                    )
+                                  ],
+                                  borderRadius: BorderRadius.circular(25),
                                 ),
+                                child: Center(
+                                    child: ShowFile(
+                                  file: file,
+                                )),
                               ),
                             ),
-                          ),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              const Icon(Icons.feed_outlined),
-                              Text(
-                                'tên file',
-                                style: GoogleFonts.quicksand(
-                                  color: const Color(0xFF57636C),
-                                  fontSize: 10,
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              )
-                            ],
-                          )
-                        ],
-                      );
-                    })),
-          ),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                const Icon(Icons.feed_outlined),
+                                Expanded(
+                                  child: Text(
+                                    file.tenFile!,
+                                    style: GoogleFonts.quicksand(
+                                      color: const Color(0xFF57636C),
+                                      fontSize: 10,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                    overflow: TextOverflow.ellipsis,
+                                  ),
+                                )
+                              ],
+                            )
+                          ],
+                        );
+                      })),
+            ),
+          ],
           SliverList(
               delegate: SliverChildListDelegate([
             Container(
