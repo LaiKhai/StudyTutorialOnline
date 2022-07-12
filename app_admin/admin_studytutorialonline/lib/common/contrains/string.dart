@@ -31,3 +31,13 @@ const String getStudentwithDepartment = baseUrl + '/api/searchSinhVienwithKhoa';
 //Tao bomon
 const String createSubjectObject = baseUrl + '/api/bomon';
 const String detailSubjectObject = baseUrl + '/api/bomon/';
+
+// sinh vien
+const String detailStudentObject = baseUrl + '/api/sinhvien/';
+const String deleteStudentObject = baseUrl + '/api/sinhvien/';
+const String createStudentObject = baseUrl + '/api/sinhvien';
+
+//giang vien
+const String detailTeacherObject = baseUrl + '/api/giangvien/';
+const String updateTeacherObject = baseUrl + '/api/giangvien/';
+const String deleteTeacherObject = baseUrl + '/api/giangvien/';

@@ -13,6 +13,8 @@ class PostPage extends StatefulWidget {
 }
 
 class _PostPageState extends State<PostPage> {
+  TextEditingController _titleController = TextEditingController();
+  TextEditingController _contentController = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -44,11 +46,15 @@ class _PostPageState extends State<PostPage> {
             color: AppColor.theme,
           ),
           FormInput(
+              isRead: false,
+              txtController: _titleController,
               title: 'Tiêu đề',
               hinttext: 'nhập tiêu đề...',
               labeltext: 'tiêu đề',
               preIcon: Icons.turned_in_outlined),
           FormInput(
+              isRead: false,
+              txtController: _contentController,
               title: 'Loại bài viết',
               hinttext: 'nhập loại bài viết...',
               labeltext: 'Loại bài viết',

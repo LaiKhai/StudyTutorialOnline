@@ -5,12 +5,12 @@ import 'package:admin_studytutorialonline/provider/Subject/SubjectProvider.dart'
 import 'package:admin_studytutorialonline/widget/InputForm.dart';
 import 'package:flutter/material.dart';
 
-import '../common/contrains/color.dart';
-import '../common/contrains/dimen.dart';
-import '../common/contrains/string.dart';
+import '../../common/contrains/color.dart';
+import '../../common/contrains/dimen.dart';
+import '../../common/contrains/string.dart';
 import 'package:http/http.dart' as http;
 
-import '../data/User.dart';
+import '../../data/User.dart';
 
 class CreateSubject extends StatefulWidget {
   final User us;

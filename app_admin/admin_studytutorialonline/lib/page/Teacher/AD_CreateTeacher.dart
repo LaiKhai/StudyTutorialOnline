@@ -4,8 +4,9 @@ import 'package:admin_studytutorialonline/widget/InputForm.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
-import '../common/contrains/color.dart';
-import '../common/contrains/string.dart';
+import '../../common/contrains/color.dart';
+import '../../common/contrains/color.dart';
+import '../../common/contrains/string.dart';
 
 class CreateTeacher extends StatefulWidget {
   const CreateTeacher({Key? key}) : super(key: key);
@@ -15,6 +16,11 @@ class CreateTeacher extends StatefulWidget {
 }
 
 class _CreateTeacherState extends State<CreateTeacher> {
+  TextEditingController _emailController = TextEditingController();
+  TextEditingController _passController = TextEditingController();
+  TextEditingController _phoneController = TextEditingController();
+  TextEditingController _nameController = TextEditingController();
+  TextEditingController _masoController = TextEditingController();
   DateTime _date = DateTime.now();
   DateFormat _dateFormat = DateFormat('yyyy-MM-dd');
   Future<void> _selectedDate(BuildContext context) async {
@@ -68,26 +74,36 @@ class _CreateTeacherState extends State<CreateTeacher> {
                         color: AppColor.theme,
                       ),
                       FormInput(
+                          isRead: false,
+                          txtController: _emailController,
                           title: 'Email',
                           hinttext: 'Nhập email...',
                           labeltext: 'Email',
                           preIcon: Icons.email),
                       FormInput(
+                          isRead: false,
+                          txtController: _passController,
                           title: 'Password',
                           hinttext: 'Nhập password...',
                           labeltext: 'password',
                           preIcon: Icons.password_rounded),
                       FormInput(
+                          isRead: false,
+                          txtController: _nameController,
                           title: 'Họ tên',
                           hinttext: 'Nhập họ tên...',
                           labeltext: 'Họ tên',
                           preIcon: Icons.person),
                       FormInput(
+                          isRead: false,
+                          txtController: _masoController,
                           title: 'Mã số giảng viên',
                           hinttext: 'Nhập mã số...',
                           labeltext: 'Mã số',
                           preIcon: Icons.info_rounded),
                       FormInput(
+                          isRead: false,
+                          txtController: _phoneController,
                           title: 'Số điện thoại',
                           hinttext: 'Nhập số điện thoại...',
                           labeltext: 'Số điện thoại',

@@ -86,14 +86,12 @@ class SinhVienController extends Controller
             $sinhVien['avt'] = $request->file('avt')->store('assets/images/avatar/' . $sinhVien['id'], 'public');
         }
         $sinhVien->save();
-        $sinhVien->lop;
-        $sinhVien->ctbaitap;
-        $sinhVien->traloi;
-        $sinhVien->binhluan;
-        $sinhVien->baiviet;
+        $sinhVien = SinhVien::join('lops', 'sinh_viens.id_lop', '=', 'lops.id')
+            ->where('sinh_viens.id', $sinhVien->id)
+            ->select('sinh_viens.*', 'lops.ten_lop', 'lops.nien_khoa')
+            ->get();
         $response = [
             'status' => true,
-            'message' => 'Dang ky sinh vien thanh cong !',
             'user' => $sinhVien
         ];
 
@@ -108,10 +106,11 @@ class SinhVienController extends Controller
      */
     public function show($id)
     {
-        $sinhVien = SinhVien::find($id);
-        $this->FixImg($sinhVien);
-        $sinhVien->traloi;
-        $sinhVien->ctbaitap;
+        $sinhVien = SinhVien::join('lops', 'sinh_viens.id_lop', '=', 'lops.id')
+            ->where('sinh_viens.id', $id)
+            ->select('sinh_viens.*', 'lops.ten_lop', 'lops.nien_khoa')
+            ->get();
+        // $this->FixImg($sinhVien);
         $response = [
             'status' => true,
             'user' => $sinhVien,
@@ -148,14 +147,12 @@ class SinhVienController extends Controller
             $sinhVien['avt'] = $request->file('avt')->store('assets/images/avatar/' . $sinhVien['id'], 'public');
         }
         $sinhVien->save();
-        $sinhVien->lop;
-        $sinhVien->ctbaitap;
-        $sinhVien->traloi;
-        $sinhVien->binhluan;
-        $sinhVien->baiviet;
+        $sinhVien = SinhVien::join('lops', 'sinh_viens.id_lop', '=', 'lops.id')
+            ->where('sinh_viens.id', $id)
+            ->select('sinh_viens.*', 'lops.ten_lop', 'lops.nien_khoa')
+            ->get();
         $response = [
             'status' => true,
-            'message' => 'chinh sua thanh cong !',
             'user' => $sinhVien
         ];
         return response()->json($response, 200);
@@ -283,7 +280,7 @@ class SinhVienController extends Controller
             ->join('lops', 'lop_hoc_phans.id_lop', '=', 'lops.id')
             ->join('sinh_viens', 'sinh_viens.id_lop', '=', 'lops.id')
             ->where('khoas.ten_khoa', 'like', '%' . $searchInput . '%')
-            ->select('sinh_viens.*', 'lops.*')->distinct()->get();
+            ->select('sinh_viens.*', 'lops.ten_lop', 'lops.nien_khoa')->distinct()->get();
         $response = [
             'data' => $lopHocPhan
         ];
