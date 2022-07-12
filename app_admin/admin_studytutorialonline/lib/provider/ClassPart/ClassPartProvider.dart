@@ -1,5 +1,6 @@
 import 'package:admin_studytutorialonline/common/contrains/color.dart';
 import 'package:admin_studytutorialonline/common/contrains/string.dart';
+import 'package:admin_studytutorialonline/data/model_duy/Class_model.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
@@ -69,11 +70,26 @@ class ClassPartProvider {
               ],
             );
           });
-          //Đặt cái di chuyển về màng hình danh sách lớp
+      //Đặt cái di chuyển về màng hình danh sách lớp
       return true;
     } else {
       print('có lổi xảy ra');
       return false;
+    }
+  }
+
+  static Future<ClassModel?> getOneClass(int id) async {
+    String? token = await getToken();
+    final response = await http.get(Uri.parse(updateclasses + id.toString()),
+        headers: {
+          'Accept': 'application/json',
+          'Authorization': 'Bearer ${token!}'
+        });
+    try {
+      final jsonrespone = ClassModel.fromJson(json.decode(response.body));
+      return jsonrespone;
+    } catch (e) {
+      return new ClassModel();
     }
   }
 }

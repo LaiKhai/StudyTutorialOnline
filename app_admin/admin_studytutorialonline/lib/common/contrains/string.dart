@@ -28,6 +28,8 @@ const String getTeacherwithDepartment =
     baseUrl + '/api/searchGiangVienwithKhoa';
 const String getStudentwithDepartment = baseUrl + '/api/searchSinhVienwithKhoa';
 
+const String updateclasses = baseUrl + '/api/lop/';
+
 //Tao bomon
 const String createSubjectObject = baseUrl + '/api/bomon';
 const String detailSubjectObject = baseUrl + '/api/bomon/';
