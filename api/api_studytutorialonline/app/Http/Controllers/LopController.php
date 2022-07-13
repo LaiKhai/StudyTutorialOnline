@@ -199,8 +199,9 @@ class LopController extends Controller
     {
         $khoa = $request->input('khoa');
         $lop = Lop::join('khoas', 'lops.id_khoa', '=', 'khoas.id')
+            ->join('giang_viens', 'giang_viens.id_lop', '=', 'lops.id')
             ->where('khoas.ten_khoa', 'like', '%' . $khoa . '%')
-            ->select('lops.*')->get();
+            ->select('lops.*', 'giang_viens.ho_ten')->get();
         if (empty($lop)) {
             return response()->json([
                 'status' => false,
