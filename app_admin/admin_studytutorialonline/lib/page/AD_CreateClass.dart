@@ -99,12 +99,15 @@ class _CreateClassState extends State<CreateClass> {
                       margin: EdgeInsets.fromLTRB(getWidthSize(context) * 0.05,
                           5, getWidthSize(context) * 0.05, 10),
                       child: DropdownButton<Khoa>(
-                        isExpanded: true,
-                        value: value1,
-                        items: khoas.map(buildItem).toList(),
-                        onChanged: (value) =>
-                            setState(() => this.value1 = value),
-                      )),
+                          isExpanded: true,
+                          value: value1,
+                          items: khoas.map(buildItem).toList(),
+                          onChanged: (value) {
+                            setState(() {
+                              print(value!.id);
+                              this.value1 = value;
+                            });
+                          })),
                   Container(
                     margin: EdgeInsets.fromLTRB(getWidthSize(context) * 0.05,
                         20, getWidthSize(context) * 0.05, 10),
@@ -118,12 +121,13 @@ class _CreateClassState extends State<CreateClass> {
                       margin: EdgeInsets.fromLTRB(getWidthSize(context) * 0.05,
                           5, getWidthSize(context) * 0.05, 10),
                       child: DropdownButton<GiangVien_model>(
-                        isExpanded: true,
-                        value: value2,
-                        items: teachers.map(buildItem2).toList(),
-                        onChanged: (value) =>
-                            setState(() => this.value2 = value),
-                      )),
+                          isExpanded: true,
+                          value: value2,
+                          items: teachers.map(buildItem2).toList(),
+                          onChanged: (value) {
+                            print(value2!.id);
+                            setState(() => this.value2 = value);
+                          })),
                   FormInput(
                       isRead: false,
                       txtController: _tenlopController,
@@ -264,6 +268,7 @@ class _CreateClassState extends State<CreateClass> {
                                     _nienkhoaController.text != '') {
                                   ClassRoomProvider.postClass(
                                       context,
+                                      value1!.id.toString(),
                                       value2!.id.toString(),
                                       _tenlopController.text,
                                       _nienkhoaController.text,

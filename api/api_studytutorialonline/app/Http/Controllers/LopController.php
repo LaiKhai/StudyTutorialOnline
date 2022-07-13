@@ -49,7 +49,7 @@ class LopController extends Controller
     public function store(Request $request)
     {
         $input['id_giangvien'] = $request->input('id_giangvien');
-        $input['id_khoa'] = $request->input('id_giangvien');
+        $input['id_khoa'] = $request->input('id_khoa');
         $input['ten_lop'] = $request->input('ten_lop');
         $input['nien_khoa'] = $request->input('nien_khoa');
         $input['trang_thai'] = 1;

@@ -31,13 +31,12 @@ class ClassRoomProvider {
       String idClass,
       String idGV,
       String tenLop,
-      
       String nienKhoa,
       String trangThai,
       User us) async {
     String? token = await getToken();
     Map Body = {
-      'id_khoa':idKhoa.toString(),
+      'id_khoa': idKhoa.toString(),
       'id_giangvien': idGV.toString(),
       'ten_lop': tenLop.toString(),
       'nien_khoa': nienKhoa,
@@ -91,11 +90,12 @@ class ClassRoomProvider {
     return true;
   }
 
-  static Future<bool> postClass(BuildContext context, String idgv,
-      String tenLop, String nienKhoa, User us) async {
+  static Future<bool> postClass(BuildContext context, String idkhoa,
+      String idgv, String tenLop, String nienKhoa, User us) async {
     String? token = await getToken();
     String url = fetchClassObject;
     Map body = {
+      'id_khoa': idkhoa,
       'id_giangvien': idgv,
       'ten_lop': tenLop,
       'nien_khoa': nienKhoa,
