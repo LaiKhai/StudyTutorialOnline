@@ -13,6 +13,7 @@ import 'package:http/http.dart' as http;
 
 class CreateClassPart extends StatefulWidget {
   final User us;
+
   const CreateClassPart({Key? key, required this.us}) : super(key: key);
 
   @override
@@ -21,6 +22,7 @@ class CreateClassPart extends StatefulWidget {
 
 class _CreateClassPartState extends State<CreateClassPart> {
   final User us;
+
   _CreateClassPartState({required this.us});
   TextEditingController _tenBoMonController = TextEditingController();
   int? selectedValue;

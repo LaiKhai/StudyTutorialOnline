@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:admin_studytutorialonline/data/ClassParts.dart';
 import 'package:admin_studytutorialonline/data/Department.dart';
+import 'package:admin_studytutorialonline/page/AD_CLassPartSetting.dart';
 import 'package:admin_studytutorialonline/page/AD_ClassPartDetail.dart';
 import 'package:admin_studytutorialonline/page/AD_CreateClassPart.dart';
 import 'package:admin_studytutorialonline/provider/ClassPart/ClassPartProvider.dart';
@@ -186,6 +187,21 @@ class _ClassPartPageState extends State<ClassPartPage> {
                                                                         lstClassPart
                                                                             .id!)));
                                                   },
+                                                  trailing: IconButton(
+                                                    icon: Icon(Icons.settings),
+                                                    onPressed: () {
+                                                      Navigator.push(
+                                                          context,
+                                                          MaterialPageRoute(
+                                                              builder: (ctx) =>
+                                                                  ClassPartSetting(
+                                                                    us: us,
+                                                                    classpartID:
+                                                                        lstClassPart
+                                                                            .id!,
+                                                                  )));
+                                                    },
+                                                  ),
                                                   title: Container(
                                                     margin: EdgeInsets.all(5),
                                                     child: Text(

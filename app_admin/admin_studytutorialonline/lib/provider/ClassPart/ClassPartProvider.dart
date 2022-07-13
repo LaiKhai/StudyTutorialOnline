@@ -160,9 +160,9 @@ class ClassPartProvider {
   }
 
   static Future<void> updateClassPart(BuildContext context, String imgClassPart,
-      String id_bo_mon, String id_lop, User us) async {
+      String id_bo_mon, String id_lop, User us, int id) async {
     String? token = await getToken();
-    String url = updateClassPartObject;
+    String url = updateClassPartObject + id.toString();
     Map body = {
       'id_bo_mon': id_bo_mon,
       'id_lop': id_lop,
