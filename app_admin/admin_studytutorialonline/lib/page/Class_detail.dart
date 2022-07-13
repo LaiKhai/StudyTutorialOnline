@@ -39,7 +39,7 @@ class _ClassDetailState extends State<ClassDetail> {
       setState(() {
         teachers = teachers_model!.user!;
       });
-      classer = await ClassPartProvider.getOneClass(widget.id);
+      classer = await ClassRoomProvider.getOneClass(widget.id);
       if (classer != null) {
         for (int i = 0; i < teachers_model!.user!.length; i++) {
           if (teachers_model.user![i].id == classer!.lop!.giangvien!.id) {
