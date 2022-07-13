@@ -144,12 +144,10 @@ class BoMonController extends Controller
             ->where('bo_mons.id', $id)
             ->select('bo_mons.*', 'khoas.ten_khoa')
             ->first();
-        $lophocphan = BoMon::join('lop_hoc_phans', 'lop_hoc_phans.id_bo_mon', '=', 'bo_mons.id')
-            ->where('lop_hoc_phans.id_bo_mon', $boMon->lophocphan)->get();
+
         $response = [
             'status' => true,
             'bomon' => $boMon,
-            'lophocphan' => $lophocphan
         ];
         return response()->json($response, 200);
     }
