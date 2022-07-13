@@ -68,7 +68,6 @@ class BoMonController extends Controller
         $boMon->khoa;
         $response = [
             'status' => true,
-            'message' => 'them thanh cong bo mon !',
             'bomon' => $boMon
         ];
         return response()->json($response, 200);
@@ -149,7 +148,6 @@ class BoMonController extends Controller
             ->where('lop_hoc_phans.id_bo_mon', $boMon->lophocphan)->get();
         $response = [
             'status' => true,
-            'message' => 'chinh sua thanh cong !',
             'bomon' => $boMon,
             'lophocphan' => $lophocphan
         ];
@@ -181,7 +179,6 @@ class BoMonController extends Controller
 
         $response = [
             'status' => true,
-            'message' => 'xoa thanh cong !',
             'bomon' => $lstBoMon,
             'lophoaphan' => $lophocphan
         ];

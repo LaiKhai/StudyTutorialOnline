@@ -12,6 +12,7 @@ import 'package:flutter/material.dart';
 import '../../common/contrains/color.dart';
 import '../../common/contrains/dimen.dart';
 import '../../data/Subject.dart';
+import '../../data/Subjects.dart';
 import '../../data/User.dart';
 import '../../widget/Drawer/Navigation_Drawer.dart';
 import 'package:http/http.dart' as http;
@@ -37,7 +38,7 @@ class _SubjectPageState extends State<SubjectPage> {
     }
   }
 
-  Future getAllubjectwithDepartment() async {
+  Future<Subjects?> getAllubjectwithDepartment() async {
     String? token = await getToken();
     var response = await http.post(Uri.parse(getSubjectwithDepartment),
         headers: <String, String>{
@@ -48,11 +49,10 @@ class _SubjectPageState extends State<SubjectPage> {
           'search': selectedValue
         });
     if (response.statusCode == 200) {
-      var subjectObject =
-          jsonDecode(response.body)['data'].cast<Map<String, dynamic>>();
-      return subjectObject.map<Subject>((e) => Subject.fromJson(e)).toList();
-      ;
+      var subjectObject = Subjects.fromJson(json.decode(response.body));
+      return subjectObject;
     }
+    return new Subjects();
   }
 
   final User us;
@@ -132,16 +132,16 @@ class _SubjectPageState extends State<SubjectPage> {
             Container(
               padding: const EdgeInsets.all(20),
               child: Text(
-                'Danh sách các thông báo',
+                'Danh sách các bộ môn',
                 style: ggTextStyle(13, FontWeight.bold, AppColor.grey),
               ),
             ),
             selectedValue != null
-                ? FutureBuilder(
+                ? FutureBuilder<Subjects?>(
                     future: getAllubjectwithDepartment(),
-                    builder: (context, AsyncSnapshot snapshot) {
+                    builder: (context, snapshot) {
                       if (snapshot.hasData) {
-                        if (snapshot.data?.length == 0) {
+                        if (snapshot.data!.bomon!.length == 0) {
                           return Center(
                             child: Text(
                               'Hiện tại chưa có bộ môn nào',
@@ -154,10 +154,10 @@ class _SubjectPageState extends State<SubjectPage> {
                             physics: NeverScrollableScrollPhysics(),
                             scrollDirection: Axis.vertical,
                             shrinkWrap: true,
-                            itemCount: snapshot.data.length,
+                            itemCount: snapshot.data!.bomon!.length,
                             itemBuilder: (context, index) {
-                              Subject lstsubject = snapshot.data[index];
-                              if (lstsubject.trang_thai != "0") {
+                              BoMon lstsubject = snapshot.data!.bomon![index];
+                              if (lstsubject.trangThai != "0") {
                                 return Column(
                                     crossAxisAlignment:
                                         CrossAxisAlignment.start,
@@ -186,7 +186,7 @@ class _SubjectPageState extends State<SubjectPage> {
                                                                     (context) =>
                                                                         SubjectSetting(
                                                                           subjectId:
-                                                                              lstsubject.id,
+                                                                              lstsubject.id!,
                                                                           us: us,
                                                                         )));
                                                       },
@@ -200,14 +200,14 @@ class _SubjectPageState extends State<SubjectPage> {
                                                                 SubjectDetail(
                                                                   subID:
                                                                       lstsubject
-                                                                          .id,
+                                                                          .id!,
                                                                   us: us,
                                                                 ))));
                                                   },
                                                   title: Container(
                                                     margin: EdgeInsets.all(5),
                                                     child: Text(
-                                                        lstsubject.ten_mon_hoc,
+                                                        lstsubject.tenMonHoc!,
                                                         style: ggTextStyle(
                                                             20,
                                                             FontWeight.bold,
@@ -234,7 +234,7 @@ class _SubjectPageState extends State<SubjectPage> {
                                                               Container(
                                                                 child: Text(
                                                                     lstsubject
-                                                                        .ten_khoa,
+                                                                        .tenKhoa!,
                                                                     style: ggTextStyle(
                                                                         12,
                                                                         FontWeight
@@ -257,7 +257,7 @@ class _SubjectPageState extends State<SubjectPage> {
                                                                 ),
                                                               ),
                                                               if (lstsubject
-                                                                      .loai_mon_hoc ==
+                                                                      .loaiMonHoc! ==
                                                                   "1")
                                                                 Container(
                                                                   child: Text(
@@ -271,7 +271,7 @@ class _SubjectPageState extends State<SubjectPage> {
                                                                   ),
                                                                 )
                                                               else if (lstsubject
-                                                                      .loai_mon_hoc ==
+                                                                      .loaiMonHoc! ==
                                                                   "2")
                                                                 Container(
                                                                   child: Text(
@@ -285,7 +285,7 @@ class _SubjectPageState extends State<SubjectPage> {
                                                                   ),
                                                                 )
                                                               else if (lstsubject
-                                                                      .loai_mon_hoc ==
+                                                                      .loaiMonHoc! ==
                                                                   "3")
                                                                 Container(
                                                                   child: Text(

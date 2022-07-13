@@ -1,8 +1,10 @@
+import 'package:admin_studytutorialonline/data/ClassRoom.dart';
 import 'package:admin_studytutorialonline/data/Teacher.dart';
 import 'package:admin_studytutorialonline/data/Teachers.dart';
 import 'package:admin_studytutorialonline/data/model_duy/Khoas_model.dart';
 import 'package:admin_studytutorialonline/data/model_duy/giangVien_model.dart';
 import 'package:admin_studytutorialonline/provider/ClassPart/ClassPartProvider.dart';
+import 'package:admin_studytutorialonline/provider/ClassRoom/ClassRoomProvider.dart';
 import 'package:admin_studytutorialonline/provider/Department/DepartmentProvider.dart';
 import 'package:admin_studytutorialonline/provider/Teacher/TeacherProvider.dart';
 import 'package:admin_studytutorialonline/widget/InputForm.dart';
@@ -237,7 +239,8 @@ class _CreateClassState extends State<CreateClass> {
                                 if (value2 != null &&
                                     _tenlopController.text != '' &&
                                     _nienkhoaController.text != '') {
-                                  ClassPartProvider.postClass(context,
+                                  ClassRoomProvider.postClass(
+                                      context,
                                       value2!.id.toString(),
                                       _tenlopController.text,
                                       _nienkhoaController.text);

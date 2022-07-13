@@ -13,6 +13,6 @@ class Subject {
         id_khoa = json['id_khoa'].toString(),
         ten_mon_hoc = json['ten_mon_hoc'],
         loai_mon_hoc = json['loai_mon_hoc'].toString(),
-        ten_khoa = json['ten_khoa'],
+        ten_khoa = json['khoa']['ten_khoa'],
         trang_thai = json['trang_thai'].toString();
 }

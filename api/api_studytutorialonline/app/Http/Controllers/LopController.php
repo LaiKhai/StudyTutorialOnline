@@ -235,16 +235,4 @@ class LopController extends Controller
         ];
         return response()->json($response, 200);
     }
-
-    public function searchLopwithKhoa(Request $request)
-    {
-        $searchInput = $request->input('searchLop');
-        $lop = Lop::join('khoas', 'lops.id_khoa', '=', 'khoas.id')
-            ->where('khoas.ten_khoa', 'like', '%' . $searchInput . '%')
-            ->select('lops.*')->get();
-        $response = [
-            'data' => $lop
-        ];
-        return response()->json($response, 200);
-    }
 }
