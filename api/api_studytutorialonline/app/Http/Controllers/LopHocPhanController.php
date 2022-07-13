@@ -124,6 +124,7 @@ class LopHocPhanController extends Controller
         $lopHocPhan->baikiemtra;
         $lopHocPhan->bomon;
         $lopHocPhan->baitap;
+        $this->FixImg($lopHocPhan);
 
         $dsgv = DS_GiangVien::join('lop_hoc_phans', 'ds_giang_viens.id_lop_hoc_phan', '=', 'lop_hoc_phans.id')
             ->join('giang_viens', 'ds_giang_viens.id_giang_vien', '=', 'giang_viens.id')
@@ -268,21 +269,21 @@ class LopHocPhanController extends Controller
                 'data' => []
             ], 404);
         }
-        if($trangthai==1){
+        if ($trangthai == 1) {
             $baikiemtra = BaiKiemTra::join('lop_hoc_phans', 'bai_kiem_tras.id_lop_hoc_phan', '=', 'lop_hoc_phans.id')
-            ->where([['bai_kiem_tras.id_lop_hoc_phan', $id]])
-            ->where ([['bai_kiem_tras.trang_thai', 1]])
-            ->orWhere([['bai_kiem_tras.trang_thai', 3]]) 
-            ->orWhere([['bai_kiem_tras.trang_thai', 4]])          
-            ->select('lop_hoc_phans.*', 'bai_kiem_tras.*')
-            ->get();
-        }else{
+                ->where([['bai_kiem_tras.id_lop_hoc_phan', $id]])
+                ->where([['bai_kiem_tras.trang_thai', 1]])
+                ->orWhere([['bai_kiem_tras.trang_thai', 3]])
+                ->orWhere([['bai_kiem_tras.trang_thai', 4]])
+                ->select('lop_hoc_phans.*', 'bai_kiem_tras.*')
+                ->get();
+        } else {
             $baikiemtra = BaiKiemTra::join('lop_hoc_phans', 'bai_kiem_tras.id_lop_hoc_phan', '=', 'lop_hoc_phans.id')
-            ->where([['bai_kiem_tras.id_lop_hoc_phan', $id]])
-            ->select('lop_hoc_phans.*', 'bai_kiem_tras.*')
-            ->get();
+                ->where([['bai_kiem_tras.id_lop_hoc_phan', $id]])
+                ->select('lop_hoc_phans.*', 'bai_kiem_tras.*')
+                ->get();
         }
-       
+
 
         $response = [
             'status' => true,

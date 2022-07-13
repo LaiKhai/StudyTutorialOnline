@@ -3,9 +3,11 @@ import 'dart:convert';
 import 'package:admin_studytutorialonline/common/contrains/color.dart';
 import 'package:admin_studytutorialonline/common/contrains/string.dart';
 import 'package:admin_studytutorialonline/data/ClassRoom.dart';
+import 'package:admin_studytutorialonline/page/AD_Class.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
+import '../../data/User.dart';
 import '../../data/model_duy/Class_model.dart';
 
 class ClassRoomProvider {
@@ -23,8 +25,14 @@ class ClassRoomProvider {
     return parseObject(response.body);
   }
 
-  static Future<bool> updateClass(BuildContext context, String idClass,
-      String idGV, String tenLop, String nienKhoa, String trangThai) async {
+  static Future<bool> updateClass(
+      BuildContext context,
+      String idClass,
+      String idGV,
+      String tenLop,
+      String nienKhoa,
+      String trangThai,
+      User us) async {
     print('urlssidGV ' + idGV.toString());
     print('urlsstenLop ' + tenLop.toString());
     print('urlssnienKhoa ' + nienKhoa.toString());
@@ -69,7 +77,10 @@ class ClassRoomProvider {
               actions: [
                 TextButton(
                     onPressed: () {
-                      //Đặt cái di chuyển về màng hình danh sách lớp
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (ctx) => ClassPage(us: us)));
                     },
                     child: Text('OK',
                         style:
@@ -81,8 +92,8 @@ class ClassRoomProvider {
     return true;
   }
 
-  static Future<bool> postClass(
-      BuildContext context, String idgv, String tenLop, String nienKhoa) async {
+  static Future<bool> postClass(BuildContext context, String idgv,
+      String tenLop, String nienKhoa, User us) async {
     String? token = await getToken();
     String url = fetchClassObject;
     Map body = {
@@ -121,7 +132,10 @@ class ClassRoomProvider {
               actions: [
                 TextButton(
                     onPressed: () {
-                      Navigator.pop(context);
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (ctx) => ClassPage(us: us)));
                     },
                     child: Text('OK',
                         style:
@@ -129,7 +143,7 @@ class ClassRoomProvider {
               ],
             );
           });
-      //Đặt cái di chuyển về màng hình danh sách lớp
+
       return true;
     } else {
       print('có lổi xảy ra');

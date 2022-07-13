@@ -161,6 +161,7 @@ class _ClassPageState extends State<ClassPage> {
                                           MaterialPageRoute(
                                               builder: (context) => ClassDetail(
                                                     id: lstClass['id'],
+                                                    us: us,
                                                   )),
                                         );
                                       },
@@ -197,14 +198,17 @@ class _ClassPageState extends State<ClassPage> {
                                                         ClassRoomProvider
                                                             .updateClass(
                                                                 context,
-                                                                lstClass['id'],
+                                                                lstClass['id']
+                                                                    .toString(),
                                                                 lstClass[
-                                                                    'id_giangvien'],
+                                                                        'id_giangvien']
+                                                                    .toString(),
                                                                 lstClass[
                                                                     'ten_lop'],
                                                                 lstClass[
                                                                     'nien_khoa'],
-                                                                0.toString());
+                                                                0.toString(),
+                                                                us);
                                                       },
                                                       child: Text('Có',
                                                           style: ggTextStyle(
@@ -315,8 +319,12 @@ class _ClassPageState extends State<ClassPage> {
             child: new Icon(Icons.add),
             backgroundColor: AppColor.theme,
             onPressed: () {
-              Navigator.push(context,
-                  MaterialPageRoute(builder: ((context) => CreateClass())));
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: ((context) => CreateClass(
+                            us: us,
+                          ))));
             }));
   }
 }
