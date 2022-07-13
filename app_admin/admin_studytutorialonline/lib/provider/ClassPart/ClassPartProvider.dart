@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:admin_studytutorialonline/common/contrains/string.dart';
 import 'package:admin_studytutorialonline/data/ClassPart.dart';
 import 'package:admin_studytutorialonline/page/AD_ClassPart.dart';
+import 'package:dio/dio.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
@@ -31,20 +32,23 @@ class ClassPartProvider {
       String id_bo_mon, String id_lop, User us) async {
     String? token = await getToken();
     String url = createClassPartObject;
-    Map body = {
+    Dio dio = new Dio();
+    FormData formData;
+    formData = new FormData.fromMap({
       'id_bo_mon': id_bo_mon,
       'id_lop': id_lop,
       'trang_thai': "1",
       'avt': imgClassPart
-    };
-    var response = await http.post(Uri.parse(url),
-        headers: <String, String>{
+    });
+
+    var response = await dio.post(url,
+        data: formData,
+        options: Options(headers: {
           'Accept': 'application/json',
           'Authorization': 'Bearer ${token!}'
-        },
-        body: body);
+        }));
     if (response.statusCode == 200) {
-      final jsonResponse = ClassPart.fromJson(json.decode(response.body));
+      final jsonResponse = ClassPart.fromJson(json.decode(response.data));
       showDialog(
           context: context,
           builder: (BuildContext context) {
