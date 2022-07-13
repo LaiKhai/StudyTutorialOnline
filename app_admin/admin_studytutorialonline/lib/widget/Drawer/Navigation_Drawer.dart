@@ -136,7 +136,7 @@ class _NavigationdrawerwidgetState extends State<Navigationdrawerwidget> {
                   bottom: 5,
                   right: 0),
               ButtonWidget(
-                  icon: Icons.class__rounded,
+                  icon: Icons.class_rounded,
                   text: 'Bộ môn',
                   onClicked: () {
                     Navigator.push(

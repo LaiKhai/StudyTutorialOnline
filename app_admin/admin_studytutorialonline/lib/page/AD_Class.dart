@@ -1,9 +1,7 @@
 import 'dart:convert';
-
-import 'package:admin_studytutorialonline/data/ClassRoom.dart';
 import 'package:admin_studytutorialonline/page/AD_CreateClass.dart';
+import 'package:admin_studytutorialonline/page/Class_detail.dart';
 import 'package:admin_studytutorialonline/provider/ClassRoom/ClassRoomProvider.dart';
-import 'package:admin_studytutorialonline/widget/ClassPage/AD_ClassList.dart';
 import 'package:flutter/material.dart';
 
 import '../common/contrains/color.dart';
@@ -128,7 +126,7 @@ class _ClassPageState extends State<ClassPage> {
             Container(
               padding: const EdgeInsets.all(20),
               child: Text(
-                'Danh sách các thông báo',
+                'Danh sách lớp',
                 style: ggTextStyle(13, FontWeight.bold, AppColor.grey),
               ),
             ),
@@ -156,71 +154,146 @@ class _ClassPageState extends State<ClassPage> {
                               return Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
-                                    Card(
-                                        shape: RoundedRectangleBorder(
-                                            borderRadius:
-                                                BorderRadius.circular(10)),
-                                        semanticContainer: true,
-                                        margin:
-                                            EdgeInsets.fromLTRB(20, 0, 20, 20),
-                                        child: ListTile(
-                                            title: Container(
-                                              margin: EdgeInsets.all(5),
-                                              child: Text(lstClass['ten_lop'],
-                                                  style: ggTextStyle(
-                                                      20,
-                                                      FontWeight.bold,
-                                                      AppColor.theme)),
-                                            ),
-                                            subtitle: Container(
-                                              margin: EdgeInsets.fromLTRB(
-                                                  0, 0, 0, 8),
-                                              child: Row(
-                                                //mainAxisAlignment: MainAxisAlignment.start,
-                                                children: [
-                                                  Container(
-                                                    margin: EdgeInsets.only(
-                                                        right: 10),
-                                                    child: Row(children: [
-                                                      Container(
-                                                        child: Icon(
-                                                          Icons.man_rounded,
-                                                          size: 15,
-                                                        ),
-                                                      ),
-                                                      Container(
-                                                        child: Text(
-                                                            lstClass['ho_ten'],
-                                                            style: ggTextStyle(
-                                                                12,
-                                                                FontWeight.bold,
-                                                                AppColor
-                                                                    .black)),
-                                                      )
-                                                    ]),
-                                                  ),
-                                                  Container(
-                                                    child: Row(
-                                                      children: [
+                                    InkWell(
+                                      onTap: () {
+                                        Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                              builder: (context) => ClassDetail(
+                                                    id: lstClass['id'],
+                                                  )),
+                                        );
+                                      },
+                                      onLongPress: () {
+                                        showDialog(
+                                            context: context,
+                                            builder: (BuildContext context) {
+                                              return AlertDialog(
+                                                content: Text(
+                                                    'Bạn muốn xoá lớp này?',
+                                                    style: ggTextStyle(
+                                                        13,
+                                                        FontWeight.bold,
+                                                        AppColor.black)),
+                                                title: Row(
+                                                  children: [
+                                                    const Icon(
+                                                      Icons.warning_rounded,
+                                                      color: AppColor.theme,
+                                                    ),
+                                                    SizedBox(
+                                                      width: 10,
+                                                    ),
+                                                    Text('Thông báo',
+                                                        style: ggTextStyle(
+                                                            13,
+                                                            FontWeight.bold,
+                                                            AppColor.black))
+                                                  ],
+                                                ),
+                                                actions: [
+                                                  TextButton(
+                                                      onPressed: () {
+                                                        ClassRoomProvider
+                                                            .updateClass(
+                                                                context,
+                                                                lstClass['id'],
+                                                                lstClass[
+                                                                    'id_giangvien'],
+                                                                lstClass[
+                                                                    'ten_lop'],
+                                                                lstClass[
+                                                                    'nien_khoa'],
+                                                                0.toString());
+                                                      },
+                                                      child: Text('Có',
+                                                          style: ggTextStyle(
+                                                              13,
+                                                              FontWeight.bold,
+                                                              AppColor.black))),
+                                                  TextButton(
+                                                      onPressed: () {
+                                                        Navigator.pop(context);
+                                                      },
+                                                      child: Text('Không',
+                                                          style: ggTextStyle(
+                                                              13,
+                                                              FontWeight.bold,
+                                                              AppColor.black)))
+                                                ],
+                                              );
+                                            });
+                                      },
+                                      child: Card(
+                                          shape: RoundedRectangleBorder(
+                                              borderRadius:
+                                                  BorderRadius.circular(10)),
+                                          semanticContainer: true,
+                                          margin: EdgeInsets.fromLTRB(
+                                              20, 0, 20, 20),
+                                          child: ListTile(
+                                              title: Container(
+                                                margin: EdgeInsets.all(5),
+                                                child: Text(lstClass['ten_lop'],
+                                                    style: ggTextStyle(
+                                                        20,
+                                                        FontWeight.bold,
+                                                        AppColor.theme)),
+                                              ),
+                                              subtitle: Container(
+                                                margin: EdgeInsets.fromLTRB(
+                                                    0, 0, 0, 8),
+                                                child: Row(
+                                                  //mainAxisAlignment: MainAxisAlignment.start,
+                                                  children: [
+                                                    Container(
+                                                      margin: EdgeInsets.only(
+                                                          right: 10),
+                                                      child: Row(children: [
                                                         Container(
-                                                            child: Icon(Icons
-                                                                .domain_verification_outlined)),
+                                                          child: Icon(
+                                                            Icons.man_rounded,
+                                                            size: 15,
+                                                          ),
+                                                        ),
                                                         Container(
                                                           child: Text(
-                                                            lstClass[
-                                                                'nien_khoa'],
-                                                            style: ggTextStyle(
-                                                                12,
-                                                                FontWeight.bold,
-                                                                AppColor.black),
-                                                          ),
+                                                              lstClass[
+                                                                  'ho_ten'],
+                                                              style: ggTextStyle(
+                                                                  12,
+                                                                  FontWeight
+                                                                      .bold,
+                                                                  AppColor
+                                                                      .black)),
                                                         )
-                                                      ],
+                                                      ]),
                                                     ),
-                                                  )
-                                                ],
-                                              ),
-                                            )))
+                                                    Container(
+                                                      child: Row(
+                                                        children: [
+                                                          Container(
+                                                              child: Icon(Icons
+                                                                  .domain_verification_outlined)),
+                                                          Container(
+                                                            child: Text(
+                                                              lstClass[
+                                                                  'nien_khoa'],
+                                                              style: ggTextStyle(
+                                                                  12,
+                                                                  FontWeight
+                                                                      .bold,
+                                                                  AppColor
+                                                                      .black),
+                                                            ),
+                                                          )
+                                                        ],
+                                                      ),
+                                                    )
+                                                  ],
+                                                ),
+                                              ))),
+                                    )
                                   ]);
                             });
                       } else if (snapshot.hasError) {

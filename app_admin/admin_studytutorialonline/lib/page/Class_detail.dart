@@ -1,9 +1,8 @@
 import 'package:admin_studytutorialonline/data/Teacher.dart';
-import 'package:admin_studytutorialonline/data/Teachers.dart';
-import 'package:admin_studytutorialonline/data/model_duy/Khoas_model.dart';
+import 'package:admin_studytutorialonline/data/model_duy/Class_model.dart';
 import 'package:admin_studytutorialonline/data/model_duy/giangVien_model.dart';
 import 'package:admin_studytutorialonline/provider/ClassPart/ClassPartProvider.dart';
-import 'package:admin_studytutorialonline/provider/Department/DepartmentProvider.dart';
+import 'package:admin_studytutorialonline/provider/ClassRoom/ClassRoomProvider.dart';
 import 'package:admin_studytutorialonline/provider/Teacher/TeacherProvider.dart';
 import 'package:admin_studytutorialonline/widget/InputForm.dart';
 import 'package:flutter/material.dart';
@@ -12,14 +11,15 @@ import '../common/contrains/color.dart';
 import '../common/contrains/dimen.dart';
 import '../common/contrains/string.dart';
 
-class CreateClass extends StatefulWidget {
-  const CreateClass({Key? key}) : super(key: key);
+class ClassDetail extends StatefulWidget {
+  int id;
+  ClassDetail({Key? key, required this.id}) : super(key: key);
 
   @override
-  State<CreateClass> createState() => _CreateClassState();
+  State<ClassDetail> createState() => _ClassDetailState();
 }
 
-class _CreateClassState extends State<CreateClass> {
+class _ClassDetailState extends State<ClassDetail> {
   TextEditingController _tenlopController = TextEditingController();
   TextEditingController _nienkhoaController =
       TextEditingController(text: DateTime.now().year.toString());
@@ -27,8 +27,11 @@ class _CreateClassState extends State<CreateClass> {
   Khoa? value1;
   List<GiangVien_model> teachers = [];
   GiangVien_model? value2;
+  ClassModel? classer;
+  getLop() async {}
+
   getBanDau() async {
-    Khoas lst = await DepartmentProvider.getAllKhoa();
+    // Khoas lst = await DepartmentProvider.getAllKhoa();
 
     if (TeacherProvider.getAllGiangVien() != null) {
       final teachers_model = await TeacherProvider.getAllGiangVien();
@@ -36,11 +39,23 @@ class _CreateClassState extends State<CreateClass> {
       setState(() {
         teachers = teachers_model!.user!;
       });
+      classer = await ClassPartProvider.getOneClass(widget.id);
+      if (classer != null) {
+        for (int i = 0; i < teachers_model!.user!.length; i++) {
+          if (teachers_model.user![i].id == classer!.lop!.giangvien!.id) {
+            setState(() {
+              _nienkhoaController.text = classer!.lop!.nienKhoa!;
+              _tenlopController.text = classer!.lop!.tenLop!;
+              value2 = teachers_model.user![i];
+            });
+          }
+        }
+      }
     }
 
-    setState(() {
-      khoas = lst.khoa!;
-    });
+    // setState(() {
+    //   khoas = lst.khoa!;
+    // });
   }
 
   @override
@@ -69,7 +84,7 @@ class _CreateClassState extends State<CreateClass> {
                         getWidthSize(context) * 0.05, 20, 0, 0),
                     width: getWidthSize(context),
                     child: Text(
-                      'Tạo Lớp',
+                      'Sửa Lớp',
                       style: ggTextStyle(40, FontWeight.bold, AppColor.theme),
                     ),
                   ),
@@ -146,7 +161,7 @@ class _CreateClassState extends State<CreateClass> {
                             height: getHeightSize(context) * 0.06,
                             child: ElevatedButton(
                               child: Text(
-                                'Thêm',
+                                'Lưu thay đổi',
                                 style: ggTextStyle(
                                     20, FontWeight.bold, AppColor.white),
                               ),
@@ -237,10 +252,13 @@ class _CreateClassState extends State<CreateClass> {
                                 if (value2 != null &&
                                     _tenlopController.text != '' &&
                                     _nienkhoaController.text != '') {
-                                  ClassPartProvider.postClass(context,
+                                  ClassRoomProvider.updateClass(
+                                      context,
+                                      widget.id.toString(),
                                       value2!.id.toString(),
                                       _tenlopController.text,
-                                      _nienkhoaController.text);
+                                      _nienkhoaController.text,
+                                      '1');
                                 }
                               },
                               style: ButtonStyle(

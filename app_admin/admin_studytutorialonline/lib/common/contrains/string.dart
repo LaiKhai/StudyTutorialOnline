@@ -28,6 +28,8 @@ const String getTeacherwithDepartment =
     baseUrl + '/api/searchGiangVienwithKhoa';
 const String getStudentwithDepartment = baseUrl + '/api/searchSinhVienwithKhoa';
 
+const String updateclasses = baseUrl + '/api/lop/';
+
 //Tao bomon
 const String createSubjectObject = baseUrl + '/api/bomon';
 const String detailSubjectObject = baseUrl + '/api/bomon/';
@@ -53,3 +55,4 @@ const String getAllposts = baseUrl + '/api/baiviet';
 const String createClassPartObject = baseUrl + '/api/lophocphan';
 const String classPartDetail = baseUrl + '/api/lophocphan/';
 const String updateClassPartObject = baseUrl + '/api/lophocphan/';
+const String getallGiangVien = baseUrl + '/api/giangvien';

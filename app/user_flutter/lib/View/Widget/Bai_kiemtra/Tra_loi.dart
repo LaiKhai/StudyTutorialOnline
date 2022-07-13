@@ -17,7 +17,7 @@ class _Tra_LoiState extends State<Tra_Loi> {
   chonAnh() async {
     FilePickerResult? result = await FilePicker.platform.pickFiles(
         type: FileType.custom,
-        allowedExtensions: ['jpg', 'png'],
+        allowedExtensions: ['jpg', 'png', 'jpg', 'pdf', 'doc'],
         allowMultiple: true);
 
     if (result != null) {

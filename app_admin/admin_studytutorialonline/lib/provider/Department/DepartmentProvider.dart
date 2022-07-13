@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:admin_studytutorialonline/data/Department.dart';
+import 'package:admin_studytutorialonline/data/model_duy/Khoas_model.dart';
 import 'package:admin_studytutorialonline/page/AD_CreateDepartmentPage.dart';
 import 'package:admin_studytutorialonline/page/AD_DepartmentPage.dart';
 import 'package:flutter/cupertino.dart';
@@ -320,6 +321,20 @@ class DepartmentProvider {
               ],
             );
           });
+    }
+  }
+
+  static Future<Khoas> getAllKhoa() async {
+    String? token = await getToken();
+    final response = await http.get(Uri.parse(fetchDepartmentObject), headers: {
+      'Accept': 'application/json',
+      'Authorization': 'Bearer ${token!}'
+    });
+    if (response.statusCode == 200) {
+      final jsonresponse = Khoas.fromJson(json.decode(response.body));
+      return jsonresponse;
+    } else {
+      return new Khoas();
     }
   }
 }

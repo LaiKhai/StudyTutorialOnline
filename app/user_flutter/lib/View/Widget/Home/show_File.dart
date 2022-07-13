@@ -12,8 +12,8 @@ class ShowFile extends StatelessWidget {
   Widget build(BuildContext context) {
     if (file.loaiFile!.toUpperCase() == 'PNG' ||
         file.loaiFile!.toUpperCase() == 'JPEG' ||
-        file.loaiFile!.toUpperCase() == 'JPG ') {
-      print('$Link/storage/${file.noiDung}');
+        file.loaiFile!.toUpperCase() == 'JPG') {
+      
       return Image.network('$Link/storage/${file.noiDung}');
     } else {
       return Text(

@@ -1,6 +1,7 @@
 // ignore_for_file: await_only_futures
 
 import 'dart:convert';
+import 'dart:io';
 
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
@@ -15,7 +16,7 @@ import 'package:user_flutter/View/page/subject_view.dart';
 
 class BaiViet {
   static Future<baiViets> getAllBaiViet(int id) async {
-    String url = getListwithclass+id.toString();
+    String url = getListwithclass + id.toString();
     String token = await Login.getToken();
     final response = await http.get(
       Uri.parse(url),
@@ -33,10 +34,14 @@ class BaiViet {
     }
   }
 
-  static Future<bool> postBaiViet(
-      int id_lopHp, String noidung, BuildContext context,int loaiThongBao) async {
+  static Future<bool> postBaiViet(int id_lopHp, String noidung,
+      BuildContext context, int loaiThongBao) async {
     Dio dio = new Dio();
     var lst = [];
+    if (listFile.length == 0) {
+      showCustomDialog(context, 'Đăng bài thất bại', false);
+      return false;
+    }
     if (listFile.length != 0) {
       for (var img in listFile) {
         img.existsSync();
@@ -56,20 +61,20 @@ class BaiViet {
         'id_sinh_vien': user.user!.id.toString(),
         'id_giang_vien': '',
         'noi_dung': noidung,
-        'file': await lst
+        'file[]': await lst
       });
     } else {
       // ignore: unnecessary_new
       formData = new FormData.fromMap({
         'id_lop_hoc_phan': id_lopHp.toString(),
-        'id_loai_bai_viet': '1',
+        'id_loai_bai_viet': loaiThongBao.toString(),
         'id_sinh_vien': '',
         'id_giang_vien': user.user!.id.toString(),
         'noi_dung': noidung,
-        'file': await lst
+        'file[]': await lst
       });
     }
-
+    listFile.clear();
     final response = await dio.post(url,
         data: formData,
         options: Options(headers: {

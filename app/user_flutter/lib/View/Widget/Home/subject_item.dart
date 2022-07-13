@@ -5,6 +5,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:user_flutter/Model/color_Subject.dart';
 import 'package:user_flutter/Model/lop_HP.dart';
 import 'package:user_flutter/Model/subject.dart';
+import 'package:user_flutter/View/common/constant/dimen.dart';
 import 'package:user_flutter/View/common/constant/string.dart';
 import '../../common/constant/color.dart';
 
@@ -43,26 +44,28 @@ class SubjectItem extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    subject.tenMonHoc!,
-                    style: GoogleFonts.quicksand(
-                      color: AppColor.white,
-                      fontSize: 24,
-                      fontWeight: FontWeight.w600,
+              SizedBox(
+                width: getWidthSize(context) * 1 / 2,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      subject.tenMonHoc!,
+                      style: GoogleFonts.quicksand(
+                        color: AppColor.white,
+                        fontSize: 24,
+                        fontWeight: FontWeight.w600,
+                      ),
                     ),
-                  ),
-                  const SizedBox(height: 4),
-                  Text(
-                    subject.tenLop!,
-                    style: GoogleFonts.quicksand(
-                      color: AppColor.white.withOpacity(0.75),
-                      fontWeight: FontWeight.w500,
-                    ),
-                  ),
-                ],
+                    const SizedBox(height: 4),
+                    Text(subject.tenLop!,
+                        style: GoogleFonts.quicksand(
+                          color: AppColor.white.withOpacity(0.75),
+                          fontWeight: FontWeight.w500,
+                        ),
+                        overflow: TextOverflow.clip),
+                  ],
+                ),
               ),
               CircleAvatar(
                   radius: 40,
