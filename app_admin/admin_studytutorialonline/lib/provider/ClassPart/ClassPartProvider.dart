@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:admin_studytutorialonline/common/contrains/string.dart';
 import 'package:admin_studytutorialonline/data/ClassPart.dart';
+import 'package:admin_studytutorialonline/data/ClassPartCreate.dart';
 import 'package:admin_studytutorialonline/page/AD_ClassPart.dart';
 import 'package:dio/dio.dart';
 import 'package:file_picker/file_picker.dart';
@@ -44,11 +45,12 @@ class ClassPartProvider {
     var response = await dio.post(url,
         data: formData,
         options: Options(headers: {
-          'Accept': 'application/json',
+          HttpHeaders.contentTypeHeader: "application/json",
           'Authorization': 'Bearer ${token!}'
         }));
     if (response.statusCode == 200) {
-      final jsonResponse = ClassPart.fromJson(json.decode(response.data));
+      final jsonResponse =
+          ClassPartCreate.fromJson(json.decode(response.data.toString()));
       showDialog(
           context: context,
           builder: (BuildContext context) {
