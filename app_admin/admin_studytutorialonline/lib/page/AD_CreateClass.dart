@@ -125,7 +125,6 @@ class _CreateClassState extends State<CreateClass> {
                           value: value2,
                           items: teachers.map(buildItem2).toList(),
                           onChanged: (value) {
-                            print(value2!.id);
                             setState(() => this.value2 = value);
                           })),
                   FormInput(
