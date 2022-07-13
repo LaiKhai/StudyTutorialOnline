@@ -27,18 +27,17 @@ class ClassRoomProvider {
 
   static Future<bool> updateClass(
       BuildContext context,
+      String idKhoa,
       String idClass,
       String idGV,
       String tenLop,
+      
       String nienKhoa,
       String trangThai,
       User us) async {
-    print('urlssidGV ' + idGV.toString());
-    print('urlsstenLop ' + tenLop.toString());
-    print('urlssnienKhoa ' + nienKhoa.toString());
-    print('urlsstrangThai ' + trangThai.toString());
     String? token = await getToken();
     Map Body = {
+      'id_khoa':idKhoa.toString(),
       'id_giangvien': idGV.toString(),
       'ten_lop': tenLop.toString(),
       'nien_khoa': nienKhoa,

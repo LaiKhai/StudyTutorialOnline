@@ -1,8 +1,10 @@
 import 'package:admin_studytutorialonline/data/Teacher.dart';
 import 'package:admin_studytutorialonline/data/model_duy/Class_model.dart';
+import 'package:admin_studytutorialonline/data/model_duy/Khoas_model.dart';
 import 'package:admin_studytutorialonline/data/model_duy/giangVien_model.dart';
 import 'package:admin_studytutorialonline/provider/ClassPart/ClassPartProvider.dart';
 import 'package:admin_studytutorialonline/provider/ClassRoom/ClassRoomProvider.dart';
+import 'package:admin_studytutorialonline/provider/Department/DepartmentProvider.dart';
 import 'package:admin_studytutorialonline/provider/Teacher/TeacherProvider.dart';
 import 'package:admin_studytutorialonline/widget/InputForm.dart';
 import 'package:flutter/material.dart';
@@ -39,8 +41,9 @@ class _ClassDetailState extends State<ClassDetail> {
 
     if (TeacherProvider.getAllGiangVien() != null) {
       final teachers_model = await TeacherProvider.getAllGiangVien();
-
+      Khoas lst = await DepartmentProvider.getAllKhoa();
       setState(() {
+        khoas = lst.khoa!;
         teachers = teachers_model!.user!;
       });
       classer = await ClassRoomProvider.getOneClass(widget.id);
@@ -52,14 +55,15 @@ class _ClassDetailState extends State<ClassDetail> {
               _tenlopController.text = classer!.lop!.tenLop!;
               value2 = teachers_model.user![i];
             });
+            if (khoas[i].id == classer!.lop!.idKhoa) {
+              setState(() {
+                value1 = khoas[i];
+              });
+            }
           }
         }
       }
     }
-
-    // setState(() {
-    //   khoas = lst.khoa!;
-    // });
   }
 
   @override
@@ -99,6 +103,25 @@ class _ClassDetailState extends State<ClassDetail> {
                     width: getWidthSize(context),
                     color: AppColor.theme,
                   ),
+                  Container(
+                    margin: EdgeInsets.fromLTRB(getWidthSize(context) * 0.05,
+                        20, getWidthSize(context) * 0.05, 10),
+                    width: getWidthSize(context),
+                    child: Text(
+                      'Khoa',
+                      style: ggTextStyle(13, FontWeight.bold, AppColor.black),
+                    ),
+                  ),
+                  Container(
+                      margin: EdgeInsets.fromLTRB(getWidthSize(context) * 0.05,
+                          5, getWidthSize(context) * 0.05, 10),
+                      child: DropdownButton<Khoa>(
+                        isExpanded: true,
+                        value: value1,
+                        items: khoas.map(buildItem).toList(),
+                        onChanged: (value) =>
+                            setState(() => this.value1 = value),
+                      )),
                   Container(
                     margin: EdgeInsets.fromLTRB(getWidthSize(context) * 0.05,
                         20, getWidthSize(context) * 0.05, 10),
@@ -170,6 +193,46 @@ class _ClassDetailState extends State<ClassDetail> {
                                     20, FontWeight.bold, AppColor.white),
                               ),
                               onPressed: () {
+                                if (value1 == null) {
+                                  showDialog(
+                                      context: context,
+                                      builder: (BuildContext context) {
+                                        return AlertDialog(
+                                          content: Text('Hãy chọn khoa trước!',
+                                              style: ggTextStyle(
+                                                  13,
+                                                  FontWeight.bold,
+                                                  AppColor.black)),
+                                          title: Row(
+                                            children: [
+                                              Icon(
+                                                Icons.warning_rounded,
+                                                color: AppColor.theme,
+                                              ),
+                                              SizedBox(
+                                                width: 10,
+                                              ),
+                                              Text('Thông báo',
+                                                  style: ggTextStyle(
+                                                      13,
+                                                      FontWeight.bold,
+                                                      AppColor.black))
+                                            ],
+                                          ),
+                                          actions: [
+                                            TextButton(
+                                                onPressed: () {
+                                                  Navigator.pop(context);
+                                                },
+                                                child: Text('OK',
+                                                    style: ggTextStyle(
+                                                        13,
+                                                        FontWeight.bold,
+                                                        AppColor.black)))
+                                          ],
+                                        );
+                                      });
+                                }
                                 if (value2 == null) {
                                   showDialog(
                                       context: context,
@@ -255,9 +318,11 @@ class _ClassDetailState extends State<ClassDetail> {
                                 }
                                 if (value2 != null &&
                                     _tenlopController.text != '' &&
+                                    value1 != null &&
                                     _nienkhoaController.text != '') {
                                   ClassRoomProvider.updateClass(
                                       context,
+                                      value1!.id.toString(),
                                       widget.id.toString(),
                                       value2!.id.toString(),
                                       _tenlopController.text,

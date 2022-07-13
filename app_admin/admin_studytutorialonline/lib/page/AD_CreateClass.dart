@@ -124,25 +124,6 @@ class _CreateClassState extends State<CreateClass> {
                         onChanged: (value) =>
                             setState(() => this.value2 = value),
                       )),
-                  Container(
-                    margin: EdgeInsets.fromLTRB(getWidthSize(context) * 0.05,
-                        20, getWidthSize(context) * 0.05, 10),
-                    width: getWidthSize(context),
-                    child: Text(
-                      'Giảng Viên Chủ Nhiệm',
-                      style: ggTextStyle(13, FontWeight.bold, AppColor.black),
-                    ),
-                  ),
-                  Container(
-                      margin: EdgeInsets.fromLTRB(getWidthSize(context) * 0.05,
-                          5, getWidthSize(context) * 0.05, 10),
-                      child: DropdownButton<GiangVien_model>(
-                        isExpanded: true,
-                        value: value2,
-                        items: teachers.map(buildItem2).toList(),
-                        onChanged: (value) =>
-                            setState(() => this.value2 = value),
-                      )),
                   FormInput(
                       isRead: false,
                       txtController: _tenlopController,
