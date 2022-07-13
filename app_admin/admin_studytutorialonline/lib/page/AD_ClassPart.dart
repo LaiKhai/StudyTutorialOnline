@@ -137,7 +137,7 @@ class _ClassPartPageState extends State<ClassPartPage> {
             Container(
               padding: const EdgeInsets.all(20),
               child: Text(
-                'Danh sách các thông báo',
+                'Danh sách các lớp học phần',
                 style: ggTextStyle(13, FontWeight.bold, AppColor.grey),
               ),
             ),

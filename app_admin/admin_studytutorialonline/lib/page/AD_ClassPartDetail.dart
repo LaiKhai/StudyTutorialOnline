@@ -167,20 +167,19 @@ class _ClassPartDetailState extends State<ClassPartDetail> {
                                                   Container(
                                                     child: TextButton(
                                                         onPressed: () {
-                                                          // ClassPartProvider
-                                                          //     .deleteClassPart(
-                                                          //         context,
-                                                          //         classPart.avt
-                                                          //             .toString(),
-                                                          //         classPart
-                                                          //             .idBoMon
-                                                          //             .toString(),
-                                                          //         classPart
-                                                          //             .idLop
-                                                          //             .toString(),
-                                                          //         us,
-                                                          //         classpartID);
-                                                          print(classPart.avt);
+                                                          ClassPartProvider
+                                                              .deleteClassPart(
+                                                                  context,
+                                                                  classPart.avt
+                                                                      .toString(),
+                                                                  classPart
+                                                                      .idBoMon
+                                                                      .toString(),
+                                                                  classPart
+                                                                      .idLop
+                                                                      .toString(),
+                                                                  us,
+                                                                  classpartID);
                                                         },
                                                         child: Text('Có',
                                                             style: ggTextStyle(

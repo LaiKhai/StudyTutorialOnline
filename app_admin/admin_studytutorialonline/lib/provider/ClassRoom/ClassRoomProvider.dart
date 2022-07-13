@@ -50,8 +50,8 @@ class ClassRoomProvider {
           'Authorization': 'Bearer ${token!}'
         },
         body: Body);
-    final parsed = jsonDecode(response.body)['status'];
-    if (parsed == true) {
+
+    if (response.statusCode == 200) {
       showDialog(
           context: context,
           builder: (BuildContext context) {
@@ -83,6 +83,37 @@ class ClassRoomProvider {
                               builder: (ctx) => ClassPage(us: us)));
                     },
                     child: Text('OK',
+                        style:
+                            ggTextStyle(13, FontWeight.bold, AppColor.black)))
+              ],
+            );
+          });
+    } else if (response.statusCode == 500) {
+      showDialog(
+          context: context,
+          builder: (BuildContext context) {
+            return AlertDialog(
+              content: Text('Lỗi máy chủ',
+                  style: ggTextStyle(13, FontWeight.bold, AppColor.black)),
+              title: Row(
+                children: [
+                  Icon(
+                    Icons.warning_rounded,
+                    color: AppColor.theme,
+                  ),
+                  SizedBox(
+                    width: 10,
+                  ),
+                  Text('Thông báo',
+                      style: ggTextStyle(13, FontWeight.bold, AppColor.black))
+                ],
+              ),
+              actions: [
+                TextButton(
+                    onPressed: () {
+                      Navigator.pop(context);
+                    },
+                    child: Text('Quay lại danh sách bộ môn',
                         style:
                             ggTextStyle(13, FontWeight.bold, AppColor.black)))
               ],
