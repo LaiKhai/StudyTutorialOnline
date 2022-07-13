@@ -199,6 +199,7 @@ class LopController extends Controller
     {
         $khoa = $request->input('khoa');
         $lop = Lop::join('khoas', 'lops.id_khoa', '=', 'khoas.id')
+            ->join('giang_viens', 'lops.id_giangvien', '=', 'giang_viens.id')
             ->where('khoas.ten_khoa', 'like', '%' . $khoa . '%')
             ->select('lops.*')->get();
         if (empty($lop)) {
