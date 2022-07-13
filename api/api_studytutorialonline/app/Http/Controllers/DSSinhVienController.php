@@ -51,7 +51,26 @@ class DSSinhVienController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $input['id_sinh_vien'] = $request->input('id_sinh_vien');
+        $input['id_lop_hoc_phan'] = $request->input('id_lop_hoc_phan');
+        $input['trang_thai'] = "1";
+
+        $validator = Validator::make($input, [
+            'id_sinh_vien' => ['required', 'max:255', 'integer'],
+            'id_lop_hoc_phan' => ['required', 'max:255', 'integer'],
+            'trang_thai' => ['required', 'max:255', 'integer'],
+        ]);
+        if ($validator->fails()) {
+            if (!empty($validator->errors())) {
+                $response['data'] = $validator->errors();
+                $response['status'] = false;
+            }
+            $response['message'] = 'Vaidator Error';
+            return response()->json($response, 404);
+        }
+        $dssv = DS_SinhVien::create($input);
+        $response = ['status' => true, 'dssv' => $dssv];
+        return response()->json($response, 200);
     }
 
     /**
