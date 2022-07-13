@@ -140,10 +140,7 @@ class BoMonController extends Controller
             'trang_thai' => $request->input('trang_thai'),
         ]);
         $boMon->save();
-        $boMon = BoMon::join('khoas', 'bo_mons.id_khoa', '=', 'khoas.id')
-            ->where('bo_mons.id', $id)
-            ->select('bo_mons.*', 'khoas.ten_khoa')
-            ->first();
+        $boMon->khoa;
 
         $response = [
             'status' => true,
