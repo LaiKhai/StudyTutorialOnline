@@ -85,7 +85,7 @@ class _SubjectSettingState extends State<SubjectSetting> {
                 child: Text('Có lỗi xảy ra !'),
               );
             } else if (snapshot.hasData) {
-              Subject subjectObject = snapshot.data!;
+              OnlySubject subjectObject = snapshot.data!.only_subject!;
               return SingleChildScrollView(
                   child: Container(
                       color: AppColor.white,
@@ -137,7 +137,7 @@ class _SubjectSettingState extends State<SubjectSetting> {
                             value: selectedValue,
                             isExpanded: true,
                             hint: Text(
-                              subjectObject.ten_khoa,
+                              subjectObject.tenKhoa!,
                               style: ggTextStyle(
                                   13, FontWeight.bold, AppColor.grey),
                             ),
@@ -180,7 +180,7 @@ class _SubjectSettingState extends State<SubjectSetting> {
                                     controller: _tenmonhocController,
                                     decoration: InputDecoration(
                                       prefixIcon: Icon(Icons.book),
-                                      hintText: subjectObject.ten_mon_hoc,
+                                      hintText: subjectObject.tenMonHoc,
                                       border: new OutlineInputBorder(
                                           borderSide: new BorderSide(
                                               color: AppColor.theme)),
@@ -213,7 +213,8 @@ class _SubjectSettingState extends State<SubjectSetting> {
                           child: DropdownButton(
                             value: value2,
                             isExpanded: true,
-                            hint: loaiMonHoc(subjectObject.loai_mon_hoc),
+                            hint:
+                                loaiMonHoc(subjectObject.loaiMonHoc.toString()),
                             items: item2.map((item) {
                               return DropdownMenuItem(
                                 value: item['value'],

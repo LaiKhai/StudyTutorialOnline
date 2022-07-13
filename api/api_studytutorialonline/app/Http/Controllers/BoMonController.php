@@ -163,14 +163,11 @@ class BoMonController extends Controller
         $lstBoMon = BoMon::all();
         foreach ($lstBoMon as $item) {
             $item->khoa;
-            $lophocphan = BoMon::join('lop_hoc_phans', 'lop_hoc_phans.id_bo_mon', '=', 'bo_mons.id')
-                ->where('lop_hoc_phans.id_bo_mon', $item->lophocphan)->get();
         }
 
         $response = [
             'status' => true,
             'bomon' => $lstBoMon,
-            'lophoaphan' => $lophocphan
         ];
         return response()->json($response, 200);
     }
