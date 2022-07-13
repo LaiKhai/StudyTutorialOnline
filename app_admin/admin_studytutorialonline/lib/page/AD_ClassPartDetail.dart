@@ -11,7 +11,7 @@ import '../widget/InputForm.dart';
 class ClassPartDetail extends StatefulWidget {
   final User us;
   final int classpartID;
-  const ClassPartDetail({Key? key, required this.us, required this.classpartID})
+  ClassPartDetail({Key? key, required this.us, required this.classpartID})
       : super(key: key);
 
   @override
@@ -41,6 +41,7 @@ class _ClassPartDetailState extends State<ClassPartDetail> {
                 );
               } else if (snapshot.hasData) {
                 Lophocphan classPart = snapshot.data!.lophocphan!;
+                print(snapshot.data!.lophocphan!.avt);
                 if (classPart.trangThai != "0") {
                   return SingleChildScrollView(
                     child: Container(
@@ -166,19 +167,20 @@ class _ClassPartDetailState extends State<ClassPartDetail> {
                                                   Container(
                                                     child: TextButton(
                                                         onPressed: () {
-                                                          ClassPartProvider
-                                                              .deleteClassPart(
-                                                                  context,
-                                                                  classPart.avt
-                                                                      .toString(),
-                                                                  classPart
-                                                                      .idBoMon
-                                                                      .toString(),
-                                                                  classPart
-                                                                      .idLop
-                                                                      .toString(),
-                                                                  us,
-                                                                  classpartID);
+                                                          // ClassPartProvider
+                                                          //     .deleteClassPart(
+                                                          //         context,
+                                                          //         classPart.avt
+                                                          //             .toString(),
+                                                          //         classPart
+                                                          //             .idBoMon
+                                                          //             .toString(),
+                                                          //         classPart
+                                                          //             .idLop
+                                                          //             .toString(),
+                                                          //         us,
+                                                          //         classpartID);
+                                                          print(classPart.avt);
                                                         },
                                                         child: Text('Có',
                                                             style: ggTextStyle(

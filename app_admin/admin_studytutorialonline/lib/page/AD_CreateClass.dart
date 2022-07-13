@@ -1,3 +1,4 @@
+import 'package:admin_studytutorialonline/data/ClassRoom.dart';
 import 'package:admin_studytutorialonline/data/Teacher.dart';
 import 'package:admin_studytutorialonline/data/Teachers.dart';
 import 'package:admin_studytutorialonline/data/model_duy/Khoas_model.dart';
@@ -12,15 +13,19 @@ import 'package:flutter/material.dart';
 import '../common/contrains/color.dart';
 import '../common/contrains/dimen.dart';
 import '../common/contrains/string.dart';
+import '../data/User.dart';
 
 class CreateClass extends StatefulWidget {
-  const CreateClass({Key? key}) : super(key: key);
+  final User us;
+  const CreateClass({Key? key, required this.us}) : super(key: key);
 
   @override
-  State<CreateClass> createState() => _CreateClassState();
+  State<CreateClass> createState() => _CreateClassState(us: us);
 }
 
 class _CreateClassState extends State<CreateClass> {
+  final User us;
+  _CreateClassState({required this.us});
   TextEditingController _tenlopController = TextEditingController();
   TextEditingController _nienkhoaController =
       TextEditingController(text: DateTime.now().year.toString());
@@ -280,7 +285,8 @@ class _CreateClassState extends State<CreateClass> {
                                       context,
                                       value2!.id.toString(),
                                       _tenlopController.text,
-                                      _nienkhoaController.text);
+                                      _nienkhoaController.text,
+                                      us);
                                 }
                               },
                               style: ButtonStyle(

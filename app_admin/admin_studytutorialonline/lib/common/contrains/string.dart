@@ -17,12 +17,13 @@ const String baseUrl = 'http://210.2.86.140';
 const String loginUrl = baseUrl + '/api/admin';
 const String fetchClassObject = baseUrl + '/api/lop';
 const String fetchDepartmentObject = baseUrl + '/api/khoa';
+const String fetchPosition = baseUrl + '/api/chucvu';
 const String fetchStatisticalObject = baseUrl + '/api/thongke';
 const String createDepartmentUrl = baseUrl + '/api/khoa';
 
 //Lay lop, lophocphan, bomon, sinhvien, giangvien theo khoa
 const String getSubjectwithDepartment = baseUrl + '/api/searchBoMon';
-const String getClasswithDepartment = baseUrl + '/api/searchLopwithKhoa';
+const String getClasswithDepartment = baseUrl + '/api/lopwithkhoa';
 const String getClassPartwithDepartment = baseUrl + '/api/lophocphanwithkhoa';
 const String getTeacherwithDepartment =
     baseUrl + '/api/searchGiangVienwithKhoa';
@@ -56,3 +57,4 @@ const String createClassPartObject = baseUrl + '/api/lophocphan';
 const String classPartDetail = baseUrl + '/api/lophocphan/';
 const String updateClassPartObject = baseUrl + '/api/lophocphan/';
 const String getallGiangVien = baseUrl + '/api/giangvien';
+const String createGiangVien = baseUrl + '/api/giangvien';

@@ -133,7 +133,7 @@ class _TeacherPageState extends State<TeacherPage> {
             Container(
               padding: const EdgeInsets.all(20),
               child: Text(
-                'Danh sách các thông báo',
+                'Danh sách các giảng viên',
                 style: ggTextStyle(13, FontWeight.bold, AppColor.grey),
               ),
             ),
@@ -333,8 +333,10 @@ class _TeacherPageState extends State<TeacherPage> {
             child: new Icon(Icons.add),
             backgroundColor: AppColor.theme,
             onPressed: () {
-              Navigator.push(context,
-                  MaterialPageRoute(builder: ((context) => CreateTeacher())));
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: ((context) => CreateTeacher(us: us))));
             }));
   }
 }

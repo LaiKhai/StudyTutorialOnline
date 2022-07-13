@@ -275,14 +275,13 @@ class SinhVienController extends Controller
     public function searchSinhVienwithKhoa(Request $request)
     {
         $searchInput = $request->input('searchSV');
-        $lopHocPhan = LopHocPhan::join('bo_mons', 'lop_hoc_phans.id_bo_mon', '=', 'bo_mons.id')
-            ->join('khoas', 'bo_mons.id_khoa', '=', 'khoas.id')
-            ->join('lops', 'lop_hoc_phans.id_lop', '=', 'lops.id')
-            ->join('sinh_viens', 'sinh_viens.id_lop', '=', 'lops.id')
+        $sinhVien = SinhVien::join('lops', 'sinh_viens.id_lop', '=', 'lops.id')
+            ->join('khoas', 'lops.id_khoa', '=', 'khoas.id')
             ->where('khoas.ten_khoa', 'like', '%' . $searchInput . '%')
-            ->select('sinh_viens.*', 'lops.ten_lop', 'lops.nien_khoa')->distinct()->get();
+            ->select('sinh_viens.*', 'lops.ten_lop', 'lops.nien_khoa')
+            ->get();
         $response = [
-            'data' => $lopHocPhan
+            'data' => $sinhVien
         ];
         return response()->json($response, 200);
     }

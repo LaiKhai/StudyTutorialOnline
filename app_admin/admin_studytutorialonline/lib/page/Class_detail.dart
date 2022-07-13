@@ -10,16 +10,20 @@ import 'package:flutter/material.dart';
 import '../common/contrains/color.dart';
 import '../common/contrains/dimen.dart';
 import '../common/contrains/string.dart';
+import '../data/User.dart';
 
 class ClassDetail extends StatefulWidget {
   int id;
-  ClassDetail({Key? key, required this.id}) : super(key: key);
+  final User us;
+  ClassDetail({Key? key, required this.id, required this.us}) : super(key: key);
 
   @override
-  State<ClassDetail> createState() => _ClassDetailState();
+  State<ClassDetail> createState() => _ClassDetailState(us: us);
 }
 
 class _ClassDetailState extends State<ClassDetail> {
+  final User us;
+  _ClassDetailState({required this.us});
   TextEditingController _tenlopController = TextEditingController();
   TextEditingController _nienkhoaController =
       TextEditingController(text: DateTime.now().year.toString());
@@ -258,7 +262,8 @@ class _ClassDetailState extends State<ClassDetail> {
                                       value2!.id.toString(),
                                       _tenlopController.text,
                                       _nienkhoaController.text,
-                                      '1');
+                                      '1',
+                                      us);
                                 }
                               },
                               style: ButtonStyle(

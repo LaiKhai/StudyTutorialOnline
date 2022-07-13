@@ -44,7 +44,7 @@ class _StudentPageState extends State<StudentPage> {
           'Authorization': 'Bearer ${token!}'
         },
         body: {
-          'search': selectedValue
+          'searchSV': selectedValue
         });
     print(response.body);
     if (response.statusCode == 200) {
@@ -132,7 +132,7 @@ class _StudentPageState extends State<StudentPage> {
             Container(
               padding: const EdgeInsets.all(20),
               child: Text(
-                'Danh sách các thông báo',
+                'Danh sách các sinh viên',
                 style: ggTextStyle(13, FontWeight.bold, AppColor.grey),
               ),
             ),

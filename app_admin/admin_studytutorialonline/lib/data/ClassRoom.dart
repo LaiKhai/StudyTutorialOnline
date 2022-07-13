@@ -11,6 +11,6 @@ class ClassRoom {
       : id = json['id'],
         tenlop = json['ten_lop'],
         nienkhoa = json['nien_khoa'],
-        giangvien = json['giangvien']['ho_ten'],
+        giangvien = json['ho_ten'],
         trang_thai = json['trang_thai'];
 }

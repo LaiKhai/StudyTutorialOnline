@@ -22,6 +22,17 @@ class _SubjectDetailState extends State<SubjectDetail> {
   final int subID;
   final User us;
   _SubjectDetailState({required this.subID, required this.us});
+
+  loaimonhoc(String idloai) {
+    if (idloai == "1") {
+      return 'Lý Thuyết';
+    } else if (idloai == "2") {
+      return 'Thực Hành';
+    } else if (idloai == "3") {
+      return 'Module';
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -41,8 +52,8 @@ class _SubjectDetailState extends State<SubjectDetail> {
                 ),
               );
             } else if (snapshot.hasData) {
-              Subject subjectObject = snapshot.data!;
-              if (subjectObject.trang_thai != "0") {
+              OnlySubject subjectObject = snapshot.data!.only_subject!;
+              if (subjectObject.trangThai != "0") {
                 return SingleChildScrollView(
                     child: Container(
                         color: AppColor.white,
@@ -54,7 +65,7 @@ class _SubjectDetailState extends State<SubjectDetail> {
                                 getWidthSize(context) * 0.05, 20, 0, 0),
                             width: getWidthSize(context),
                             child: Text(
-                              subjectObject.ten_mon_hoc,
+                              subjectObject.tenMonHoc!,
                               style: ggTextStyle(
                                   40, FontWeight.bold, AppColor.theme),
                             ),
@@ -92,7 +103,7 @@ class _SubjectDetailState extends State<SubjectDetail> {
                                 readOnly: true,
                                 decoration: InputDecoration(
                                   prefixIcon: Icon(Icons.cast_for_education),
-                                  hintText: subjectObject.ten_khoa,
+                                  hintText: subjectObject.tenKhoa!,
                                   border: new OutlineInputBorder(
                                       borderSide: new BorderSide(
                                           color: AppColor.theme)),
@@ -121,7 +132,7 @@ class _SubjectDetailState extends State<SubjectDetail> {
                                 readOnly: true,
                                 decoration: InputDecoration(
                                   prefixIcon: Icon(Icons.book),
-                                  hintText: subjectObject.loai_mon_hoc,
+                                  hintText: subjectObject.tenMonHoc.toString(),
                                   border: new OutlineInputBorder(
                                       borderSide: new BorderSide(
                                           color: AppColor.theme)),
@@ -150,7 +161,8 @@ class _SubjectDetailState extends State<SubjectDetail> {
                                 readOnly: true,
                                 decoration: InputDecoration(
                                   prefixIcon: Icon(Icons.menu_book),
-                                  hintText: 'Loại Môn Học A',
+                                  hintText: loaimonhoc(
+                                      subjectObject.loaiMonHoc.toString()),
                                   border: new OutlineInputBorder(
                                       borderSide: new BorderSide(
                                           color: AppColor.theme)),
@@ -181,7 +193,7 @@ class _SubjectDetailState extends State<SubjectDetail> {
                                             builder: (BuildContext context) {
                                               return AlertDialog(
                                                 content: Text(
-                                                    'Bạn có chắc muốn xóa bộ môn ${subjectObject.ten_mon_hoc}',
+                                                    'Bạn có chắc muốn xóa bộ môn ${subjectObject.tenMonHoc!}',
                                                     style: ggTextStyle(
                                                         13,
                                                         FontWeight.bold,
@@ -223,14 +235,17 @@ class _SubjectDetailState extends State<SubjectDetail> {
                                                               .deleteSubject(
                                                                   context,
                                                                   subjectObject
-                                                                      .id_khoa,
+                                                                      .idKhoa
+                                                                      .toString(),
                                                                   subjectObject
-                                                                      .ten_mon_hoc,
+                                                                      .tenMonHoc
+                                                                      .toString(),
                                                                   subjectObject
-                                                                      .loai_mon_hoc,
+                                                                      .loaiMonHoc
+                                                                      .toString(),
                                                                   us,
                                                                   subjectObject
-                                                                      .id);
+                                                                      .id!);
                                                         },
                                                         child: Text('Có',
                                                             style: ggTextStyle(

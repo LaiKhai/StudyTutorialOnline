@@ -68,7 +68,6 @@ class BoMonController extends Controller
         $boMon->khoa;
         $response = [
             'status' => true,
-            'message' => 'them thanh cong bo mon !',
             'bomon' => $boMon
         ];
         return response()->json($response, 200);
@@ -94,15 +93,10 @@ class BoMonController extends Controller
                 'message' => 'khong tim thay bo mon nao !'
             ], 404);
         }
-        $lophocphan = BoMon::join('lop_hoc_phans', 'lop_hoc_phans.id_bo_mon', '=', 'bo_mons.id')
-            ->join('lops', 'lop_hoc_phans.id_lop', '=', 'lops.id')
-            ->join('khoas', 'bo_mons.id_khoa', '=', 'khoas.id')
-            ->where('bo_mons.id', $id)
-            ->select('lop_hoc_phans.*', 'bo_mons.*', 'lops.*', 'khoas.ten_khoa')->get();
+        $boMon->khoa;
         $response = [
             'status' => true,
             'bomon' => $boMon,
-            'lophocphan' => $lophocphan
         ];
         return response()->json($response, 200);
     }
@@ -141,17 +135,11 @@ class BoMonController extends Controller
             'trang_thai' => $request->input('trang_thai'),
         ]);
         $boMon->save();
-        $boMon = BoMon::join('khoas', 'bo_mons.id_khoa', '=', 'khoas.id')
-            ->where('bo_mons.id', $id)
-            ->select('bo_mons.*', 'khoas.ten_khoa')
-            ->first();
-        $lophocphan = BoMon::join('lop_hoc_phans', 'lop_hoc_phans.id_bo_mon', '=', 'bo_mons.id')
-            ->where('lop_hoc_phans.id_bo_mon', $boMon->lophocphan)->get();
+        $boMon->khoa;
+
         $response = [
             'status' => true,
-            'message' => 'chinh sua thanh cong !',
             'bomon' => $boMon,
-            'lophocphan' => $lophocphan
         ];
         return response()->json($response, 200);
     }
@@ -175,15 +163,11 @@ class BoMonController extends Controller
         $lstBoMon = BoMon::all();
         foreach ($lstBoMon as $item) {
             $item->khoa;
-            $lophocphan = BoMon::join('lop_hoc_phans', 'lop_hoc_phans.id_bo_mon', '=', 'bo_mons.id')
-                ->where('lop_hoc_phans.id_bo_mon', $item->lophocphan)->get();
         }
 
         $response = [
             'status' => true,
-            'message' => 'xoa thanh cong !',
             'bomon' => $lstBoMon,
-            'lophoaphan' => $lophocphan
         ];
         return response()->json($response, 200);
     }

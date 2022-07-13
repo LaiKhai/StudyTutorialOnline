@@ -33,14 +33,13 @@ class _CreateStudentPageState extends State<CreateStudentPage> {
   int? selectedValue;
   List departmentItemList = [];
   Future getAllDepartment() async {
-    var response = await http.get(Uri.parse(fetchClassObject));
+    var response = await http.get(Uri.parse(fetchDepartmentObject));
     if (response.statusCode == 200) {
-      var jsonData = json.decode(response.body)['lop'];
+      var jsonData = json.decode(response.body)['khoa'];
       setState(() {
         departmentItemList = jsonData;
       });
     }
-    print(departmentItemList);
   }
 
   DateTime _date = DateTime.now();

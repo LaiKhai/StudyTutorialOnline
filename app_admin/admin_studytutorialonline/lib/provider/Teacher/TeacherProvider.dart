@@ -344,9 +344,148 @@ class TeacherProvider {
       'Authorization': 'Bearer ${token!}'
     });
     if (response.statusCode == 200) {
-      final jsonresponse = GiangViens_model.fromJson(json.decode(response.body));
+      final jsonresponse =
+          GiangViens_model.fromJson(json.decode(response.body));
       return jsonresponse;
     } else
       return null;
+  }
+
+  static Future<Teacher?> createStudent(
+      BuildContext context,
+      String email,
+      String password,
+      String ma_so,
+      String sdt,
+      String ho_ten,
+      String ngay_sinh,
+      String id_chuc_vu,
+      String id_khoa,
+      User us) async {
+    String? token = await getToken();
+    Map body = {
+      'email': email,
+      'password': password,
+      'ho_ten': ho_ten,
+      'ma_so': ma_so,
+      'sdt': sdt,
+      'ngay_sinh': ngay_sinh,
+      'id_chuc_vu': id_chuc_vu,
+      'id_khoa': id_khoa,
+    };
+    String url = createGiangVien;
+    var response = await http.post(Uri.parse(url),
+        headers: <String, String>{
+          'Accept': 'application/json',
+          'Authorization': 'Bearer ${token!}'
+        },
+        body: body);
+    if (response.statusCode == 200) {
+      final jsonResponse = Teacher.fromJson(json.decode(response.body));
+      showDialog(
+          context: context,
+          builder: (BuildContext context) {
+            return AlertDialog(
+              content: Text('Tạo tài khoản giảng viên thành công',
+                  style: ggTextStyle(13, FontWeight.bold, AppColor.black)),
+              title: Row(
+                children: [
+                  Icon(
+                    Icons.warning_rounded,
+                    color: AppColor.theme,
+                  ),
+                  SizedBox(
+                    width: 10,
+                  ),
+                  Text('Thông báo',
+                      style: ggTextStyle(13, FontWeight.bold, AppColor.black))
+                ],
+              ),
+              actions: [
+                TextButton(
+                    onPressed: () {
+                      Navigator.pushAndRemoveUntil(
+                          context,
+                          MaterialPageRoute(
+                              builder: (ctx) => TeacherPage(
+                                    us: us,
+                                  )),
+                          (route) => false);
+                    },
+                    child: Text('Quay lại danh sách giảng viên',
+                        style:
+                            ggTextStyle(13, FontWeight.bold, AppColor.black)))
+              ],
+            );
+          });
+    } else if (response.statusCode == 500) {
+      showDialog(
+          context: context,
+          builder: (BuildContext context) {
+            return AlertDialog(
+              content: Text('Lỗi máy chủ',
+                  style: ggTextStyle(13, FontWeight.bold, AppColor.black)),
+              title: Row(
+                children: [
+                  Icon(
+                    Icons.warning_rounded,
+                    color: AppColor.theme,
+                  ),
+                  SizedBox(
+                    width: 10,
+                  ),
+                  Text('Thông báo',
+                      style: ggTextStyle(13, FontWeight.bold, AppColor.black))
+                ],
+              ),
+              actions: [
+                TextButton(
+                    onPressed: () {
+                      Navigator.pushAndRemoveUntil(
+                          context,
+                          MaterialPageRoute(
+                              builder: (ctx) => TeacherPage(
+                                    us: us,
+                                  )),
+                          (route) => false);
+                    },
+                    child: Text('Quay lại danh sách giảng viên',
+                        style:
+                            ggTextStyle(13, FontWeight.bold, AppColor.black)))
+              ],
+            );
+          });
+    } else {
+      showDialog(
+          context: context,
+          builder: (BuildContext context) {
+            return AlertDialog(
+              content: Text('Tạo tài khoản giảng viên thất bại',
+                  style: ggTextStyle(13, FontWeight.bold, AppColor.black)),
+              title: Row(
+                children: [
+                  Icon(
+                    Icons.warning_rounded,
+                    color: AppColor.theme,
+                  ),
+                  SizedBox(
+                    width: 10,
+                  ),
+                  Text('Thông báo',
+                      style: ggTextStyle(13, FontWeight.bold, AppColor.black))
+                ],
+              ),
+              actions: [
+                TextButton(
+                    onPressed: () {
+                      Navigator.pop(context);
+                    },
+                    child: Text('Quay lại ',
+                        style:
+                            ggTextStyle(13, FontWeight.bold, AppColor.black)))
+              ],
+            );
+          });
+    }
   }
 }

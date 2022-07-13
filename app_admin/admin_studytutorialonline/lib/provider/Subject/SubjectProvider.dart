@@ -27,8 +27,7 @@ class SubjectProvider {
         },
         body: body);
     if (response.statusCode == 200) {
-      final jsonResponse =
-          Subject.fromJson(json.decode(response.body)['bomon']);
+      final jsonResponse = Subject.fromJson(json.decode(response.body));
       showDialog(
           context: context,
           builder: (BuildContext context) {
@@ -107,7 +106,7 @@ class SubjectProvider {
       'Authorization': 'Bearer ${token!}'
     });
     if (response.statusCode == 200) {
-      var jsonData = Subject.fromJson(json.decode(response.body)['bomon']);
+      var jsonData = Subject.fromJson(json.decode(response.body));
       return jsonData;
     } else {
       showDialog(
@@ -161,8 +160,7 @@ class SubjectProvider {
         },
         body: body);
     if (response.statusCode == 200) {
-      final jsonResponse =
-          Subject.fromJson(json.decode(response.body)['bomon']);
+      final jsonResponse = Subject.fromJson(json.decode(response.body));
       showDialog(
           context: context,
           builder: (BuildContext context) {
