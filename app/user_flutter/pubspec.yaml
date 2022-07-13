@@ -60,6 +60,7 @@ dependencies:
   http: ^0.13.4
   popup_menu: ^1.0.5
   custom_pop_up_menu: ^1.2.2
+  animated_dialog_box: ^0.0.2
 dev_dependencies:
   flutter_test:
     sdk: flutter

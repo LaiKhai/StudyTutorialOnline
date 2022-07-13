@@ -21,6 +21,7 @@ class ClassModel {
 
 class Lop {
   int? id;
+  int? idKhoa;
   int? idGiangvien;
   String? tenLop;
   String? nienKhoa;
@@ -30,6 +31,7 @@ class Lop {
 
   Lop(
       {this.id,
+      this.idKhoa,
       this.idGiangvien,
       this.tenLop,
       this.nienKhoa,
@@ -39,6 +41,7 @@ class Lop {
 
   Lop.fromJson(Map<String, dynamic> json) {
     id = json['id'];
+    idKhoa = json['id_khoa'];
     idGiangvien = json['id_giangvien'];
     tenLop = json['ten_lop'];
     nienKhoa = json['nien_khoa'];

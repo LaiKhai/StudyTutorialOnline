@@ -60,23 +60,25 @@ class BaiKiemTraVM {
   static Future<bool> Create_BKTra(String tieuDe, String noiDung, int idLop,
       int soLuong, int Diem, int idGvien, BuildContext context) async {
     String url = postBktra;
-    Dio dio = new Dio();
     String token = await Login.getToken();
-    FormData formData;
+    Map formData;
     // ignore: unnecessary_new
-    formData = new FormData.fromMap({
-      "tg_ket_thuc": DateTime.now(),
-      "id_lop_hoc_phan": idLop,
-      "sl_cau_hoi": soLuong,
-      "id_giang_vien": idGvien,
+    formData = {
+      "tg_ket_thuc": DateTime.now().toString(),
+      "id_lop_hoc_phan": idLop.toString(),
+      "sl_cau_hoi": soLuong.toString(),
+      "id_giang_vien": idGvien.toString(),
       "tieu_de": tieuDe,
       "noi_dung": noiDung,
-    });
-    final response = await dio.post(url,
-        data: formData,
-        options: Options(headers: {
+      "trang_thai": '0'
+    };
+    final response = await http.post(Uri.parse(url),
+        headers: {
           'Authorization': 'Bearer $token',
-        }));
+          'Accept': 'application/json'
+        },
+        body: formData);
+    print(response.statusCode);
     if (response.statusCode == 200) {
       TextEditingController tieuDeController =
           new TextEditingController(text: tieuDe);
@@ -90,7 +92,7 @@ class BaiKiemTraVM {
       TextEditingController diemToiDaController =
           new TextEditingController(text: Diem.toString());
       final jsonResponse =
-          Crate_Bktra.fromJson(json.decode(response.toString()));
+          Crate_Bktra.fromJson(json.decode(response.body.toString()));
       Navigator.push(
         context,
         MaterialPageRoute(

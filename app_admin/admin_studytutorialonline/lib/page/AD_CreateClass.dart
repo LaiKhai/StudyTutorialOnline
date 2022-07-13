@@ -91,6 +91,25 @@ class _CreateClassState extends State<CreateClass> {
                         20, getWidthSize(context) * 0.05, 10),
                     width: getWidthSize(context),
                     child: Text(
+                      'Khoa',
+                      style: ggTextStyle(13, FontWeight.bold, AppColor.black),
+                    ),
+                  ),
+                  Container(
+                      margin: EdgeInsets.fromLTRB(getWidthSize(context) * 0.05,
+                          5, getWidthSize(context) * 0.05, 10),
+                      child: DropdownButton<Khoa>(
+                        isExpanded: true,
+                        value: value1,
+                        items: khoas.map(buildItem).toList(),
+                        onChanged: (value) =>
+                            setState(() => this.value1 = value),
+                      )),
+                  Container(
+                    margin: EdgeInsets.fromLTRB(getWidthSize(context) * 0.05,
+                        20, getWidthSize(context) * 0.05, 10),
+                    width: getWidthSize(context),
+                    child: Text(
                       'Giảng Viên Chủ Nhiệm',
                       style: ggTextStyle(13, FontWeight.bold, AppColor.black),
                     ),

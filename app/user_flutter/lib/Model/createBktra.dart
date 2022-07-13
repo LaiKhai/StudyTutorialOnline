@@ -21,7 +21,7 @@ class Crate_Bktra {
   }
 }
 
-class Baikiemtra {
+class   Baikiemtra {
   int? id;
   int? idLopHocPhan;
   int? idGiangVien;

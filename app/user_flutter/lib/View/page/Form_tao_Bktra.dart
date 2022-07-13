@@ -7,6 +7,7 @@ import 'package:user_flutter/Model/createBktra.dart';
 import 'package:user_flutter/Model/tao_CauHoi.dart';
 import 'package:user_flutter/Model_View/CauHoi.dart';
 import 'package:user_flutter/View/Widget/Form_tao.dart/Tao_tra_loi.dart';
+import 'package:user_flutter/View/Widget/showNouti.dart';
 import 'package:user_flutter/View/common/constant/color.dart';
 import 'package:user_flutter/View/common/constant/dimen.dart';
 import 'package:user_flutter/View/common/constant/string.dart';
@@ -132,8 +133,22 @@ class _Tao_trac_nghiemState extends State<Tao_trac_nghiem> {
     }
 
     cauhoi_ktra.listCauHoi = lst_cauhoi;
-    CauHoi.taoCauHoi(
-        cauhoi_ktra, context, widget.bktra.baikiemtra!.idLopHocPhan!,widget.bktra);
+    CauHoi.taoCauHoi(cauhoi_ktra, context,
+        widget.bktra.baikiemtra!.idLopHocPhan!, widget.bktra);
+  }
+
+  bool Checknull() {
+    for (int i = 0; i < Lst_Cauhoi.length; i++) {
+      if (lst_Trl_TracNghiem[i][0].text.trim() != '' ||
+          lst_Trl_TracNghiem[i][1].text.trim() != '' ||
+          lst_Trl_TracNghiem[i][2].text.trim() != '' ||
+          lst_Trl_TracNghiem[i][3].text.trim() != '' ||
+          lst_Trl_TracNghiem[i][4].text.trim() != '' ||
+          Lst_Cauhoi[i].text.trim() != '') {
+        return false;
+      }
+    }
+    return true;
   }
 
   TextEditingController controller = new TextEditingController();
@@ -165,7 +180,13 @@ class _Tao_trac_nghiemState extends State<Tao_trac_nghiem> {
             ),
           ),
           onPressed: () {
-            Lay();
+            if (Checknull() == false) {
+              showCustomDialog(context,
+                  'Hãy đảm bảo là không có giá trị nào bị trống', false);
+            } else {
+              Lay();
+            }
+
             // Navigator.push(
             //   context,
             //   MaterialPageRoute(

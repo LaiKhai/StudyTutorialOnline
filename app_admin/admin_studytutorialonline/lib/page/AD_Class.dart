@@ -198,6 +198,7 @@ class _ClassPageState extends State<ClassPage> {
                                                         ClassRoomProvider
                                                             .updateClass(
                                                                 context,
+                                                                lstClass['id_khoa'],
                                                                 lstClass['id']
                                                                     .toString(),
                                                                 lstClass[
