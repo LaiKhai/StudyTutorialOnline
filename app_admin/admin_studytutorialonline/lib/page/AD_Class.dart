@@ -195,21 +195,20 @@ class _ClassPageState extends State<ClassPage> {
                                                 actions: [
                                                   TextButton(
                                                       onPressed: () {
-                                                        ClassRoomProvider
-                                                            .updateClass(
-                                                                context,
-                                                                lstClass['id_khoa'],
-                                                                lstClass['id']
-                                                                    .toString(),
-                                                                lstClass[
-                                                                        'id_giangvien']
-                                                                    .toString(),
-                                                                lstClass[
-                                                                    'ten_lop'],
-                                                                lstClass[
-                                                                    'nien_khoa'],
-                                                                0.toString(),
-                                                                us);
+                                                        ClassRoomProvider.updateClass(
+                                                            context,
+                                                            lstClass['id_khoa']
+                                                                .toString(),
+                                                            lstClass['id']
+                                                                .toString(),
+                                                            lstClass[
+                                                                    'id_giangvien']
+                                                                .toString(),
+                                                            lstClass['ten_lop'],
+                                                            lstClass[
+                                                                'nien_khoa'],
+                                                            0.toString(),
+                                                            us);
                                                       },
                                                       child: Text('Có',
                                                           style: ggTextStyle(
