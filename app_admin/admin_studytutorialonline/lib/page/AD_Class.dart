@@ -41,10 +41,10 @@ class _ClassPageState extends State<ClassPage> {
           'Authorization': 'Bearer ${token!}'
         },
         body: {
-          'searchLop': selectedValue
+          'khoa': selectedValue
         });
     if (response.statusCode == 200) {
-      var classObject = json.decode(response.body)['data'];
+      var classObject = json.decode(response.body)['lop'];
       return classObject;
     }
   }

@@ -1,5 +1,8 @@
+import 'dart:convert';
+
 import 'package:admin_studytutorialonline/common/contrains/dimen.dart';
 import 'package:admin_studytutorialonline/provider/Teacher/TeacherDateTimePicker.dart';
+import 'package:admin_studytutorialonline/provider/Teacher/TeacherProvider.dart';
 import 'package:admin_studytutorialonline/widget/InputForm.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
@@ -7,15 +10,21 @@ import 'package:intl/intl.dart';
 import '../../common/contrains/color.dart';
 import '../../common/contrains/color.dart';
 import '../../common/contrains/string.dart';
+import 'package:http/http.dart' as http;
+
+import '../../data/User.dart';
 
 class CreateTeacher extends StatefulWidget {
-  const CreateTeacher({Key? key}) : super(key: key);
+  final User us;
+  const CreateTeacher({Key? key, required this.us}) : super(key: key);
 
   @override
-  State<CreateTeacher> createState() => _CreateTeacherState();
+  State<CreateTeacher> createState() => _CreateTeacherState(us: us);
 }
 
 class _CreateTeacherState extends State<CreateTeacher> {
+  final User us;
+  _CreateTeacherState({required this.us});
   TextEditingController _emailController = TextEditingController();
   TextEditingController _passController = TextEditingController();
   TextEditingController _phoneController = TextEditingController();
@@ -34,6 +43,37 @@ class _CreateTeacherState extends State<CreateTeacher> {
         _date = _datetime;
       });
     }
+  }
+
+  int? selectedValue;
+  List departmentItemList = [];
+  Future getAllDepartment() async {
+    var response = await http.get(Uri.parse(fetchDepartmentObject));
+    if (response.statusCode == 200) {
+      var jsonData = json.decode(response.body)['khoa'];
+      setState(() {
+        departmentItemList = jsonData;
+      });
+    }
+  }
+
+  int? positionValue;
+  List positionItemList = [];
+  Future getAllPosition() async {
+    var response = await http.get(Uri.parse(fetchPosition));
+    if (response.statusCode == 200) {
+      var jsonData = json.decode(response.body)['chucvu'];
+      setState(() {
+        positionItemList = jsonData;
+      });
+    }
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    getAllDepartment();
+    getAllPosition();
   }
 
   @override
@@ -72,6 +112,82 @@ class _CreateTeacherState extends State<CreateTeacher> {
                         height: 5,
                         width: getWidthSize(context),
                         color: AppColor.theme,
+                      ),
+                      Container(
+                        margin: EdgeInsets.fromLTRB(
+                            getWidthSize(context) * 0.05,
+                            10,
+                            getWidthSize(context) * 0.05,
+                            10),
+                        width: getWidthSize(context),
+                        child: Text(
+                          'Tên Khoa',
+                          style:
+                              ggTextStyle(13, FontWeight.bold, AppColor.black),
+                        ),
+                      ),
+                      Container(
+                        margin: EdgeInsets.fromLTRB(
+                            getWidthSize(context) * 0.05,
+                            15,
+                            getWidthSize(context) * 0.05,
+                            10),
+                        width: getWidthSize(context),
+                        height: getHeightSize(context) * 0.07,
+                        child: DropdownButton(
+                          value: selectedValue,
+                          isExpanded: true,
+                          hint: Text('Chọn Khoa...'),
+                          items: departmentItemList.map((department) {
+                            return DropdownMenuItem(
+                              value: department['id'],
+                              child: Text(department['ten_khoa']),
+                            );
+                          }).toList(),
+                          onChanged: (value) {
+                            setState(() {
+                              selectedValue = value as int?;
+                            });
+                          },
+                        ),
+                      ),
+                      Container(
+                        margin: EdgeInsets.fromLTRB(
+                            getWidthSize(context) * 0.05,
+                            10,
+                            getWidthSize(context) * 0.05,
+                            10),
+                        width: getWidthSize(context),
+                        child: Text(
+                          'Tên Chức Vụ',
+                          style:
+                              ggTextStyle(13, FontWeight.bold, AppColor.black),
+                        ),
+                      ),
+                      Container(
+                        margin: EdgeInsets.fromLTRB(
+                            getWidthSize(context) * 0.05,
+                            15,
+                            getWidthSize(context) * 0.05,
+                            10),
+                        width: getWidthSize(context),
+                        height: getHeightSize(context) * 0.07,
+                        child: DropdownButton(
+                          value: positionValue,
+                          isExpanded: true,
+                          hint: Text('Chọn Chức Vụ...'),
+                          items: positionItemList.map((position) {
+                            return DropdownMenuItem(
+                              value: position['id'],
+                              child: Text(position['ten_chuc_vu']),
+                            );
+                          }).toList(),
+                          onChanged: (value) {
+                            setState(() {
+                              positionValue = value as int?;
+                            });
+                          },
+                        ),
                       ),
                       FormInput(
                           isRead: false,
@@ -182,7 +298,68 @@ class _CreateTeacherState extends State<CreateTeacher> {
                                     style: ggTextStyle(
                                         20, FontWeight.bold, AppColor.white),
                                   ),
-                                  onPressed: () {},
+                                  onPressed: () {
+                                    if (selectedValue != null &&
+                                        positionValue != null &&
+                                        _emailController != null &&
+                                        _passController != null &&
+                                        _masoController != null &&
+                                        _phoneController != null &&
+                                        _nameController != null &&
+                                        _date != null) {
+                                      TeacherProvider.createStudent(
+                                          context,
+                                          _emailController.text,
+                                          _passController.text,
+                                          _masoController.text,
+                                          _phoneController.text,
+                                          _nameController.text,
+                                          _dateFormat.format(_date),
+                                          positionValue.toString(),
+                                          selectedValue.toString(),
+                                          us);
+                                    } else {
+                                      showDialog(
+                                          context: context,
+                                          builder: (BuildContext context) {
+                                            return AlertDialog(
+                                              content: Text(
+                                                  'Yêu cầu điền đầy đủ thông tin !',
+                                                  style: ggTextStyle(
+                                                      13,
+                                                      FontWeight.bold,
+                                                      AppColor.black)),
+                                              title: Row(
+                                                children: [
+                                                  Icon(
+                                                    Icons.warning_rounded,
+                                                    color: AppColor.theme,
+                                                  ),
+                                                  SizedBox(
+                                                    width: 10,
+                                                  ),
+                                                  Text('Thông báo',
+                                                      style: ggTextStyle(
+                                                          13,
+                                                          FontWeight.bold,
+                                                          AppColor.black))
+                                                ],
+                                              ),
+                                              actions: [
+                                                TextButton(
+                                                    onPressed: () {
+                                                      Navigator.pop(context);
+                                                    },
+                                                    child: Text('Quay lại',
+                                                        style: ggTextStyle(
+                                                            13,
+                                                            FontWeight.bold,
+                                                            AppColor.black)))
+                                              ],
+                                            );
+                                          });
+                                    }
+                                  },
                                   style: ButtonStyle(
                                       backgroundColor:
                                           MaterialStateProperty.all<Color>(
