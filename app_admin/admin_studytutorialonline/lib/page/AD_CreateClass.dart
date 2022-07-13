@@ -3,6 +3,7 @@ import 'package:admin_studytutorialonline/data/Teachers.dart';
 import 'package:admin_studytutorialonline/data/model_duy/Khoas_model.dart';
 import 'package:admin_studytutorialonline/data/model_duy/giangVien_model.dart';
 import 'package:admin_studytutorialonline/provider/ClassPart/ClassPartProvider.dart';
+import 'package:admin_studytutorialonline/provider/ClassRoom/ClassRoomProvider.dart';
 import 'package:admin_studytutorialonline/provider/Department/DepartmentProvider.dart';
 import 'package:admin_studytutorialonline/provider/Teacher/TeacherProvider.dart';
 import 'package:admin_studytutorialonline/widget/InputForm.dart';
@@ -80,6 +81,44 @@ class _CreateClassState extends State<CreateClass> {
                     width: getWidthSize(context),
                     color: AppColor.theme,
                   ),
+                  Container(
+                    margin: EdgeInsets.fromLTRB(getWidthSize(context) * 0.05,
+                        20, getWidthSize(context) * 0.05, 10),
+                    width: getWidthSize(context),
+                    child: Text(
+                      'Khoa',
+                      style: ggTextStyle(13, FontWeight.bold, AppColor.black),
+                    ),
+                  ),
+                  Container(
+                      margin: EdgeInsets.fromLTRB(getWidthSize(context) * 0.05,
+                          5, getWidthSize(context) * 0.05, 10),
+                      child: DropdownButton<Khoa>(
+                        isExpanded: true,
+                        value: value1,
+                        items: khoas.map(buildItem).toList(),
+                        onChanged: (value) =>
+                            setState(() => this.value1 = value),
+                      )),
+                  Container(
+                    margin: EdgeInsets.fromLTRB(getWidthSize(context) * 0.05,
+                        20, getWidthSize(context) * 0.05, 10),
+                    width: getWidthSize(context),
+                    child: Text(
+                      'Giảng Viên Chủ Nhiệm',
+                      style: ggTextStyle(13, FontWeight.bold, AppColor.black),
+                    ),
+                  ),
+                  Container(
+                      margin: EdgeInsets.fromLTRB(getWidthSize(context) * 0.05,
+                          5, getWidthSize(context) * 0.05, 10),
+                      child: DropdownButton<GiangVien_model>(
+                        isExpanded: true,
+                        value: value2,
+                        items: teachers.map(buildItem2).toList(),
+                        onChanged: (value) =>
+                            setState(() => this.value2 = value),
+                      )),
                   Container(
                     margin: EdgeInsets.fromLTRB(getWidthSize(context) * 0.05,
                         20, getWidthSize(context) * 0.05, 10),
@@ -237,7 +276,8 @@ class _CreateClassState extends State<CreateClass> {
                                 if (value2 != null &&
                                     _tenlopController.text != '' &&
                                     _nienkhoaController.text != '') {
-                                  ClassPartProvider.postClass(context,
+                                  ClassRoomProvider.postClass(
+                                      context,
                                       value2!.id.toString(),
                                       _tenlopController.text,
                                       _nienkhoaController.text);

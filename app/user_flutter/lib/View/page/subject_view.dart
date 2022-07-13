@@ -21,6 +21,7 @@ import 'package:user_flutter/View/Widget/Home/assignment_item.dart';
 import 'package:user_flutter/View/Widget/Home/stream_item.dart';
 import 'package:user_flutter/View/Widget/Home/student_item.dart';
 import 'package:user_flutter/View/Widget/Home/subject_post.dart';
+import 'package:user_flutter/View/Widget/No_child.dart';
 import 'package:user_flutter/View/Widget/button_back.dart';
 import 'package:user_flutter/View/Widget/widget_loadin.dart';
 import 'package:user_flutter/View/common/constant/color.dart';
@@ -300,16 +301,20 @@ class _StreamBodyState extends State<StreamBody> {
           future: BaiViet.getAllBaiViet(widget.id_Lop),
           builder: ((context, snapshot) {
             if (snapshot.hasData) {
-              return ListView.builder(
-                physics: const BouncingScrollPhysics(),
-                itemCount: snapshot.data!.data!.length,
-                itemBuilder: (ctx, index) {
-                  // Stream item
-                  return StreamItem(
-                    bv: snapshot.data!.data![index],
-                  );
-                },
-              );
+              if (snapshot.data!.data!.length == 0) {
+                return NoChild(icon: 'noThongB.svg');
+              } else {
+                return ListView.builder(
+                  physics: const BouncingScrollPhysics(),
+                  itemCount: snapshot.data!.data!.length,
+                  itemBuilder: (ctx, index) {
+                    // Stream item
+                    return StreamItem(
+                      bv: snapshot.data!.data![index],
+                    );
+                  },
+                );
+              }
             } else {
               return Loading();
             }
@@ -341,19 +346,23 @@ class AssignmentBody extends StatelessWidget {
             future: BaiKiemTraVM.Get_BKTra(id_lop),
             builder: (context, snapshot) {
               if (snapshot.hasData) {
-                List_Ktra_model ktra = snapshot.data!;
-                return ListView.builder(
-                  physics: const BouncingScrollPhysics(),
-                  itemCount: ktra.data!.length,
-                  itemBuilder: (ctx, index) {
-                    final assignment = assignments[0];
+                if (snapshot.data!.data!.length == 0) {
+                  return NoChild(icon: 'list-check.svg');
+                } else {
+                  List_Ktra_model ktra = snapshot.data!;
+                  return ListView.builder(
+                    physics: const BouncingScrollPhysics(),
+                    itemCount: ktra.data!.length,
+                    itemBuilder: (ctx, index) {
+                      final assignment = assignments[0];
 
-                    return AssignmentItem(
-                      assignment: assignment,
-                      baikiemtra: ktra.data![index],
-                    );
-                  },
-                );
+                      return AssignmentItem(
+                        assignment: assignment,
+                        baikiemtra: ktra.data![index],
+                      );
+                    },
+                  );
+                }
               } else {
                 return Loading();
               }
@@ -375,6 +384,9 @@ class ClassmateBody extends StatelessWidget {
       future: LopHocPhan.getOneLopHP(id_lop),
       builder: (context, snapshot) {
         if (snapshot.hasData) {
+          if (snapshot.data!.dssv!.length == 0) {
+            return NoChild(icon: 'groupuser.svg');
+          }
           List<Dssv> dssv = snapshot.data!.dssv!;
           return Column(
             children: [
