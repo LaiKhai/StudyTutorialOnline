@@ -116,7 +116,7 @@ class StudentProvider {
                                   )),
                           (route) => false);
                     },
-                    child: Text('Quay lại danh sách bộ môn',
+                    child: Text('Quay lại danh sách sinh viên',
                         style:
                             ggTextStyle(13, FontWeight.bold, AppColor.black)))
               ],
@@ -153,7 +153,7 @@ class StudentProvider {
                                   )),
                           (route) => false);
                     },
-                    child: Text('Quay lại danh sách bộ môn',
+                    child: Text('Quay lại danh sách sinh viên',
                         style:
                             ggTextStyle(13, FontWeight.bold, AppColor.black)))
               ],
@@ -253,7 +253,7 @@ class StudentProvider {
                                   )),
                           (route) => false);
                     },
-                    child: Text('Quay lại danh sách bộ môn',
+                    child: Text('Quay lại danh sách sinh viên',
                         style:
                             ggTextStyle(13, FontWeight.bold, AppColor.black)))
               ],
@@ -290,7 +290,7 @@ class StudentProvider {
                                   )),
                           (route) => false);
                     },
-                    child: Text('Quay lại danh sách bộ môn',
+                    child: Text('Quay lại danh sách sinh viên',
                         style:
                             ggTextStyle(13, FontWeight.bold, AppColor.black)))
               ],
@@ -389,7 +389,7 @@ class StudentProvider {
                                   )),
                           (route) => false);
                     },
-                    child: Text('Quay lại danh sách bộ môn',
+                    child: Text('Quay lại danh sách sinh viên',
                         style:
                             ggTextStyle(13, FontWeight.bold, AppColor.black)))
               ],
@@ -426,7 +426,7 @@ class StudentProvider {
                                   )),
                           (route) => false);
                     },
-                    child: Text('Quay lại danh sách bộ môn',
+                    child: Text('Quay lại danh sách sinh viên',
                         style:
                             ggTextStyle(13, FontWeight.bold, AppColor.black)))
               ],

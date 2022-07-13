@@ -22,6 +22,17 @@ class _SubjectDetailState extends State<SubjectDetail> {
   final int subID;
   final User us;
   _SubjectDetailState({required this.subID, required this.us});
+
+  loaimonhoc(String idloai) {
+    if (idloai == "1") {
+      return 'Lý Thuyết';
+    } else if (idloai == "2") {
+      return 'Thực Hành';
+    } else if (idloai == "3") {
+      return 'Module';
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -121,7 +132,7 @@ class _SubjectDetailState extends State<SubjectDetail> {
                                 readOnly: true,
                                 decoration: InputDecoration(
                                   prefixIcon: Icon(Icons.book),
-                                  hintText: subjectObject.loaiMonHoc.toString(),
+                                  hintText: subjectObject.tenMonHoc.toString(),
                                   border: new OutlineInputBorder(
                                       borderSide: new BorderSide(
                                           color: AppColor.theme)),
@@ -150,7 +161,8 @@ class _SubjectDetailState extends State<SubjectDetail> {
                                 readOnly: true,
                                 decoration: InputDecoration(
                                   prefixIcon: Icon(Icons.menu_book),
-                                  hintText: 'Loại Môn Học A',
+                                  hintText: loaimonhoc(
+                                      subjectObject.loaiMonHoc.toString()),
                                   border: new OutlineInputBorder(
                                       borderSide: new BorderSide(
                                           color: AppColor.theme)),

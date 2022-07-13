@@ -157,7 +157,7 @@ class _SubjectPageState extends State<SubjectPage> {
                             itemCount: snapshot.data!.bomon!.length,
                             itemBuilder: (context, index) {
                               BoMon lstsubject = snapshot.data!.bomon![index];
-                              if (lstsubject.trangThai != "0") {
+                              if (lstsubject.trangThai != 0) {
                                 return Column(
                                     crossAxisAlignment:
                                         CrossAxisAlignment.start,
