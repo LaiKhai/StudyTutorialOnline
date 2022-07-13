@@ -49,12 +49,14 @@ class LopController extends Controller
     public function store(Request $request)
     {
         $input['id_giangvien'] = $request->input('id_giangvien');
+        $input['id_khoa'] = $request->input('id_giangvien');
         $input['ten_lop'] = $request->input('ten_lop');
         $input['nien_khoa'] = $request->input('nien_khoa');
         $input['trang_thai'] = 1;
 
         $validator = Validator::make($input, [
             'id_giangvien' => 'required|max:255|string',
+            'id_khoa' => 'required|max:255|string',
             'ten_lop' => 'required|max:255|string|unique:lops,ten_lop',
             'nien_khoa' => 'required|max:255|string'
         ]);
@@ -130,6 +132,7 @@ class LopController extends Controller
         }
         $lop->fill([
             'id_giangvien' => $request->input('id_giangvien'),
+            'id_khoa' => $request->input('id_khoa'),
             'ten_lop' => $request->input('ten_lop'),
             'nien_khoa' => $request->input('nien_khoa'),
             'trang_thai' => $request->input('trang_thai'),
@@ -195,9 +198,7 @@ class LopController extends Controller
     public function lopwithKhoa(Request $request)
     {
         $khoa = $request->input('khoa');
-        $lop = Lop::join('lop_hoc_phans', 'lop_hoc_phans.id_lop', '=', 'lops.id')
-            ->join('bo_mons', 'lop_hoc_phans.id_bo_mon', '=', 'bo_mons.id')
-            ->join('khoas', 'bo_mons.id_khoa', '=', 'khoas.id')
+        $lop = Lop::join('khoas', 'lops.id_khoa', '=', 'khoas.id')
             ->where('khoas.ten_khoa', 'like', '%' . $khoa . '%')
             ->select('lops.*')->get();
         if (empty($lop)) {
@@ -238,14 +239,11 @@ class LopController extends Controller
     public function searchLopwithKhoa(Request $request)
     {
         $searchInput = $request->input('searchLop');
-        $lopHocPhan = LopHocPhan::join('bo_mons', 'lop_hoc_phans.id_bo_mon', '=', 'bo_mons.id')
-            ->join('khoas', 'bo_mons.id_khoa', '=', 'khoas.id')
-            ->join('lops', 'lop_hoc_phans.id_lop', '=', 'lops.id')
-            ->join('giang_viens', 'lops.id_giangvien', '=', 'giang_viens.id')
+        $lop = Lop::join('khoas', 'lops.id_khoa', '=', 'khoas.id')
             ->where('khoas.ten_khoa', 'like', '%' . $searchInput . '%')
-            ->select('lops.*', 'giang_viens.ho_ten')->distinct()->get();
+            ->select('lops.*')->get();
         $response = [
-            'data' => $lopHocPhan
+            'data' => $lop
         ];
         return response()->json($response, 200);
     }

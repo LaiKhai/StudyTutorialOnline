@@ -16,6 +16,7 @@ class CreateLopsTable extends Migration
         Schema::create('lops', function (Blueprint $table) {
             $table->id();
             $table->foreignId('id_giangvien');
+            $table->foreignId('id_khoa');
             $table->string('ten_lop');
             $table->string('nien_khoa');
             $table->integer('trang_thai');

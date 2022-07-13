@@ -25,6 +25,7 @@ class ForeignKey extends Migration
         });
         Schema::table('lops', function (Blueprint $table) {
             $table->foreign('id_giangvien')->references('id')->on('giang_viens');
+            $table->foreign('id_khoa')->references('id')->on('khoas');
         });
         Schema::table('lop_hoc_phans', function (Blueprint $table) {
             $table->foreign('id_bo_mon')->references('id')->on('bo_mons');
