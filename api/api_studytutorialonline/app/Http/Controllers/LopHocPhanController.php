@@ -143,7 +143,6 @@ class LopHocPhanController extends Controller
         $lopHocPhan->baikiemtra;
         $lopHocPhan->bomon;
         $lopHocPhan->baitap;
-        // $this->FixImg($lopHocPhan);
 
         $dsgv = DS_GiangVien::join('lop_hoc_phans', 'ds_giang_viens.id_lop_hoc_phan', '=', 'lop_hoc_phans.id')
             ->join('giang_viens', 'ds_giang_viens.id_giang_vien', '=', 'giang_viens.id')
@@ -156,7 +155,7 @@ class LopHocPhanController extends Controller
 
         $response = [
             'status' => true,
-            'lophocphan' => $lopHocPhan->avt,
+            'lophocphan' => $lopHocPhan,
             'dssv' => $dssv,
             'dsgv' => $dsgv
         ];
