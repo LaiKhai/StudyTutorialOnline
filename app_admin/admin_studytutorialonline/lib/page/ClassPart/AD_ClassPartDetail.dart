@@ -2,11 +2,11 @@ import 'package:admin_studytutorialonline/data/ClassPart.dart';
 import 'package:admin_studytutorialonline/provider/ClassPart/ClassPartProvider.dart';
 import 'package:flutter/material.dart';
 
-import '../common/contrains/color.dart';
-import '../common/contrains/dimen.dart';
-import '../common/contrains/string.dart';
-import '../data/User.dart';
-import '../widget/InputForm.dart';
+import '../../common/contrains/color.dart';
+import '../../common/contrains/dimen.dart';
+import '../../common/contrains/string.dart';
+import '../../data/User.dart';
+import '../../widget/InputForm.dart';
 
 class ClassPartDetail extends StatefulWidget {
   final User us;

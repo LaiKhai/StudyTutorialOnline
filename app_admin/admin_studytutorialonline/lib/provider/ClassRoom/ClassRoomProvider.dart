@@ -3,7 +3,7 @@ import 'dart:convert';
 import 'package:admin_studytutorialonline/common/contrains/color.dart';
 import 'package:admin_studytutorialonline/common/contrains/string.dart';
 import 'package:admin_studytutorialonline/data/ClassRoom.dart';
-import 'package:admin_studytutorialonline/page/AD_Class.dart';
+import 'package:admin_studytutorialonline/page/ClassRoom/AD_Class.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 

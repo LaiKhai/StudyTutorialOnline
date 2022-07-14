@@ -2,19 +2,19 @@ import 'dart:convert';
 
 import 'package:admin_studytutorialonline/data/ClassParts.dart';
 import 'package:admin_studytutorialonline/data/Department.dart';
-import 'package:admin_studytutorialonline/page/AD_CLassPartSetting.dart';
-import 'package:admin_studytutorialonline/page/AD_ClassPartDetail.dart';
-import 'package:admin_studytutorialonline/page/AD_CreateClassPart.dart';
+import 'package:admin_studytutorialonline/page/ClassPart/AD_CLassPartSetting.dart';
+import 'package:admin_studytutorialonline/page/ClassPart/AD_ClassPartDetail.dart';
+import 'package:admin_studytutorialonline/page/ClassPart/AD_CreateClassPart.dart';
 import 'package:admin_studytutorialonline/provider/ClassPart/ClassPartProvider.dart';
 import 'package:admin_studytutorialonline/widget/ClassPart/AD_ClassPartList.dart';
 import 'package:admin_studytutorialonline/widget/DepartmentPage/AD_DepartmentList.dart';
 import 'package:flutter/material.dart';
 
-import '../common/contrains/color.dart';
-import '../common/contrains/dimen.dart';
-import '../common/contrains/string.dart';
-import '../data/User.dart';
-import '../widget/Drawer/Navigation_Drawer.dart';
+import '../../common/contrains/color.dart';
+import '../../common/contrains/dimen.dart';
+import '../../common/contrains/string.dart';
+import '../../data/User.dart';
+import '../../widget/Drawer/Navigation_Drawer.dart';
 
 import 'package:http/http.dart' as http;
 

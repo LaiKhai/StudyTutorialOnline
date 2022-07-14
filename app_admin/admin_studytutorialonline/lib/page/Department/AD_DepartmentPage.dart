@@ -2,13 +2,13 @@ import 'package:admin_studytutorialonline/common/contrains/color.dart';
 import 'package:admin_studytutorialonline/common/contrains/dimen.dart';
 import 'package:admin_studytutorialonline/common/contrains/string.dart';
 import 'package:admin_studytutorialonline/data/Department.dart';
-import 'package:admin_studytutorialonline/page/AD_CreateDepartmentPage.dart';
+import 'package:admin_studytutorialonline/page/Department/AD_CreateDepartmentPage.dart';
 import 'package:admin_studytutorialonline/provider/Department/DepartmentProvider.dart';
 import 'package:flutter/material.dart';
 
-import '../data/User.dart';
-import '../widget/DepartmentPage/AD_DepartmentList.dart';
-import '../widget/Drawer/Navigation_Drawer.dart';
+import '../../data/User.dart';
+import '../../widget/DepartmentPage/AD_DepartmentList.dart';
+import '../../widget/Drawer/Navigation_Drawer.dart';
 
 class DepartmentPage extends StatefulWidget {
   final User us;
