@@ -58,7 +58,7 @@ class SubjectProvider {
                                   )),
                           (route) => false);
                     },
-                    child: Text('Quay lại danh sách khoa',
+                    child: Text('Quay lại danh sách bộ môn',
                         style:
                             ggTextStyle(13, FontWeight.bold, AppColor.black)))
               ],
@@ -191,7 +191,7 @@ class SubjectProvider {
                                   )),
                           (route) => false);
                     },
-                    child: Text('Quay lại danh sách khoa',
+                    child: Text('Quay lại danh sách bộ môn',
                         style:
                             ggTextStyle(13, FontWeight.bold, AppColor.black)))
               ],

@@ -129,6 +129,37 @@ class LoginProvider {
               ],
             );
           });
+    } else if (response.statusCode == 500) {
+      showDialog(
+          context: context,
+          builder: (BuildContext context) {
+            return AlertDialog(
+              content: Text('Lỗi máy chủ',
+                  style: ggTextStyle(13, FontWeight.bold, AppColor.black)),
+              title: Row(
+                children: [
+                  Icon(
+                    Icons.warning_rounded,
+                    color: AppColor.theme,
+                  ),
+                  SizedBox(
+                    width: 10,
+                  ),
+                  Text('Thông báo',
+                      style: ggTextStyle(13, FontWeight.bold, AppColor.black))
+                ],
+              ),
+              actions: [
+                TextButton(
+                    onPressed: () {
+                      Navigator.pop(context);
+                    },
+                    child: Text('OK',
+                        style:
+                            ggTextStyle(13, FontWeight.bold, AppColor.black)))
+              ],
+            );
+          });
     }
   }
 

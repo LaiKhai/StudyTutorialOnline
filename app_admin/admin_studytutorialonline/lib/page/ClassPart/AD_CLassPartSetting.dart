@@ -342,7 +342,7 @@ class _ClassPartSettingState extends State<ClassPartSetting> {
                                           imgClassPart != null) {
                                         ClassPartProvider.updateClassPart(
                                             context,
-                                            imgClassPart.toString(),
+                                            imgClassPart!,
                                             selectedValue.toString(),
                                             selectedClassValue.toString(),
                                             us,

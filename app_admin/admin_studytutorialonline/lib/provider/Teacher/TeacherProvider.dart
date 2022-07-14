@@ -120,7 +120,7 @@ class TeacherProvider {
                                   )),
                           (route) => false);
                     },
-                    child: Text('Quay lại danh sách bộ môn',
+                    child: Text('Quay lại danh sách giảng viên',
                         style:
                             ggTextStyle(13, FontWeight.bold, AppColor.black)))
               ],
@@ -157,7 +157,7 @@ class TeacherProvider {
                                   )),
                           (route) => false);
                     },
-                    child: Text('Quay lại danh sách bộ môn',
+                    child: Text('Quay lại danh sách giảng viên',
                         style:
                             ggTextStyle(13, FontWeight.bold, AppColor.black)))
               ],
@@ -260,7 +260,7 @@ class TeacherProvider {
                                   )),
                           (route) => false);
                     },
-                    child: Text('Quay lại danh sách bộ môn',
+                    child: Text('Quay lại danh sách giảng viên',
                         style:
                             ggTextStyle(13, FontWeight.bold, AppColor.black)))
               ],
@@ -297,7 +297,7 @@ class TeacherProvider {
                                   )),
                           (route) => false);
                     },
-                    child: Text('Quay lại danh sách bộ môn',
+                    child: Text('Quay lại danh sách giảng viên',
                         style:
                             ggTextStyle(13, FontWeight.bold, AppColor.black)))
               ],
