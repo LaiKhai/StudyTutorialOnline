@@ -30,7 +30,7 @@ class Storeprocedure extends Migration
 
         $batdauKT = 'CREATE PROCEDURE `Bat_dau_KT`(IN `id_bai_ktra` INT, IN `id_lop_hphan` INT) 
         BEGIN
-        INSERT INTO tra_lois(id_sinh_vien,id_cau_hoi) 
+        INSERT INTO tra_lois(id_sinh_vien,id_cau_hoi)
         select id_sinh_vien,cau_hois.id from ds_sinh_viens, cau_hois 
         where id_bai_kiem_tra = id_bai_ktra and ds_sinh_viens.id_lop_hoc_phan=id_lop_hphan; 
         END';
@@ -48,7 +48,7 @@ class Storeprocedure extends Migration
         $taoCauTraLoi = "CREATE PROCEDURE `Tao_cau_TrL`(IN `dapan` VARCHAR(15), IN `id_cauhoi` INT, IN `id_baikt` INT, IN `id_cautrl` INT) 
             UPDATE `tra_lois` SET `dap_an`=dapan,`diem`= Case 
             WHEN `dap_an`=(SELECT `dap_an_dung`FROM `cau_hois` WHERE cau_hois.id=id_cauhoi AND cau_hois.id_bai_kiem_tra=id_baikt)
-            THEN (SELECT `diem`FROM `cau_hois` WHERE cau_hois.id=3 AND  cau_hois.id_bai_kiem_tra=1)
+            THEN (SELECT `diem`FROM `cau_hois` WHERE cau_hois.id=id_cauhoi AND  cau_hois.id_bai_kiem_tra=id_baikt)
             WHEN `dap_an`!=(SELECT `dap_an_dung`FROM `cau_hois` WHERE cau_hois.id=id_cauhoi AND cau_hois.id_bai_kiem_tra=id_baikt) THEN 0 END,
             `trang_thai`=1,`created_at`=Now(),`updated_at`=Now() WHERE id=id_cautrl and id_cau_hoi=id_cauhoi;";
 
