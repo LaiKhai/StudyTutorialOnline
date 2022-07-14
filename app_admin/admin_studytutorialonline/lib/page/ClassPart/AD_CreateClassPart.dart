@@ -159,13 +159,12 @@ class _CreateClassPartState extends State<CreateClassPart> {
                   ),
                   Container(
                     height: 300,
-                    width: 500,
+                    width: getWidthSize(context),
                     child: InkWell(
                       onTap: () {},
                       child: Container(
                         height: 300,
-                        width: 500,
-                        margin: EdgeInsets.only(right: 14),
+                        width: getWidthSize(context),
                         decoration: BoxDecoration(
                             image: imgClassPart != null
                                 ? DecorationImage(
@@ -250,7 +249,7 @@ class _CreateClassPartState extends State<CreateClassPart> {
                                     selectedValue != null) {
                                   ClassPartProvider.createClassPart(
                                       context,
-                                      imgClassPart!.toString(),
+                                      imgClassPart!,
                                       selectedValue.toString(),
                                       selectedClassValue.toString(),
                                       us);

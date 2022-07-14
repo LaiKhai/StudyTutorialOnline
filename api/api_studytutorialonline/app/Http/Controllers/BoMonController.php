@@ -17,7 +17,7 @@ class BoMonController extends Controller
      */
     public function index()
     {
-        $lstBoMon = BoMon::all();
+        $lstBoMon = BoMon::all()->where('trang_thai', '>', "0");
         foreach ($lstBoMon as $item) {
             $item->khoa;
         }
@@ -177,6 +177,7 @@ class BoMonController extends Controller
         $searchInput = $request->input('search');
         $bomon = BoMon::join('khoas', 'bo_mons.id_khoa', '=', 'khoas.id')
             ->where('ten_khoa', 'like', '%' . $searchInput . '%')
+            ->where('bo_mons.trang_thai', '>', "0")
             ->orWhere('ten_mon_hoc', 'like', '%' . $searchInput . '%')
             ->select('bo_mons.*', 'khoas.ten_khoa')
             ->get();

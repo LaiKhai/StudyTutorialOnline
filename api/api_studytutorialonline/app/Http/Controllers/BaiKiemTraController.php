@@ -18,7 +18,7 @@ class BaiKiemTraController extends Controller
      */
     public function index()
     {
-        $baiKiemTra = BaiKiemTra::all();
+        $baiKiemTra = BaiKiemTra::all()->where('trang_thai', '>', "0");
         foreach ($baiKiemTra as $item) {
             $item->lophocphan;
             $item->giangvien;

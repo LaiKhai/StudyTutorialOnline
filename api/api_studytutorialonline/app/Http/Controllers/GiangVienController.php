@@ -36,7 +36,7 @@ class GiangVienController extends Controller
      */
     public function index()
     {
-        $giangVien = GiangVien::all();
+        $giangVien = GiangVien::all()->where('trang_thai', '>', "0");
         foreach ($giangVien as $item) {
             $item->khoa;
             $item->chucvu;
@@ -275,6 +275,7 @@ class GiangVienController extends Controller
         $searchInput = $request->input('searchGV');
         $giangvien = GiangVien::join('khoas', 'giang_viens.id_khoa', '=', 'khoas.id')
             ->where('khoas.ten_khoa', 'like', '%' . $searchInput . '%')
+            ->where('giang_viens.trang_thai', '>', "0")
             ->select('giang_viens.*', 'khoas.ten_khoa')
             ->get();
         $response = [

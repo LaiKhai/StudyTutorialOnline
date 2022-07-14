@@ -19,7 +19,7 @@ class LopController extends Controller
      */
     public function index()
     {
-        $lstLop = Lop::all();
+        $lstLop = Lop::all()->where('trang_thai', '>', "0");
         foreach ($lstLop as $item) {
             $item->giangvien;
         }
@@ -201,6 +201,7 @@ class LopController extends Controller
         $lop = Lop::join('khoas', 'lops.id_khoa', '=', 'khoas.id')
             ->join('giang_viens', 'lops.id_giangvien', '=', 'giang_viens.id')
             ->where('khoas.ten_khoa', 'like', '%' . $khoa . '%')
+            ->where('lops.trang_thai', '>', "0")
             ->select('lops.*', 'giang_viens.ho_ten')->get();
         if (empty($lop)) {
             return response()->json([
@@ -224,6 +225,7 @@ class LopController extends Controller
                 '%' . $searchInput . '%'
 
             )
+            ->where('lops.trang_thai', '>', "0")
             ->orWhere('nien_khoa', 'like', '%' . $searchInput . '%')
             ->orWhere('giang_viens.ho_ten', 'like', '%' . $searchInput . '%')
             ->select('lops.*')
