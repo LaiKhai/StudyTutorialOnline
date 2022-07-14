@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
+import 'package:user_flutter/Model/listBaiKtra_model.dart';
+import 'package:user_flutter/Model_View/bai_Ktra.dart';
 import 'package:user_flutter/View/Widget/Home/app_icon_buttton.dart';
 import 'package:user_flutter/View/Widget/ThongKe.dart/TatCa.dart';
 import 'package:user_flutter/View/Widget/ThongKe.dart/floatingBton.dart';
@@ -9,7 +11,8 @@ import 'package:user_flutter/View/common/constant/color.dart';
 import 'package:user_flutter/View/common/constant/dimen.dart';
 
 class ThongKePage extends StatefulWidget {
-  const ThongKePage({Key? key}) : super(key: key);
+  final BaiKtra_model baikiemtra;
+  const ThongKePage({Key? key, required this.baikiemtra}) : super(key: key);
 
   @override
   State<ThongKePage> createState() => _ThongKePageState();
@@ -138,6 +141,8 @@ class _ThongKePageState extends State<ThongKePage> {
         floatingActionButton: FloatingBtun(
             text: 'Bắt đầu kiểm tra',
             onPressed: () {
+              BaiKiemTraVM.BatdauKtra(
+                  widget.baikiemtra.id!, widget.baikiemtra.idLopHocPhan!);
               print('bắt đầu ktra');
             }));
   }

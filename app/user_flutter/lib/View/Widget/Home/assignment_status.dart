@@ -4,7 +4,7 @@ import 'package:user_flutter/Model/subject_assignment.dart';
 import 'package:user_flutter/View/common/constant/color.dart';
 
 class AssignmentStatus extends StatelessWidget {
-  final SubjectAssignmentType type;
+  final int type;
 
   const AssignmentStatus({Key? key, required this.type}) : super(key: key);
 
@@ -17,18 +17,24 @@ class AssignmentStatus extends StatelessWidget {
       ),
       decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(360),
-          color: (type == SubjectAssignmentType.turnedIn
+          color: (type == 3
                   ? AppColor.green
-                  : AppColor.red)
+                  : type == 2
+                      ? AppColor.red
+                      : AppColor.grey2)
               .withOpacity(0.25)),
       child: Text(
-        type == SubjectAssignmentType.turnedIn
+        type == 3
             ? "Hoàn thành"
-            : "Chưa hoàn thành",
+            : type == 2
+                ? "Chưa hoàn thành"
+                : "Có vấn đề xảy ra",
         style: GoogleFonts.quicksand(
-          color: type == SubjectAssignmentType.turnedIn
+          color: type == 3
               ? AppColor.green
-              : AppColor.red,
+              : type == 2
+                  ? AppColor.red
+                  : AppColor.grey2,
           fontSize: 12,
           fontWeight: FontWeight.w600,
         ),

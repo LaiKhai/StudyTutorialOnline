@@ -178,6 +178,24 @@ class _Bai_KtraState extends State<Bai_Ktra> {
                                   horizontalAlignment:
                                       MainAxisAlignment.spaceAround,
                                   onChanged: (value) {
+                                    String trl = '';
+                                    if (value == lst_Cauhoi[index].dapAn1) {
+                                      trl = "A";
+                                    }
+                                    if (value == lst_Cauhoi[index].dapAn2) {
+                                      trl = "B";
+                                    }
+                                    if (value == lst_Cauhoi[index].dapAn3) {
+                                      trl = "C";
+                                    }
+                                    if (value == lst_Cauhoi[index].dapAn4) {
+                                      trl = "D";
+                                    }
+                                    setState(() {
+                                      trl;
+                                    });
+                                    BaiKiemTraVM.traLoiMotCau(trl,
+                                        lst_Cauhoi[index].id!, widget.id, 1);
                                     setState(() {
                                       _verticalGroupValue[index] = value!;
                                     });

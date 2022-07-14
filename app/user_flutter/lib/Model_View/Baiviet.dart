@@ -38,10 +38,10 @@ class BaiViet {
       BuildContext context, int loaiThongBao) async {
     Dio dio = new Dio();
     var lst = [];
-    if (listFile.length == 0) {
-      showCustomDialog(context, 'Đăng bài thất bại', false);
-      return false;
-    }
+    // if (listFile.length == 0) {
+    //   showCustomDialog(context, 'Đăng bài thất bại', false);
+    //   return false;
+    // }
     if (listFile.length != 0) {
       for (var img in listFile) {
         img.existsSync();

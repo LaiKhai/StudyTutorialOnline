@@ -21,3 +21,4 @@ const String postCauHoi = '$Link/api/taoCauHoi';
 const String urlBaiktra = '$Link/api/baikiemtra/';
 const String getBaiktra = '$Link/api/listbaikiemtra/';
 const String postTraLoi = '$Link/api/taoCauTraLoi';
+const String poat = '$Link/api/batdauKT';

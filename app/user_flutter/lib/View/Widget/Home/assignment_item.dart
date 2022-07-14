@@ -3,11 +3,13 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import 'package:intl/intl.dart';
+import 'package:user_flutter/Model/User_login.dart';
 import 'package:user_flutter/Model/listBaiKtra_model.dart';
 import 'package:user_flutter/Model/subject_assignment.dart';
 import 'package:user_flutter/View/Widget/Home/assignment_status.dart';
 import 'package:user_flutter/View/common/constant/color.dart';
 import 'package:user_flutter/View/page/Bai_Ktra.dart';
+import 'package:user_flutter/View/page/thongKe.dart';
 
 class AssignmentItem extends StatelessWidget {
   final SubjectAssignment assignment;
@@ -35,13 +37,20 @@ class AssignmentItem extends StatelessWidget {
         children: [
           InkWell(
             onTap: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                    builder: (context) => Bai_Ktra(
-                          id: baikiemtra.id!,
-                        )),
-              );
+              if (user.user!.idChucVu != 0) {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => ThongKePage(baikiemtra: baikiemtra,)),
+                );
+              } else {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => Bai_Ktra(
+                            id: baikiemtra.id!,
+                          )),
+                );
+              }
             },
             child: Container(
               padding: const EdgeInsets.all(12),
@@ -85,7 +94,7 @@ class AssignmentItem extends StatelessWidget {
                         ),
                       ),
                       const SizedBox(width: 16),
-                      AssignmentStatus(type: SubjectAssignmentType.turnedIn),
+                      AssignmentStatus(type: baikiemtra.trangThai!),
                     ],
                   ),
                   const SizedBox(height: 8),

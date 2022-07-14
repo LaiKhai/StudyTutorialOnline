@@ -28,8 +28,8 @@ class CauHoi {
     if (response.statusCode == 200) {
       print(response.body);
       showCustomDialog(context, 'Tạo bài thành công', true);
-      BaiKiemTraVM.Update_BKTra(id, user.user!.id!, bktra.baikiemtra!.noiDung!,
-          lst_cauHoi.listCauHoi!.length);
+      BaiKiemTraVM.Update_BKTra(bktra.baikiemtra!.id!,id, user.user!.id!, bktra.baikiemtra!.noiDung!,
+          lst_cauHoi.listCauHoi!.length,'2');
       Navigator.of(context).pushAndRemoveUntil(
           MaterialPageRoute(
               builder: (context) => SubjectView(

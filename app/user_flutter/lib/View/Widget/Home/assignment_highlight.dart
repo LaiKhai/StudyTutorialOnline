@@ -72,7 +72,7 @@ class AssignmentHighlight extends StatelessWidget {
                   ),
                   const SizedBox(width: 8),
                   // Assignment status
-                  AssignmentStatus(type: assignment.type),
+                  // AssignmentStatus(type: assignment.type),
                 ],
               ),
             ],
