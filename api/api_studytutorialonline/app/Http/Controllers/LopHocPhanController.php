@@ -88,17 +88,6 @@ class LopHocPhanController extends Controller
             return response()->json($response, 404);
         }
         $lopHocPhan = LopHocPhan::create($input);
-        if ($request->hasFile('avt')) {
-            $lopHocPhan['avt'] = $request->file('avt')
-                ->store('assets/images/lophocphan/' . $lopHocPhan['id'], 'public');
-        }
-        $this->FixImg($lopHocPhan);
-        $lopHocPhan->save();
-        $lopHocPhan->lop;
-        $lopHocPhan->baikiemtra;
-        $lopHocPhan->bomon;
-        $lopHocPhan->baitap;
-        $lopHocPhan->baiviet;
         $sinhVien = SinhVien::join('lops', 'sinh_viens.id_lop', '=', 'lops.id')
             ->where('sinh_viens.id_lop', $lopHocPhan->id_lop)
             ->select('sinh_viens.*')
@@ -111,12 +100,33 @@ class LopHocPhanController extends Controller
                 $input['id_lop_hoc_phan'],
             ]);
         }
+        if ($request->hasFile('avt')) {
+            $lopHocPhan['avt'] = $request->file('avt')
+                ->store('assets/images/lophocphan/' . $lopHocPhan['id'], 'public');
+        }
+        $lopHocPhan->save();
+        $lopHocPhan->lop;
+        $lopHocPhan->baikiemtra;
+        $lopHocPhan->bomon;
+        $lopHocPhan->baitap;
+        $this->FixImg($lopHocPhan);
+
+        $dsgv = DS_GiangVien::join('lop_hoc_phans', 'ds_giang_viens.id_lop_hoc_phan', '=', 'lop_hoc_phans.id')
+            ->join('giang_viens', 'ds_giang_viens.id_giang_vien', '=', 'giang_viens.id')
+            ->where('lop_hoc_phans.id', $lopHocPhan->id)
+            ->select('lop_hoc_phans.*', 'giang_viens.*')->get();
+        $dssv = DS_SinhVien::join('lop_hoc_phans', 'ds_sinh_viens.id_lop_hoc_phan', '=', 'lop_hoc_phans.id')
+            ->join('sinh_viens', 'ds_sinh_viens.id_sinh_vien', '=', 'sinh_viens.id')
+            ->where('lop_hoc_phans.id', $lopHocPhan->id)
+            ->select('lop_hoc_phans.*', 'sinh_viens.*')->get();
+
         $response = [
             'status' => true,
-            'message' => 'them lop hoc phan thanh cong !',
             'lophocphan' => $lopHocPhan,
+            'dssv' => $dssv,
+            'dsgv' => $dsgv
         ];
-        return response()->json($response, 200);
+        return response($response, 200);
     }
 
     /**
@@ -199,13 +209,24 @@ class LopHocPhanController extends Controller
         $lopHocPhan->baikiemtra;
         $lopHocPhan->bomon;
         $lopHocPhan->baitap;
-        $lopHocPhan->baiviet;
+        $this->FixImg($lopHocPhan);
+
+        $dsgv = DS_GiangVien::join('lop_hoc_phans', 'ds_giang_viens.id_lop_hoc_phan', '=', 'lop_hoc_phans.id')
+            ->join('giang_viens', 'ds_giang_viens.id_giang_vien', '=', 'giang_viens.id')
+            ->where('lop_hoc_phans.id', $id)
+            ->select('lop_hoc_phans.*', 'giang_viens.*')->get();
+        $dssv = DS_SinhVien::join('lop_hoc_phans', 'ds_sinh_viens.id_lop_hoc_phan', '=', 'lop_hoc_phans.id')
+            ->join('sinh_viens', 'ds_sinh_viens.id_sinh_vien', '=', 'sinh_viens.id')
+            ->where('lop_hoc_phans.id', $id)
+            ->select('lop_hoc_phans.*', 'sinh_viens.*')->get();
+
         $response = [
             'status' => true,
-            'message' => 'chinh sua thanh cong !',
-            'lophocphan' => $lopHocPhan
+            'lophocphan' => $lopHocPhan,
+            'dssv' => $dssv,
+            'dsgv' => $dsgv
         ];
-        return response()->json($response, 200);
+        return response($response, 200);
     }
 
     /**
