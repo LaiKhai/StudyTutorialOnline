@@ -62,6 +62,22 @@ class _CreatePostState extends State<CreatePost> {
               height: getHeightSize(context),
               child: Column(children: [
                 Container(
+                  padding: EdgeInsets.fromLTRB(
+                      getWidthSize(context) * 0.05, 20, 0, 0),
+                  width: getWidthSize(context),
+                  child: Text(
+                    'Tạo Bài Viết',
+                    style: ggTextStyle(40, FontWeight.bold, AppColor.theme),
+                  ),
+                ),
+                Container(
+                  margin: EdgeInsets.fromLTRB(getWidthSize(context) * 0.05, 20,
+                      getWidthSize(context) * 0.05, 20),
+                  height: 5,
+                  width: getWidthSize(context),
+                  color: AppColor.theme,
+                ),
+                Container(
                   margin: EdgeInsets.fromLTRB(getWidthSize(context) * 0.05, 10,
                       getWidthSize(context) * 0.05, 10),
                   width: getWidthSize(context),
@@ -136,7 +152,7 @@ class _CreatePostState extends State<CreatePost> {
                     margin: EdgeInsets.fromLTRB(15, 0, 15, 0),
                     child: TextFormField(
                       minLines: 2,
-                      maxLines: (getHeightSize(context) / 2).toInt(),
+                      maxLines: 15,
                       keyboardType: TextInputType.multiline,
                       decoration: InputDecoration(
                           hintText: 'Nhập nội dung...',
