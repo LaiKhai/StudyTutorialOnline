@@ -116,7 +116,6 @@ class LopHocPhanController extends Controller
             'status' => true,
             'message' => 'them lop hoc phan thanh cong !',
             'lophocphan' => $lopHocPhan,
-            'dssv' => $dssv
         ];
         return response()->json($response, 200);
     }

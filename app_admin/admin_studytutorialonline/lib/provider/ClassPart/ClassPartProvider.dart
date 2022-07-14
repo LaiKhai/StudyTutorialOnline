@@ -7,6 +7,7 @@ import 'package:dio/dio.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:path/path.dart';
 import 'dart:convert';
 
 import '../../common/contrains/color.dart';
@@ -33,11 +34,12 @@ class ClassPartProvider {
     String? token = await getToken();
     Dio dio = new Dio();
     FormData formData;
+    String filename = basename(imgClassPart.path);
     formData = FormData.fromMap({
       'id_bo_mon': id_bo_mon.toString(),
       'id_lop': id_lop.toString(),
       'trang_thai': "1",
-      'avt': imgClassPart
+      'avt': await MultipartFile.fromFile(imgClassPart.path, filename: filename)
     });
     String url = createClassPartObject;
 
@@ -56,7 +58,6 @@ class ClassPartProvider {
     //       'Authorization': 'Bearer ${token!}'
     //     },
     //     body: body);
-    print('KEY DATA' + response.data);
     if (response.statusCode == 200) {
       final jsonResponse = ClassPart.fromJson(json.decode(response.data));
       showDialog(
