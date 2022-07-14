@@ -2,9 +2,9 @@ import 'dart:ui';
 
 import 'package:admin_studytutorialonline/common/contrains/color.dart';
 import 'package:admin_studytutorialonline/common/contrains/string.dart';
-import 'package:admin_studytutorialonline/page/AD_Class.dart';
-import 'package:admin_studytutorialonline/page/AD_ClassPart.dart';
-import 'package:admin_studytutorialonline/page/AD_DepartmentPage.dart';
+import 'package:admin_studytutorialonline/page/ClassRoom/AD_Class.dart';
+import 'package:admin_studytutorialonline/page/ClassPart/AD_ClassPart.dart';
+import 'package:admin_studytutorialonline/page/Department/AD_DepartmentPage.dart';
 import 'package:admin_studytutorialonline/page/AD_HomePage.dart';
 import 'package:admin_studytutorialonline/page/Student/AD_StudentPage.dart';
 import 'package:admin_studytutorialonline/page/Subject/AD_SubjectPage.dart';

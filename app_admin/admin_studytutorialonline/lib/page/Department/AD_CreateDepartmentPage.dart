@@ -1,10 +1,10 @@
 import 'package:admin_studytutorialonline/provider/Department/DepartmentProvider.dart';
 import 'package:flutter/material.dart';
 
-import '../common/contrains/color.dart';
-import '../common/contrains/dimen.dart';
-import '../common/contrains/string.dart';
-import '../data/User.dart';
+import '../../common/contrains/color.dart';
+import '../../common/contrains/dimen.dart';
+import '../../common/contrains/string.dart';
+import '../../data/User.dart';
 
 class CreateDepartmentPage extends StatefulWidget {
   final User us;

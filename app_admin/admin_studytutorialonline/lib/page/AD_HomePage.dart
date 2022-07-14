@@ -88,7 +88,7 @@ class _HomePageState extends State<HomePage> {
                                   Container(
                                       padding: EdgeInsets.fromLTRB(
                                           getWidthSize(context) * 0.05,
-                                          10,
+                                          0,
                                           10,
                                           10),
                                       child: Align(

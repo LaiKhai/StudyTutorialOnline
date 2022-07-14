@@ -9,10 +9,10 @@ import 'package:admin_studytutorialonline/provider/Teacher/TeacherProvider.dart'
 import 'package:admin_studytutorialonline/widget/InputForm.dart';
 import 'package:flutter/material.dart';
 
-import '../common/contrains/color.dart';
-import '../common/contrains/dimen.dart';
-import '../common/contrains/string.dart';
-import '../data/User.dart';
+import '../../common/contrains/color.dart';
+import '../../common/contrains/dimen.dart';
+import '../../common/contrains/string.dart';
+import '../../data/User.dart';
 
 class ClassDetail extends StatefulWidget {
   int id;

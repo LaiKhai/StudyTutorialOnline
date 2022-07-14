@@ -2,8 +2,8 @@ import 'dart:convert';
 
 import 'package:admin_studytutorialonline/data/Department.dart';
 import 'package:admin_studytutorialonline/data/model_duy/Khoas_model.dart';
-import 'package:admin_studytutorialonline/page/AD_CreateDepartmentPage.dart';
-import 'package:admin_studytutorialonline/page/AD_DepartmentPage.dart';
+import 'package:admin_studytutorialonline/page/Department/AD_CreateDepartmentPage.dart';
+import 'package:admin_studytutorialonline/page/Department/AD_DepartmentPage.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;

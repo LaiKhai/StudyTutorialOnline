@@ -5,11 +5,11 @@ import 'package:admin_studytutorialonline/provider/ClassPart/ClassPartProvider.d
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 
-import '../common/contrains/color.dart';
-import '../common/contrains/dimen.dart';
-import '../common/contrains/string.dart';
-import '../data/ClassPart.dart';
-import '../data/User.dart';
+import '../../common/contrains/color.dart';
+import '../../common/contrains/dimen.dart';
+import '../../common/contrains/string.dart';
+import '../../data/ClassPart.dart';
+import '../../data/User.dart';
 import 'package:http/http.dart' as http;
 
 class ClassPartSetting extends StatefulWidget {
@@ -342,7 +342,7 @@ class _ClassPartSettingState extends State<ClassPartSetting> {
                                           imgClassPart != null) {
                                         ClassPartProvider.updateClassPart(
                                             context,
-                                            imgClassPart.toString(),
+                                            imgClassPart!,
                                             selectedValue.toString(),
                                             selectedClassValue.toString(),
                                             us,

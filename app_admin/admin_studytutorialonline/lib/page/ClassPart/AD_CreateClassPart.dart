@@ -5,10 +5,10 @@ import 'package:admin_studytutorialonline/provider/ClassPart/ClassPartProvider.d
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 
-import '../common/contrains/color.dart';
-import '../common/contrains/dimen.dart';
-import '../common/contrains/string.dart';
-import '../data/User.dart';
+import '../../common/contrains/color.dart';
+import '../../common/contrains/dimen.dart';
+import '../../common/contrains/string.dart';
+import '../../data/User.dart';
 import 'package:http/http.dart' as http;
 
 class CreateClassPart extends StatefulWidget {
@@ -112,7 +112,7 @@ class _CreateClassPartState extends State<CreateClassPart> {
                     child: DropdownButton(
                       value: selectedValue,
                       isExpanded: true,
-                      hint: Text('Chọn Khoa...'),
+                      hint: Text('Chọn Bộ Môn...'),
                       items: subjectlist.map((subject) {
                         return DropdownMenuItem(
                           value: subject['id'],
@@ -159,13 +159,12 @@ class _CreateClassPartState extends State<CreateClassPart> {
                   ),
                   Container(
                     height: 300,
-                    width: 500,
+                    width: getWidthSize(context),
                     child: InkWell(
                       onTap: () {},
                       child: Container(
                         height: 300,
-                        width: 500,
-                        margin: EdgeInsets.only(right: 14),
+                        width: getWidthSize(context),
                         decoration: BoxDecoration(
                             image: imgClassPart != null
                                 ? DecorationImage(
@@ -250,7 +249,7 @@ class _CreateClassPartState extends State<CreateClassPart> {
                                     selectedValue != null) {
                                   ClassPartProvider.createClassPart(
                                       context,
-                                      imgClassPart!.toString(),
+                                      imgClassPart!,
                                       selectedValue.toString(),
                                       selectedClassValue.toString(),
                                       us);
@@ -281,7 +280,7 @@ class _CreateClassPartState extends State<CreateClassPart> {
                                                     0.06,
                                                 child: TextButton(
                                                   child: Text(
-                                                    'Quuay lại',
+                                                    'Quay lại',
                                                     style: ggTextStyle(
                                                         20,
                                                         FontWeight.bold,

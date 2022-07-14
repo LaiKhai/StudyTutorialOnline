@@ -8,6 +8,8 @@ use App\Models\BaiKiemTra;
 use App\Models\DS_SinhVien;
 use App\Models\LopHocPhan;
 use App\Models\CheckFile;
+use Illuminate\Support\Facades\DB;
+use App\Models\SinhVien;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
@@ -29,7 +31,7 @@ class LopHocPhanController extends Controller
      */
     public function index()
     {
-        $lstLopHocPhan = LopHocPhan::all();
+        $lstLopHocPhan = LopHocPhan::where('trang_thai', '>', "0")->get();
         foreach ($lstLopHocPhan as $item) {
             $item->lop;
             $item->baikiemtra;
@@ -86,23 +88,40 @@ class LopHocPhanController extends Controller
             return response()->json($response, 404);
         }
         $lopHocPhan = LopHocPhan::create($input);
+        $sinhVien = SinhVien::join('lops', 'sinh_viens.id_lop', '=', 'lops.id')
+            ->where('sinh_viens.id_lop', $lopHocPhan->id_lop)
+            ->select('sinh_viens.*')
+            ->get();
+        foreach ($sinhVien as $item) {
+            $input['id_sinh_vien'] = $item->id;
+            $input['id_lop_hoc_phan'] = $lopHocPhan->id;
+            DB::select('call tao_dssv(?,?)', [
+                $input['id_sinh_vien'],
+                $input['id_lop_hoc_phan'],
+            ]);
+        }
         if ($request->hasFile('avt')) {
             $lopHocPhan['avt'] = $request->file('avt')
                 ->store('assets/images/lophocphan/' . $lopHocPhan['id'], 'public');
         }
-        $this->FixImg($lopHocPhan);
         $lopHocPhan->save();
         $lopHocPhan->lop;
         $lopHocPhan->baikiemtra;
         $lopHocPhan->bomon;
         $lopHocPhan->baitap;
-        $lopHocPhan->baiviet;
+        $this->FixImg($lopHocPhan);
+
+        $dssv = DS_SinhVien::join('lop_hoc_phans', 'ds_sinh_viens.id_lop_hoc_phan', '=', 'lop_hoc_phans.id')
+            ->join('sinh_viens', 'ds_sinh_viens.id_sinh_vien', '=', 'sinh_viens.id')
+            ->where('lop_hoc_phans.id', $lopHocPhan->id)
+            ->select('lop_hoc_phans.*', 'sinh_viens.*')->get();
+
         $response = [
             'status' => true,
-            'message' => 'them lop hoc phan thanh cong !',
-            'lophocphan' => $lopHocPhan
+            'lophocphan' => $lopHocPhan,
+            'dssv' => $dssv,
         ];
-        return response()->json($response, 200);
+        return response($response, 200);
     }
 
     /**
@@ -124,7 +143,6 @@ class LopHocPhanController extends Controller
         $lopHocPhan->baikiemtra;
         $lopHocPhan->bomon;
         $lopHocPhan->baitap;
-        $this->FixImg($lopHocPhan);
 
         $dsgv = DS_GiangVien::join('lop_hoc_phans', 'ds_giang_viens.id_lop_hoc_phan', '=', 'lop_hoc_phans.id')
             ->join('giang_viens', 'ds_giang_viens.id_giang_vien', '=', 'giang_viens.id')
@@ -185,13 +203,24 @@ class LopHocPhanController extends Controller
         $lopHocPhan->baikiemtra;
         $lopHocPhan->bomon;
         $lopHocPhan->baitap;
-        $lopHocPhan->baiviet;
+        $this->FixImg($lopHocPhan);
+
+        $dsgv = DS_GiangVien::join('lop_hoc_phans', 'ds_giang_viens.id_lop_hoc_phan', '=', 'lop_hoc_phans.id')
+            ->join('giang_viens', 'ds_giang_viens.id_giang_vien', '=', 'giang_viens.id')
+            ->where('lop_hoc_phans.id', $id)
+            ->select('lop_hoc_phans.*', 'giang_viens.*')->get();
+        $dssv = DS_SinhVien::join('lop_hoc_phans', 'ds_sinh_viens.id_lop_hoc_phan', '=', 'lop_hoc_phans.id')
+            ->join('sinh_viens', 'ds_sinh_viens.id_sinh_vien', '=', 'sinh_viens.id')
+            ->where('lop_hoc_phans.id', $id)
+            ->select('lop_hoc_phans.*', 'sinh_viens.*')->get();
+
         $response = [
             'status' => true,
-            'message' => 'chinh sua thanh cong !',
-            'lophocphan' => $lopHocPhan
+            'lophocphan' => $lopHocPhan,
+            'dssv' => $dssv,
+            'dsgv' => $dsgv
         ];
-        return response()->json($response, 200);
+        return response($response, 200);
     }
 
     /**
@@ -310,6 +339,7 @@ class LopHocPhanController extends Controller
             ->join('bo_mons', 'lop_hoc_phans.id_bo_mon', '=', 'bo_mons.id')
             ->join('khoas', 'lops.id_khoa', '=', 'khoas.id')
             ->where('khoas.ten_khoa', 'like', '%' . $khoa . '%')
+            ->where('lop_hoc_phans.trang_thai', '>', "0")
             ->select('lop_hoc_phans.*', 'bo_mons.ten_mon_hoc', 'khoas.ten_khoa', 'lops.ten_lop')->get();
         if (empty($lopHocPhan)) {
             return response()->json([

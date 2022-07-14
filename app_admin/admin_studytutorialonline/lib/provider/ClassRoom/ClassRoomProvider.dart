@@ -3,7 +3,7 @@ import 'dart:convert';
 import 'package:admin_studytutorialonline/common/contrains/color.dart';
 import 'package:admin_studytutorialonline/common/contrains/string.dart';
 import 'package:admin_studytutorialonline/data/ClassRoom.dart';
-import 'package:admin_studytutorialonline/page/AD_Class.dart';
+import 'package:admin_studytutorialonline/page/ClassRoom/AD_Class.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
@@ -111,7 +111,7 @@ class ClassRoomProvider {
                     onPressed: () {
                       Navigator.pop(context);
                     },
-                    child: Text('Quay lại danh sách bộ môn',
+                    child: Text('Quay lại danh sách lớp',
                         style:
                             ggTextStyle(13, FontWeight.bold, AppColor.black)))
               ],
@@ -167,7 +167,7 @@ class ClassRoomProvider {
                           MaterialPageRoute(
                               builder: (ctx) => ClassPage(us: us)));
                     },
-                    child: Text('OK',
+                    child: Text('Quay lại danh sách lớp',
                         style:
                             ggTextStyle(13, FontWeight.bold, AppColor.black)))
               ],
@@ -176,7 +176,36 @@ class ClassRoomProvider {
 
       return true;
     } else {
-      print('có lổi xảy ra');
+      showDialog(
+          context: context,
+          builder: (BuildContext context) {
+            return AlertDialog(
+              content: Text('Tạo lớp thất bại!',
+                  style: ggTextStyle(13, FontWeight.bold, AppColor.black)),
+              title: Row(
+                children: [
+                  Icon(
+                    Icons.warning_rounded,
+                    color: AppColor.theme,
+                  ),
+                  SizedBox(
+                    width: 10,
+                  ),
+                  Text('Thông báo',
+                      style: ggTextStyle(13, FontWeight.bold, AppColor.black))
+                ],
+              ),
+              actions: [
+                TextButton(
+                    onPressed: () {
+                      Navigator.pop(context);
+                    },
+                    child: Text('OK',
+                        style:
+                            ggTextStyle(13, FontWeight.bold, AppColor.black)))
+              ],
+            );
+          });
       return false;
     }
   }

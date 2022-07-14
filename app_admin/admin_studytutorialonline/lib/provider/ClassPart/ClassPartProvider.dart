@@ -2,10 +2,13 @@ import 'dart:io';
 
 import 'package:admin_studytutorialonline/common/contrains/string.dart';
 import 'package:admin_studytutorialonline/data/ClassPart.dart';
-import 'package:admin_studytutorialonline/page/AD_ClassPart.dart';
+import 'package:admin_studytutorialonline/data/ClassPartCreate.dart';
+import 'package:admin_studytutorialonline/page/ClassPart/AD_ClassPart.dart';
+import 'package:dio/dio.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:path/path.dart';
 import 'dart:convert';
 
 import '../../common/contrains/color.dart';
@@ -27,24 +30,37 @@ class ClassPartProvider {
     return parseObject(response.body);
   }
 
-  static Future<void> createClassPart(BuildContext context, String imgClassPart,
+  static Future<void> createClassPart(BuildContext context, File imgClassPart,
       String id_bo_mon, String id_lop, User us) async {
     String? token = await getToken();
-    String url = createClassPartObject;
-    Map body = {
-      'id_bo_mon': id_bo_mon,
-      'id_lop': id_lop,
+    Dio dio = new Dio();
+    FormData formData;
+    String filename = basename(imgClassPart.path);
+    formData = FormData.fromMap({
+      'id_bo_mon': id_bo_mon.toString(),
+      'id_lop': id_lop.toString(),
       'trang_thai': "1",
-      'avt': imgClassPart
-    };
-    var response = await http.post(Uri.parse(url),
-        headers: <String, String>{
-          'Accept': 'application/json',
-          'Authorization': 'Bearer ${token!}'
-        },
-        body: body);
+      'avt': await MultipartFile.fromFile(imgClassPart.path)
+    });
+    String url = createClassPartObject;
+
+    final response = await dio.post(url,
+        data: formData,
+        options: Options(headers: {'Authorization': 'Bearer $token'}));
+    // Map body = {
+    //   'id_bo_mon': id_bo_mon,
+    //   'id_lop': id_lop,
+    //   'trang_thai': "1",
+    //   'avt': imgClassPart
+    // };
+    // var response = await http.post(Uri.parse(url),
+    //     headers: <String, String>{
+    //       'Accept': 'application/json',
+    //       'Authorization': 'Bearer ${token!}'
+    //     },
+    //     body: body);
+    print(response.data);
     if (response.statusCode == 200) {
-      final jsonResponse = ClassPart.fromJson(json.decode(response.body));
       showDialog(
           context: context,
           builder: (BuildContext context) {
@@ -73,7 +89,7 @@ class ClassPartProvider {
                               builder: (ctx) => ClassPartPage(us: us)),
                           (route) => false);
                     },
-                    child: Text('Quay lại danh sách khoa',
+                    child: Text('Quay lại danh sách lớp học phần',
                         style:
                             ggTextStyle(13, FontWeight.bold, AppColor.black)))
               ],
@@ -159,24 +175,24 @@ class ClassPartProvider {
     return null;
   }
 
-  static Future<void> updateClassPart(BuildContext context, String imgClassPart,
+  static Future<void> updateClassPart(BuildContext context, File imgClassPart,
       String id_bo_mon, String id_lop, User us, int id) async {
     String? token = await getToken();
     String url = updateClassPartObject + id.toString();
-    Map body = {
-      'id_bo_mon': id_bo_mon,
-      'id_lop': id_lop,
+    Dio dio = new Dio();
+    FormData formData;
+    String filename = basename(imgClassPart.path);
+    formData = FormData.fromMap({
+      'id_bo_mon': id_bo_mon.toString(),
+      'id_lop': id_lop.toString(),
       'trang_thai': "1",
-      'avt': imgClassPart
-    };
-    var response = await http.put(Uri.parse(url),
-        headers: <String, String>{
-          'Accept': 'application/json',
-          'Authorization': 'Bearer ${token!}'
-        },
-        body: body);
+      'avt': await MultipartFile.fromFile(imgClassPart.path)
+    });
+
+    final response = await dio.put(url,
+        data: formData,
+        options: Options(headers: {'Authorization': 'Bearer $token'}));
     if (response.statusCode == 200) {
-      final jsonResponse = ClassPart.fromJson(json.decode(response.body));
       showDialog(
           context: context,
           builder: (BuildContext context) {
@@ -205,7 +221,7 @@ class ClassPartProvider {
                               builder: (ctx) => ClassPartPage(us: us)),
                           (route) => false);
                     },
-                    child: Text('Quay lại danh sách khoa',
+                    child: Text('Quay lại danh sách lớp học phần',
                         style:
                             ggTextStyle(13, FontWeight.bold, AppColor.black)))
               ],
@@ -291,7 +307,7 @@ class ClassPartProvider {
                               builder: (ctx) => ClassPartPage(us: us)),
                           (route) => false);
                     },
-                    child: Text('Quay lại danh sách khoa',
+                    child: Text('Quay lại danh sách lớp học phần',
                         style:
                             ggTextStyle(13, FontWeight.bold, AppColor.black)))
               ],

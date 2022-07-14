@@ -2,11 +2,12 @@ import 'package:admin_studytutorialonline/data/Department.dart';
 import 'package:admin_studytutorialonline/provider/Department/DepartmentProvider.dart';
 import 'package:flutter/material.dart';
 
-import '../common/contrains/color.dart';
-import '../common/contrains/dimen.dart';
-import '../common/contrains/string.dart';
-import '../data/User.dart';
-import '../widget/InputForm.dart';
+import '../../common/contrains/color.dart';
+import '../../common/contrains/dimen.dart';
+import '../../common/contrains/string.dart';
+import '../../data/User.dart';
+import '../../data/User.dart';
+import '../../widget/InputForm.dart';
 
 class DepartmentSetting extends StatefulWidget {
   final int departmentId;

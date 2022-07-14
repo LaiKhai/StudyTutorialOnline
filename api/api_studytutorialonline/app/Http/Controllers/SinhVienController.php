@@ -30,7 +30,7 @@ class SinhVienController extends Controller
      */
     public function index()
     {
-        $sinhVien = SinhVien::all();
+        $sinhVien = SinhVien::where('trang_thai', '>', "0")->get();
         foreach ($sinhVien as $item) {
             $item->lop;
             $item->ctbaitap;
@@ -278,6 +278,7 @@ class SinhVienController extends Controller
         $sinhVien = SinhVien::join('lops', 'sinh_viens.id_lop', '=', 'lops.id')
             ->join('khoas', 'lops.id_khoa', '=', 'khoas.id')
             ->where('khoas.ten_khoa', 'like', '%' . $searchInput . '%')
+            ->where('sinh_viens.trang_thai', '>', "0")
             ->select('sinh_viens.*', 'lops.ten_lop', 'lops.nien_khoa')
             ->get();
         $response = [

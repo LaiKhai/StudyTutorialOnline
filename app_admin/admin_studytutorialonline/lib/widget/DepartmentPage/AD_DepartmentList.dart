@@ -2,7 +2,7 @@ import 'package:admin_studytutorialonline/common/contrains/color.dart';
 import 'package:admin_studytutorialonline/common/contrains/dimen.dart';
 import 'package:admin_studytutorialonline/common/contrains/string.dart';
 import 'package:admin_studytutorialonline/data/Department.dart';
-import 'package:admin_studytutorialonline/page/AD_DepartmentSetting.dart';
+import 'package:admin_studytutorialonline/page/Department/AD_DepartmentSetting.dart';
 import 'package:admin_studytutorialonline/provider/Department/DepartmentProvider.dart';
 import 'package:flutter/material.dart';
 

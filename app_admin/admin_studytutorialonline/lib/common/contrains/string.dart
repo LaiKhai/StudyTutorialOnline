@@ -28,6 +28,8 @@ const String getClassPartwithDepartment = baseUrl + '/api/lophocphanwithkhoa';
 const String getTeacherwithDepartment =
     baseUrl + '/api/searchGiangVienwithKhoa';
 const String getStudentwithDepartment = baseUrl + '/api/searchSinhVienwithKhoa';
+const String getAllClassPart = baseUrl + '/api/lophocphan';
+const String getAllTypePost = baseUrl + '/api/loaibaiviet';
 
 const String updateclasses = baseUrl + '/api/lop/';
 

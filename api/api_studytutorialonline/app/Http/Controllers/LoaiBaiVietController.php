@@ -15,7 +15,7 @@ class LoaiBaiVietController extends Controller
      */
     public function index()
     {
-        $lstLoaiBaiViet = LoaiBaiViet::all();
+        $lstLoaiBaiViet = LoaiBaiViet::where('trang_thai', '>', "0")->get();
         $response = [
             'status' => true,
             'loaibaiviet' => $lstLoaiBaiViet
