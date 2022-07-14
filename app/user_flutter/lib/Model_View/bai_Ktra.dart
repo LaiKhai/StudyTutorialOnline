@@ -178,29 +178,25 @@ class BaiKiemTraVM {
     }
   }
 
-  static Future<bool> BatdauKtra(int idktra, int idlophp)async {
-    try {
-       String url = postTraLoi;
-      String token = await Login.getToken();
-      Map body = {
-        "id_bai_kiem_tra": idktra.toString(),
-        "id_lop_hoc_phan": idlophp.toString(),
-      };
-      var response = await http.post(Uri.parse(url),
-          headers: <String, String>{
-            'Accept': 'application/json',
-            'Authorization': 'Bearer $token',
-          },
-          body: body);
-      Map<String, dynamic> map = json.decode(response.body);
-      List<dynamic> posts = map["status"];
-      print(posts);
-      if (response.statusCode == 200) {
-        return true;
-      }
-      return true;
-    } catch (e) {
-      return false;
-    }
+  static Future<bool> BatdauKtra(int idktra, int idlophp) async {
+    String url = postTraLoi;
+    String token = await Login.getToken();
+    Map body = {
+      "id_bai_kiem_tra": idktra.toString(),
+      "id_lop_hoc_phan": idlophp.toString(),
+    };
+    print(idktra);
+    print(idlophp);
+    var response = await http.post(Uri.parse(url),
+        headers: <String, String>{
+          'Accept': 'application/json',
+          'Authorization': 'Bearer $token',
+        },
+        body: body);
+    Map<String, dynamic> map = json.decode(response.body);
+    var posts = map["message"];
+    print(posts);
+    print(true);
+    return true;
   }
 }
