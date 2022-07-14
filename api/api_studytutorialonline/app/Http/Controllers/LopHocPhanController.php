@@ -111,10 +111,6 @@ class LopHocPhanController extends Controller
         $lopHocPhan->baitap;
         $this->FixImg($lopHocPhan);
 
-        $dsgv = DS_GiangVien::join('lop_hoc_phans', 'ds_giang_viens.id_lop_hoc_phan', '=', 'lop_hoc_phans.id')
-            ->join('giang_viens', 'ds_giang_viens.id_giang_vien', '=', 'giang_viens.id')
-            ->where('lop_hoc_phans.id', $lopHocPhan->id)
-            ->select('lop_hoc_phans.*', 'giang_viens.*')->get();
         $dssv = DS_SinhVien::join('lop_hoc_phans', 'ds_sinh_viens.id_lop_hoc_phan', '=', 'lop_hoc_phans.id')
             ->join('sinh_viens', 'ds_sinh_viens.id_sinh_vien', '=', 'sinh_viens.id')
             ->where('lop_hoc_phans.id', $lopHocPhan->id)
@@ -124,7 +120,6 @@ class LopHocPhanController extends Controller
             'status' => true,
             'lophocphan' => $lopHocPhan,
             'dssv' => $dssv,
-            'dsgv' => $dsgv
         ];
         return response($response, 200);
     }

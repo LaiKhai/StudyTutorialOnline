@@ -39,7 +39,7 @@ class ClassPartProvider {
       'id_bo_mon': id_bo_mon.toString(),
       'id_lop': id_lop.toString(),
       'trang_thai': "1",
-      'avt': await MultipartFile.fromFile(imgClassPart.path, filename: filename)
+      'avt': await MultipartFile.fromFile(imgClassPart.path)
     });
     String url = createClassPartObject;
 
@@ -58,6 +58,7 @@ class ClassPartProvider {
     //       'Authorization': 'Bearer ${token!}'
     //     },
     //     body: body);
+    print(response.data);
     if (response.statusCode == 200) {
       final jsonResponse = ClassPart.fromJson(json.decode(response.data));
       showDialog(
