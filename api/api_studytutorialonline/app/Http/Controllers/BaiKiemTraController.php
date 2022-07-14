@@ -283,8 +283,10 @@ class BaiKiemTraController extends Controller
      */
     public function batdauKT(Request $request)
     {
-
-        DB::select('exec Bat_dau_KT(?,?)', [$request->input('id_bai_kiem_tra'), $request->input('id_lop_hoc_phan')]);
+        DB::select('call Bat_dau_KT(?,?)', [
+            $request->input('id_bai_kiem_tra'),
+            $request->input('id_lop_hoc_phan'),
+        ]);
         $traLoi = TraLoi::all();
         $response = [
             'message' => 'da bat dau kiem tra !',
