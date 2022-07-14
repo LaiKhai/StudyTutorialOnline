@@ -17,7 +17,7 @@ class BoMonController extends Controller
      */
     public function index()
     {
-        $lstBoMon = BoMon::all()->where('trang_thai', '>', "0");
+        $lstBoMon = BoMon::where('trang_thai', '>', "0")->get();
         foreach ($lstBoMon as $item) {
             $item->khoa;
         }

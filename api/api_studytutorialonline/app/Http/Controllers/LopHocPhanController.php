@@ -31,7 +31,7 @@ class LopHocPhanController extends Controller
      */
     public function index()
     {
-        $lstLopHocPhan = LopHocPhan::all()->where('trang_thai', '>', "0");
+        $lstLopHocPhan = LopHocPhan::where('trang_thai', '>', "0")->get();
         foreach ($lstLopHocPhan as $item) {
             $item->lop;
             $item->baikiemtra;

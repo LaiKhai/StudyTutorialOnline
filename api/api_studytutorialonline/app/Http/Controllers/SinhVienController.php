@@ -30,7 +30,7 @@ class SinhVienController extends Controller
      */
     public function index()
     {
-        $sinhVien = SinhVien::all();
+        $sinhVien = SinhVien::where('trang_thai', '>', "0")->get();
         foreach ($sinhVien as $item) {
             $item->lop;
             $item->ctbaitap;

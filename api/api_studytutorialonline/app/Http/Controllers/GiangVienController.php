@@ -36,7 +36,7 @@ class GiangVienController extends Controller
      */
     public function index()
     {
-        $giangVien = GiangVien::all()->where('trang_thai', '>', "0");
+        $giangVien = GiangVien::where('trang_thai', '>', "0")->get();
         foreach ($giangVien as $item) {
             $item->khoa;
             $item->chucvu;

@@ -19,7 +19,7 @@ class LopController extends Controller
      */
     public function index()
     {
-        $lstLop = Lop::all()->where('trang_thai', '>', "0");
+        $lstLop = Lop::where('trang_thai', '>', "0")->get();
         foreach ($lstLop as $item) {
             $item->giangvien;
         }

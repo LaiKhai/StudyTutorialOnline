@@ -37,7 +37,7 @@ class BaiVietController extends Controller
      */
     public function index()
     {
-        $lstBaiViet = BaiViet::all()->where('trang_thai', '>', "0");
+        $lstBaiViet = BaiViet::where('trang_thai', '>', "0")->get();
 
         foreach ($lstBaiViet as $item) {
             $item->lophocphan;
