@@ -111,7 +111,6 @@ class LopHocPhanController extends Controller
                 $input['id_lop_hoc_phan'],
             ]);
         }
-        $dssv = DS_SinhVien::all();
         $response = [
             'status' => true,
             'message' => 'them lop hoc phan thanh cong !',
