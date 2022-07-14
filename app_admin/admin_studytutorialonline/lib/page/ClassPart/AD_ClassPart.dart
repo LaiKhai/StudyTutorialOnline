@@ -1,13 +1,13 @@
 import 'dart:convert';
 
-import 'package:admin_studytutorialonline/data/ClassParts.dart';
-import 'package:admin_studytutorialonline/data/Department.dart';
-import 'package:admin_studytutorialonline/page/ClassPart/AD_CLassPartSetting.dart';
-import 'package:admin_studytutorialonline/page/ClassPart/AD_ClassPartDetail.dart';
-import 'package:admin_studytutorialonline/page/ClassPart/AD_CreateClassPart.dart';
-import 'package:admin_studytutorialonline/provider/ClassPart/ClassPartProvider.dart';
-import 'package:admin_studytutorialonline/widget/ClassPart/AD_ClassPartList.dart';
-import 'package:admin_studytutorialonline/widget/DepartmentPage/AD_DepartmentList.dart';
+import 'package:StudyTutorialOnlineAdmin/data/ClassParts.dart';
+import 'package:StudyTutorialOnlineAdmin/data/Department.dart';
+import 'package:StudyTutorialOnlineAdmin/page/ClassPart/AD_CLassPartSetting.dart';
+import 'package:StudyTutorialOnlineAdmin/page/ClassPart/AD_ClassPartDetail.dart';
+import 'package:StudyTutorialOnlineAdmin/page/ClassPart/AD_CreateClassPart.dart';
+import 'package:StudyTutorialOnlineAdmin/provider/ClassPart/ClassPartProvider.dart';
+import 'package:StudyTutorialOnlineAdmin/widget/ClassPart/AD_ClassPartList.dart';
+import 'package:StudyTutorialOnlineAdmin/widget/DepartmentPage/AD_DepartmentList.dart';
 import 'package:flutter/material.dart';
 
 import '../../common/contrains/color.dart';

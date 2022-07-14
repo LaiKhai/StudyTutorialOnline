@@ -1,6 +1,6 @@
-import 'package:admin_studytutorialonline/common/contrains/color.dart';
-import 'package:admin_studytutorialonline/common/contrains/dimen.dart';
-import 'package:admin_studytutorialonline/common/contrains/string.dart';
+import 'package:StudyTutorialOnlineAdmin/common/contrains/color.dart';
+import 'package:StudyTutorialOnlineAdmin/common/contrains/dimen.dart';
+import 'package:StudyTutorialOnlineAdmin/common/contrains/string.dart';
 import 'package:flutter/material.dart';
 
 import '../widget/InputForm.dart';

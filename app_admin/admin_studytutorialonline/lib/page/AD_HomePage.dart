@@ -1,12 +1,12 @@
-import 'package:admin_studytutorialonline/common/contrains/color.dart';
-import 'package:admin_studytutorialonline/common/contrains/dimen.dart';
-import 'package:admin_studytutorialonline/common/contrains/string.dart';
-import 'package:admin_studytutorialonline/data/Statistical.dart';
-import 'package:admin_studytutorialonline/page/AD_Post.dart';
-import 'package:admin_studytutorialonline/page/AD_PostList.dart';
-import 'package:admin_studytutorialonline/provider/Post/PostProvider.dart';
-import 'package:admin_studytutorialonline/provider/Statistical/StatisticalProvider.dart';
-import 'package:admin_studytutorialonline/widget/Drawer/Navigation_Drawer.dart';
+import 'package:StudyTutorialOnlineAdmin/common/contrains/color.dart';
+import 'package:StudyTutorialOnlineAdmin/common/contrains/dimen.dart';
+import 'package:StudyTutorialOnlineAdmin/common/contrains/string.dart';
+import 'package:StudyTutorialOnlineAdmin/data/Statistical.dart';
+import 'package:StudyTutorialOnlineAdmin/page/AD_Post.dart';
+import 'package:StudyTutorialOnlineAdmin/page/AD_PostList.dart';
+import 'package:StudyTutorialOnlineAdmin/provider/Post/PostProvider.dart';
+import 'package:StudyTutorialOnlineAdmin/provider/Statistical/StatisticalProvider.dart';
+import 'package:StudyTutorialOnlineAdmin/widget/Drawer/Navigation_Drawer.dart';
 import 'package:flutter/material.dart';
 
 import '../data/Posts.dart';

@@ -1,4 +1,4 @@
-import 'package:admin_studytutorialonline/common/contrains/color.dart';
+import 'package:StudyTutorialOnlineAdmin/common/contrains/color.dart';
 import 'package:flutter/material.dart';
 
 class HomeNoti extends StatefulWidget {

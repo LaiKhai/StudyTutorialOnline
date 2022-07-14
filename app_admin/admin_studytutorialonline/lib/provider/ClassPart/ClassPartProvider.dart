@@ -1,9 +1,9 @@
 import 'dart:io';
 
-import 'package:admin_studytutorialonline/common/contrains/string.dart';
-import 'package:admin_studytutorialonline/data/ClassPart.dart';
-import 'package:admin_studytutorialonline/data/ClassPartCreate.dart';
-import 'package:admin_studytutorialonline/page/ClassPart/AD_ClassPart.dart';
+import 'package:StudyTutorialOnlineAdmin/common/contrains/string.dart';
+import 'package:StudyTutorialOnlineAdmin/data/ClassPart.dart';
+import 'package:StudyTutorialOnlineAdmin/data/ClassPartCreate.dart';
+import 'package:StudyTutorialOnlineAdmin/page/ClassPart/AD_ClassPart.dart';
 import 'package:dio/dio.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';

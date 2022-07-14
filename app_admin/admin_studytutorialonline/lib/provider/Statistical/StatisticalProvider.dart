@@ -1,6 +1,6 @@
 import 'dart:convert';
 
-import 'package:admin_studytutorialonline/data/Statistical.dart';
+import 'package:StudyTutorialOnlineAdmin/data/Statistical.dart';
 import 'package:http/http.dart' as http;
 import '../../common/contrains/string.dart';
 

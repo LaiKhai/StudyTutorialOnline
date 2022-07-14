@@ -1,8 +1,8 @@
 import 'dart:convert';
 
-import 'package:admin_studytutorialonline/data/Subject.dart';
-import 'package:admin_studytutorialonline/provider/Subject/SubjectProvider.dart';
-import 'package:admin_studytutorialonline/widget/InputForm.dart';
+import 'package:StudyTutorialOnlineAdmin/data/Subject.dart';
+import 'package:StudyTutorialOnlineAdmin/provider/Subject/SubjectProvider.dart';
+import 'package:StudyTutorialOnlineAdmin/widget/InputForm.dart';
 import 'package:flutter/material.dart';
 
 import '../../common/contrains/color.dart';

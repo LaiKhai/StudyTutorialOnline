@@ -1,17 +1,17 @@
 import 'dart:ui';
 
-import 'package:admin_studytutorialonline/common/contrains/color.dart';
-import 'package:admin_studytutorialonline/common/contrains/string.dart';
-import 'package:admin_studytutorialonline/page/ClassRoom/AD_Class.dart';
-import 'package:admin_studytutorialonline/page/ClassPart/AD_ClassPart.dart';
-import 'package:admin_studytutorialonline/page/Department/AD_DepartmentPage.dart';
-import 'package:admin_studytutorialonline/page/AD_HomePage.dart';
-import 'package:admin_studytutorialonline/page/Student/AD_StudentPage.dart';
-import 'package:admin_studytutorialonline/page/Subject/AD_SubjectPage.dart';
-import 'package:admin_studytutorialonline/page/Teacher/AD_TecherPage.dart';
-import 'package:admin_studytutorialonline/widget/ClassPart/AD_ClassPartList.dart';
-import 'package:admin_studytutorialonline/widget/DepartmentPage/AD_DepartmentList.dart';
-import 'package:admin_studytutorialonline/widget/Subject/AD_SubjectCard.dart';
+import 'package:StudyTutorialOnlineAdmin/common/contrains/color.dart';
+import 'package:StudyTutorialOnlineAdmin/common/contrains/string.dart';
+import 'package:StudyTutorialOnlineAdmin/page/ClassRoom/AD_Class.dart';
+import 'package:StudyTutorialOnlineAdmin/page/ClassPart/AD_ClassPart.dart';
+import 'package:StudyTutorialOnlineAdmin/page/Department/AD_DepartmentPage.dart';
+import 'package:StudyTutorialOnlineAdmin/page/AD_HomePage.dart';
+import 'package:StudyTutorialOnlineAdmin/page/Student/AD_StudentPage.dart';
+import 'package:StudyTutorialOnlineAdmin/page/Subject/AD_SubjectPage.dart';
+import 'package:StudyTutorialOnlineAdmin/page/Teacher/AD_TecherPage.dart';
+import 'package:StudyTutorialOnlineAdmin/widget/ClassPart/AD_ClassPartList.dart';
+import 'package:StudyTutorialOnlineAdmin/widget/DepartmentPage/AD_DepartmentList.dart';
+import 'package:StudyTutorialOnlineAdmin/widget/Subject/AD_SubjectCard.dart';
 import 'package:flutter/material.dart';
 
 import '../../data/User.dart';

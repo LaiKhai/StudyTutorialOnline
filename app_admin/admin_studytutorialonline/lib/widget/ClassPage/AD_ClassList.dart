@@ -1,4 +1,4 @@
-import 'package:admin_studytutorialonline/data/ClassRoom.dart';
+import 'package:StudyTutorialOnlineAdmin/data/ClassRoom.dart';
 import 'package:flutter/material.dart';
 
 import '../../common/contrains/color.dart';

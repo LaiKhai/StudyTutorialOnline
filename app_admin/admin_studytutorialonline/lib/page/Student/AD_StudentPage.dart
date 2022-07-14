@@ -1,11 +1,11 @@
 import 'dart:convert';
 
-import 'package:admin_studytutorialonline/data/Student.dart';
-import 'package:admin_studytutorialonline/data/Students.dart';
-import 'package:admin_studytutorialonline/page/Student/AD_CreateStudent.dart';
-import 'package:admin_studytutorialonline/page/Student/AD_StudentDetail.dart';
-import 'package:admin_studytutorialonline/page/Student/AD_StudentSetting.dart';
-import 'package:admin_studytutorialonline/widget/StudentPage/AD_StudentCard.dart';
+import 'package:StudyTutorialOnlineAdmin/data/Student.dart';
+import 'package:StudyTutorialOnlineAdmin/data/Students.dart';
+import 'package:StudyTutorialOnlineAdmin/page/Student/AD_CreateStudent.dart';
+import 'package:StudyTutorialOnlineAdmin/page/Student/AD_StudentDetail.dart';
+import 'package:StudyTutorialOnlineAdmin/page/Student/AD_StudentSetting.dart';
+import 'package:StudyTutorialOnlineAdmin/widget/StudentPage/AD_StudentCard.dart';
 import 'package:flutter/material.dart';
 
 import '../../common/contrains/color.dart';

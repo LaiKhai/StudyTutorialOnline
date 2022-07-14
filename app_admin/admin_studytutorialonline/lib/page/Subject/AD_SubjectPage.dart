@@ -1,12 +1,12 @@
 import 'dart:convert';
 
-import 'package:admin_studytutorialonline/common/contrains/string.dart';
-import 'package:admin_studytutorialonline/data/Department.dart';
-import 'package:admin_studytutorialonline/page/Subject/AD_CreateSubject.dart';
-import 'package:admin_studytutorialonline/page/Subject/AD_CreateSubject.dart';
-import 'package:admin_studytutorialonline/page/Subject/AD_SubjectDetail.dart';
-import 'package:admin_studytutorialonline/page/Subject/AD_SubjectSetting.dart';
-import 'package:admin_studytutorialonline/widget/Subject/AD_SubjectCard.dart';
+import 'package:StudyTutorialOnlineAdmin/common/contrains/string.dart';
+import 'package:StudyTutorialOnlineAdmin/data/Department.dart';
+import 'package:StudyTutorialOnlineAdmin/page/Subject/AD_CreateSubject.dart';
+import 'package:StudyTutorialOnlineAdmin/page/Subject/AD_CreateSubject.dart';
+import 'package:StudyTutorialOnlineAdmin/page/Subject/AD_SubjectDetail.dart';
+import 'package:StudyTutorialOnlineAdmin/page/Subject/AD_SubjectSetting.dart';
+import 'package:StudyTutorialOnlineAdmin/widget/Subject/AD_SubjectCard.dart';
 import 'package:flutter/material.dart';
 
 import '../../common/contrains/color.dart';

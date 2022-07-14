@@ -1,7 +1,7 @@
 import 'dart:convert';
-import 'package:admin_studytutorialonline/data/Teachers.dart';
-import 'package:admin_studytutorialonline/data/model_duy/giangVien_model.dart';
-import 'package:admin_studytutorialonline/page/Teacher/AD_TecherPage.dart';
+import 'package:StudyTutorialOnlineAdmin/data/Teachers.dart';
+import 'package:StudyTutorialOnlineAdmin/data/model_duy/giangVien_model.dart';
+import 'package:StudyTutorialOnlineAdmin/page/Teacher/AD_TecherPage.dart';
 import 'package:flutter/material.dart';
 
 import '../../common/contrains/color.dart';

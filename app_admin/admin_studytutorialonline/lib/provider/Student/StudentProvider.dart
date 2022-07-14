@@ -1,6 +1,6 @@
 import 'dart:convert';
 
-import 'package:admin_studytutorialonline/page/Student/AD_StudentPage.dart';
+import 'package:StudyTutorialOnlineAdmin/page/Student/AD_StudentPage.dart';
 import 'package:flutter/material.dart';
 
 import '../../common/contrains/color.dart';

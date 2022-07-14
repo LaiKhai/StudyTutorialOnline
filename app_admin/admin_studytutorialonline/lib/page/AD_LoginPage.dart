@@ -1,4 +1,4 @@
-import 'package:admin_studytutorialonline/common/contrains/dimen.dart';
+import 'package:StudyTutorialOnlineAdmin/common/contrains/dimen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
