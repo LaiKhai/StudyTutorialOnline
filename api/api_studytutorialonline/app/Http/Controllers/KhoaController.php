@@ -16,7 +16,7 @@ class KhoaController extends Controller
      */
     public function index()
     {
-        $lstKhoa = Khoa::all()->where('trang_thai', '>', "0");
+        $lstKhoa = Khoa::all()->where('trang_thai', "1");
         $response = [
             'status' => true,
             'khoa' => $lstKhoa

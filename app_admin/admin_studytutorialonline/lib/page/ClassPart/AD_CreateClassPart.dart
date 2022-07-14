@@ -112,7 +112,7 @@ class _CreateClassPartState extends State<CreateClassPart> {
                     child: DropdownButton(
                       value: selectedValue,
                       isExpanded: true,
-                      hint: Text('Chọn Khoa...'),
+                      hint: Text('Chọn Bộ Môn...'),
                       items: subjectlist.map((subject) {
                         return DropdownMenuItem(
                           value: subject['id'],
@@ -280,7 +280,7 @@ class _CreateClassPartState extends State<CreateClassPart> {
                                                     0.06,
                                                 child: TextButton(
                                                   child: Text(
-                                                    'Quuay lại',
+                                                    'Quay lại',
                                                     style: ggTextStyle(
                                                         20,
                                                         FontWeight.bold,

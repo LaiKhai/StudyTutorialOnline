@@ -2,6 +2,7 @@ import 'package:admin_studytutorialonline/common/contrains/color.dart';
 import 'package:admin_studytutorialonline/common/contrains/dimen.dart';
 import 'package:admin_studytutorialonline/common/contrains/string.dart';
 import 'package:admin_studytutorialonline/data/Statistical.dart';
+import 'package:admin_studytutorialonline/page/AD_CreatePost.dart';
 import 'package:admin_studytutorialonline/page/AD_Post.dart';
 import 'package:admin_studytutorialonline/page/AD_PostList.dart';
 import 'package:admin_studytutorialonline/provider/Post/PostProvider.dart';
@@ -81,14 +82,55 @@ class _HomePageState extends State<HomePage> {
                               )),
                             ),
                             Container(
+                              margin: EdgeInsets.fromLTRB(20, 0, 20, 0),
                               padding: EdgeInsets.only(
                                   top: getHeightSize(context) * 0.1),
+                              child: ElevatedButton(
+                                onPressed: () {
+                                  Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) => CreatePost()));
+                                },
+                                style: ElevatedButton.styleFrom(
+                                    primary: AppColor.white,
+                                    shape: RoundedRectangleBorder(
+                                        borderRadius:
+                                            BorderRadius.circular(15))),
+                                child: Row(
+                                  children: [
+                                    Container(
+                                      margin: EdgeInsets.fromLTRB(0, 15, 0, 15),
+                                      height: 50,
+                                      child: ClipRRect(
+                                        borderRadius: BorderRadius.circular(90),
+                                        child: Image.network(
+                                          baseUrl + us.avt,
+                                          fit: BoxFit.cover,
+                                        ),
+                                      ),
+                                    ),
+                                    Container(
+                                      margin: EdgeInsets.fromLTRB(20, 0, 0, 0),
+                                      child: Text(
+                                        'Bạn muốn thông báo gì hôm nay',
+                                        style: ggTextStyle(13,
+                                            FontWeight.normal, AppColor.grey),
+                                      ),
+                                    )
+                                  ],
+                                ),
+                              ),
+                            ),
+                            Container(
+                              padding: EdgeInsets.only(
+                                  top: getHeightSize(context) * 0.05),
                               child: Column(
                                 children: [
                                   Container(
                                       padding: EdgeInsets.fromLTRB(
                                           getWidthSize(context) * 0.05,
-                                          10,
+                                          0,
                                           10,
                                           10),
                                       child: Align(
