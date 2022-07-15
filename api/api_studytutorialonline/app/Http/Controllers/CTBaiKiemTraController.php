@@ -46,13 +46,13 @@ class CTBaiKiemTraController extends Controller
     public function store(Request $request)
     {
         $input['id_bai_kiem_tra'] = $request->input('id_bai_kiem_tra');
-        $input['ten_sinh_vien'] = $request->input('ten_sinh_vien');
+        $input['id_sinh_vien'] = $request->input('id_sinh_vien');
         $input['tg_nop_bai'] = $request->input('tg_nop_bai');
         $input['tong_diem'] = $request->input('tong_diem');
         $input['trang_thai'] = $request->input('trang_thai');
         $validator = Validator::make($input, [
             'id_bai_kiem_tra' => ['required', 'max:255', 'integer'],
-            'ten_sinh_vien' => ['required', 'max:255', 'string'],
+            'id_sinh_vien' => ['required', 'max:255', 'string'],
             'tg_nop_bai' => ['required'],
             'tong_diem' => ['required'],
             'trang_thai' => ['required'],
@@ -127,7 +127,7 @@ class CTBaiKiemTraController extends Controller
         }
         $ctBaiKiemTra->fill([
             'id_bai_kiem_tra' => $request->input('id_bai_kiem_tra'),
-            'ten_sinh_vien' => $request->input('ten_sinh_vien'),
+            'id_sinh_vien' => $request->input('id_sinh_vien'),
             'tg_nop_bai' => $request->input('tg_nop_bai'),
             'tong_diem' => $request->input('tong_diem'),
             'trang_thai' => $request->input('trang_thai')
