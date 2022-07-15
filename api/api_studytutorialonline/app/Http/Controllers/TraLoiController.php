@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\BaiKiemTra;
 use App\Models\TraLoi;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
@@ -174,35 +175,16 @@ class TraLoiController extends Controller
 
     public function traloiwithbaikiemtra(Request $request)
     {
-        $idBaiKtra = $request->input['id_bai_ktra'];
-        $idSinhVien = $request->input['id_sinh_vien'];
-        if (empty($idBaiKtra)) {
-            $response = [
-                'status' => false,
-                'message' => 'Không tìm thấy bài kiểm tra nào'
-            ];
-            return response()->json($response, 404);
-        } else if (empty($idSinhVien)) {
-            $response = [
-                'status' => false,
-                'message' => 'Không tìm thấy bài kiểm tra của sinh viên nào'
-            ];
-            return response()->json($response, 404);
-        }
-        try {
-            $baiktra = TraLoi::join('cau_hois', 'tra_lois.id_cau_hoi', '=', 'cau_hois.id')
-                ->join('bai_kiem_tras', 'cau_hois.id_bai_kiem_tra', '=', 'bai_kiem_tras.id')
-                ->where(['bai_kiem_tras.id', $idBaiKtra], ['tra_lois.id_sinh_vien', $idSinhVien])
-                ->select('tra_lois.*')->get();
-            $response = [
-                'status' => true,
-                'baikiemtra' => $baiktra
-            ];
-        } catch (ModelNotFoundException $exception) {
-            $response = [
-                'status' => false
-            ];
-        }
+        $idBaiKtra = $request->input('id_bai_ktra');
+        $idSinhVien = $request->input('id_sinh_vien');
+        $baikiemtra = TraLoi::join('cau_hois', 'tra_lois.id_cau_hoi', '=', 'cau_hois.id')
+            ->where([['tra_lois.id_sinh_vien', $idSinhVien], ['cau_hois.id_bai_kiem_tra', $idBaiKtra]])
+            ->select('tra_lois.id', 'tra_lois.dap_an', 'tra_lois.diem', 'tra_lois.trang_thai', 'cau_hois.*')
+            ->get();
+        $response = [
+            'status' => true,
+            'baikiemtra' => $baikiemtra
+        ];
         return response()->json($response, 200);
     }
 }
