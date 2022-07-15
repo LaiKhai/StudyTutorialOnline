@@ -5,6 +5,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\BaiKiemTraController;
 use App\Http\Controllers\BaiTapController;
 use App\Http\Controllers\BaiVietController;
+use App\Http\Controllers\BinhLuanController;
 use App\Http\Controllers\SinhVienController;
 use App\Http\Controllers\GiangVienController;
 use App\Http\Controllers\LopController;
@@ -92,6 +93,7 @@ Route::apiResource('file', FileController::class);
 Route::apiResource('dsgv', DS_GiangVien::class);
 Route::apiResource('traloi', TraLoiController::class);
 Route::apiResource('ctbaikiemtra', CTBaiKiemTraController::class);
+Route::apiResource('binhluan', BinhLuanController::class);
 Route::middleware(['auth:sanctum'])->group(function () {
 });
 

@@ -8,6 +8,7 @@ use App\Models\CTBaiKiemTra;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Carbon;
 
 class CTBaiKiemTraController extends Controller
 {
@@ -18,7 +19,7 @@ class CTBaiKiemTraController extends Controller
      */
     public function index()
     {
-        $ctBaiKiemTra = CTBaiKiemTra::all();
+        $ctBaiKiemTra = CTBaiKiemTra::where('trang_thai', '>', "0")->get();
         foreach ($ctBaiKiemTra as $item) {
             $item->baikiemtra;
             $item->traloi;
@@ -50,78 +51,40 @@ class CTBaiKiemTraController extends Controller
     {
         $input['id_bai_kiem_tra'] = $request->input('id_bai_kiem_tra');
         $input['id_sinh_vien'] = $request->input('id_sinh_vien');
-        $input['tong_diem'] = 0;
-        $input['trang_thai'] = $request->input('trang_thai');
-        $validator = Validator::make($input, [
-            'id_bai_kiem_tra' => ['required', 'max:255', 'integer'],
-            'id_sinh_vien' => ['required', 'max:255', 'string'],
-            'trang_thai' => ['required'],
+        $input['trang_thai'] = 1;
+        DB::select('call tao_ct_bai_kiem_tra(?,?,?)', [
+            $input['id_bai_kiem_tra'],
+            $input['id_sinh_vien'],
+            $input['trang_thai'],
         ]);
-        if ($validator->fails()) {
-            if (!empty($validator->errors())) {
-                $response['data'] = $validator->errors();
-                $response['status'] = false;
-            }
-            $response['message'] = 'Vaidator Error';
-            return response()->json($response, 404);
-        }
-        $ctBaiKiemTra = CTBaiKiemTra::create($input);
-
-        $baikiemtra = BaiKiemTra::find($ctBaiKiemTra->id_bai_kiem_tra);
-        $traloi = TraLoi::where('tra_lois.id_sinh_vien', $ctBaiKiemTra->id_sinh_vien);
-        // if ($baikiemtra->tg_ket_thuc == null) {
-        //     $response = [
-        //         'status' => false,
-        //         'message' => 'chưa có thời gian kết thúc',
-        //     ];
-        //     return response()->json($response, 200);
-        // } else {
-        //     if ($baikiemtra->tg_ket_thuc < $ctBaiKiemTra->tg_nop_bai) {
-        //         $tongdiem = DB::select('call TongDiem(?,?,?)', [
-        //             $ctBaiKiemTra['id_bai_kiem_tra'],
-        //             $ctBaiKiemTra['id_sinh_vien'],
-        //             $traloi['diem'],
-        //         ]);
-        //         $ctBaiKiemTra['tong_diem'] = $tongdiem;
-        //         $ctBaiKiemTra['trang_thai'] = 2;
-        //         $ctBaiKiemTra->save();
-        //         $response = [
-        //             'status' => true,
-        //             'message' => 'nop tre',
-        //             'data' => $ctBaiKiemTra
-        //         ];
-        //         return response()->json($response, 200);
-        //     } else if ($baikiemtra->tg_ket_thuc == $ctBaiKiemTra->tg_nop_bai) {
-        //         $tongdiem = DB::select('call TongDiem(?,?,?)', [
-        //             $ctBaiKiemTra['id_bai_kiem_tra'],
-        //             $ctBaiKiemTra['id_sinh_vien'],
-        //             $traloi['diem'],
-        //         ]);
-        //         $ctBaiKiemTra['tong_diem'] = $tongdiem;
-        //         $ctBaiKiemTra['trang_thai'] = 1;
-        //         $ctBaiKiemTra->save();
-        //         $response = [
-        //             'status' => true,
-        //             'message' => 'da nop !',
-        //             'data' => $ctBaiKiemTra
-        //         ];
-        //         return response()->json($response, 200);
-        //     }
-        // }
-
-        if ($baikiemtra->tg_ket_thuc < $ctBaiKiemTra->tg_nop_bai) {
-            $tongdiem = DB::select('call TongDiem(?,?,?)', [
-                $ctBaiKiemTra['id_bai_kiem_tra'],
-                $ctBaiKiemTra['id_sinh_vien'],
-                $traloi['diem'],
+        $tg_ket_thuc = CTBaiKiemTra::join('bai_kiem_tras', 'ct_bai_kiem_tras.id_bai_kiem_tra', '=', 'bai_kiem_tras.id')
+            ->where('ct_bai_kiem_tras.id_bai_kiem_tra', $input['id_bai_kiem_tra'])
+            ->max('bai_kiem_tras.tg_ket_thuc');
+        $tg_nop_bai = CTBaiKiemTra::where('id_bai_kiem_tra', $input['id_bai_kiem_tra'])->max('tg_nop_bai');
+        if ($tg_ket_thuc < $tg_nop_bai) {
+            DB::select('call cap_nhat_trang_thai_CTBKT(?,?,?)', [
+                $input['id_bai_kiem_tra'],
+                $input['id_sinh_vien'],
+                2,
             ]);
-            $ctBaiKiemTra['tong_diem'] = $tongdiem;
-            $ctBaiKiemTra['trang_thai'] = 2;
-            $ctBaiKiemTra->save();
+            $kq = CTBaiKiemTra::all();
             $response = [
                 'status' => true,
-                'message' => 'nop tre',
-                'data' => $ctBaiKiemTra['trang_thai']
+                'message' => 'Nộp trễ',
+                'data' => $kq,
+            ];
+            return response()->json($response, 200);
+        } else if ($tg_ket_thuc == $tg_nop_bai) {
+            DB::select('call cap_nhat_trang_thai_CTBKT(?,?,?)', [
+                $input['id_bai_kiem_tra'],
+                $input['id_sinh_vien'],
+                1,
+            ]);
+            $kq = CTBaiKiemTra::all();
+            $response = [
+                'status' => true,
+                'message' => 'Đã nộp',
+                'data' => $kq,
             ];
             return response()->json($response, 200);
         }
