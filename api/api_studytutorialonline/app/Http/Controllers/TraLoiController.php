@@ -6,6 +6,8 @@ use App\Models\TraLoi;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
+use Illuminate\Database\Eloquent\ModelNotFoundException;
+
 class TraLoiController extends Controller
 {
     /**
@@ -167,6 +169,40 @@ class TraLoiController extends Controller
             'message' => 'xoa thanh cong !',
             'traloi' => $lstTraLoi
         ];
+        return response()->json($response, 200);
+    }
+
+    public function traloiwithbaikiemtra(Request $request)
+    {
+        $idBaiKtra = $request->input['id_bai_ktra'];
+        $idSinhVien = $request->input['id_sinh_vien'];
+        if (empty($idBaiKtra)) {
+            $response = [
+                'status' => false,
+                'message' => 'Không tìm thấy bài kiểm tra nào'
+            ];
+            return response()->json($response, 404);
+        } else if (empty($idSinhVien)) {
+            $response = [
+                'status' => false,
+                'message' => 'Không tìm thấy bài kiểm tra của sinh viên nào'
+            ];
+            return response()->json($response, 404);
+        }
+        try {
+            $baiktra = TraLoi::join('cau_hois', 'tra_lois.id_cau_hoi', '=', 'cau_hois.id')
+                ->join('bai_kiem_tras', 'cau_hois.id_bai_kiem_tra', '=', 'bai_kiem_tras.id')
+                ->where(['bai_kiem_tras.id', $idBaiKtra], ['tra_lois.id_sinh_vien', $idSinhVien])
+                ->select('tra_lois.*')->get();
+            $response = [
+                'status' => true,
+                'baikiemtra' => $baiktra
+            ];
+        } catch (ModelNotFoundException $exception) {
+            $response = [
+                'status' => false
+            ];
+        }
         return response()->json($response, 200);
     }
 }

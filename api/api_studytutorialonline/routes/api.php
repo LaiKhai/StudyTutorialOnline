@@ -108,6 +108,9 @@ Route::post('batdauKT', [BaiKiemTraController::class, 'batdauKT']);
 //nop bai
 Route::post('nopBai', [BaiKiemTraController::class, 'nopBai']);
 
+//chi tiet bai kiem tra da lam
+Route::post('traloiwithbaikiemtra', [TraLoiController::class, 'traloiwithbaikiemtra']);
+
 //Tìm kiếm
 //Tìm kiếm Khoa
 Route::post('/searchKhoa', [KhoaController::class, 'search']);
