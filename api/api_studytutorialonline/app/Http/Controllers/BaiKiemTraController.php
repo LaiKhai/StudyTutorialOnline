@@ -8,6 +8,7 @@ use App\Models\TraLoi;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 
 class BaiKiemTraController extends Controller
 {
@@ -261,17 +262,45 @@ class BaiKiemTraController extends Controller
      */
     public function taoCauTraloi(Request $request)
     {
-        DB::select('call Tao_cau_TrL(?,?,?,?)', [
+        DB::select('call Tao_cau_TrL(?,?,?)', [
             $request->input('dap_an'),
             $request->input('id_cau_hoi'),
-            $request->input('id_bai_kiem_tra'),
             $request->input('id_cau_tra_loi'),
         ]);
         $traLoi = TraLoi::find($request->input('id_cau_tra_loi'));
         $response = [
             'message' => 'da tra loi !',
-            'baikiemtra' => $traLoi
+            'traloi' => $traLoi
         ];
+        return response()->json($response, 200);
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function nopBai(Request $request)
+    {
+        try {
+            foreach ($request->input('list_cau_tra_loi') as $item) {
+                DB::select('call Tao_cau_TrL(?,?,?)', [
+                    $item['dap_an'],
+                    $item['id_cau_hoi'],
+                    $item['id_cau_tra_loi'],
+                ]);
+            }
+            $traLoi = TraLoi::find($request->input('id_cau_tra_loi'));
+            $response = [
+                'status' => true,
+                'message' => 'da tra loi !',
+                'traloi' => $traLoi
+            ];
+        } catch (ModelNotFoundException $exception) {
+            $response = [
+                'status' => false
+            ];
+        }
         return response()->json($response, 200);
     }
 

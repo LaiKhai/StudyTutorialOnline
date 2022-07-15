@@ -45,12 +45,12 @@ class Storeprocedure extends Migration
         INSERT INTO `cau_hois`( `id_bai_kiem_tra`, `de_bai`, `dap_an_1`, `dap_an_2`, `dap_an_3`, `dap_an_4`, `dap_an_dung`, `diem`, `trang_thai`, `created_at`, `updated_at`) 
         VALUES (id_bai_kiem_tra,de_bai,dap_an_1,dap_an_2,dap_an_3,dap_an_4,dap_an_dung,diem,1,NOW(),NOW());";
 
-        $taoCauTraLoi = "CREATE PROCEDURE `Tao_cau_TrL`(IN `dapan` VARCHAR(15), IN `id_cauhoi` INT, IN `id_baikt` INT, IN `id_cautrl` INT) 
+        $taoCauTraLoi = "CREATE PROCEDURE `Tao_cau_TrL`(IN `dapan` VARCHAR(15), IN `id_cauhoi` INT, IN `id_cautrl` INT) 
             UPDATE `tra_lois` SET `dap_an`=dapan,`diem`= Case 
-            WHEN `dap_an`=(SELECT `dap_an_dung`FROM `cau_hois` WHERE cau_hois.id=id_cauhoi AND cau_hois.id_bai_kiem_tra=id_baikt)
-            THEN (SELECT `diem`FROM `cau_hois` WHERE cau_hois.id=id_cauhoi AND  cau_hois.id_bai_kiem_tra=id_baikt)
-            WHEN `dap_an`!=(SELECT `dap_an_dung`FROM `cau_hois` WHERE cau_hois.id=id_cauhoi AND cau_hois.id_bai_kiem_tra=id_baikt) THEN 0 END,
-            `trang_thai`=1,`created_at`=Now(),`updated_at`=Now() WHERE id=id_cautrl and id_cau_hoi=id_cauhoi;";
+            WHEN `dap_an`=(SELECT `dap_an_dung`FROM `cau_hois` WHERE cau_hois.id=id_cauhoi)
+            THEN (SELECT `diem`FROM `cau_hois` WHERE cau_hois.id=id_cauhoi)
+            WHEN `dap_an`!=(SELECT `dap_an_dung`FROM `cau_hois` WHERE cau_hois.id=id_cauhoi) THEN 0 END,
+            `trang_thai`=1,`created_at`=Now(),`updated_at`=Now() WHERE id=id_cautrl";
 
         $taoDSSV = "CREATE PROCEDURE `tao_dssv`(IN `id_sinh_vien` VARCHAR(255),IN `id_lop_hoc_phan` INT)
         INSERT INTO `ds_sinh_viens`(`id_sinh_vien`,`id_lop_hoc_phan`,`trang_thai`,`created_at`,`updated_at`)
