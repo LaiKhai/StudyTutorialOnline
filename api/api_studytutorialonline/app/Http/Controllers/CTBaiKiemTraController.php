@@ -57,11 +57,26 @@ class CTBaiKiemTraController extends Controller
             $input['id_sinh_vien'],
             $input['trang_thai'],
         ]);
+        $sv = CTBaiKiemTra::where('id_sinh_vien', $input['id_sinh_vien'])->first();
         $tg_ket_thuc = CTBaiKiemTra::join('bai_kiem_tras', 'ct_bai_kiem_tras.id_bai_kiem_tra', '=', 'bai_kiem_tras.id')
             ->where('ct_bai_kiem_tras.id_bai_kiem_tra', $input['id_bai_kiem_tra'])
             ->max('bai_kiem_tras.tg_ket_thuc');
         $tg_nop_bai = CTBaiKiemTra::where('id_bai_kiem_tra', $input['id_bai_kiem_tra'])->max('tg_nop_bai');
-        if ($tg_ket_thuc < $tg_nop_bai) {
+        if ($sv == null) {
+            DB::select('call cap_nhat_trang_thai_CTBKT(?,?,?)', [
+                $input['id_bai_kiem_tra'],
+                $input['id_sinh_vien'],
+                3,
+            ]);
+            $kq = CTBaiKiemTra::all();
+            $response = [
+                'status' => true,
+                'message' => 'Không nộp bài',
+                'data' => $kq,
+            ];
+            return response()->json($response, 200);
+        }
+        if ($sv != null && $tg_ket_thuc < $tg_nop_bai) {
             DB::select('call cap_nhat_trang_thai_CTBKT(?,?,?)', [
                 $input['id_bai_kiem_tra'],
                 $input['id_sinh_vien'],
@@ -74,7 +89,8 @@ class CTBaiKiemTraController extends Controller
                 'data' => $kq,
             ];
             return response()->json($response, 200);
-        } else if ($tg_ket_thuc == $tg_nop_bai) {
+        }
+        if ($sv != null && $tg_ket_thuc == $tg_nop_bai) {
             DB::select('call cap_nhat_trang_thai_CTBKT(?,?,?)', [
                 $input['id_bai_kiem_tra'],
                 $input['id_sinh_vien'],
