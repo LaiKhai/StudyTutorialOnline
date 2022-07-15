@@ -179,7 +179,7 @@ class TraLoiController extends Controller
         $idSinhVien = $request->input('id_sinh_vien');
         $baikiemtra = TraLoi::join('cau_hois', 'tra_lois.id_cau_hoi', '=', 'cau_hois.id')
             ->where([['tra_lois.id_sinh_vien', $idSinhVien], ['cau_hois.id_bai_kiem_tra', $idBaiKtra]])
-            ->select('tra_lois.id', 'tra_lois.dap_an', 'tra_lois.diem', 'tra_lois.trang_thai', 'cau_hois.*')
+            ->select('tra_lois.id as idTraLoi', 'tra_lois.dap_an', 'tra_lois.diem', 'tra_lois.trang_thai', 'cau_hois.*')
             ->get();
         $response = [
             'status' => true,

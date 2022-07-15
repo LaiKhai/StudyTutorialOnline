@@ -20,6 +20,7 @@ class Storeprocedure extends Migration
         $droptaoCauHoi = "DROP PROCEDURE IF EXISTS `tao_cau_hoi`;";
         $droptaoDSSV = "DROP PROCEDURE IF EXISTS `tao_dssv`;";
         $droptaoDSGV = "DROP PROCEDURE IF EXISTS `tao_dsgv`;";
+        $droptaoTongDiem = "DROP PROCEDURE IF EXISTS `TongDiem`;";
 
         DB::unprepared($dropbatdauKT);
         DB::unprepared($droptaobaiKT);
@@ -27,6 +28,7 @@ class Storeprocedure extends Migration
         DB::unprepared($droptaoCauHoi);
         DB::unprepared($droptaoDSSV);
         DB::unprepared($droptaoDSGV);
+        DB::unprepared($droptaoTongDiem);
 
         $batdauKT = 'CREATE PROCEDURE `Bat_dau_KT`(IN `id_bai_ktra` INT, IN `id_lop_hphan` INT) 
         BEGIN
@@ -60,6 +62,11 @@ class Storeprocedure extends Migration
         INSERT INTO `ds_giang_viens`(`id_giang_vien`,`id_lop_hoc_phan`,`trang_thai`,`created_at`,`updated_at`)
         VALUES(id_giang_vien,id_lop_hoc_phan,1,NOW(),NOW());";
 
+        $tongDiem = "CREATE PROCEDURE `TongDiem`(IN `idbaikiem_tra` INT, IN `idsinhvien` INT, OUT `diem` FLOAT)
+        SELECT sum(tra_lois.diem) FROM `tra_lois`,cau_hois 
+        where tra_lois.id_cau_hoi=cau_hois.id AND tra_lois.id_sinh_vien=idsinhvien 
+        AND cau_hois.id_bai_kiem_tra=idbaikiem_tra;";
+
         DB::unprepared($taoBaiKT);
         DB::unprepared($batdauKT);
         DB::unprepared($taoCauHoi);
@@ -67,6 +74,7 @@ class Storeprocedure extends Migration
 
         DB::unprepared($taoDSSV);
         DB::unprepared($taoDSGV);
+        DB::unprepared($tongDiem);
     }
 
     /**
