@@ -283,7 +283,7 @@ class BaiKiemTraController extends Controller
     public function nopBai(Request $request)
     {
         try {
-            foreach ($request->input('list_cau_tra_loi') as $item) {
+            foreach ($request->json('list_cau_tra_loi') as $item) {
                 DB::select('call Tao_cau_TrL(?,?,?)', [
                     $item['dap_an'],
                     $item['id_cau_hoi'],
