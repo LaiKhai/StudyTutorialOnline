@@ -293,7 +293,7 @@ class BaiKiemTraController extends Controller
             $traLoi = TraLoi::find($request->input('id_cau_tra_loi'));
             $response = [
                 'status' => true,
-                'message' => 'da tra loi !',
+                'message' => 'da nop bai thanh cong !',
                 'traloi' => $traLoi
             ];
         } catch (ModelNotFoundException $exception) {
