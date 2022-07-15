@@ -170,4 +170,17 @@ class BinhLuanController extends Controller
         ];
         return response()->json($response, 200);
     }
+
+    public function binhluanwithidbaiviet(Request $request)
+    {
+        $binhluan = BinhLuan::join('bai_viets', 'binh_luans.id_bai_viet', '=', 'bai_viets.id')
+            ->where('bai_viets.id', $request->input('id_bai_viet'))
+            ->select('binh_luans.*', 'bai_viets.id as idBaiViet')
+            ->get();
+        $response = [
+            'status' => true,
+            'data' => $binhluan
+        ];
+        return response()->json($response, 200);
+    }
 }
