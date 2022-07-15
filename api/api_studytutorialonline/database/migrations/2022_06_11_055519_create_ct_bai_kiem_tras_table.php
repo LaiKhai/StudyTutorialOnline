@@ -15,7 +15,7 @@ class CreateCTBaiKiemTrasTable extends Migration
     {
         Schema::create('ct_bai_kiem_tras', function (Blueprint $table) {
             $table->foreignId('id_bai_kiem_tra');
-            $table->foreignId('id_tra_loi');
+            $table->string('ten_sinh_vien');
             $table->dateTime('tg_nop_bai');
             $table->float('tong_diem');
             $table->integer('trang_thai');
