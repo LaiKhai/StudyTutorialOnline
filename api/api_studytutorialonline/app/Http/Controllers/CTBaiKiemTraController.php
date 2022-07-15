@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\BaiKiemTra;
 use App\Models\CTBaiKiemTra;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
@@ -22,7 +23,7 @@ class CTBaiKiemTraController extends Controller
         }
         $response = [
             'status' => true,
-            'ctbaikiemtra' => $ctBaiKiemTra
+            'data' => $ctBaiKiemTra
         ];
         return response()->json($response, 200);
     }
@@ -47,13 +48,11 @@ class CTBaiKiemTraController extends Controller
     {
         $input['id_bai_kiem_tra'] = $request->input('id_bai_kiem_tra');
         $input['id_sinh_vien'] = $request->input('id_sinh_vien');
-        $input['tg_nop_bai'] = $request->input('tg_nop_bai');
         $input['tong_diem'] = $request->input('tong_diem');
         $input['trang_thai'] = $request->input('trang_thai');
         $validator = Validator::make($input, [
             'id_bai_kiem_tra' => ['required', 'max:255', 'integer'],
             'id_sinh_vien' => ['required', 'max:255', 'string'],
-            'tg_nop_bai' => ['required'],
             'tong_diem' => ['required'],
             'trang_thai' => ['required'],
         ]);
@@ -66,12 +65,37 @@ class CTBaiKiemTraController extends Controller
             return response()->json($response, 404);
         }
         $ctBaiKiemTra = CTBaiKiemTra::create($input);
-        $response = [
-            'status' => true,
-            'message' => 'them chi tiet bai kiem tra thanh cong !',
-            'ctbaikiemtra' => $ctBaiKiemTra
-        ];
-        return response()->json($response, 200);
+        $baikiemtra = BaiKiemTra::find($ctBaiKiemTra->id_bai_kiem_tra);
+        if ($baikiemtra->tg_ket_thuc == null) {
+            $response = [
+                'status' => false,
+                'message' => 'chưa có thời gian kết thúc',
+            ];
+            return response()->json($response, 200);
+        } else {
+            if ($baikiemtra->tg_ket_thuc < $ctBaiKiemTra->tg_nop_bai) {
+                $ctBaiKiemTra['trang_thai'] = 2;
+                $ctBaiKiemTra->save();
+                $response = [
+                    'status' => true,
+                    'message' => 'nop tre',
+                    'trangthai' =>
+                    $ctBaiKiemTra->trang_thai,
+                    'data' => $ctBaiKiemTra
+                ];
+                return response()->json($response, 200);
+            } else if ($baikiemtra->tg_ket_thuc == $ctBaiKiemTra->tg_nop_bai) {
+                $ctBaiKiemTra['trang_thai'] = 1;
+                $ctBaiKiemTra->save();
+                $response = [
+                    'status' => true,
+                    'message' => 'da nop !',
+                    'trangthai' => $ctBaiKiemTra->trang_thai,
+                    'data' => $ctBaiKiemTra
+                ];
+                return response()->json($response, 200);
+            }
+        }
     }
 
     /**
@@ -93,7 +117,7 @@ class CTBaiKiemTraController extends Controller
         $ctBaiKiemTra->traloi;
         $response = [
             'status' => true,
-            'ctbaikiemtra' => $ctBaiKiemTra,
+            'data' => $ctBaiKiemTra,
         ];
         return response($response, 200);
     }
@@ -136,7 +160,7 @@ class CTBaiKiemTraController extends Controller
         $response = [
             'status' => true,
             'message' => 'chinh sua thanh cong !',
-            'ctbaikiemtra' => $ctBaiKiemTra
+            'data' => $ctBaiKiemTra
         ];
         return response()->json($response, 200);
     }
@@ -161,7 +185,7 @@ class CTBaiKiemTraController extends Controller
         $response = [
             'status' => true,
             'message' => 'xoa thanh cong !',
-            'ctbaikiemtra' => $lstCTBaiKiemTra
+            'data' => $lstCTBaiKiemTra
         ];
         return response()->json($response, 200);
     }
