@@ -53,7 +53,6 @@ class BinhLuanController extends Controller
         $input['trang_thai'] = 1;
         $validator = Validator::make($input, [
             'id_bai_viet' => ['required', 'max:255', 'integer'],
-            'id_bai_tap' => ['required', 'max:255', 'integer'],
             'id_sinh_vien' => ['required', 'max:255', 'integer'],
             'noi_dung' => ['required', 'max:255', 'string'],
             'trang_thai' => ['required', 'max:255', 'integer'],
@@ -129,6 +128,7 @@ class BinhLuanController extends Controller
             ], 404);
         }
         $binhLuan->fill([
+            'id_bai_viet' => $request->input('id_bai_viet'),
             'id_bai_tap' => $request->input('id_bai_tap'),
             'id_sinh_vien' => $request->input('id_sinh_vien'),
             'noi_dung' => $request->input('noi_dung'),

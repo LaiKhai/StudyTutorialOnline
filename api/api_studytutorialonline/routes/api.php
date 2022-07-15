@@ -114,6 +114,8 @@ Route::post('nopBai', [BaiKiemTraController::class, 'nopBai']);
 
 //chi tiet bai kiem tra da lam
 Route::post('traloiwithbaikiemtra', [TraLoiController::class, 'traloiwithbaikiemtra']);
+//binh luan theo bai viet
+Route::post('binhluanwithidbaiviet', [BinhLuanController::class, 'binhluanwithidbaiviet']);
 
 //Tìm kiếm
 //Tìm kiếm Khoa
