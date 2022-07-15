@@ -290,7 +290,7 @@ class BaiKiemTraController extends Controller
                     $item['id_cau_tra_loi'],
                 ]);
             }
-            $traLoi = TraLoi::find($request->input('id_cau_tra_loi'));
+            $traLoi = TraLoi::all();
             $response = [
                 'status' => true,
                 'message' => 'da nop bai thanh cong !',
