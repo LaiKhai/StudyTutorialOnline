@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:user_flutter/View/page/Binh_luan.dart';
 import 'package:user_flutter/View/page/splash_page.dart';
 
 void main() {
@@ -26,7 +27,7 @@ class MyApp extends StatelessWidget {
         // is not restarted.
         primarySwatch: Colors.blue,
       ),
-      home: const US_Splash_Screen(),
+      home: const BinhLuan(),
     );
   }
 }
