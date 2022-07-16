@@ -27,7 +27,7 @@ class MyApp extends StatelessWidget {
         // is not restarted.
         primarySwatch: Colors.blue,
       ),
-      home: const BinhLuan(),
+      home: const US_Splash_Screen(),
     );
   }
 }
