@@ -23,6 +23,7 @@ class Storeprocedure extends Migration
         $droptaoTongDiem = "DROP PROCEDURE IF EXISTS `TongDiem`;";
         $droptaoCTBaiKiemTra = "DROP PROCEDURE IF EXISTS `tao_ct_bai_kiem_tra`;";
         $droptaocapnhatBKT = "DROP PROCEDURE IF EXISTS `cap_nhat_trang_thai_CTBKT`;";
+        $droptaoCauTraLoi2 = "DROP PROCEDURE IF EXISTS `tao_chi_tiet_bai_ktra_2`;";
 
         DB::unprepared($dropbatdauKT);
         DB::unprepared($droptaobaiKT);
@@ -33,6 +34,7 @@ class Storeprocedure extends Migration
         DB::unprepared($droptaoTongDiem);
         DB::unprepared($droptaoCTBaiKiemTra);
         DB::unprepared($droptaocapnhatBKT);
+        DB::unprepared($droptaoCauTraLoi2);
 
         $batdauKT = 'CREATE PROCEDURE `Bat_dau_KT`(IN `id_bai_ktra` INT, IN `id_lop_hphan` INT) 
         BEGIN
@@ -80,6 +82,10 @@ class Storeprocedure extends Migration
         $capnhatCTBKT = "CREATE PROCEDURE `cap_nhat_trang_thai_CTBKT`(IN `id_bai_kiem_tra` INT, IN `id_sinh_vien` INT, IN `trang_thai` INT)
         UPDATE `ct_bai_kiem_tras` SET `trang_thai`=trang_thai WHERE `ct_bai_kiem_tras`.`id_bai_kiem_tra`=id_bai_kiem_tra AND `ct_bai_kiem_tras`.`id_sinh_vien`=id_sinh_vien;";
 
+        $taoCauTraLoi2 = "CREATE PROCEDURE `tao_chi_tiet_bai_ktra_2`(IN `idbaikiemtra` INT, IN `trangthai` INT)
+        INSERT INTO `ct_bai_kiem_tras`(`id_bai_kiem_tra`, `id_sinh_vien`, `tg_nop_bai`, `tong_diem`, `trang_thai`, `created_at`, `updated_at`) 
+        SELECT cau_hois.id_bai_kiem_tra, tra_lois.id_sinh_vien,NOW(),0,trangthai,NOW(),NOW() FROM cau_hois,tra_lois WHERE cau_hois.id=tra_lois.id_cau_hoi AND cau_hois.id_bai_kiem_tra=idbaikiemtra GROUP BY cau_hois.id_bai_kiem_tra,tra_lois.id_sinh_vien;";
+
         DB::unprepared($taoBaiKT);
         DB::unprepared($batdauKT);
         DB::unprepared($taoCauHoi);
@@ -90,6 +96,7 @@ class Storeprocedure extends Migration
         DB::unprepared($tongDiem);
         DB::unprepared($tao_ct_bai_kiem_tra);
         DB::unprepared($capnhatCTBKT);
+        DB::unprepared($taoCauTraLoi2);
     }
 
     /**

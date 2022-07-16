@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\BaiKiemTra;
 use App\Models\CauHoi;
+use App\Models\CTBaiKiemTra;
+use App\Models\DS_SinhVien;
 use App\Models\TraLoi;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
@@ -316,10 +318,16 @@ class BaiKiemTraController extends Controller
             $request->input('id_bai_kiem_tra'),
             $request->input('id_lop_hoc_phan'),
         ]);
+        DB::select('call tao_chi_tiet_bai_ktra_2(?,?)', [
+            $request->input('id_bai_kiem_tra'),
+            3,
+        ]);
         $traLoi = TraLoi::all();
+        $ctbaiktra = CTBaiKiemTra::all();
         $response = [
             'message' => 'da bat dau kiem tra !',
-            'traloi' => $traLoi
+            'traloi' => $traLoi,
+            'ctBaiKtra' => $ctbaiktra
         ];
         return response()->json($response, 200);
     }
