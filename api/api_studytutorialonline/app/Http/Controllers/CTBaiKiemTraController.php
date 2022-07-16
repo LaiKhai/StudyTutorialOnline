@@ -200,11 +200,22 @@ class CTBaiKiemTraController extends Controller
 
     public function baikiemtrawithsinhvien(Request $request)
     {
-        $input = $request->input('id_sinh_vien');
+        $idsv = $request->input('id_sinh_vien');
+        $idlhp = $request->input('id_lop_hoc_phan');
         $lstbaikiemtra = CTBaiKiemTra::join('sinh_viens', 'ct_bai_kiem_tras.id_sinh_vien', '=', 'sinh_viens.id')
             ->join('bai_kiem_tras', 'ct_bai_kiem_tras.id_bai_kiem_tra', '=', 'bai_kiem_tras.id')
-            ->where('ct_bai_kiem_tras.id_sinh_vien', '=', $input)
-            ->select('sinh_viens.ho_ten', 'ct_bai_kiem_tras.*', 'bai_kiem_tras.*')->get();
+            ->join('lop_hoc_phans', 'lop_hoc_phans.id_lop', '=', 'sinh_viens.id_lop')
+            ->where([['ct_bai_kiem_tras.id_sinh_vien', '=', $idsv], ['lop_hoc_phans.id', $idlhp]])
+            ->select(
+                'sinh_viens.ho_ten',
+                'ct_bai_kiem_tras.*',
+                'lop_hoc_phans.*',
+                'bai_kiem_tras.sl_cau_hoi',
+                'bai_kiem_tras.tieu_de',
+                'bai_kiem_tras.noi_dung',
+                'bai_kiem_tras.tg_bat_dau',
+                'bai_kiem_tras.tg_ket_thuc',
+            )->get();
         if ($lstbaikiemtra == null) {
             $response = [
                 'status' => false
