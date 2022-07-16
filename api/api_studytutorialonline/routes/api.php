@@ -21,6 +21,7 @@ use App\Http\Controllers\DSGiangVienController;
 use App\Http\Controllers\FileController;
 use App\Http\Controllers\ThongKeController;
 use App\Http\Controllers\TraLoiController;
+use App\Models\CTBaiKiemTra;
 use App\Models\DS_GiangVien;
 use Database\Factories\BoMonFactory;
 
@@ -128,3 +129,6 @@ Route::post('/searchGiangVien', [GiangVienController::class, 'search']);
 Route::post('/searchLopwithKhoa', [LopController::class, 'searchLopwithKhoa']);
 Route::post('/searchGiangVienwithKhoa', [GiangVienController::class, 'searchGiangVienwithKhoa']);
 Route::post('/searchSinhVienwithKhoa', [SinhVienController::class, 'searchSinhVienwithKhoa']);
+
+Route::post('/baikiemtrawithsinhvien', [CTBaiKiemTraController::class, 'baikiemtrawithsinhvien']);
+Route::post('/baikiemtrawithlophocphan', [CTBaiKiemTraController::class, 'baikiemtrawithlophocphan']);

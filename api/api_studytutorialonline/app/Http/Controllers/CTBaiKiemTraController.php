@@ -51,8 +51,8 @@ class CTBaiKiemTraController extends Controller
     {
         $input['id_bai_kiem_tra'] = $request->input('id_bai_kiem_tra');
         $input['id_sinh_vien'] = $request->input('id_sinh_vien');
-        $input['trang_thai'] = 1;
-        DB::select('call tao_ct_bai_kiem_tra(?,?,?)', [
+        $input['trang_thai'] = 3;
+        DB::select('call update_ct_bai_kiem_tra(?,?,?)', [
             $input['id_bai_kiem_tra'],
             $input['id_sinh_vien'],
             $input['trang_thai'],
@@ -194,6 +194,43 @@ class CTBaiKiemTraController extends Controller
             'status' => true,
             'message' => 'xoa thanh cong !',
             'data' => $lstCTBaiKiemTra
+        ];
+        return response()->json($response, 200);
+    }
+
+    public function baikiemtrawithsinhvien(Request $request)
+    {
+        $input = $request->input('id_sinh_vien');
+        $lstbaikiemtra = CTBaiKiemTra::join('sinh_viens', 'ct_bai_kiem_tras.id_sinh_vien', '=', 'sinh_viens.id')
+            ->where('ct_bai_kiem_tras.id_sinh_vien', $input)
+            ->select('sinh_viens.ho_ten', 'ct_bai_kiem_tras.*')->get();
+        if ($lstbaikiemtra = null) {
+            $response = [
+                'status' => false
+            ];
+            return response()->json($response, 200);
+        }
+        $response = [
+            'status' => true,
+            'data' => $lstbaikiemtra
+        ];
+        return response()->json($response, 200);
+    }
+    public function baikiemtrawithlophocphan(Request $request)
+    {
+        $lstbaikiemtra = CTBaiKiemTra::join('sinh_viens', 'ct_bai_kiem_tras.id_sinh_vien', '=', 'sinh_viens.id')
+            ->join('lop_hoc_phans', 'lop_hoc_phans.id_lop', '=', 'sinh_viens.id_lop')
+            ->where('lop_hoc_phans.id', $request->input('id_lop_hoc_phan'))
+            ->select('lop_hoc_phans.*', 'ct_bai_kiem_tras.*')->get();
+        if ($lstbaikiemtra = null) {
+            $response = [
+                'status' => false
+            ];
+            return response()->json($response, 200);
+        }
+        $response = [
+            'status' => true,
+            'data' => $lstbaikiemtra
         ];
         return response()->json($response, 200);
     }

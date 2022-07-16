@@ -21,9 +21,10 @@ class Storeprocedure extends Migration
         $droptaoDSSV = "DROP PROCEDURE IF EXISTS `tao_dssv`;";
         $droptaoDSGV = "DROP PROCEDURE IF EXISTS `tao_dsgv`;";
         $droptaoTongDiem = "DROP PROCEDURE IF EXISTS `TongDiem`;";
-        $droptaoCTBaiKiemTra = "DROP PROCEDURE IF EXISTS `tao_ct_bai_kiem_tra`;";
+        $droptaoCTBaiKiemTra = "DROP PROCEDURE IF EXISTS `update_ct_bai_kiem_tra`;";
         $droptaocapnhatBKT = "DROP PROCEDURE IF EXISTS `cap_nhat_trang_thai_CTBKT`;";
         $droptaoCauTraLoi2 = "DROP PROCEDURE IF EXISTS `tao_chi_tiet_bai_ktra_2`;";
+        $dropTinhDiem = "DROP FUNCTION IF EXISTS `TinhDiem`;";
 
         DB::unprepared($dropbatdauKT);
         DB::unprepared($droptaobaiKT);
@@ -73,11 +74,18 @@ class Storeprocedure extends Migration
         where tra_lois.id_cau_hoi=cau_hois.id AND tra_lois.id_sinh_vien=idsinhvien 
         AND cau_hois.id_bai_kiem_tra=idbaikiem_tra;";
 
-        $tao_ct_bai_kiem_tra = "CREATE PROCEDURE `tao_ct_bai_kiem_tra`(IN `id_bai_kiem_tra` INT, IN `id_sinh_vien` INT, IN `trang_thai` INT)
-        INSERT INTO `ct_bai_kiem_tras`(`id_bai_kiem_tra`, `id_sinh_vien`, `tg_nop_bai`, `tong_diem`, `trang_thai`, `created_at`, `updated_at`) 
-        VALUES (id_bai_kiem_tra,id_sinh_vien,NOW(),
-        (SELECT sum(tra_lois.diem) FROM `tra_lois`,cau_hois where tra_lois.id_cau_hoi=cau_hois.id and tra_lois.id_sinh_vien=id_sinh_vien 
-        AND cau_hois.id_bai_kiem_tra=id_bai_kiem_tra),trang_thai,NOW(),NOW());";
+        $tao_ct_bai_kiem_tra = "CREATE PROCEDURE `update_ct_bai_kiem_tra`(IN `id_bai_kiem_tra` INT, IN `id_sinh_vien` INT, IN `trang_thai` INT)
+        UPDATE `ct_bai_kiem_tras` SET `tg_nop_bai`=NOW(),`tong_diem`=TinhDiem(id_bai_kiem_tra,id_sinh_vien),`trang_thai`=trang_thai where `id_bai_kiem_tra`=id_bai_kiem_tra And `id_sinh_vien`=id_sinh_vien;";
+
+        $tinhdiem = "CREATE FUNCTION `TinhDiem`(`id_bai_kiem_tra` DOUBLE, `id_sinh_vien` DOUBLE) RETURNS double
+                        BEGIN
+                        DECLARE tong double;  
+                        SELECT sum(tra_lois.diem) INTO tong FROM `tra_lois`,cau_hois 
+                                where tra_lois.id_cau_hoi=cau_hois.id AND tra_lois.id_sinh_vien=id_sinh_vien 
+                                AND cau_hois.id_bai_kiem_tra=id_bai_kiem_tra;
+                        RETURN tong;
+                        END;";
+
 
         $capnhatCTBKT = "CREATE PROCEDURE `cap_nhat_trang_thai_CTBKT`(IN `id_bai_kiem_tra` INT, IN `id_sinh_vien` INT, IN `trang_thai` INT)
         UPDATE `ct_bai_kiem_tras` SET `trang_thai`=trang_thai WHERE `ct_bai_kiem_tras`.`id_bai_kiem_tra`=id_bai_kiem_tra AND `ct_bai_kiem_tras`.`id_sinh_vien`=id_sinh_vien;";
@@ -94,6 +102,7 @@ class Storeprocedure extends Migration
         DB::unprepared($taoDSSV);
         DB::unprepared($taoDSGV);
         DB::unprepared($tongDiem);
+        DB::unprepared($tinhdiem);
         DB::unprepared($tao_ct_bai_kiem_tra);
         DB::unprepared($capnhatCTBKT);
         DB::unprepared($taoCauTraLoi2);
