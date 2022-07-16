@@ -1,7 +1,7 @@
 import 'dart:convert';
 
-import 'package:admin_studytutorialonline/data/Student.dart';
-import 'package:admin_studytutorialonline/provider/Student/StudentProvider.dart';
+import 'package:StudyTutorialOnlineAdmin/data/Student.dart';
+import 'package:StudyTutorialOnlineAdmin/provider/Student/StudentProvider.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
@@ -32,10 +32,10 @@ class _CreateStudentPageState extends State<CreateStudentPage> {
 
   int? selectedValue;
   List departmentItemList = [];
-  Future getAllDepartment() async {
-    var response = await http.get(Uri.parse(fetchDepartmentObject));
+  Future getAllClass() async {
+    var response = await http.get(Uri.parse(fetchClassObject));
     if (response.statusCode == 200) {
-      var jsonData = json.decode(response.body)['khoa'];
+      var jsonData = json.decode(response.body)['lop'];
       setState(() {
         departmentItemList = jsonData;
       });
@@ -60,7 +60,7 @@ class _CreateStudentPageState extends State<CreateStudentPage> {
   @override
   void initState() {
     super.initState();
-    getAllDepartment();
+    getAllClass();
   }
 
   @override

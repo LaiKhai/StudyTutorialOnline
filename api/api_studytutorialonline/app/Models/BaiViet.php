@@ -43,6 +43,10 @@ class BaiViet extends Model
     {
         return $this->hasMany(CheckFile::class, 'id_bai_viet', 'id');
     }
+    public function binhluan()
+    {
+        return $this->hasMany(BinhLuan::class, 'id_bai_viet', 'id');
+    }
     public function files()
     {
         return $this->belongsToMany('App\Models\File', 'check_files', 'id_bai_viet', 'id_file');

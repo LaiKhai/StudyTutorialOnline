@@ -1,9 +1,9 @@
 import 'dart:convert';
 
-import 'package:admin_studytutorialonline/common/contrains/dimen.dart';
-import 'package:admin_studytutorialonline/provider/Teacher/TeacherDateTimePicker.dart';
-import 'package:admin_studytutorialonline/provider/Teacher/TeacherProvider.dart';
-import 'package:admin_studytutorialonline/widget/InputForm.dart';
+import 'package:StudyTutorialOnlineAdmin/common/contrains/dimen.dart';
+import 'package:StudyTutorialOnlineAdmin/provider/Teacher/TeacherDateTimePicker.dart';
+import 'package:StudyTutorialOnlineAdmin/provider/Teacher/TeacherProvider.dart';
+import 'package:StudyTutorialOnlineAdmin/widget/InputForm.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 

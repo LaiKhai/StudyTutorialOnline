@@ -1,5 +1,5 @@
-import 'package:admin_studytutorialonline/common/contrains/color.dart';
-import 'package:admin_studytutorialonline/provider/LoginPage/LoginProvider.dart';
+import 'package:StudyTutorialOnlineAdmin/common/contrains/color.dart';
+import 'package:StudyTutorialOnlineAdmin/provider/LoginPage/LoginProvider.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 

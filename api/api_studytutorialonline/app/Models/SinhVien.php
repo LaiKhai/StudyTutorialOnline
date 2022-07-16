@@ -53,4 +53,8 @@ class SinhVien extends Model
     {
         return $this->hasMany(BaiViet::class, 'id_sinh_vien', 'id');
     }
+    public function ctbaikiemtra()
+    {
+        return $this->hasMany(CTBaiKiemTra::class, 'id_sinh_vien', 'id');
+    }
 }

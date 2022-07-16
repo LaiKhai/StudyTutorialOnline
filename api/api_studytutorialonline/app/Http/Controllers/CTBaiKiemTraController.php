@@ -2,9 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\BaiKiemTra;
+use App\Models\TraLoi;
 use App\Models\CTBaiKiemTra;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Carbon;
 
 class CTBaiKiemTraController extends Controller
 {
@@ -15,14 +19,14 @@ class CTBaiKiemTraController extends Controller
      */
     public function index()
     {
-        $ctBaiKiemTra = CTBaiKiemTra::all();
+        $ctBaiKiemTra = CTBaiKiemTra::where('trang_thai', '>', "0")->get();
         foreach ($ctBaiKiemTra as $item) {
             $item->baikiemtra;
             $item->traloi;
         }
         $response = [
             'status' => true,
-            'ctbaikiemtra' => $ctBaiKiemTra
+            'data' => $ctBaiKiemTra
         ];
         return response()->json($response, 200);
     }
@@ -46,32 +50,60 @@ class CTBaiKiemTraController extends Controller
     public function store(Request $request)
     {
         $input['id_bai_kiem_tra'] = $request->input('id_bai_kiem_tra');
-        $input['id_tra_loi'] = $request->input('id_tra_loi');
-        $input['tg_nop_bai'] = $request->input('tg_nop_bai');
-        $input['tong_diem'] = $request->input('tong_diem');
-        $input['trang_thai'] = $request->input('trang_thai');
-        $validator = Validator::make($input, [
-            'id_bai_kiem_tra' => ['required', 'max:255', 'integer'],
-            'id_tra_loi' => ['required', 'max:255', 'integer'],
-            'tg_nop_bai' => ['required'],
-            'tong_diem' => ['required'],
-            'trang_thai' => ['required'],
+        $input['id_sinh_vien'] = $request->input('id_sinh_vien');
+        $input['trang_thai'] = 3;
+        DB::select('call update_ct_bai_kiem_tra(?,?,?)', [
+            $input['id_bai_kiem_tra'],
+            $input['id_sinh_vien'],
+            $input['trang_thai'],
         ]);
-        if ($validator->fails()) {
-            if (!empty($validator->errors())) {
-                $response['data'] = $validator->errors();
-                $response['status'] = false;
-            }
-            $response['message'] = 'Vaidator Error';
-            return response()->json($response, 404);
+        $sv = CTBaiKiemTra::where('id_sinh_vien', $input['id_sinh_vien'])->first();
+        $tg_ket_thuc = CTBaiKiemTra::join('bai_kiem_tras', 'ct_bai_kiem_tras.id_bai_kiem_tra', '=', 'bai_kiem_tras.id')
+            ->where('ct_bai_kiem_tras.id_bai_kiem_tra', $input['id_bai_kiem_tra'])
+            ->max('bai_kiem_tras.tg_ket_thuc');
+        $tg_nop_bai = CTBaiKiemTra::where('id_bai_kiem_tra', $input['id_bai_kiem_tra'])->max('tg_nop_bai');
+        if ($sv == null) {
+            DB::select('call cap_nhat_trang_thai_CTBKT(?,?,?)', [
+                $input['id_bai_kiem_tra'],
+                $input['id_sinh_vien'],
+                3,
+            ]);
+            $kq = CTBaiKiemTra::all();
+            $response = [
+                'status' => true,
+                'message' => 'Không nộp bài',
+                'data' => $kq,
+            ];
+            return response()->json($response, 200);
         }
-        $ctBaiKiemTra = CTBaiKiemTra::create($input);
-        $response = [
-            'status' => true,
-            'message' => 'them chi tiet bai kiem tra thanh cong !',
-            'ctbaikiemtra' => $ctBaiKiemTra
-        ];
-        return response()->json($response, 200);
+        if ($sv != null && $tg_ket_thuc < $tg_nop_bai) {
+            DB::select('call cap_nhat_trang_thai_CTBKT(?,?,?)', [
+                $input['id_bai_kiem_tra'],
+                $input['id_sinh_vien'],
+                2,
+            ]);
+            $kq = CTBaiKiemTra::all();
+            $response = [
+                'status' => true,
+                'message' => 'Nộp trễ',
+                'data' => $kq,
+            ];
+            return response()->json($response, 200);
+        }
+        if ($sv != null && $tg_ket_thuc == $tg_nop_bai) {
+            DB::select('call cap_nhat_trang_thai_CTBKT(?,?,?)', [
+                $input['id_bai_kiem_tra'],
+                $input['id_sinh_vien'],
+                1,
+            ]);
+            $kq = CTBaiKiemTra::all();
+            $response = [
+                'status' => true,
+                'message' => 'Đã nộp',
+                'data' => $kq,
+            ];
+            return response()->json($response, 200);
+        }
     }
 
     /**
@@ -93,7 +125,7 @@ class CTBaiKiemTraController extends Controller
         $ctBaiKiemTra->traloi;
         $response = [
             'status' => true,
-            'ctbaikiemtra' => $ctBaiKiemTra,
+            'data' => $ctBaiKiemTra,
         ];
         return response($response, 200);
     }
@@ -127,7 +159,7 @@ class CTBaiKiemTraController extends Controller
         }
         $ctBaiKiemTra->fill([
             'id_bai_kiem_tra' => $request->input('id_bai_kiem_tra'),
-            'id_tra_loi' => $request->input('id_tra_loi'),
+            'id_sinh_vien' => $request->input('id_sinh_vien'),
             'tg_nop_bai' => $request->input('tg_nop_bai'),
             'tong_diem' => $request->input('tong_diem'),
             'trang_thai' => $request->input('trang_thai')
@@ -136,7 +168,7 @@ class CTBaiKiemTraController extends Controller
         $response = [
             'status' => true,
             'message' => 'chinh sua thanh cong !',
-            'ctbaikiemtra' => $ctBaiKiemTra
+            'data' => $ctBaiKiemTra
         ];
         return response()->json($response, 200);
     }
@@ -161,7 +193,66 @@ class CTBaiKiemTraController extends Controller
         $response = [
             'status' => true,
             'message' => 'xoa thanh cong !',
-            'ctbaikiemtra' => $lstCTBaiKiemTra
+            'data' => $lstCTBaiKiemTra
+        ];
+        return response()->json($response, 200);
+    }
+
+    public function baikiemtrawithsinhvien(Request $request)
+    {
+        $idsv = $request->input('id_sinh_vien');
+        $idlhp = $request->input('id_lop_hoc_phan');
+        $lstbaikiemtra = CTBaiKiemTra::join('sinh_viens', 'ct_bai_kiem_tras.id_sinh_vien', '=', 'sinh_viens.id')
+            ->join('bai_kiem_tras', 'ct_bai_kiem_tras.id_bai_kiem_tra', '=', 'bai_kiem_tras.id')
+            ->join('lop_hoc_phans', 'lop_hoc_phans.id_lop', '=', 'sinh_viens.id_lop')
+            ->where([['ct_bai_kiem_tras.id_sinh_vien', '=', $idsv], ['lop_hoc_phans.id', $idlhp]])
+            ->select(
+                'sinh_viens.ho_ten',
+                'ct_bai_kiem_tras.*',
+                'lop_hoc_phans.*',
+                'bai_kiem_tras.sl_cau_hoi',
+                'bai_kiem_tras.tieu_de',
+                'bai_kiem_tras.noi_dung',
+                'bai_kiem_tras.tg_bat_dau',
+                'bai_kiem_tras.tg_ket_thuc',
+            )->get();
+        if ($lstbaikiemtra == null) {
+            $response = [
+                'status' => false
+            ];
+            return response()->json($response, 200);
+        }
+        $response = [
+            'status' => true,
+            'data' => $lstbaikiemtra
+        ];
+        return response()->json($response, 200);
+    }
+    public function baikiemtrawithlophocphan(Request $request)
+    {
+        $lstbaikiemtra = CTBaiKiemTra::join('sinh_viens', 'ct_bai_kiem_tras.id_sinh_vien', '=', 'sinh_viens.id')
+            ->join('bai_kiem_tras', 'ct_bai_kiem_tras.id_bai_kiem_tra', '=', 'bai_kiem_tras.id')
+            ->join('lop_hoc_phans', 'lop_hoc_phans.id_lop', '=', 'sinh_viens.id_lop')
+            ->where('lop_hoc_phans.id', $request->input('id_lop_hoc_phan'))
+            ->select(
+                'lop_hoc_phans.*',
+                'ct_bai_kiem_tras.*',
+                'bai_kiem_tras.sl_cau_hoi',
+                'bai_kiem_tras.tieu_de',
+                'bai_kiem_tras.noi_dung',
+                'bai_kiem_tras.tg_bat_dau',
+                'bai_kiem_tras.tg_ket_thuc',
+            )
+            ->get();
+        if ($lstbaikiemtra == null) {
+            $response = [
+                'status' => false
+            ];
+            return response()->json($response, 200);
+        }
+        $response = [
+            'status' => true,
+            'data' => $lstbaikiemtra
         ];
         return response()->json($response, 200);
     }

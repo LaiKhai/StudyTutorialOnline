@@ -1,4 +1,4 @@
-import 'package:admin_studytutorialonline/provider/Department/DepartmentProvider.dart';
+import 'package:StudyTutorialOnlineAdmin/provider/Department/DepartmentProvider.dart';
 import 'package:flutter/material.dart';
 
 import '../../common/contrains/color.dart';

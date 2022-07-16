@@ -1,4 +1,4 @@
-import 'package:admin_studytutorialonline/page/AD_LoginPage.dart';
+import 'package:StudyTutorialOnlineAdmin/page/AD_LoginPage.dart';
 import 'package:flutter/material.dart';
 
 void main() {

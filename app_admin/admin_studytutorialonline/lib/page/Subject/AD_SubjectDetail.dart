@@ -1,5 +1,5 @@
-import 'package:admin_studytutorialonline/data/Subject.dart';
-import 'package:admin_studytutorialonline/provider/Subject/SubjectProvider.dart';
+import 'package:StudyTutorialOnlineAdmin/data/Subject.dart';
+import 'package:StudyTutorialOnlineAdmin/provider/Subject/SubjectProvider.dart';
 import 'package:flutter/material.dart';
 
 import '../../common/contrains/color.dart';

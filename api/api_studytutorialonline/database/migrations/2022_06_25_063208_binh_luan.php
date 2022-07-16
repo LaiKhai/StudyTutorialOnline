@@ -15,7 +15,8 @@ class BinhLuan extends Migration
     {
         Schema::create('binh_luans', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('id_bai_tap');
+            $table->foreignId('id_bai_viet')->nullable();
+            $table->foreignId('id_bai_tap')->nullable();
             $table->foreignId('id_sinh_vien');
             $table->string('noi_dung');
             $table->integer('trang_thai');

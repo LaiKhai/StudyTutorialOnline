@@ -5,6 +5,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\BaiKiemTraController;
 use App\Http\Controllers\BaiTapController;
 use App\Http\Controllers\BaiVietController;
+use App\Http\Controllers\BinhLuanController;
 use App\Http\Controllers\SinhVienController;
 use App\Http\Controllers\GiangVienController;
 use App\Http\Controllers\LopController;
@@ -13,12 +14,14 @@ use App\Http\Controllers\LoaiBaiTapController;
 use App\Http\Controllers\KhoaController;
 use App\Http\Controllers\LopHocPhanController;
 use App\Http\Controllers\BoMonController;
+use App\Http\Controllers\CTBaiKiemTraController;
 use App\Http\Controllers\LoaiBaiVietController;
 use App\Http\Controllers\DSSinhVienController;
 use App\Http\Controllers\DSGiangVienController;
 use App\Http\Controllers\FileController;
 use App\Http\Controllers\ThongKeController;
 use App\Http\Controllers\TraLoiController;
+use App\Models\CTBaiKiemTra;
 use App\Models\DS_GiangVien;
 use Database\Factories\BoMonFactory;
 
@@ -90,6 +93,8 @@ Route::apiResource('baiviet', BaiVietController::class);
 Route::apiResource('file', FileController::class);
 Route::apiResource('dsgv', DS_GiangVien::class);
 Route::apiResource('traloi', TraLoiController::class);
+Route::apiResource('ctbaikiemtra', CTBaiKiemTraController::class);
+Route::apiResource('binhluan', BinhLuanController::class);
 Route::middleware(['auth:sanctum'])->group(function () {
 });
 
@@ -105,6 +110,14 @@ Route::post('taoCauTraLoi', [BaiKiemTraController::class, 'taoCauTraloi']);
 //Bắt đầu kiểm tra
 Route::post('batdauKT', [BaiKiemTraController::class, 'batdauKT']);
 
+//nop bai
+Route::post('nopBai', [BaiKiemTraController::class, 'nopBai']);
+
+//chi tiet bai kiem tra da lam
+Route::post('traloiwithbaikiemtra', [TraLoiController::class, 'traloiwithbaikiemtra']);
+//binh luan theo bai viet
+Route::post('binhluanwithidbaiviet', [BinhLuanController::class, 'binhluanwithidbaiviet']);
+
 //Tìm kiếm
 //Tìm kiếm Khoa
 Route::post('/searchKhoa', [KhoaController::class, 'search']);
@@ -116,3 +129,6 @@ Route::post('/searchGiangVien', [GiangVienController::class, 'search']);
 Route::post('/searchLopwithKhoa', [LopController::class, 'searchLopwithKhoa']);
 Route::post('/searchGiangVienwithKhoa', [GiangVienController::class, 'searchGiangVienwithKhoa']);
 Route::post('/searchSinhVienwithKhoa', [SinhVienController::class, 'searchSinhVienwithKhoa']);
+
+Route::post('/baikiemtrawithsinhvien', [CTBaiKiemTraController::class, 'baikiemtrawithsinhvien']);
+Route::post('/baikiemtrawithlophocphan', [CTBaiKiemTraController::class, 'baikiemtrawithlophocphan']);

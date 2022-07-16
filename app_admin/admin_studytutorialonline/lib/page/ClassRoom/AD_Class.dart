@@ -1,7 +1,7 @@
 import 'dart:convert';
-import 'package:admin_studytutorialonline/page/ClassRoom/AD_CreateClass.dart';
-import 'package:admin_studytutorialonline/page/ClassRoom/Class_detail.dart';
-import 'package:admin_studytutorialonline/provider/ClassRoom/ClassRoomProvider.dart';
+import 'package:StudyTutorialOnlineAdmin/page/ClassRoom/AD_CreateClass.dart';
+import 'package:StudyTutorialOnlineAdmin/page/ClassRoom/Class_detail.dart';
+import 'package:StudyTutorialOnlineAdmin/provider/ClassRoom/ClassRoomProvider.dart';
 import 'package:flutter/material.dart';
 
 import '../../common/contrains/color.dart';

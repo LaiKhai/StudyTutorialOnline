@@ -1,7 +1,7 @@
 import 'dart:convert';
 import 'dart:io';
 
-import 'package:admin_studytutorialonline/provider/ClassPart/ClassPartProvider.dart';
+import 'package:StudyTutorialOnlineAdmin/provider/ClassPart/ClassPartProvider.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 
@@ -53,14 +53,14 @@ class _ClassPartSettingState extends State<ClassPartSetting> {
     }
   }
 
-  File? imgClassPart;
-  chonAnh() async {
-    FilePickerResult? result = await FilePicker.platform.pickFiles();
-    if (result != null) {
-      imgClassPart = File(result.files.single.path!);
-    }
-    setState(() {});
-  }
+  // File? imgClassPart;
+  // chonAnh() async {
+  //   FilePickerResult? result = await FilePicker.platform.pickFiles();
+  //   if (result != null) {
+  //     imgClassPart = File(result.files.single.path!);
+  //   }
+  //   setState(() {});
+  // }
 
   @override
   void initState() {
@@ -189,72 +189,73 @@ class _ClassPartSettingState extends State<ClassPartSetting> {
                             },
                           ),
                         ),
-                        imgClassPart != null
-                            ? Container(
-                                height: getHeightSize(context) * 0.3,
-                                width: getWidthSize(context),
-                                child: InkWell(
-                                  onTap: () {},
-                                  child: Container(
-                                    height: 300,
-                                    width: getWidthSize(context),
-                                    decoration: BoxDecoration(
-                                        image: imgClassPart != null
-                                            ? DecorationImage(
-                                                image: FileImage(imgClassPart!),
-                                                fit: BoxFit.scaleDown)
-                                            : null),
-                                  ),
-                                ),
-                              )
-                            : Container(
-                                height: getHeightSize(context) * 0.3,
-                                width: getWidthSize(context),
-                                child: Image.network(
-                                  baseUrl + classpart.avt!,
-                                  fit: BoxFit.cover,
-                                )),
+                        // imgClassPart != null
+                        //     ? Container(
+                        //         height: getHeightSize(context) * 0.3,
+                        //         width: getWidthSize(context),
+                        //         child: InkWell(
+                        //           onTap: () {},
+                        //           child: Container(
+                        //             height: 300,
+                        //             width: getWidthSize(context),
+                        //             decoration: BoxDecoration(
+                        //                 image: imgClassPart != null
+                        //                     ? DecorationImage(
+                        //                         image: FileImage(imgClassPart!),
+                        //                         fit: BoxFit.scaleDown)
+                        //                     : null),
+                        //           ),
+                        //         ),
+                        //       )
+                        //     :
+                        Container(
+                            height: getHeightSize(context) * 0.3,
+                            width: getWidthSize(context),
+                            child: Image.network(
+                              baseUrl + classpart.avt!,
+                              fit: BoxFit.contain,
+                            )),
+                        // Container(
+                        //   margin: EdgeInsets.fromLTRB(
+                        //       getWidthSize(context) * 0.06,
+                        //       10,
+                        //       getWidthSize(context) * 0.06,
+                        //       10),
+                        //   width: getWidthSize(context),
+                        //   child: Row(
+                        //     children: [
+                        //       Container(
+                        //           margin: EdgeInsets.fromLTRB(2, 10, 0, 0),
+                        //           width: getWidthSize(context) * 0.86,
+                        //           height: getHeightSize(context) * 0.05,
+                        //           child: ElevatedButton(
+                        //             child: Text(
+                        //               'Thêm Ảnh +',
+                        //               style: ggTextStyle(
+                        //                   20, FontWeight.bold, AppColor.white),
+                        //             ),
+                        //             onPressed: () {
+                        //               imgClassPart = null;
+                        //               chonAnh();
+                        //             },
+                        //             style: ButtonStyle(
+                        //                 backgroundColor:
+                        //                     MaterialStateProperty.all<Color>(
+                        //                         AppColor.theme),
+                        //                 shape: MaterialStateProperty.all<
+                        //                         RoundedRectangleBorder>(
+                        //                     RoundedRectangleBorder(
+                        //                   borderRadius:
+                        //                       BorderRadius.circular(10),
+                        //                 ))),
+                        //           ))
+                        //     ],
+                        //   ),
+                        // ),
                         Container(
                           margin: EdgeInsets.fromLTRB(
                               getWidthSize(context) * 0.06,
-                              10,
-                              getWidthSize(context) * 0.06,
-                              10),
-                          width: getWidthSize(context),
-                          child: Row(
-                            children: [
-                              Container(
-                                  margin: EdgeInsets.fromLTRB(2, 10, 0, 0),
-                                  width: getWidthSize(context) * 0.86,
-                                  height: getHeightSize(context) * 0.05,
-                                  child: ElevatedButton(
-                                    child: Text(
-                                      'Thêm Ảnh +',
-                                      style: ggTextStyle(
-                                          20, FontWeight.bold, AppColor.white),
-                                    ),
-                                    onPressed: () {
-                                      imgClassPart = null;
-                                      chonAnh();
-                                    },
-                                    style: ButtonStyle(
-                                        backgroundColor:
-                                            MaterialStateProperty.all<Color>(
-                                                AppColor.theme),
-                                        shape: MaterialStateProperty.all<
-                                                RoundedRectangleBorder>(
-                                            RoundedRectangleBorder(
-                                          borderRadius:
-                                              BorderRadius.circular(10),
-                                        ))),
-                                  ))
-                            ],
-                          ),
-                        ),
-                        Container(
-                          margin: EdgeInsets.fromLTRB(
-                              getWidthSize(context) * 0.06,
-                              10,
+                              20,
                               getWidthSize(context) * 0.06,
                               10),
                           width: getWidthSize(context),
@@ -294,55 +295,13 @@ class _ClassPartSettingState extends State<ClassPartSetting> {
                                     onPressed: () {
                                       if (selectedClassValue == null) {
                                         selectedClassValue = classpart.lop!.id;
-                                      } else if (selectedValue == "null") {
+                                      } else if (selectedValue == null) {
                                         selectedValue = classpart.bomon!.id;
-                                      } else if (imgClassPart == null) {
-                                        showDialog(
-                                            context: context,
-                                            builder: (BuildContext context) {
-                                              return AlertDialog(
-                                                content: Text(
-                                                    'Yêu cầu thêm ảnh',
-                                                    style: ggTextStyle(
-                                                        13,
-                                                        FontWeight.bold,
-                                                        AppColor.black)),
-                                                title: Row(
-                                                  children: [
-                                                    Icon(
-                                                      Icons.warning_rounded,
-                                                      color: AppColor.theme,
-                                                    ),
-                                                    SizedBox(
-                                                      width: 10,
-                                                    ),
-                                                    Text('Thông báo',
-                                                        style: ggTextStyle(
-                                                            13,
-                                                            FontWeight.bold,
-                                                            AppColor.black))
-                                                  ],
-                                                ),
-                                                actions: [
-                                                  TextButton(
-                                                      onPressed: () {
-                                                        Navigator.pop(context);
-                                                      },
-                                                      child: Text('OK',
-                                                          style: ggTextStyle(
-                                                              13,
-                                                              FontWeight.bold,
-                                                              AppColor.black)))
-                                                ],
-                                              );
-                                            });
-                                      }
-                                      if (selectedClassValue != null &&
-                                          selectedValue != "null" &&
-                                          imgClassPart != null) {
+                                      } else if (selectedClassValue != null &&
+                                          selectedValue != null) {
                                         ClassPartProvider.updateClassPart(
                                             context,
-                                            imgClassPart!,
+                                            classpart.avt.toString(),
                                             selectedValue.toString(),
                                             selectedClassValue.toString(),
                                             us,

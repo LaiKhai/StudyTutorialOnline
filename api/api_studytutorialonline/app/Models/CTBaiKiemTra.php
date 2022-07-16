@@ -14,7 +14,7 @@ class CTBaiKiemTra extends Model
     protected $table = 'ct_bai_kiem_tras';
     protected $fillable = [
         'id_bai_kiem_tra',
-        'id_tra_loi',
+        'id_sinh_vien',
         'tg_nop_bai',
         'tong_diem',
         'trang_thai',
@@ -23,8 +23,8 @@ class CTBaiKiemTra extends Model
     {
         return $this->belongsTo(BaiKiemTra::class, 'id_bai_kiem_tra');
     }
-    public function traloi()
+    public function sinhvien()
     {
-        return $this->belongsTo(TraLoi::class, 'id_tra_loi');
+        return $this->belongsTo(SinhVien::class, 'id_sinh_vien');
     }
 }

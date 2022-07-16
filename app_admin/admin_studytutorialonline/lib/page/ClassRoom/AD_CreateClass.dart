@@ -1,13 +1,13 @@
-import 'package:admin_studytutorialonline/data/ClassRoom.dart';
-import 'package:admin_studytutorialonline/data/Teacher.dart';
-import 'package:admin_studytutorialonline/data/Teachers.dart';
-import 'package:admin_studytutorialonline/data/model_duy/Khoas_model.dart';
-import 'package:admin_studytutorialonline/data/model_duy/giangVien_model.dart';
-import 'package:admin_studytutorialonline/provider/ClassPart/ClassPartProvider.dart';
-import 'package:admin_studytutorialonline/provider/ClassRoom/ClassRoomProvider.dart';
-import 'package:admin_studytutorialonline/provider/Department/DepartmentProvider.dart';
-import 'package:admin_studytutorialonline/provider/Teacher/TeacherProvider.dart';
-import 'package:admin_studytutorialonline/widget/InputForm.dart';
+import 'package:StudyTutorialOnlineAdmin/data/ClassRoom.dart';
+import 'package:StudyTutorialOnlineAdmin/data/Teacher.dart';
+import 'package:StudyTutorialOnlineAdmin/data/Teachers.dart';
+import 'package:StudyTutorialOnlineAdmin/data/model_duy/Khoas_model.dart';
+import 'package:StudyTutorialOnlineAdmin/data/model_duy/giangVien_model.dart';
+import 'package:StudyTutorialOnlineAdmin/provider/ClassPart/ClassPartProvider.dart';
+import 'package:StudyTutorialOnlineAdmin/provider/ClassRoom/ClassRoomProvider.dart';
+import 'package:StudyTutorialOnlineAdmin/provider/Department/DepartmentProvider.dart';
+import 'package:StudyTutorialOnlineAdmin/provider/Teacher/TeacherProvider.dart';
+import 'package:StudyTutorialOnlineAdmin/widget/InputForm.dart';
 import 'package:flutter/material.dart';
 
 import '../../common/contrains/color.dart';

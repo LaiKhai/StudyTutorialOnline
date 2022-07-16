@@ -2,9 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\BaiKiemTra;
 use App\Models\TraLoi;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
+
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 
 class TraLoiController extends Controller
 {
@@ -166,6 +169,21 @@ class TraLoiController extends Controller
             'status' => true,
             'message' => 'xoa thanh cong !',
             'traloi' => $lstTraLoi
+        ];
+        return response()->json($response, 200);
+    }
+
+    public function traloiwithbaikiemtra(Request $request)
+    {
+        $idBaiKtra = $request->input('id_bai_ktra');
+        $idSinhVien = $request->input('id_sinh_vien');
+        $baikiemtra = TraLoi::join('cau_hois', 'tra_lois.id_cau_hoi', '=', 'cau_hois.id')
+            ->where([['tra_lois.id_sinh_vien', $idSinhVien], ['cau_hois.id_bai_kiem_tra', $idBaiKtra]])
+            ->select('tra_lois.id as idTraLoi', 'tra_lois.dap_an', 'tra_lois.diem', 'tra_lois.trang_thai', 'cau_hois.*')
+            ->get();
+        $response = [
+            'status' => true,
+            'baikiemtra' => $baikiemtra
         ];
         return response()->json($response, 200);
     }

@@ -1,8 +1,8 @@
 import 'dart:convert';
 
-import 'package:admin_studytutorialonline/common/contrains/color.dart';
-import 'package:admin_studytutorialonline/page/AD_HomePage.dart';
-import 'package:admin_studytutorialonline/page/AD_LoginPage.dart';
+import 'package:StudyTutorialOnlineAdmin/common/contrains/color.dart';
+import 'package:StudyTutorialOnlineAdmin/page/AD_HomePage.dart';
+import 'package:StudyTutorialOnlineAdmin/page/AD_LoginPage.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;

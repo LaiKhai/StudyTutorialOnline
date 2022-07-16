@@ -11,6 +11,7 @@ class BinhLuan extends Model
     protected $table = 'binh_luans';
     protected $fillable = [
         'id',
+        'id_bai_viet',
         'id_bai_tap',
         'id_sinh_vien',
         'noi_dung',
@@ -19,6 +20,10 @@ class BinhLuan extends Model
     public function baitap()
     {
         return $this->belongsTo(BaiTap::class, 'id_bai_tap');
+    }
+    public function baiviet()
+    {
+        return $this->belongsTo(BaiViet::class, 'id_bai_viet');
     }
     public function sinhvien()
     {

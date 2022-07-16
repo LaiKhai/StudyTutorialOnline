@@ -1,4 +1,4 @@
-import 'package:admin_studytutorialonline/data/Teacher.dart';
+import 'package:StudyTutorialOnlineAdmin/data/Teacher.dart';
 
 class Khoas {
   bool? status;
@@ -25,4 +25,3 @@ class Khoas {
     return data;
   }
 }
-

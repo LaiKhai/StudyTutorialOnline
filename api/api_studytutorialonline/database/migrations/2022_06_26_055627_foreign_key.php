@@ -66,7 +66,7 @@ class ForeignKey extends Migration
         });
         Schema::table('ct_bai_kiem_tras', function (Blueprint $table) {
             $table->foreign('id_bai_kiem_tra')->references('id')->on('bai_kiem_tras');
-            $table->foreign('id_tra_loi')->references('id')->on('tra_lois');
+            $table->foreign('id_sinh_vien')->references('id')->on('sinh_viens');
         });
 
         Schema::table('check_files', function (Blueprint $table) {

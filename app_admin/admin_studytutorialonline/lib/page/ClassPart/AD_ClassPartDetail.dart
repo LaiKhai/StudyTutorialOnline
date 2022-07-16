@@ -1,5 +1,5 @@
-import 'package:admin_studytutorialonline/data/ClassPart.dart';
-import 'package:admin_studytutorialonline/provider/ClassPart/ClassPartProvider.dart';
+import 'package:StudyTutorialOnlineAdmin/data/ClassPart.dart';
+import 'package:StudyTutorialOnlineAdmin/provider/ClassPart/ClassPartProvider.dart';
 import 'package:flutter/material.dart';
 
 import '../../common/contrains/color.dart';
@@ -80,7 +80,7 @@ class _ClassPartDetailState extends State<ClassPartDetail> {
                               height: getHeightSize(context) * 0.3,
                               child: Image.network(
                                 baseUrl + classPart.avt.toString(),
-                                fit: BoxFit.cover,
+                                fit: BoxFit.contain,
                               )),
                           Container(
                             margin: EdgeInsets.fromLTRB(
@@ -91,28 +91,6 @@ class _ClassPartDetailState extends State<ClassPartDetail> {
                             width: getWidthSize(context),
                             child: Column(
                               children: [
-                                Container(
-                                    margin: EdgeInsets.fromLTRB(2, 10, 0, 0),
-                                    width: getWidthSize(context) * 0.86,
-                                    height: getHeightSize(context) * 0.06,
-                                    child: ElevatedButton(
-                                      child: Text(
-                                        'Thêm Danh Sách Sinh Viên',
-                                        style: ggTextStyle(20, FontWeight.bold,
-                                            AppColor.white),
-                                      ),
-                                      onPressed: () {},
-                                      style: ButtonStyle(
-                                          backgroundColor:
-                                              MaterialStateProperty.all<Color>(
-                                                  AppColor.theme),
-                                          shape: MaterialStateProperty.all<
-                                                  RoundedRectangleBorder>(
-                                              RoundedRectangleBorder(
-                                            borderRadius:
-                                                BorderRadius.circular(10),
-                                          ))),
-                                    )),
                                 Container(
                                     margin: EdgeInsets.fromLTRB(2, 10, 0, 0),
                                     width: getWidthSize(context) * 0.86,

@@ -1,6 +1,6 @@
 import 'dart:convert';
 
-import 'package:admin_studytutorialonline/provider/Subject/SubjectProvider.dart';
+import 'package:StudyTutorialOnlineAdmin/provider/Subject/SubjectProvider.dart';
 import 'package:flutter/material.dart';
 
 import '../../common/contrains/color.dart';
