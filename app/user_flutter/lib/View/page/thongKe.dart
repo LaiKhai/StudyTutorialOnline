@@ -2,11 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
+import 'package:user_flutter/Model/User_login.dart';
 import 'package:user_flutter/Model/listBaiKtra_model.dart';
 import 'package:user_flutter/Model_View/bai_Ktra.dart';
 import 'package:user_flutter/View/Widget/Home/app_icon_buttton.dart';
 import 'package:user_flutter/View/Widget/ThongKe.dart/TatCa.dart';
 import 'package:user_flutter/View/Widget/ThongKe.dart/floatingBton.dart';
+import 'package:user_flutter/View/Widget/showNouti.dart';
 import 'package:user_flutter/View/common/constant/color.dart';
 import 'package:user_flutter/View/common/constant/dimen.dart';
 
@@ -138,12 +140,70 @@ class _ThongKePageState extends State<ThongKePage> {
             ),
           ),
         ]),
-        floatingActionButton: FloatingBtun(
-            text: 'Bắt đầu kiểm tra',
-            onPressed: () {
-              BaiKiemTraVM.BatdauKtra(
-                  widget.baikiemtra.id!, widget.baikiemtra.idLopHocPhan!);
-              print('bắt đầu ktra');
-            }));
+        floatingActionButton: widget.baikiemtra.trangThai == 1
+            ? FloatingBtun(
+                text: 'Chi tiết bài kiểm tra',
+                onPressed: () async {
+                  print('Xem chi tiết');
+                  showCustomDialog(
+                      context,
+                      "Không thể bắt đầu ngay bây giờ. Hãy thử lại sau!",
+                      false);
+                })
+            : widget.baikiemtra.trangThai == 4
+                ? FloatingBtun(
+                    text: 'Kết thúc kiểm tra',
+                    onPressed: () async {
+                      bool ktra = await BaiKiemTraVM.BatdauKtra(
+                          widget.baikiemtra.id!,
+                          widget.baikiemtra.idLopHocPhan!);
+                      if (ktra == true) {
+                        BaiKiemTraVM.Update_BKTra(
+                            widget.baikiemtra.id!,
+                            widget.baikiemtra.idLopHocPhan!,
+                            widget.baikiemtra.idGiangVien!,
+                            widget.baikiemtra.noiDung!,
+                            widget.baikiemtra.slCauHoi!,
+                            widget.baikiemtra.tgBatDau!,
+                            DateTime.now().toString(),
+                            '1');
+                        Navigator.pop(context);
+                      } else {
+                        showCustomDialog(
+                            context,
+                            "Không thể kết thúc ngay bây giờ. Hãy thử lại sau!",
+                            false);
+                      }
+
+                      ;
+                      print('bắt đầu ktra');
+                    })
+                : FloatingBtun(
+                    text: 'Bắt đầu kiểm tra',
+                    onPressed: () async {
+                      bool ktra = await BaiKiemTraVM.BatdauKtra(
+                          widget.baikiemtra.id!,
+                          widget.baikiemtra.idLopHocPhan!);
+                      if (ktra == true) {
+                        BaiKiemTraVM.Update_BKTra(
+                            widget.baikiemtra.id!,
+                            widget.baikiemtra.idLopHocPhan!,
+                            widget.baikiemtra.idGiangVien!,
+                            widget.baikiemtra.noiDung!,
+                            widget.baikiemtra.slCauHoi!,
+                            DateTime.now().toString(),
+                            '',
+                            '4');
+                        Navigator.pop(context);
+                      } else {
+                        showCustomDialog(
+                            context,
+                            "Không thể bắt đầu ngay bây giờ. Hãy thử lại sau!",
+                            false);
+                      }
+
+                      ;
+                      print('bắt đầu ktra');
+                    }));
   }
 }

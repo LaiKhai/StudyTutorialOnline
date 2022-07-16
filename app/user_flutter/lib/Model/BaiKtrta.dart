@@ -196,8 +196,17 @@ class CT_Baikiemtra {
     slCauHoi = json['sl_cau_hoi'];
     tieuDe = json['tieu_de'];
     noiDung = json['noi_dung'];
-    tgBatDau = json['tg_bat_dau'];
-    tgKetThuc = json['tg_ket_thuc'];
+    if (json['tg_bat_dau'] == null) {
+      tgBatDau = '';
+    } else {
+      tgBatDau = json['tg_bat_dau'];
+    }
+    if (json['tg_ket_thuc'] == null) {
+      tgKetThuc = '';
+    } else {
+      tgKetThuc = json['tg_ket_thuc'];
+    }
+
     trangThai = json['trang_thai'];
     createdAt = json['created_at'];
     updatedAt = json['updated_at'];

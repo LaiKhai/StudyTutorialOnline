@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:group_radio_button/group_radio_button.dart';
 import 'package:user_flutter/Model/BaiKtrta.dart';
+import 'package:user_flutter/Model/Bai_da_luu.dart';
+import 'package:user_flutter/Model/User_login.dart';
 import 'package:user_flutter/Model_View/bai_Ktra.dart';
 import 'package:user_flutter/View/Widget/widget_loadin.dart';
 import 'package:user_flutter/View/common/constant/color.dart';
@@ -18,12 +20,56 @@ class Bai_Ktra extends StatefulWidget {
 }
 
 class _Bai_KtraState extends State<Bai_Ktra> {
+  BaiDaLuuModel? baiDaluu = null;
   List<String> a = [];
   List<String> _verticalGroupValue = [];
   List<String> _status = ["Pendings", "Released", "Blocked"];
+
+  getBaidaluu() async {
+    BaiDaLuuModel? gets = await BaiKiemTraVM.Getbaidaluu(widget.id);
+    setState(() {
+      baiDaluu = gets;
+    });
+  }
+
   khoitao_Value(int dai) {
-    for (int i = 0; i < dai; i++) {
-      _verticalGroupValue.add('');
+    if (baiDaluu != null) {
+      for (int i = 0; i < dai; i++) {
+        if (baiDaluu!.baikiemtra![i] != null) {
+          String da = '';
+          switch (baiDaluu!.baikiemtra![i].dapAn!) {
+            case 'A':
+              _verticalGroupValue.add(baiDaluu!.baikiemtra![i].dapAn1!);
+              print(i);
+              print('A');
+              break;
+            case 'B':
+              _verticalGroupValue.add(baiDaluu!.baikiemtra![i].dapAn2!);
+              print(i);
+              print('B b b b ');
+              break;
+            case 'C':
+              _verticalGroupValue.add(baiDaluu!.baikiemtra![i].dapAn3!);
+              print(i);
+              print('C');
+              break;
+            case 'D':
+              _verticalGroupValue.add(baiDaluu!.baikiemtra![i].dapAn4!);
+              print(i);
+              print(_verticalGroupValue[1]);
+              print('D');
+              break;
+            default:
+              _verticalGroupValue.add("F@@");
+          }
+        } else {
+          _verticalGroupValue.add('F@@');
+        }
+      }
+    } else {
+      for (int i = 0; i < dai; i++) {
+        _verticalGroupValue.add('F@@');
+      }
     }
   }
 
@@ -31,6 +77,7 @@ class _Bai_KtraState extends State<Bai_Ktra> {
   void initState() {
     // TODO: implement initState
     super.initState();
+    getBaidaluu();
   }
 
   @override
@@ -54,7 +101,21 @@ class _Bai_KtraState extends State<Bai_Ktra> {
                     fontWeight: FontWeight.bold,
                   ),
                 ),
-                onPressed: () {},
+                onPressed: () async {
+                  bool ktra;
+                  ktra = await BaiKiemTraVM.Update_BKTra(
+                      ct_baikiemtra.id!,
+                      ct_baikiemtra.lophocphan!.id!,
+                      ct_baikiemtra.idGiangVien!,
+                      ct_baikiemtra.noiDung!,
+                      ct_baikiemtra.slCauHoi!, 
+                      ct_baikiemtra.tgBatDau!,
+                      ct_baikiemtra.tgKetThuc!,
+                      '3');
+                  if (ktra == true) {
+                    Navigator.pop(context);
+                  }
+                },
                 tooltip: 'Increment',
                 //foregroundColor: Colors.yellow,
                 //backgroundColor: Colors.red,
@@ -178,6 +239,7 @@ class _Bai_KtraState extends State<Bai_Ktra> {
                                   horizontalAlignment:
                                       MainAxisAlignment.spaceAround,
                                   onChanged: (value) {
+                                    print('index: ' + index.toString());
                                     String trl = '';
                                     if (value == lst_Cauhoi[index].dapAn1) {
                                       trl = "A";
@@ -194,8 +256,11 @@ class _Bai_KtraState extends State<Bai_Ktra> {
                                     setState(() {
                                       trl;
                                     });
-                                    BaiKiemTraVM.traLoiMotCau(trl,
-                                        lst_Cauhoi[index].id!, widget.id, 1);
+                                    BaiKiemTraVM.traLoiMotCau(
+                                        trl,
+                                        lst_Cauhoi[index].id!,
+                                        widget.id,
+                                        baiDaluu!.baikiemtra![index].id!);
                                     setState(() {
                                       _verticalGroupValue[index] = value!;
                                     });

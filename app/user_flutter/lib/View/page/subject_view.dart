@@ -325,13 +325,18 @@ class _StreamBodyState extends State<StreamBody> {
   }
 }
 
-class AssignmentBody extends StatelessWidget {
+class AssignmentBody extends StatefulWidget {
   final List<SubjectAssignment> assignments;
   final int id_lop;
   const AssignmentBody(
       {Key? key, required this.assignments, required this.id_lop})
       : super(key: key);
 
+  @override
+  State<AssignmentBody> createState() => _AssignmentBodyState();
+}
+
+class _AssignmentBodyState extends State<AssignmentBody> {
   @override
   Widget build(BuildContext context) {
     int id = 0;
@@ -343,7 +348,7 @@ class AssignmentBody extends StatelessWidget {
         const SizedBox(height: 16),
         Expanded(
           child: FutureBuilder<List_Ktra_model>(
-            future: BaiKiemTraVM.Get_BKTra(id_lop),
+            future: BaiKiemTraVM.Get_BKTra(widget.id_lop),
             builder: (context, snapshot) {
               if (snapshot.hasData) {
                 if (snapshot.data!.data!.length == 0) {

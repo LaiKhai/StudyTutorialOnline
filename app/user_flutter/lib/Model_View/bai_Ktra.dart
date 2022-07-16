@@ -5,6 +5,7 @@ import 'package:http/http.dart' as http;
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:user_flutter/Model/BaiKtrta.dart';
+import 'package:user_flutter/Model/Bai_da_luu.dart';
 import 'package:user_flutter/Model/User_login.dart';
 import 'package:user_flutter/Model/createBktra.dart';
 import 'package:user_flutter/Model/listBaiKtra_model.dart';
@@ -117,76 +118,69 @@ class BaiKiemTraVM {
     }
   }
 
-  static Future<bool> Update_BKTra(int idbkt, int id_lop, int id_gv,
-      String noiDung, int tong, String trangthai) async {
-    try {
-      String url = urlBaiktra + idbkt.toString();
-      String token = await Login.getToken();
-      Map body = {
-        "id_lop_hoc_phan": id_lop.toString(),
-        "id_giang_vien": id_gv.toString(),
-        "sl_cau_hoi": tong.toString(),
-        "noi_dung": noiDung.toString(),
-        "tg_bat_dau": DateTime.now().toString(),
-        "tg_ket_thuc": DateTime.now().toString(),
-        "trang_thai": trangthai
-      };
-      var response = await http.patch(Uri.parse(url),
-          headers: <String, String>{
-            'Accept': 'application/json',
-            'Authorization': 'Bearer $token',
-          },
-          body: body);
-      Map<String, dynamic> map = json.decode(response.body);
-      List<dynamic> posts = map["status"];
-      print(posts);
-      if (response.statusCode == 200) {
-        return true;
-      }
-      return false;
-    } catch (e) {
-      return false;
+  static Future<bool> Update_BKTra(
+      int idbkt,
+      int id_lop,
+      int id_gv,
+      String noiDung,
+      int tong,
+      String batDau,
+      String ketThuc,
+      String trangthai) async {
+    String url = urlBaiktra + idbkt.toString();
+    String token = await Login.getToken();
+    DateTime batDautime;
+    DateTime ketThuctime;
+    // print(idbkt);
+    // print(id_lop);
+    // print(id_gv);
+    // print(noiDung);
+    // print(tong);
+    Map body = {
+      "id_lop_hoc_phan": id_lop.toString(),
+      "id_giang_vien": id_gv.toString(),
+      "sl_cau_hoi": tong.toString(),
+      "noi_dung": noiDung.toString(),
+      "tg_bat_dau": batDau,
+      "tg_ket_thuc": ketThuc,
+      "trang_thai": trangthai
+    };
+    var response = await http.patch(Uri.parse(url),
+        headers: <String, String>{
+          'Accept': 'application/json',
+          'Authorization': 'Bearer $token',
+        },
+        body: body);
+    print(response.body);
+    Map<String, dynamic> map = json.decode(response.body);
+    var posts = map["status"];
+    print(posts);
+    if (response.statusCode == 200) {
+      return true;
     }
+    return false;
   }
 
   static Future<bool> traLoiMotCau(String dap_an, int id_cau_hoi,
       int id_bai_viet, int id_cau_tra_loi) async {
-    try {
-      String url = postTraLoi;
-      String token = await Login.getToken();
-      Map body = {
-        "dap_an": dap_an.toString(),
-        "id_cau_hoi": id_cau_hoi.toString(),
-        "id_bai_kiem_tra": id_bai_viet.toString(),
-        "id_cau_tra_loi": id_cau_tra_loi.toString(),
-      };
-      var response = await http.post(Uri.parse(url),
-          headers: <String, String>{
-            'Accept': 'application/json',
-            'Authorization': 'Bearer $token',
-          },
-          body: body);
-      Map<String, dynamic> map = json.decode(response.body);
-      List<dynamic> posts = map["status"];
-      print(posts);
-      if (response.statusCode == 200) {
-        return true;
-      }
-      return false;
-    } catch (e) {
-      return false;
-    }
-  }
-
-  static Future<bool> BatdauKtra(int idktra, int idlophp) async {
     String url = postTraLoi;
     String token = await Login.getToken();
     Map body = {
-      "id_bai_kiem_tra": idktra.toString(),
-      "id_lop_hoc_phan": idlophp.toString(),
+      "dap_an": dap_an.toString(),
+      "id_cau_hoi": id_cau_hoi.toString(),
+      "id_bai_kiem_tra": id_bai_viet.toString(),
+      "id_cau_tra_loi": id_cau_tra_loi.toString(),
     };
-    print(idktra);
-    print(idlophp);
+    print(
+      "dap_an" + dap_an.toString(),
+    );
+    print(
+      "id_cau_hoi" + id_cau_hoi.toString(),
+    );
+    print(
+      "id_bai_kiem_tra" + id_bai_viet.toString(),
+    );
+    print("cau tra3 loi27 " + id_cau_tra_loi.toString());
     var response = await http.post(Uri.parse(url),
         headers: <String, String>{
           'Accept': 'application/json',
@@ -196,7 +190,88 @@ class BaiKiemTraVM {
     Map<String, dynamic> map = json.decode(response.body);
     var posts = map["message"];
     print(posts);
-    print(true);
-    return true;
+    if (response.statusCode == 200) {
+      print('lưu');
+      return true;
+    }
+    print('Không lưu 1');
+    return false;
   }
+
+  static Future<bool> BatdauKtra(int idktra, int idlophp) async {
+    try {
+      String url = postBatDktra;
+      String token = await Login.getToken();
+      Map body = {
+        "id_bai_kiem_tra": idktra.toString(),
+        "id_lop_hoc_phan": idlophp.toString(),
+      };
+      print("id bktra: " + idktra.toString());
+      print("id_lop:" + idlophp.toString());
+      var response = await http.post(Uri.parse(url),
+          headers: <String, String>{
+            'Accept': 'application/json',
+            'Authorization': 'Bearer $token',
+          },
+          body: body);
+      Map<String, dynamic> map = json.decode(response.body);
+      var posts = map["message"];
+      print(true);
+      return true;
+    } catch (e) {
+      return false;
+    }
+  }
+
+  static Future<BaiDaLuuModel?> Getbaidaluu(int idbaiktra) async {
+    // try {
+    String url = getBaiDaluu;
+    String token = await Login.getToken();
+    Map body = {
+      "id_bai_ktra": idbaiktra.toString(),
+      "id_sinh_vien": user.user!.id.toString(),
+    };
+    print(idbaiktra);
+    print(user.user!.id);
+    var response = await http.post(Uri.parse(url),
+        headers: <String, String>{
+          'Accept': 'application/json',
+          'Authorization': 'Bearer $token',
+        },
+        body: body);
+    Map<String, dynamic> map = json.decode(response.body);
+    var posts = map["message"];
+    print(response.body);
+    final jsonResponse =
+        BaiDaLuuModel.fromJson(json.decode(response.body.toString()));
+    return jsonResponse;
+    // } catch (e) {
+    //   return null;
+    // }
+  }
+
+
+  static Future<bool> postNopBai(int idBaiKiemTra,int idSinhVien)async{
+     try {
+      String url = postNopbai;
+      String token = await Login.getToken();
+      Map body = {
+        "id_bai_kiem_tra": idBaiKiemTra.toString(),
+        "id_sinh_vien": idSinhVien.toString(),
+      };
+      var response = await http.post(Uri.parse(url),
+          headers: <String, String>{
+            'Accept': 'application/json',
+            'Authorization': 'Bearer $token',
+          },
+          body: body);
+      Map<String, dynamic> map = json.decode(response.body);
+      var posts = map["message"];
+      print(true);
+      return true;
+    } catch (e) {
+      return false;
+    }
+  }
+
 }

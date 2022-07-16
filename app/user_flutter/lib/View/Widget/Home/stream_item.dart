@@ -11,6 +11,7 @@ import 'package:user_flutter/View/Widget/Home/stream_type.dart';
 import 'package:user_flutter/View/common/constant/color.dart';
 import 'package:user_flutter/View/common/constant/dimen.dart';
 import 'package:user_flutter/View/common/constant/string.dart';
+import 'package:user_flutter/View/page/Binh_luan.dart';
 import 'package:user_flutter/View/page/Chi_tiet_bai_tap.dart';
 
 class StreamItem extends StatelessWidget {
@@ -58,7 +59,9 @@ class StreamItem extends StatelessWidget {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                      builder: (context) =>  Chi_tiet_Page(baiviet: bv,)),
+                      builder: (context) => Chi_tiet_Page(
+                            baiviet: bv,
+                          )),
                 );
               }
             },
@@ -206,7 +209,12 @@ class StreamItem extends StatelessWidget {
               bottomLeft: Radius.circular(15),
               bottomRight: Radius.circular(15),
             ),
-            onTap: () {},
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => const BinhLuan_Page()),
+              );
+            },
             child: Container(
               padding: const EdgeInsets.all(12),
               child: Row(

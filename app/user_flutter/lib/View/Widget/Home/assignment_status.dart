@@ -21,23 +21,32 @@ class AssignmentStatus extends StatelessWidget {
                   ? AppColor.green
                   : type == 2
                       ? AppColor.red
-                      : AppColor.grey2)
+                      : type == 3
+                          ? Colors.deepPurple
+                          : type == 4
+                              ? Colors.blueAccent
+                              : AppColor.grey2)
               .withOpacity(0.25)),
       child: Text(
-        type == 3
-            ? "Hoàn thành"
+        type == 1
+            ? "Đã kết thúc bài kiểm tra"
             : type == 2
-                ? "Chưa hoàn thành"
-                : "Có vấn đề xảy ra",
+                ? "Chưa bắt đầu kiểm tra"
+                : type == 3
+                    ? "Chưa xác định"
+                    : type == 4
+                        ? "Đã bắt đầu"
+                        : "Có vấn đề xảy ra",
         style: GoogleFonts.quicksand(
-          color: type == 3
-              ? AppColor.green
-              : type == 2
-                  ? AppColor.red
-                  : AppColor.grey2,
-          fontSize: 12,
-          fontWeight: FontWeight.w600,
-        ),
+            color: type == 1
+                ? AppColor.green
+                : type == 2
+                    ? AppColor.red
+                    : type == 3
+                        ? Colors.deepPurple
+                        : type == 4
+                            ? Colors.blueAccent
+                            : AppColor.grey2),
       ),
     );
   }
