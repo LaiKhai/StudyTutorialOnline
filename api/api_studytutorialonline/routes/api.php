@@ -66,6 +66,9 @@ Route::get('/dowloadfile/{id}', [FileController::class, 'dowloadFile']);
 //Thống kê sinh viên, giảng viên, lớp
 Route::get('/thongke', [ThongKeController::class, 'ThongKe']);
 
+//Thống kê bài kiểm tra
+Route::post('/thongkeCTBKT', [ThongKeController::class, 'thongkeCTBKT']);
+
 //lấy lớp học phần theo khoa
 Route::post('/lophocphanwithkhoa', [LopHocPhanController::class, 'lstLopHocPhanwithKhoa']);
 //lấy lớp theo khoa

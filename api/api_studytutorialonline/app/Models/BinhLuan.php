@@ -14,6 +14,7 @@ class BinhLuan extends Model
         'id_bai_viet',
         'id_bai_tap',
         'id_sinh_vien',
+        'id_giang_vien',
         'noi_dung',
         'trang_thai'
     ];
