@@ -20,6 +20,7 @@ use App\Http\Controllers\DSSinhVienController;
 use App\Http\Controllers\DSGiangVienController;
 use App\Http\Controllers\FileController;
 use App\Http\Controllers\ThongKeController;
+use App\Http\Controllers\TraLoi_ThongBaoController;
 use App\Http\Controllers\TraLoiController;
 use App\Models\CTBaiKiemTra;
 use App\Models\DS_GiangVien;
@@ -99,6 +100,12 @@ Route::apiResource('dsgv', DS_GiangVien::class);
 Route::apiResource('traloi', TraLoiController::class);
 Route::apiResource('ctbaikiemtra', CTBaiKiemTraController::class);
 Route::apiResource('binhluan', BinhLuanController::class);
+Route::apiResource('traloithongbao', TraLoi_ThongBaoController::class);
+
+//lấy danh sách sinh viên
+Route::post('getSinhVien', [TraLoi_ThongBaoController::class, 'getSinhVien']);
+//lấy danh sách file
+Route::post('getfile', [TraLoi_ThongBaoController::class, 'getfile']);
 
 
 //Tạo Bài Kiểm Tra
