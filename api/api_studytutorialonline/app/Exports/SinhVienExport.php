@@ -6,15 +6,15 @@ use App\Models\SinhVien;
 use Maatwebsite\Excel\Concerns\FromCollection;
 use Maatwebsite\Excel\Concerns\WithHeadings;
 
-class SinhVienExport implements FromCollection, WithHeadings
+class SinhVienExport implements WithHeadings
 {
-    /**
-     * @return \Illuminate\Support\Collection
-     */
-    public function collection()
-    {
-        return null;
-    }
+    // /**
+    //  * @return \Illuminate\Support\Collection
+    //  */
+    // public function collection()
+    // {
+    //     return SinhVien::all();
+    // }
 
     public function headings(): array
     {
