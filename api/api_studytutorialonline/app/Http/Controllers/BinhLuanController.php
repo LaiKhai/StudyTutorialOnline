@@ -49,11 +49,10 @@ class BinhLuanController extends Controller
         $input['id_bai_viet'] = $request->input('id_bai_viet');
         $input['id_bai_tap'] = $request->input('id_bai_tap');
         $input['id_sinh_vien'] = $request->input('id_sinh_vien');
+        $input['id_giang_vien'] = $request->input('id_giang_vien');
         $input['noi_dung'] = $request->input('noi_dung');
         $input['trang_thai'] = 1;
         $validator = Validator::make($input, [
-            'id_bai_viet' => ['required', 'max:255', 'integer'],
-            'id_sinh_vien' => ['required', 'max:255', 'integer'],
             'noi_dung' => ['required', 'max:255', 'string'],
             'trang_thai' => ['required', 'max:255', 'integer'],
         ]);
@@ -180,13 +179,14 @@ class BinhLuanController extends Controller
         if (empty($baiviet)) {
             $response = [
                 'status' => false,
-                'message' => 'không tìm thấy lớp nào'
+                'message' => 'không tìm thấy bài viết nào'
             ];
             return response()->json($response, 404);
         }
         $binhluan = BinhLuan::join('bai_viets', 'binh_luans.id_bai_viet', '=', 'bai_viets.id')
+            ->join('sinh_viens', 'binh_luans.id_sinh_vien', '=', 'sinh_viens.id')
             ->where('bai_viets.id', $request->input('id_bai_viet'))
-            ->select('binh_luans.*', 'bai_viets.id as idBaiViet')
+            ->select('binh_luans.*', 'bai_viets.id as idBaiViet', 'sinh_viens.ho_ten')
             ->get();
         $response = [
             'status' => true,

@@ -43,6 +43,7 @@ Route::post('dngv', [AuthController::class, 'dangNhapGiangVien']);
 Route::post('admin', [AuthController::class, 'dangNhapAdmin']);
 Route::post('/sinhvien/import', [SinhVienController::class, 'import']);
 Route::get('/sinhvien/export', [SinhVienController::class, 'export']);
+Route::get('/sinhvien/exportDiemDanh/{idlop}', [SinhVienController::class, 'exportDiemDanh']);
 //Lay danh sach lop theo id sinh vien
 Route::get('/lop/lstWithIdSV', [LopController::class, 'LstLopWithIdSV']);
 //Tao Danh sach sinh vien auto
@@ -65,6 +66,9 @@ Route::get('/dowloadfile/{id}', [FileController::class, 'dowloadFile']);
 
 //Thống kê sinh viên, giảng viên, lớp
 Route::get('/thongke', [ThongKeController::class, 'ThongKe']);
+
+//Thống kê bài kiểm tra
+Route::post('/thongkeCTBKT', [ThongKeController::class, 'thongkeCTBKT']);
 
 //lấy lớp học phần theo khoa
 Route::post('/lophocphanwithkhoa', [LopHocPhanController::class, 'lstLopHocPhanwithKhoa']);
@@ -95,8 +99,7 @@ Route::apiResource('dsgv', DS_GiangVien::class);
 Route::apiResource('traloi', TraLoiController::class);
 Route::apiResource('ctbaikiemtra', CTBaiKiemTraController::class);
 Route::apiResource('binhluan', BinhLuanController::class);
-Route::middleware(['auth:sanctum'])->group(function () {
-});
+
 
 //Tạo Bài Kiểm Tra
 Route::post('taobaiKT', [BaiKiemTraController::class, 'taoBaiKT']);
@@ -132,3 +135,14 @@ Route::post('/searchSinhVienwithKhoa', [SinhVienController::class, 'searchSinhVi
 
 Route::post('/baikiemtrawithsinhvien', [CTBaiKiemTraController::class, 'baikiemtrawithsinhvien']);
 Route::post('/baikiemtrawithlophocphan', [CTBaiKiemTraController::class, 'baikiemtrawithlophocphan']);
+
+//danh sách sinh viên đẫ hoàn thành bài kiểm
+Route::post('/svHoanThanhBKT', [CTBaiKiemTraController::class, 'svHoanThanhBKT']);
+//danh sách sinh viên chưa hoàn thành bài kiểm
+Route::post('/svChuaHoanThanhBKT', [CTBaiKiemTraController::class, 'svChuaHoanThanhBKT']);
+//danh sách sinh viên tham gia kiểm tra
+Route::post('/svwithBKT', [CTBaiKiemTraController::class, 'svwithBKT']);
+
+
+Route::middleware(['auth:sanctum'])->group(function () {
+});

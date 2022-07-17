@@ -63,7 +63,7 @@ class CTBaiKiemTraController extends Controller
             ->max('bai_kiem_tras.tg_ket_thuc');
         $tg_nop_bai = CTBaiKiemTra::where('id_bai_kiem_tra', $input['id_bai_kiem_tra'])->max('tg_nop_bai');
         if ($tg_ket_thuc == null) {
-            DB::select('call cap_nhat_trang_thai_CTBKT(?,?,?)', [
+            DB::select('call update_ct_bai_kiem_tra(?,?,?)', [
                 $input['id_bai_kiem_tra'],
                 $input['id_sinh_vien'],
                 1,
@@ -75,22 +75,8 @@ class CTBaiKiemTraController extends Controller
             ];
             return response()->json($response, 200);
         }
-        if ($sv == null) {
-            DB::select('call cap_nhat_trang_thai_CTBKT(?,?,?)', [
-                $input['id_bai_kiem_tra'],
-                $input['id_sinh_vien'],
-                3,
-            ]);
-            $kq = CTBaiKiemTra::all();
-            $response = [
-                'status' => true,
-                'message' => 'Không nộp bài',
-                'data' => $kq,
-            ];
-            return response()->json($response, 200);
-        }
         if ($sv != null && $tg_ket_thuc < $tg_nop_bai) {
-            DB::select('call cap_nhat_trang_thai_CTBKT(?,?,?)', [
+            DB::select('call update_ct_bai_kiem_tra(?,?,?)', [
                 $input['id_bai_kiem_tra'],
                 $input['id_sinh_vien'],
                 2,
@@ -102,9 +88,8 @@ class CTBaiKiemTraController extends Controller
                 'data' => $kq,
             ];
             return response()->json($response, 200);
-        }
-        if ($sv != null && $tg_ket_thuc == $tg_nop_bai) {
-            DB::select('call cap_nhat_trang_thai_CTBKT(?,?,?)', [
+        } else if ($sv != null && $tg_ket_thuc == $tg_nop_bai) {
+            DB::select('call update_ct_bai_kiem_tra(?,?,?)', [
                 $input['id_bai_kiem_tra'],
                 $input['id_sinh_vien'],
                 1,
@@ -222,7 +207,7 @@ class CTBaiKiemTraController extends Controller
             ->select(
                 'sinh_viens.ho_ten',
                 'ct_bai_kiem_tras.*',
-                'lop_hoc_phans.*',
+                'lop_hoc_phans.id as idlophocphan',
                 'bai_kiem_tras.sl_cau_hoi',
                 'bai_kiem_tras.tieu_de',
                 'bai_kiem_tras.noi_dung',
@@ -239,6 +224,43 @@ class CTBaiKiemTraController extends Controller
             'status' => true,
             'data' => $lstbaikiemtra
         ];
+        return response()->json($response, 200);
+    }
+
+    public function svHoanThanhBKT(Request $request)
+    {
+        $idBKT = $request->input('id_bai_kiem_tra');
+
+        $ctBKT = CTBaiKiemTra::join('sinh_viens', 'ct_bai_kiem_tras.id_sinh_vien', '=', 'sinh_viens.id')
+            ->where([['ct_bai_kiem_tras.id_bai_kiem_tra', $idBKT], ['ct_bai_kiem_tras.trang_thai', '1']])
+            ->orWhere([['ct_bai_kiem_tras.id_bai_kiem_tra', $idBKT], ['ct_bai_kiem_tras.trang_thai', '2']])
+            ->select('ct_bai_kiem_tras.trang_thai as trangthaiCTBKT', 'sinh_viens.*')
+            ->get();
+        $response = ['status' => true, 'data' => $ctBKT];
+        return response()->json($response, 200);
+    }
+
+    public function svChuaHoanThanhBKT(Request $request)
+    {
+        $idBKT = $request->input('id_bai_kiem_tra');
+
+        $ctBKT = CTBaiKiemTra::join('sinh_viens', 'ct_bai_kiem_tras.id_sinh_vien', '=', 'sinh_viens.id')
+            ->where([['ct_bai_kiem_tras.id_bai_kiem_tra', $idBKT], ['ct_bai_kiem_tras.trang_thai', '3']])
+            ->select('ct_bai_kiem_tras.trang_thai as trangthaiCTBKT', 'sinh_viens.*')
+            ->get();
+        $response = ['status' => true, 'data' => $ctBKT];
+        return response()->json($response, 200);
+    }
+
+    public function svwithBKT(Request $request)
+    {
+        $idBKT = $request->input('id_bai_kiem_tra');
+
+        $ctBKT = CTBaiKiemTra::join('sinh_viens', 'ct_bai_kiem_tras.id_sinh_vien', '=', 'sinh_viens.id')
+            ->where([['ct_bai_kiem_tras.id_bai_kiem_tra', $idBKT], ['ct_bai_kiem_tras.trang_thai', '>', '0']])
+            ->select('ct_bai_kiem_tras.trang_thai as trangthaiCTBKT', 'sinh_viens.*')
+            ->get();
+        $response = ['status' => true, 'data' => $ctBKT];
         return response()->json($response, 200);
     }
 }

@@ -60,3 +60,5 @@ const String classPartDetail = baseUrl + '/api/lophocphan/';
 const String updateClassPartObject = baseUrl + '/api/lophocphan/';
 const String getallGiangVien = baseUrl + '/api/giangvien';
 const String createGiangVien = baseUrl + '/api/giangvien';
+
+const String importFile = baseUrl + '/api/sinhvien/import';

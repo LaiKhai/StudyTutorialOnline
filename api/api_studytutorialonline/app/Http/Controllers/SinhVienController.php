@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Exports\DiemDanhExport;
 use App\Models\SinhVien;
 use App\Models\LopHocPhan;
 use Illuminate\Http\Request;
@@ -204,6 +205,11 @@ class SinhVienController extends Controller
     public function export()
     {
         return Excel::download(new SinhVienExport, 'SinhVien.xlsx');
+    }
+
+    public function exportDiemDanh($idlop)
+    {
+        return Excel::download(new DiemDanhExport($idlop), 'DiemDanh.xlsx');
     }
 
     /**
