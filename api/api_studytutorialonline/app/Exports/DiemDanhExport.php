@@ -78,6 +78,13 @@ class DiemDanhExport implements
             AfterSheet::class    => function (AfterSheet $event) {
                 $cellRange = 'A1:F1'; // All headers
                 $event->sheet->getDelegate()->getStyle($cellRange)->getFont()->setSize(13);
+                $event->sheet->mergeCells('A1:F1');
+                $event->sheet->getDelegate()->getStyle('A1:F1')
+                    ->getAlignment()
+                    ->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);
+                $event->sheet->getDelegate()->getStyle('A2:F2')
+                    ->getAlignment()
+                    ->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);
                 $styleArray = [
                     'borders' => [
                         'outline' => [
