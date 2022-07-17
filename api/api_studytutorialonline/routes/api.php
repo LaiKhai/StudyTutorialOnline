@@ -43,6 +43,7 @@ Route::post('dngv', [AuthController::class, 'dangNhapGiangVien']);
 Route::post('admin', [AuthController::class, 'dangNhapAdmin']);
 Route::post('/sinhvien/import', [SinhVienController::class, 'import']);
 Route::get('/sinhvien/export', [SinhVienController::class, 'export']);
+Route::get('/sinhvien/exportDiemDanh', [SinhVienController::class, 'exportDiemDanh']);
 //Lay danh sach lop theo id sinh vien
 Route::get('/lop/lstWithIdSV', [LopController::class, 'LstLopWithIdSV']);
 //Tao Danh sach sinh vien auto
