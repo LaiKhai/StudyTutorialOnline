@@ -12,6 +12,7 @@ use Maatwebsite\Excel\Concerns\ShouldAutoSize;
 use Maatwebsite\Excel\Concerns\FromQuery;
 use Maatwebsite\Excel\Concerns\WithEvents;
 use Maatwebsite\Excel\Events\AfterSheet;
+use Maatwebsite\Excel\Concerns\Exportable;
 
 class DiemDanhExport implements
     FromQuery,
@@ -22,9 +23,16 @@ class DiemDanhExport implements
     ShouldAutoSize,
     WithEvents
 {
+    use Exportable;
+
+    public function __construct(int $lop)
+    {
+        $this->lop = $lop;
+    }
+
     public function query()
     {
-        $sinhvien = SinhVien::query();
+        $sinhvien = SinhVien::query()->where('id_lop', $this->lop);
         return $sinhvien;
     }
 

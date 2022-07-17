@@ -207,9 +207,9 @@ class SinhVienController extends Controller
         return Excel::download(new SinhVienExport, 'SinhVien.xlsx');
     }
 
-    public function exportDiemDanh()
+    public function exportDiemDanh($idlop)
     {
-        return Excel::download(new DiemDanhExport, 'DiemDanh.xlsx');
+        return Excel::download(new DiemDanhExport($idlop), 'DiemDanh.xlsx');
     }
 
     /**
