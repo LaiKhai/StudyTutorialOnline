@@ -36,6 +36,7 @@ class Storeprocedure extends Migration
         DB::unprepared($droptaoCTBaiKiemTra);
         DB::unprepared($droptaocapnhatBKT);
         DB::unprepared($droptaoCauTraLoi2);
+        DB::unprepared($dropTinhDiem);
 
         $batdauKT = 'CREATE PROCEDURE `Bat_dau_KT`(IN `id_bai_ktra` INT, IN `id_lop_hphan` INT) 
         BEGIN

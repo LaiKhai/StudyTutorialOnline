@@ -2,6 +2,7 @@ import 'dart:ui';
 
 import 'package:StudyTutorialOnlineAdmin/common/contrains/color.dart';
 import 'package:StudyTutorialOnlineAdmin/common/contrains/string.dart';
+import 'package:StudyTutorialOnlineAdmin/page/AD_ImportExportDSSV.dart';
 import 'package:StudyTutorialOnlineAdmin/page/ClassRoom/AD_Class.dart';
 import 'package:StudyTutorialOnlineAdmin/page/ClassPart/AD_ClassPart.dart';
 import 'package:StudyTutorialOnlineAdmin/page/Department/AD_DepartmentPage.dart';
@@ -205,6 +206,21 @@ class _NavigationdrawerwidgetState extends State<Navigationdrawerwidget> {
                   top: 10,
                   left: 20,
                   bottom: 10,
+                  right: 0),
+              ButtonWidget(
+                  icon: Icons.import_contacts_rounded,
+                  text: 'Import/Export DSSV',
+                  onClicked: () {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => Import_Export_DSSV(
+                                  us: us,
+                                )));
+                  },
+                  top: 10,
+                  left: 20,
+                  bottom: 0,
                   right: 0),
             ]),
           ),
