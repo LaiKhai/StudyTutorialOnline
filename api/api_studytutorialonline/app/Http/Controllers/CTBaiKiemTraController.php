@@ -63,7 +63,7 @@ class CTBaiKiemTraController extends Controller
             ->max('bai_kiem_tras.tg_ket_thuc');
         $tg_nop_bai = CTBaiKiemTra::where('id_bai_kiem_tra', $input['id_bai_kiem_tra'])->max('tg_nop_bai');
         if ($tg_ket_thuc == null) {
-            DB::select('call cap_nhat_trang_thai_CTBKT(?,?,?)', [
+            DB::select('call update_ct_bai_kiem_tra(?,?,?)', [
                 $input['id_bai_kiem_tra'],
                 $input['id_sinh_vien'],
                 1,
@@ -76,7 +76,7 @@ class CTBaiKiemTraController extends Controller
             return response()->json($response, 200);
         }
         if ($sv == null) {
-            DB::select('call cap_nhat_trang_thai_CTBKT(?,?,?)', [
+            DB::select('call update_ct_bai_kiem_tra(?,?,?)', [
                 $input['id_bai_kiem_tra'],
                 $input['id_sinh_vien'],
                 3,
@@ -90,7 +90,7 @@ class CTBaiKiemTraController extends Controller
             return response()->json($response, 200);
         }
         if ($sv != null && $tg_ket_thuc < $tg_nop_bai) {
-            DB::select('call cap_nhat_trang_thai_CTBKT(?,?,?)', [
+            DB::select('call update_ct_bai_kiem_tra(?,?,?)', [
                 $input['id_bai_kiem_tra'],
                 $input['id_sinh_vien'],
                 2,
@@ -104,7 +104,7 @@ class CTBaiKiemTraController extends Controller
             return response()->json($response, 200);
         }
         if ($sv != null && $tg_ket_thuc == $tg_nop_bai) {
-            DB::select('call cap_nhat_trang_thai_CTBKT(?,?,?)', [
+            DB::select('call update_ct_bai_kiem_tra(?,?,?)', [
                 $input['id_bai_kiem_tra'],
                 $input['id_sinh_vien'],
                 1,
