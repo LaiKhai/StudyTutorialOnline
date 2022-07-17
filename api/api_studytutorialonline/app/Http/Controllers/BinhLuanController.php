@@ -185,7 +185,7 @@ class BinhLuanController extends Controller
             return response()->json($response, 404);
         }
         $binhluan = BinhLuan::join('bai_viets', 'binh_luans.id_bai_viet', '=', 'bai_viets.id')
-            ->join('sinh_viens', 'bai_viets.id_sinh_vien', '=', 'sinh_viens.id')
+            ->join('sinh_viens', 'binh_luans.id_sinh_vien', '=', 'sinh_viens.id')
             ->where('bai_viets.id', $request->input('id_bai_viet'))
             ->select('binh_luans.*', 'bai_viets.id as idBaiViet', 'sinh_viens.ho_ten', 'sinh_viens.avt')
             ->get();
