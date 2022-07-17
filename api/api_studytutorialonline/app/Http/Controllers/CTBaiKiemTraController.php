@@ -226,4 +226,42 @@ class CTBaiKiemTraController extends Controller
         ];
         return response()->json($response, 200);
     }
+
+    public function svHoanThanhBKT(Request $request)
+    {
+        $idBKT = $request->input('id_bai_kiem_tra');
+
+        $ctBKT = CTBaiKiemTra::join('sinh_viens', 'ct_bai_kiem_tras.id_sinh_vien', '=', 'sinh_viens.id')
+            ->where('ct_bai_kiem_tras.id_bai_kiem_tra', $idBKT)
+            ->orWhere('ct_bai_kiem_tras.trang_thai', '1')
+            ->orWhere('ct_bai_kiem_tras.trang_thai', '2')
+            ->select('sinh_viens.*')
+            ->get();
+        $response = ['status' => true, 'data' => $ctBKT];
+        return response()->json($response, 200);
+    }
+
+    public function svChuaHoanThanhBKT(Request $request)
+    {
+        $idBKT = $request->input('id_bai_kiem_tra');
+
+        $ctBKT = CTBaiKiemTra::join('sinh_viens', 'ct_bai_kiem_tras.id_sinh_vien', '=', 'sinh_viens.id')
+            ->where([['ct_bai_kiem_tras.id_bai_kiem_tra', $idBKT], ['ct_bai_kiem_tras.trang_thai', '3']])
+            ->select('sinh_viens.*')
+            ->get();
+        $response = ['status' => true, 'data' => $ctBKT];
+        return response()->json($response, 200);
+    }
+
+    public function svwithBKT(Request $request)
+    {
+        $idBKT = $request->input('id_bai_kiem_tra');
+
+        $ctBKT = CTBaiKiemTra::join('sinh_viens', 'ct_bai_kiem_tras.id_sinh_vien', '=', 'sinh_viens.id')
+            ->where([['ct_bai_kiem_tras.id_bai_kiem_tra', $idBKT], ['ct_bai_kiem_tras.trang_thai', '>', '0']])
+            ->select('sinh_viens.*')
+            ->get();
+        $response = ['status' => true, 'data' => $ctBKT];
+        return response()->json($response, 200);
+    }
 }

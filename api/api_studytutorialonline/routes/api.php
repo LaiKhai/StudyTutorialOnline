@@ -98,8 +98,7 @@ Route::apiResource('dsgv', DS_GiangVien::class);
 Route::apiResource('traloi', TraLoiController::class);
 Route::apiResource('ctbaikiemtra', CTBaiKiemTraController::class);
 Route::apiResource('binhluan', BinhLuanController::class);
-Route::middleware(['auth:sanctum'])->group(function () {
-});
+
 
 //Tạo Bài Kiểm Tra
 Route::post('taobaiKT', [BaiKiemTraController::class, 'taoBaiKT']);
@@ -135,3 +134,14 @@ Route::post('/searchSinhVienwithKhoa', [SinhVienController::class, 'searchSinhVi
 
 Route::post('/baikiemtrawithsinhvien', [CTBaiKiemTraController::class, 'baikiemtrawithsinhvien']);
 Route::post('/baikiemtrawithlophocphan', [CTBaiKiemTraController::class, 'baikiemtrawithlophocphan']);
+
+//danh sách sinh viên đẫ hoàn thành bài kiểm
+Route::post('/svHoanThanhBKT', [CTBaiKiemTraController::class, 'svHoanThanhBKT']);
+//danh sách sinh viên chưa hoàn thành bài kiểm
+Route::post('/svChuaHoanThanhBKT', [CTBaiKiemTraController::class, 'svChuaHoanThanhBKT']);
+//danh sách sinh viên tham gia kiểm tra
+Route::post('/svwithBKT', [CTBaiKiemTraController::class, 'svwithBKT']);
+
+
+Route::middleware(['auth:sanctum'])->group(function () {
+});
