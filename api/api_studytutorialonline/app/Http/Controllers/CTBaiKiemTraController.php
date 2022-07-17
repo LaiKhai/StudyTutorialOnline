@@ -222,7 +222,7 @@ class CTBaiKiemTraController extends Controller
             ->select(
                 'sinh_viens.ho_ten',
                 'ct_bai_kiem_tras.*',
-                'lop_hoc_phans.*',
+                'lop_hoc_phans.id as idlophocphan',
                 'bai_kiem_tras.sl_cau_hoi',
                 'bai_kiem_tras.tieu_de',
                 'bai_kiem_tras.noi_dung',
