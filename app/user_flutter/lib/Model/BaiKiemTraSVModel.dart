@@ -29,14 +29,11 @@ class Data {
   int? idBaiKiemTra;
   int? idSinhVien;
   String? tgNopBai;
-  int? tongDiem;
+  double? tongDiem;
   int? trangThai;
   String? createdAt;
   String? updatedAt;
-  int? id;
-  int? idBoMon;
-  int? idLop;
-  String? avt;
+  int? idlophocphan;
   int? slCauHoi;
   String? tieuDe;
   String? noiDung;
@@ -52,10 +49,7 @@ class Data {
       this.trangThai,
       this.createdAt,
       this.updatedAt,
-      this.id,
-      this.idBoMon,
-      this.idLop,
-      this.avt,
+      this.idlophocphan,
       this.slCauHoi,
       this.tieuDe,
       this.noiDung,
@@ -67,14 +61,11 @@ class Data {
     idBaiKiemTra = json['id_bai_kiem_tra'];
     idSinhVien = json['id_sinh_vien'];
     tgNopBai = json['tg_nop_bai'];
-    tongDiem = json['tong_diem'];
+    tongDiem = double.parse(json['tong_diem'].toString());
     trangThai = json['trang_thai'];
     createdAt = json['created_at'];
     updatedAt = json['updated_at'];
-    id = json['id'];
-    idBoMon = json['id_bo_mon'];
-    idLop = json['id_lop'];
-    avt = json['avt'];
+    idlophocphan = json['idlophocphan'];
     slCauHoi = json['sl_cau_hoi'];
     tieuDe = json['tieu_de'];
     noiDung = json['noi_dung'];
@@ -92,10 +83,7 @@ class Data {
     data['trang_thai'] = this.trangThai;
     data['created_at'] = this.createdAt;
     data['updated_at'] = this.updatedAt;
-    data['id'] = this.id;
-    data['id_bo_mon'] = this.idBoMon;
-    data['id_lop'] = this.idLop;
-    data['avt'] = this.avt;
+    data['idlophocphan'] = this.idlophocphan;
     data['sl_cau_hoi'] = this.slCauHoi;
     data['tieu_de'] = this.tieuDe;
     data['noi_dung'] = this.noiDung;

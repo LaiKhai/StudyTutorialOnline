@@ -7,16 +7,18 @@ import 'package:flutter/material.dart';
 import 'package:user_flutter/Model/BaiKiemTraSVModel.dart';
 import 'package:user_flutter/Model/BaiKtrta.dart';
 import 'package:user_flutter/Model/Bai_da_luu.dart';
+import 'package:user_flutter/Model/SinhVienLamKtraM.dart';
 import 'package:user_flutter/Model/User_login.dart';
 import 'package:user_flutter/Model/createBktra.dart';
 import 'package:user_flutter/Model/listBaiKtra_model.dart';
 import 'package:user_flutter/Model_View/login.dart';
+import 'package:user_flutter/View/Widget/ThongKe.dart/TatCa.dart';
 import 'package:user_flutter/View/common/constant/string.dart';
 import 'package:user_flutter/View/page/Form_tao_Bktra.dart';
 
 class BaiKiemTraVM {
-  static Future<List_Ktra_model> Get_BKTra(int id_lop) async {
-    String url = getBaiktra + id_lop.toString();
+  static Future<List_Ktra_model> Get_BKTra(int idLop) async {
+    String url = getBaiktra + idLop.toString();
     String token = await Login.getToken();
     Map body;
     if (user.user!.idChucVu != 0) {
@@ -44,12 +46,44 @@ class BaiKiemTraVM {
     }
   }
 
-  static Future<BaiKtraSVModel?> Get_BKTraSV(int id_lop) async {
+  static Future<BaiKtraSVModel?> Get_BKTraSV(int idLop) async {
     String url = urlgetBaiktraSV;
     String token = await Login.getToken();
     Map body = {
       "id_sinh_vien": user.user!.id.toString(),
-      "id_lop_hoc_phan": id_lop.toString(),
+      "id_lop_hoc_phan": idLop.toString(),
+    };
+    print(url);
+    var response = await http.post(Uri.parse(url),
+        headers: <String, String>{
+          'Accept': 'application/json',
+          'Authorization': 'Bearer $token',
+        },
+        body: body);
+    print(response.body);
+    if (response.statusCode == 200) {
+      print('Status =200');
+      final jsonResponse = BaiKtraSVModel.fromJson(json.decode(response.body));
+      return jsonResponse;
+    } else {
+      print('status khác 200');
+      return null;
+    }
+  }
+
+  static Future<DanhSachLamKtraM?> Get_DSSVChualam(int idLop, int tt) async {
+    String url;
+    if (tt == 0) {
+      url = urlgetSinhvienchualam;
+    } else if (tt == 1) {
+      url = urlgetSinhviendalam;
+    } else {
+      url = urlgetSinhvienall;
+    }
+
+    String token = await Login.getToken();
+    Map body = {
+      "id_bai_kiem_tra": idLop.toString(),
     };
     print(url);
     var response = await http.post(Uri.parse(url),
@@ -62,7 +96,7 @@ class BaiKiemTraVM {
     if (response.statusCode == 200) {
       print('Status =200');
       final jsonResponse =
-          BaiKtraSVModel.fromJson(json.decode(response.body));
+          DanhSachLamKtraM.fromJson(json.decode(response.body));
       return jsonResponse;
     } else {
       print('status khác 200');
@@ -70,8 +104,8 @@ class BaiKiemTraVM {
     }
   }
 
-  static Future<CT_Bai_Ktra_model> Show_BKTra(int id_bkta) async {
-    String url = urlBaiktra + id_bkta.toString();
+  static Future<CT_Bai_Ktra_model> Show_BKTra(int idBkta) async {
+    String url = urlBaiktra + idBkta.toString();
     String token = await Login.getToken();
 
     final response = await http.get(
@@ -147,8 +181,8 @@ class BaiKiemTraVM {
 
   static Future<bool> Update_BKTra(
       int idbkt,
-      int id_lop,
-      int id_gv,
+      int idLop,
+      int idGv,
       String noiDung,
       int tong,
       String batDau,
@@ -164,8 +198,8 @@ class BaiKiemTraVM {
     // print(noiDung);
     // print(tong);
     Map body = {
-      "id_lop_hoc_phan": id_lop.toString(),
-      "id_giang_vien": id_gv.toString(),
+      "id_lop_hoc_phan": idLop.toString(),
+      "id_giang_vien": idGv.toString(),
       "sl_cau_hoi": tong.toString(),
       "noi_dung": noiDung.toString(),
       "tg_bat_dau": batDau,
@@ -188,27 +222,27 @@ class BaiKiemTraVM {
     return false;
   }
 
-  static Future<bool> traLoiMotCau(String dap_an, int id_cau_hoi,
-      int id_bai_viet, int id_cau_tra_loi) async {
+  static Future<bool> traLoiMotCau(
+      String dapAn, int idCauHoi, int idBaiViet, int idCauTraLoi) async {
     String url = postTraLoi;
     String token = await Login.getToken();
     Map body = {
-      "dap_an": dap_an.toString(),
-      "id_cau_hoi": id_cau_hoi.toString(),
-      "id_bai_kiem_tra": id_bai_viet.toString(),
-      "id_cau_tra_loi": id_cau_tra_loi.toString(),
+      "dap_an": dapAn.toString(),
+      "id_cau_hoi": idCauHoi.toString(),
+      "id_bai_kiem_tra": idBaiViet.toString(),
+      "id_cau_tra_loi": idCauTraLoi.toString(),
     };
     print(user.user!.id!);
     print(
-      "dap_an" + dap_an.toString(),
+      "dap_an" + dapAn.toString(),
     );
     print(
-      "id_cau_hoi" + id_cau_hoi.toString(),
+      "id_cau_hoi" + idCauHoi.toString(),
     );
     print(
-      "id_bai_kiem_tra" + id_bai_viet.toString(),
+      "id_bai_kiem_tra" + idBaiViet.toString(),
     );
-    print("cau tra3 loi27 " + id_cau_tra_loi.toString());
+    print("cau tra3 loi27 " + idCauTraLoi.toString());
     var response = await http.post(Uri.parse(url),
         headers: <String, String>{
           'Accept': 'application/json',

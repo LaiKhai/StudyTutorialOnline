@@ -212,7 +212,7 @@ class StreamItem extends StatelessWidget {
             onTap: () {
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => const BinhLuan_Page()),
+                MaterialPageRoute(builder: (context) =>  BinhLuan_Page(id_lophp: bv.idLopHocPhan!,)),
               );
             },
             child: Container(

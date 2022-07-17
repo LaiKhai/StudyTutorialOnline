@@ -1,17 +1,21 @@
 import 'package:flutter/material.dart';
+import 'package:user_flutter/Model/User_login.dart';
+import 'package:user_flutter/Model_View/BinhLuan_MV.dart';
 import 'package:user_flutter/View/common/constant/color.dart';
 import 'package:user_flutter/View/common/constant/dimen.dart';
 import 'package:user_flutter/View/common/constant/string.dart';
 import 'package:user_flutter/View/common/navigator_index/index.dart';
 
 class BinhLuan_Page extends StatefulWidget {
-  const BinhLuan_Page({Key? key}) : super(key: key);
+  int id_lophp;
+  BinhLuan_Page({Key? key, required this.id_lophp}) : super(key: key);
 
   @override
   State<BinhLuan_Page> createState() => _BinhLuan_PageState();
 }
 
 class _BinhLuan_PageState extends State<BinhLuan_Page> {
+  TextEditingController textcontroller = new TextEditingController();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -82,11 +86,27 @@ class _BinhLuan_PageState extends State<BinhLuan_Page> {
           Container(
             padding: EdgeInsets.fromLTRB(10, 0, 10, 10),
             child: TextField(
+              controller: textcontroller,
               decoration: InputDecoration(
                   hintText: 'Nhập bình luận',
-                  suffixIcon: Icon(
-                    Icons.send_rounded,
-                    color: AppColor.theme,
+                  suffixIcon: IconButton(
+                    icon: Icon(
+                      Icons.send_rounded,
+                      color: AppColor.theme,
+                    ),
+                    onPressed: () async {
+                      bool bl;
+                      bl = await BinhLuan_MV.postBinhLuan(
+                          widget.id_lophp.toString(),
+                          user.user!.id.toString(),
+                          textcontroller.text);
+                      if (bl == true) {
+                        textcontroller.clear();
+                        setState(() {
+                          textcontroller;
+                        });
+                      }
+                    },
                   ),
                   border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(30))),

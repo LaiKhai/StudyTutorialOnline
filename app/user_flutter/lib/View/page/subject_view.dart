@@ -364,6 +364,7 @@ class _AssignmentBodyState extends State<AssignmentBody> {
                             itemBuilder: (ctx, index) {
                               final assignment = assignments[0];
                               BaiTapModel baitap = BaiTapModel(
+                                  diem: 0.0,
                                   id: ktra.data![index].id!,
                                   tieuDe: ktra.data![index].tieuDe!,
                                   noiDung: ktra.data![index].noiDung!,
@@ -393,6 +394,7 @@ class _AssignmentBodyState extends State<AssignmentBody> {
                             itemCount: ktra.data!.length,
                             itemBuilder: (ctx, index) {
                               BaiTapModel baiTap = BaiTapModel(
+                                  diem: ktra.data![index].tongDiem!,
                                   id: ktra.data![index].idBaiKiemTra!,
                                   tieuDe: ktra.data![index].tieuDe!,
                                   noiDung: ktra.data![index].noiDung!,

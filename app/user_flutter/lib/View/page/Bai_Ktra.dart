@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:group_radio_button/group_radio_button.dart';
 import 'package:user_flutter/Model/BaiKtrta.dart';
 import 'package:user_flutter/Model/Bai_da_luu.dart';
 import 'package:user_flutter/Model/User_login.dart';
 import 'package:user_flutter/Model_View/bai_Ktra.dart';
 import 'package:user_flutter/View/Widget/widget_loadin.dart';
 import 'package:user_flutter/View/common/constant/color.dart';
+import 'package:user_flutter/View/common/constant/dimen.dart';
+import 'package:user_flutter/View/page/subject_view.dart';
 
 class Bai_Ktra extends StatefulWidget {
   int id;
@@ -22,7 +23,7 @@ class Bai_Ktra extends StatefulWidget {
 class _Bai_KtraState extends State<Bai_Ktra> {
   BaiDaLuuModel? baiDaluu = null;
   List<String> a = [];
-  List<String> _verticalGroupValue = [];
+  List<int> _verticalGroupValue = [];
   List<String> _status = ["Pendings", "Released", "Blocked"];
 
   getBaidaluu() async {
@@ -39,36 +40,36 @@ class _Bai_KtraState extends State<Bai_Ktra> {
           String da = '';
           switch (baiDaluu!.baikiemtra![i].dapAn!) {
             case 'A':
-              _verticalGroupValue.add(baiDaluu!.baikiemtra![i].dapAn1!);
+              _verticalGroupValue.add(0);
               print(i);
               print('A');
               break;
             case 'B':
-              _verticalGroupValue.add(baiDaluu!.baikiemtra![i].dapAn2!);
+              _verticalGroupValue.add(1);
               print(i);
               print('B b b b ');
               break;
             case 'C':
-              _verticalGroupValue.add(baiDaluu!.baikiemtra![i].dapAn3!);
+              _verticalGroupValue.add(2);
               print(i);
               print('C');
               break;
             case 'D':
-              _verticalGroupValue.add(baiDaluu!.baikiemtra![i].dapAn4!);
+              _verticalGroupValue.add(3);
               print(i);
               print(_verticalGroupValue[1]);
               print('D');
               break;
             default:
-              _verticalGroupValue.add("F@@");
+              _verticalGroupValue.add(0);
           }
         } else {
-          _verticalGroupValue.add('F@@');
+          _verticalGroupValue.add(0);
         }
       }
     } else {
       for (int i = 0; i < dai; i++) {
-        _verticalGroupValue.add('F@@');
+        _verticalGroupValue.add(0);
       }
     }
   }
@@ -107,7 +108,12 @@ class _Bai_KtraState extends State<Bai_Ktra> {
                       ct_baikiemtra.id!, user.user!.id!);
 
                   if (ktra == true) {
-                    Navigator.pop(context);
+                    Navigator.of(context).pushAndRemoveUntil(
+                        MaterialPageRoute(
+                            builder: (context) => SubjectView(
+                                  id_lopHp: ct_baikiemtra.idLopHocPhan!,
+                                )),
+                        (route) => false);
                   }
                 },
                 tooltip: 'Increment',
@@ -226,25 +232,68 @@ class _Bai_KtraState extends State<Bai_Ktra> {
                                       fontWeight: FontWeight.w600,
                                       color: Colors.black),
                                 ),
-                                RadioGroup<String>.builder(
-                                  activeColor: US_APP_COLOR,
-                                  direction: Axis.vertical,
-                                  groupValue: _verticalGroupValue[index],
-                                  horizontalAlignment:
-                                      MainAxisAlignment.spaceAround,
-                                  onChanged: (value) {
+                                GroupRadioButton(
+                                  label: [
+                                    Container(
+                                        width: getWidthSize(context) * 2 / 3,
+                                        child: Text(
+                                          _status[0],
+                                          style: GoogleFonts.quicksand(
+                                              textStyle: TextStyle(
+                                                  overflow: TextOverflow.clip),
+                                              fontSize: 15,
+                                              fontWeight: FontWeight.w600),
+                                        )),
+                                    Container(
+                                        width: getWidthSize(context) * 2 / 3,
+                                        child: Text(
+                                          _status[1],
+                                          style: GoogleFonts.quicksand(
+                                              textStyle: TextStyle(
+                                                  overflow: TextOverflow.clip),
+                                              fontSize: 15,
+                                              fontWeight: FontWeight.w600),
+                                        )),
+                                    Container(
+                                        width: getWidthSize(context) * 2 / 3,
+                                        child: Text(
+                                          _status[2],
+                                          style: GoogleFonts.quicksand(
+                                              textStyle: TextStyle(
+                                                  overflow: TextOverflow.clip),
+                                              fontSize: 15,
+                                              fontWeight: FontWeight.w600),
+                                        )),
+                                    Container(
+                                        width: getWidthSize(context) * 2 / 3,
+                                        child: Text(
+                                          _status[3],
+                                          style: GoogleFonts.quicksand(
+                                              textStyle: TextStyle(
+                                                  overflow: TextOverflow.clip),
+                                              fontSize: 15,
+                                              fontWeight: FontWeight.w600),
+                                        )),
+                                  ],
+                                  padding: EdgeInsets.symmetric(vertical: 10),
+                                  spaceBetween: 5,
+                                  radioRadius: 10,
+                                  color: US_APP_COLOR,
+                                  selectedIndex: _verticalGroupValue[index],
+                                  onChanged: (listIndex) {
+                                    print(listIndex);
                                     print('index: ' + index.toString());
                                     String trl = '';
-                                    if (value == lst_Cauhoi[index].dapAn1) {
+                                    if (listIndex == 0) {
                                       trl = "A";
                                     }
-                                    if (value == lst_Cauhoi[index].dapAn2) {
+                                    if (listIndex == 1) {
                                       trl = "B";
                                     }
-                                    if (value == lst_Cauhoi[index].dapAn3) {
+                                    if (listIndex == 2) {
                                       trl = "C";
                                     }
-                                    if (value == lst_Cauhoi[index].dapAn4) {
+                                    if (listIndex == 3) {
                                       trl = "D";
                                     }
                                     setState(() {
@@ -256,18 +305,51 @@ class _Bai_KtraState extends State<Bai_Ktra> {
                                         widget.id,
                                         baiDaluu!.baikiemtra![index].idTraLoi!);
                                     setState(() {
-                                      _verticalGroupValue[index] = value!;
+                                      _verticalGroupValue[index] = listIndex;
                                     });
                                   },
-                                  items: _status,
-                                  textStyle: GoogleFonts.quicksand(
-                                      fontSize: 15,
-                                      color: US_APP_COLOR,
-                                      fontWeight: FontWeight.w500),
-                                  itemBuilder: (item) => RadioButtonBuilder(
-                                    item,
-                                  ),
                                 ),
+                                // RadioGroup<String>.builder(
+                                //   activeColor: US_APP_COLOR,
+                                //   direction: Axis.vertical,
+                                //   groupValue: _verticalGroupValue[index],
+                                //   horizontalAlignment:
+                                //       MainAxisAlignment.spaceAround,
+                                //   onChanged: (value) {
+                                //     print('index: ' + index.toString());
+                                //     String trl = '';
+                                //     if (value == lst_Cauhoi[index].dapAn1) {
+                                //       trl = "A";
+                                //     }
+                                //     if (value == lst_Cauhoi[index].dapAn2) {
+                                //       trl = "B";
+                                //     }
+                                //     if (value == lst_Cauhoi[index].dapAn3) {
+                                //       trl = "C";
+                                //     }
+                                //     if (value == lst_Cauhoi[index].dapAn4) {
+                                //       trl = "D";
+                                //     }
+                                //     setState(() {
+                                //       trl;
+                                //     });
+                                //     BaiKiemTraVM.traLoiMotCau(
+                                //         trl,
+                                //         lst_Cauhoi[index].id!,
+                                //         widget.id,
+                                //         baiDaluu!.baikiemtra![index].idTraLoi!);
+                                //     setState(() {
+                                //       _verticalGroupValue[index] = value!;
+                                //     });
+                                //   },
+                                //   items: _status,
+                                //   textStyle: TextStyle(
+                                //       overflow: TextOverflow.clip,
+                                //       fontSize: 20),
+                                //   itemBuilder: (item) => RadioButtonBuilder(
+                                //     item,
+                                //   ),
+                                // ),
                               ],
                             ),
                           ),
@@ -283,5 +365,133 @@ class _Bai_KtraState extends State<Bai_Ktra> {
         }
       },
     ));
+  }
+}
+
+class GroupRadioButton extends StatefulWidget {
+  final Color color;
+  final List<Widget> label;
+  final EdgeInsets padding;
+  final Function(int) onChanged;
+  final double radioRadius;
+  final double spaceBetween;
+  late final int selectedIndex;
+  final MainAxisAlignment mainAxisAlignment;
+  final CrossAxisAlignment crossAxisAlignment;
+  GroupRadioButton({
+    required this.label,
+    required this.padding,
+    required this.onChanged,
+    this.color = Colors.blue,
+    this.radioRadius = 14.0,
+    this.spaceBetween = 5.0,
+    required this.selectedIndex,
+    this.mainAxisAlignment = MainAxisAlignment.start,
+    this.crossAxisAlignment = CrossAxisAlignment.start,
+  });
+
+  @override
+  _GroupRadioButtonState createState() => _GroupRadioButtonState();
+}
+
+class _GroupRadioButtonState extends State<GroupRadioButton> {
+  @override
+  Widget build(BuildContext context) {
+    return ListView.builder(
+        shrinkWrap: true,
+        physics: NeverScrollableScrollPhysics(),
+        itemCount: widget.label != null ? widget.label.length : 0,
+        itemBuilder: (context, index) {
+          return LabeledRadio(
+            selectedIndex: widget.selectedIndex,
+            color: widget.color,
+            onChanged: (value) {
+              setState(() {
+                widget.onChanged(value);
+                // print(value);
+              });
+            },
+            index: index,
+            label: widget.label[index],
+            crossAxisAlignment: widget.crossAxisAlignment,
+            mainAxisAlignment: widget.mainAxisAlignment,
+            radioRadius: widget.radioRadius,
+            spaceBetween: widget.spaceBetween,
+            padding: widget.padding,
+          );
+        });
+  }
+}
+
+class LabeledRadio extends StatelessWidget {
+  LabeledRadio({
+    required this.label,
+    required this.index,
+    required this.color,
+    //required this.groupValue,
+    //required this.value,
+    required this.onChanged,
+    required this.radioRadius,
+    required this.padding,
+    required this.spaceBetween,
+    required this.mainAxisAlignment,
+    required this.crossAxisAlignment,
+    required this.selectedIndex,
+  });
+
+  final Color color;
+  final int selectedIndex;
+  final Widget label;
+  final index;
+  final EdgeInsets padding;
+  //final bool groupValue;
+  //final bool value;
+  final Function(int) onChanged;
+  final double radioRadius;
+  final double spaceBetween;
+  final MainAxisAlignment mainAxisAlignment;
+  final CrossAxisAlignment crossAxisAlignment;
+
+  @override
+  Widget build(BuildContext context) {
+    return InkWell(
+      onTap: () {
+        onChanged(index);
+      },
+      child: Padding(
+        padding: padding,
+        child: Row(
+          mainAxisAlignment: mainAxisAlignment,
+          crossAxisAlignment: crossAxisAlignment,
+          children: <Widget>[
+            Container(
+              decoration: BoxDecoration(
+                //color: Const.mainColor,
+                shape: BoxShape.circle,
+                border: Border.all(color: color, width: 2),
+              ),
+              padding: EdgeInsets.all(2),
+              child: selectedIndex == index
+                  ? Container(
+                      height: radioRadius,
+                      width: radioRadius,
+                      decoration: BoxDecoration(
+                        color: color,
+                        shape: BoxShape.circle,
+                      ),
+                    )
+                  : Container(
+                      height: radioRadius,
+                      width: radioRadius,
+                    ),
+            ),
+            SizedBox(
+              width: spaceBetween,
+            ),
+            label,
+          ],
+        ),
+      ),
+    );
   }
 }

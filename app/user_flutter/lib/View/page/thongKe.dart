@@ -1,12 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
-import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:user_flutter/Model/BaiKtrta.dart';
-import 'package:user_flutter/Model/User_login.dart';
-import 'package:user_flutter/Model/listBaiKtra_model.dart';
+import 'package:user_flutter/Model/ThongKeM.dart';
+import 'package:user_flutter/Model_View/ThongKeMV.dart';
 import 'package:user_flutter/Model_View/bai_Ktra.dart';
-import 'package:user_flutter/View/Widget/Home/app_icon_buttton.dart';
 import 'package:user_flutter/View/Widget/ThongKe.dart/TatCa.dart';
 import 'package:user_flutter/View/Widget/ThongKe.dart/floatingBton.dart';
 import 'package:user_flutter/View/Widget/showNouti.dart';
@@ -20,15 +18,27 @@ class ThongKePage extends StatefulWidget {
   const ThongKePage({Key? key, required this.idBktra}) : super(key: key);
 
   @override
-  State<ThongKePage> createState() => _ThongKePageState();
+  State<ThongKePage> createState() {
+    return _ThongKePageState(idBktra: idBktra);
+  }
 }
 
 class _ThongKePageState extends State<ThongKePage> {
-  List<Widget> bodies = [
-    DanhSachSV(tt: 0),
-    DanhSachSV(tt: 1),
-    DanhSachSV(tt: 2),
-  ];
+  int idBktra;
+  _ThongKePageState({
+    required this.idBktra,
+  });
+  ThongKeM thongKeM =
+      ThongKeM(status: true, dagiao: 0, hoanthanh: 0, noptre: 0, chuanop: 0);
+  getThongke() async {
+    if (ThongKeMV.getThongKe(widget.idBktra) != null) {
+      thongKeM = (await ThongKeMV.getThongKe(widget.idBktra))!;
+      setState(() {
+        thongKeM;
+      });
+    }
+  }
+
   final List<Map<String, dynamic>> menus = [
     {'index': 1, 'icon': Icons.alarm_off_outlined, 'title': "Chưa hoàn thành"},
     {'index': 2, 'icon': Icons.alarm_on_outlined, 'title': "Đa hoàn thành"},
@@ -36,8 +46,30 @@ class _ThongKePageState extends State<ThongKePage> {
   ];
   int _activeIndex = 0;
   final pageController = PageController();
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    getThongke();
+  }
+
   @override
   Widget build(BuildContext context) {
+    final List<Widget> bodies = [
+      DanhSachSV(
+        tt: 0,
+        idbaiktra: widget.idBktra,
+      ),
+      DanhSachSV(
+        tt: 1,
+        idbaiktra: widget.idBktra,
+      ),
+      DanhSachSV(
+        tt: 2,
+        idbaiktra: widget.idBktra,
+      ),
+    ];
     return FutureBuilder<CT_Bai_Ktra_model>(
         future: BaiKiemTraVM.Show_BKTra(widget.idBktra),
         builder: (context, snapshot) {
@@ -56,7 +88,7 @@ class _ThongKePageState extends State<ThongKePage> {
                           child: Column(
                             children: [
                               Text(
-                                '0',
+                                "${thongKeM.hoanthanh! + thongKeM.noptre!}",
                                 style: GoogleFonts.quicksand(
                                     fontSize: 40, fontWeight: FontWeight.w700),
                               ),
@@ -79,7 +111,7 @@ class _ThongKePageState extends State<ThongKePage> {
                           child: Column(
                             children: [
                               Text(
-                                '0',
+                                thongKeM.dagiao.toString(),
                                 style: GoogleFonts.quicksand(
                                     fontSize: 40, fontWeight: FontWeight.w700),
                               ),

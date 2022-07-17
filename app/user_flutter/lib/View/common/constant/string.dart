@@ -27,3 +27,8 @@ const String postNopbai = '$Link/api/ctbaikiemtra';
 const String urlBinhLuan = '$Link/api/binhluan';
 
 const String urlgetBaiktraSV = '$Link/api/baikiemtrawithsinhvien';
+const String urlThongKe = '$Link/api/thongkeCTBKT';
+const String urlgetSinhvienchualam = '$Link/api/svChuaHoanThanhBKT';
+const String urlgetSinhviendalam= '$Link/api/svHoanThanhBKT';
+const String urlgetSinhvienall= '$Link/api/svwithBKT';
+

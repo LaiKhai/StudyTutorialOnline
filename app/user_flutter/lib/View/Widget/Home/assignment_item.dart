@@ -7,6 +7,7 @@ import 'package:user_flutter/Model/User_login.dart';
 import 'package:user_flutter/Model/listBaiKtra_model.dart';
 import 'package:user_flutter/Model/model_reing/BaiTapModel.dart';
 import 'package:user_flutter/View/Widget/Home/assignment_status.dart';
+import 'package:user_flutter/View/Widget/showNouti.dart';
 import 'package:user_flutter/View/common/constant/color.dart';
 import 'package:user_flutter/View/page/Bai_Ktra.dart';
 import 'package:user_flutter/View/page/thongKe.dart';
@@ -44,13 +45,20 @@ class AssignmentItem extends StatelessWidget {
                           )),
                 );
               } else {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) => Bai_Ktra(
-                            id: baikiemtra.id,
-                          )),
-                );
+                if (baikiemtra.type == 1 || baikiemtra.type == 3) {
+                  showCustomDialog(
+                      context,
+                      'Kết quả của bạn là: ' + baikiemtra.diem.toString(),
+                      true);
+                } else {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => Bai_Ktra(
+                              id: baikiemtra.id,
+                            )),
+                  );
+                }
               }
             },
             child: Container(
