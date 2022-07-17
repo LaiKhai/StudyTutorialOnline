@@ -209,7 +209,7 @@ class _NavigationdrawerwidgetState extends State<Navigationdrawerwidget> {
                   right: 0),
               ButtonWidget(
                   icon: Icons.import_contacts_rounded,
-                  text: 'Import/Export DSSV',
+                  text: 'Export DSSV',
                   onClicked: () {
                     Navigator.push(
                         context,
