@@ -232,9 +232,8 @@ class CTBaiKiemTraController extends Controller
         $idBKT = $request->input('id_bai_kiem_tra');
 
         $ctBKT = CTBaiKiemTra::join('sinh_viens', 'ct_bai_kiem_tras.id_sinh_vien', '=', 'sinh_viens.id')
-            ->where('ct_bai_kiem_tras.id_bai_kiem_tra', $idBKT)
-            ->orWhere('ct_bai_kiem_tras.trang_thai', '1')
-            ->orWhere('ct_bai_kiem_tras.trang_thai', '2')
+            ->where([['ct_bai_kiem_tras.id_bai_kiem_tra', $idBKT], ['ct_bai_kiem_tras.trang_thai', '1']])
+            ->orWhere([['ct_bai_kiem_tras.id_bai_kiem_tra', $idBKT], ['ct_bai_kiem_tras.trang_thai', '2']])
             ->select('ct_bai_kiem_tras.trang_thai as trangthaiCTBKT', 'sinh_viens.*')
             ->get();
         $response = ['status' => true, 'data' => $ctBKT];
