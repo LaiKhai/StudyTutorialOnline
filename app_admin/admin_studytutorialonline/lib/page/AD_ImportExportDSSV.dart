@@ -1,8 +1,11 @@
 import 'dart:io';
 
 import 'package:StudyTutorialOnlineAdmin/provider/Import_Export_file.dart';
+import 'package:StudyTutorialOnlineAdmin/provider/link_url.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
+import 'package:url_launcher/url_launcher.dart';
+import 'package:url_launcher/url_launcher_string.dart';
 
 import '../common/contrains/color.dart';
 import '../common/contrains/dimen.dart';
@@ -152,6 +155,32 @@ class _Import_Export_DSSVState extends State<Import_Export_DSSV> {
                               );
                             });
                       }
+                    },
+                    style: ButtonStyle(
+                        backgroundColor:
+                            MaterialStateProperty.all<Color>(AppColor.theme),
+                        shape:
+                            MaterialStateProperty.all<RoundedRectangleBorder>(
+                                RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(10),
+                        ))),
+                  )),
+            ),
+            Container(
+              margin: EdgeInsets.fromLTRB(getWidthSize(context) * 0.06, 10,
+                  getWidthSize(context) * 0.06, 10),
+              width: getWidthSize(context),
+              child: Container(
+                  margin: EdgeInsets.fromLTRB(2, 10, 0, 0),
+                  width: getWidthSize(context) * 0.86,
+                  height: getHeightSize(context) * 0.06,
+                  child: ElevatedButton(
+                    child: Text(
+                      'Export file danh sách',
+                      style: ggTextStyle(20, FontWeight.bold, AppColor.white),
+                    ),
+                    onPressed: () {
+                      linkUrl.openLink(url: baseUrl + '/api/sinhvien/export');
                     },
                     style: ButtonStyle(
                         backgroundColor:

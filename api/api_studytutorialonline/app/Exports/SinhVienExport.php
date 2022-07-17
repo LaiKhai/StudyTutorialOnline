@@ -13,7 +13,7 @@ class SinhVienExport implements FromCollection, WithHeadings
      */
     public function collection()
     {
-        return SinhVien::all();
+        return null;
     }
 
     public function headings(): array
