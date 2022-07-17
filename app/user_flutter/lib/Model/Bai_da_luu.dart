@@ -25,10 +25,11 @@ class BaiDaLuuModel {
 }
 
 class BaikiemtraDL {
-  int? id;
+  int? idTraLoi;
   String? dapAn;
   int? diem;
   int? trangThai;
+  int? id;
   int? idBaiKiemTra;
   Null? idFile;
   String? deBai;
@@ -41,10 +42,11 @@ class BaikiemtraDL {
   String? updatedAt;
 
   BaikiemtraDL(
-      {this.id,
+      {this.idTraLoi,
       this.dapAn,
       this.diem,
       this.trangThai,
+      this.id,
       this.idBaiKiemTra,
       this.idFile,
       this.deBai,
@@ -57,10 +59,11 @@ class BaikiemtraDL {
       this.updatedAt});
 
   BaikiemtraDL.fromJson(Map<String, dynamic> json) {
-    id = json['id'];
+    idTraLoi = json['idTraLoi'];
     dapAn = json['dap_an'];
     diem = json['diem'];
     trangThai = json['trang_thai'];
+    id = json['id'];
     idBaiKiemTra = json['id_bai_kiem_tra'];
     idFile = json['id_file'];
     deBai = json['de_bai'];
@@ -75,10 +78,11 @@ class BaikiemtraDL {
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['id'] = this.id;
+    data['idTraLoi'] = this.idTraLoi;
     data['dap_an'] = this.dapAn;
     data['diem'] = this.diem;
     data['trang_thai'] = this.trangThai;
+    data['id'] = this.id;
     data['id_bai_kiem_tra'] = this.idBaiKiemTra;
     data['id_file'] = this.idFile;
     data['de_bai'] = this.deBai;

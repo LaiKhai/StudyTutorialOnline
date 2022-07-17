@@ -4,6 +4,7 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:user_flutter/Model/BaiKiemTraSVModel.dart';
 import 'package:user_flutter/Model/BaiKtrta.dart';
 import 'package:user_flutter/Model/Bai_da_luu.dart';
 import 'package:user_flutter/Model/User_login.dart';
@@ -40,6 +41,32 @@ class BaiKiemTraVM {
       }
     } else {
       return new List_Ktra_model();
+    }
+  }
+
+  static Future<BaiKtraSVModel?> Get_BKTraSV(int id_lop) async {
+    String url = urlgetBaiktraSV;
+    String token = await Login.getToken();
+    Map body = {
+      "id_sinh_vien": user.user!.id.toString(),
+      "id_lop_hoc_phan": id_lop.toString(),
+    };
+    print(url);
+    var response = await http.post(Uri.parse(url),
+        headers: <String, String>{
+          'Accept': 'application/json',
+          'Authorization': 'Bearer $token',
+        },
+        body: body);
+    print(response.body);
+    if (response.statusCode == 200) {
+      print('Status =200');
+      final jsonResponse =
+          BaiKtraSVModel.fromJson(json.decode(response.body));
+      return jsonResponse;
+    } else {
+      print('status khác 200');
+      return null;
     }
   }
 
@@ -171,6 +198,7 @@ class BaiKiemTraVM {
       "id_bai_kiem_tra": id_bai_viet.toString(),
       "id_cau_tra_loi": id_cau_tra_loi.toString(),
     };
+    print(user.user!.id!);
     print(
       "dap_an" + dap_an.toString(),
     );
@@ -250,9 +278,8 @@ class BaiKiemTraVM {
     // }
   }
 
-
-  static Future<bool> postNopBai(int idBaiKiemTra,int idSinhVien)async{
-     try {
+  static Future<bool> postNopBai(int idBaiKiemTra, int idSinhVien) async {
+    try {
       String url = postNopbai;
       String token = await Login.getToken();
       Map body = {
@@ -273,5 +300,4 @@ class BaiKiemTraVM {
       return false;
     }
   }
-
 }

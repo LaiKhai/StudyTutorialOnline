@@ -102,16 +102,10 @@ class _Bai_KtraState extends State<Bai_Ktra> {
                   ),
                 ),
                 onPressed: () async {
-                  bool ktra;
-                  ktra = await BaiKiemTraVM.Update_BKTra(
-                      ct_baikiemtra.id!,
-                      ct_baikiemtra.lophocphan!.id!,
-                      ct_baikiemtra.idGiangVien!,
-                      ct_baikiemtra.noiDung!,
-                      ct_baikiemtra.slCauHoi!, 
-                      ct_baikiemtra.tgBatDau!,
-                      ct_baikiemtra.tgKetThuc!,
-                      '3');
+                  bool ktra = true;
+                  ktra = await BaiKiemTraVM.postNopBai(
+                      ct_baikiemtra.id!, user.user!.id!);
+
                   if (ktra == true) {
                     Navigator.pop(context);
                   }
@@ -260,7 +254,7 @@ class _Bai_KtraState extends State<Bai_Ktra> {
                                         trl,
                                         lst_Cauhoi[index].id!,
                                         widget.id,
-                                        baiDaluu!.baikiemtra![index].id!);
+                                        baiDaluu!.baikiemtra![index].idTraLoi!);
                                     setState(() {
                                       _verticalGroupValue[index] = value!;
                                     });

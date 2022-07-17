@@ -25,3 +25,5 @@ const String postBatDktra = '$Link/api/batdauKT';
 const String getBaiDaluu = '$Link/api/traloiwithbaikiemtra';
 const String postNopbai = '$Link/api/ctbaikiemtra';
 const String urlBinhLuan = '$Link/api/binhluan';
+
+const String urlgetBaiktraSV = '$Link/api/baikiemtrawithsinhvien';
