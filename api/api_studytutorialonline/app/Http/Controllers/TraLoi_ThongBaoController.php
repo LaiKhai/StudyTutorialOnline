@@ -32,8 +32,6 @@ class TraLoi_ThongBaoController extends Controller
             return response()->json($response, 404);
         }
         try {
-            $inputcheckfile['id_bai_viet'] =  $input['id_bai_viet'];
-            $inputcheckfile['trang_thai'] = 1;
             $inputfile['trang_thai'] = 1;
             $files = $request->file('file');
             if ($request->hasFile('file')) {
@@ -42,8 +40,6 @@ class TraLoi_ThongBaoController extends Controller
                 $inputfile['loai_file'] = $files->extension();
                 $inputfile['ten_file'] = $files->getClientOriginalName();
                 $itemFile2 = File::create($inputfile);
-                $inputcheckfile['id_file'] = $itemFile2->id;
-                CheckFile::create($inputcheckfile);
             }
             $input['id_file'] = $itemFile2->id;
             DB::select('call tao_traloi_thongbao(?,?,?,?,?)', [
