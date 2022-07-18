@@ -49,7 +49,7 @@ class BinhLuanController extends Controller
         $input['id_bai_viet'] = $request->input('id_bai_viet');
         $input['id_bai_tap'] = $request->input('id_bai_tap');
         $input['id_sinh_vien'] = $request->input('id_sinh_vien');
-        $input['id_giang_vien'] = $request->input('id_giang_vien');
+        // $input['id_giang_vien'] = $request->input('id_giang_vien');
         $input['noi_dung'] = $request->input('noi_dung');
         $input['trang_thai'] = 1;
         $validator = Validator::make($input, [
@@ -130,6 +130,7 @@ class BinhLuanController extends Controller
             'id_bai_viet' => $request->input('id_bai_viet'),
             'id_bai_tap' => $request->input('id_bai_tap'),
             'id_sinh_vien' => $request->input('id_sinh_vien'),
+            // 'id_giang_vien' => $request->input('id_giang_vien'),
             'noi_dung' => $request->input('noi_dung'),
             'trang_thai' => $request->input('trang_thai'),
         ]);
