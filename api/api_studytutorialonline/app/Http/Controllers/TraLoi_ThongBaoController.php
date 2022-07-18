@@ -65,8 +65,26 @@ class TraLoi_ThongBaoController extends Controller
     {
         $sv = TraLoi_ThongBao::join('files', 'traloi_thongbao.id_file', '=', 'files.id')
             ->join('sinh_viens', 'traloi_thongbao.id_sinh_vien', '=', 'sinh_viens.id')
+            ->join('bai_viets', 'traloi_thongbao.id_bai_viet', '=', 'bai_viets.id')
             ->where([['traloi_thongbao.id_sinh_vien', $request->input('id_sinh_vien')], ['traloi_thongbao.id_bai_viet', $request->input('id_bai_viet')]])
-            ->select('sinh_viens.*', 'traloi_thongbao.id_sinh_vien as idSVTraLoiThongBao')
+            ->select(
+                'sinh_viens.*',
+                'traloi_thongbao.id_sinh_vien as idSVTraLoiThongBao',
+                'traloi_thongbao.id_bai_viet',
+                'traloi_thongbao.id_file',
+                'traloi_thongbao.cau_tra_loi',
+                'traloi_thongbao.trang_thai',
+                'bai_viets.id as idbaiviet',
+                'bai_viets.id_lop_hoc_phan',
+                'bai_viets.id_loai_bai_viet',
+                'bai_viets.id_giang_vien',
+                'bai_viets.noi_dung',
+                'files.id as IDFile',
+                'files.noi_dung',
+                'files.ten_file',
+                'files.loai_file',
+                'files.trang_thai',
+            )
             ->get();
         if ($sv != null) {
             $response = [
