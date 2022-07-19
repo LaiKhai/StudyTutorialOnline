@@ -341,8 +341,8 @@ class BaiKiemTraController extends Controller
                 ->join('sinh_viens', 'ct_bai_kiem_tras.id_sinh_vien', '=', 'sinh_viens.id')
                 ->join('lops', 'sinh_viens.id_lop', '=', 'lops.id')
                 ->where([['bai_kiem_tras.id', $request->input('id_bai_kiem_tra')], ['sinh_viens.id', $request->input('id_sinh_vien')]])
-                ->select('sinh_viens.ho_ten', 'sinh_viens.ma_so', 'sinh_viens.email', 'ct_bai_kiem_tras.tong_diem as tongdiem', 'ct_bai_kiem_tras.trang_thai', 'ct_bai_kiem_tras.tg_nop_bai')
-                ->groupBy('sinh_viens.ho_ten', 'sinh_viens.ma_so', 'sinh_viens.email', 'ct_bai_kiem_tras.trang_thai', 'ct_bai_kiem_tras.tg_nop_bai', 'ct_bai_kiem_tras.tong_diem')
+                ->select('sinh_viens.id as idsinhvien', 'sinh_viens.ho_ten', 'sinh_viens.ma_so', 'sinh_viens.email', 'lops.id as idlop', 'lops.ten_lop', 'ct_bai_kiem_tras.tong_diem as tongdiem', 'ct_bai_kiem_tras.trang_thai', 'ct_bai_kiem_tras.tg_nop_bai')
+                ->groupBy('sinh_viens.id', 'sinh_viens.ho_ten', 'sinh_viens.ma_so', 'sinh_viens.email', 'lops.id', 'lops.ten_lop', 'ct_bai_kiem_tras.tong_diem', 'ct_bai_kiem_tras.trang_thai', 'ct_bai_kiem_tras.tg_nop_bai')
                 ->get();
             $response = [
                 'status' => true,
