@@ -2,10 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Exports\DanhSachDiemExport;
 use App\Models\BaiKiemTra;
 use App\Models\TraLoi;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
+use Maatwebsite\Excel\Facades\Excel;
+use Illuminate\Support\Facades\DB;
 
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 
@@ -194,5 +197,45 @@ class TraLoiController extends Controller
             'baikiemtra' => $baikiemtra
         ];
         return response()->json($response, 200);
+    }
+
+    public function exportDiemSV(Request $request)
+    {
+        return Excel::download(new DanhSachDiemExport($request->baikt, $request->lop), 'DS_Diem_SV.xlsx');
+    }
+
+    public function danhsachDiemSV(Request $request)
+    {
+        $lsttraloi = TraLoi::join('cau_hois', 'tra_lois.id_cau_hoi', '=', 'cau_hois.id')
+            ->join('bai_kiem_tras', 'cau_hois.id_bai_kiem_tra', '=', 'bai_kiem_tras.id')
+            ->join('sinh_viens', 'tra_lois.id_sinh_vien', '=', 'sinh_viens.id')
+            ->join('lops', 'sinh_viens.id_lop', '=', 'lops.id')
+            ->where([['cau_hois.id_bai_kiem_tra', $request->input('id_bai_kiem_tra')], ['sinh_viens.id_lop', $request->input('id_lop')]])
+            ->select('sinh_viens.ma_so', 'sinh_viens.ho_ten', 'lops.ten_lop', 'bai_kiem_tras.id as idBKT', DB::raw("SUM(tra_lois.diem) as tongdiem"))
+            ->groupBy('sinh_viens.ma_so', 'sinh_viens.ho_ten', 'lops.ten_lop', 'bai_kiem_tras.id')
+            ->get();
+
+        $response = [
+            'status' => true,
+            'dsdiemsv' => $lsttraloi
+        ];
+        return response()->json($response, 404);
+    }
+
+    public function lichsuTraLoi(Request $request)
+    {
+        $lichsu = TraLoi::join('cau_hois', 'tra_lois.id_cau_hoi', '=', 'cau_hois.id')
+            ->join('bai_kiem_tras', 'cau_hois.id_bai_kiem_tra', '=', 'bai_kiem_tras.id')
+            ->join('sinh_viens', 'tra_lois.id_sinh_vien', '=', 'sinh_viens.id')
+            ->join('lops', 'sinh_viens.id_lop', '=', 'lops.id')
+            ->where([['cau_hois.id_bai_kiem_tra', $request->input('id_bai_kiem_tra')], ['sinh_viens.id', $request->input('id_sinh_vien')]])
+            ->select('tra_lois.id as idcautraloi', 'sinh_viens.ma_so', 'sinh_viens.ho_ten', 'lops.ten_lop', 'bai_kiem_tras.id as idBKT', 'tra_lois.dap_an')
+            ->get();
+
+        $response = [
+            'status' => true,
+            'dsdiemsv' => $lichsu
+        ];
+        return response()->json($response, 404);
     }
 }

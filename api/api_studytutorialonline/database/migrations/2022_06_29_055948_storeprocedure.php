@@ -61,9 +61,9 @@ class Storeprocedure extends Migration
 
         $taoCauTraLoi = "CREATE PROCEDURE `Tao_cau_TrL`(IN `dapan` VARCHAR(15), IN `id_cauhoi` INT, IN `id_cautrl` INT) 
             UPDATE `tra_lois` SET `dap_an`=dapan,`diem`= Case 
-            WHEN `dap_an`=(SELECT `dap_an_dung`FROM `cau_hois` WHERE cau_hois.id=id_cauhoi)
+            WHEN dapan =(SELECT `dap_an_dung`FROM `cau_hois` WHERE cau_hois.id=id_cauhoi)
             THEN (SELECT `diem`FROM `cau_hois` WHERE cau_hois.id=id_cauhoi)
-            WHEN `dap_an`!=(SELECT `dap_an_dung`FROM `cau_hois` WHERE cau_hois.id=id_cauhoi) THEN 0 END,
+            ELSE 0 END,
             `trang_thai`=1,`created_at`=Now(),`updated_at`=Now() WHERE id=id_cautrl";
 
         $taoDSSV = "CREATE PROCEDURE `tao_dssv`(IN `id_sinh_vien` VARCHAR(255),IN `id_lop_hoc_phan` INT)
