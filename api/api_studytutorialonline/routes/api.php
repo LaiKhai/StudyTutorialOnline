@@ -156,6 +156,11 @@ Route::post('/svChuaHoanThanhBKT', [CTBaiKiemTraController::class, 'svChuaHoanTh
 //danh sách sinh viên tham gia kiểm tra
 Route::post('/svwithBKT', [CTBaiKiemTraController::class, 'svwithBKT']);
 
+//lấy danh sách sinh viên theo bai kiểm tra
+Route::post('/getSinhVienBaiKiemTra', [BaiKiemTraController::class, 'getSinhVienBaiKiemTra']);
+
+
+
 
 Route::middleware(['auth:sanctum'])->group(function () {
 });
