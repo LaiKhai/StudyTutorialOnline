@@ -36,9 +36,10 @@ class DanhSachDiemExport implements
     {
         $traloi = TraLoi::query()->join('cau_hois', 'tra_lois.id_cau_hoi', '=', 'cau_hois.id')
             ->join('bai_kiem_tras', 'cau_hois.id_bai_kiem_tra', '=', 'bai_kiem_tras.id')
-            ->join('sinh_viens', 'tra_lois.id_sinh_vien', '=', 'sinh_viens.id')
+            ->join('ds_sinh_viens', 'tra_lois.id_sinh_vien', '=', 'ds_sinh_viens.id_sinh_vien')
+            ->join('sinh_viens', 'ds_sinh_viens.id_sinh_vien', '=', 'sinh_viens.id')
             ->join('lops', 'sinh_viens.id_lop', '=', 'lops.id')
-            ->join('lop_hoc_phans', 'lop_hoc_phans.id_lop', '=', 'sinh_viens.id_lop')
+            ->join('lop_hoc_phans', 'ds_sinh_viens.id_lop_hoc_phan', '=', 'lop_hoc_phans.id')
             ->where([['cau_hois.id_bai_kiem_tra', $this->idbkt], ['lop_hoc_phans.id', $this->idlophp]])
             ->select('sinh_viens.ma_so', 'sinh_viens.ho_ten', 'lops.ten_lop', 'bai_kiem_tras.id', DB::raw("SUM(tra_lois.diem) as tongdiem"))
             ->groupBy('sinh_viens.ma_so', 'sinh_viens.ho_ten', 'lops.ten_lop', 'bai_kiem_tras.id');
