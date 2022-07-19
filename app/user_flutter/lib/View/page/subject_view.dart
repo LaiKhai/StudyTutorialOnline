@@ -119,7 +119,8 @@ class _SubjectViewState extends State<SubjectView> {
                       : null,
                   backgroundColor: const Color(0xFFF6F9FE),
                   body: Padding(
-                    padding: const EdgeInsets.all(16),
+                    padding:
+                        const EdgeInsets.only(top: 16, left: 16, right: 16),
                     child: SingleChildScrollView(
                       controller: scroll,
                       child: Column(
@@ -300,11 +301,11 @@ class _StreamBodyState extends State<StreamBody> {
         const SizedBox(height: 16),
         Expanded(
             child: FutureBuilder<baiViets>(
-          future: BaiViet.getAllBaiViet(widget.id_Lop),
+          future: BaiVietVM.getAllBaiViet(widget.id_Lop),
           builder: ((context, snapshot) {
             if (snapshot.hasData) {
               if (snapshot.data!.data!.length == 0) {
-                return NoChild(icon: 'noThongB.svg');
+                return NoChild(icon: 'comment.svg');
               } else {
                 return ListView.builder(
                   physics: const BouncingScrollPhysics(),
@@ -365,6 +366,7 @@ class _AssignmentBodyState extends State<AssignmentBody> {
                               final assignment = assignments[0];
                               BaiTapModel baitap = BaiTapModel(
                                   diem: 0.0,
+                                  idLopHP: ktra.data![index].idLopHocPhan!,
                                   id: ktra.data![index].id!,
                                   tieuDe: ktra.data![index].tieuDe!,
                                   noiDung: ktra.data![index].noiDung!,
@@ -395,6 +397,7 @@ class _AssignmentBodyState extends State<AssignmentBody> {
                             itemBuilder: (ctx, index) {
                               BaiTapModel baiTap = BaiTapModel(
                                   diem: ktra.data![index].tongDiem!,
+                                  idLopHP: ktra.data![index].idlophocphan!,
                                   id: ktra.data![index].idBaiKiemTra!,
                                   tieuDe: ktra.data![index].tieuDe!,
                                   noiDung: ktra.data![index].noiDung!,

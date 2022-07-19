@@ -5,8 +5,9 @@ import 'package:user_flutter/Model/BaiKtrta.dart';
 import 'package:user_flutter/Model/ThongKeM.dart';
 import 'package:user_flutter/Model_View/ThongKeMV.dart';
 import 'package:user_flutter/Model_View/bai_Ktra.dart';
-import 'package:user_flutter/View/Widget/ThongKe.dart/TatCa.dart';
-import 'package:user_flutter/View/Widget/ThongKe.dart/floatingBton.dart';
+import 'package:user_flutter/View/Widget/ThongKe/TatCa.dart';
+import 'package:user_flutter/View/Widget/ThongKe/floatingBton.dart';
+import 'package:user_flutter/View/Widget/ThongKe/thongKeDiem.dart';
 import 'package:user_flutter/View/Widget/showNouti.dart';
 import 'package:user_flutter/View/Widget/widget_loadin.dart';
 import 'package:user_flutter/View/common/constant/color.dart';
@@ -76,7 +77,19 @@ class _ThongKePageState extends State<ThongKePage> {
           if (snapshot.hasData) {
             CT_Bai_Ktra_model baiKiemTra = snapshot.data!;
             return Scaffold(
-                appBar: AppBar(),
+                appBar: AppBar(
+                  backgroundColor: US_APP_COLOR,
+                  shadowColor: US_APP_COLOR,
+                  elevation: 0,
+                  title: Text(
+                    'Chi tiết bài kiểm tra',
+                    style: GoogleFonts.quicksand(
+                        color: Colors.white,
+                        fontWeight: FontWeight.bold,
+                        fontSize: 25),
+                  ),
+                  centerTitle: true,
+                ),
                 body: CustomScrollView(slivers: <Widget>[
                   SliverList(
                       delegate: SliverChildListDelegate([
@@ -190,10 +203,11 @@ class _ThongKePageState extends State<ThongKePage> {
                         text: 'Chi tiết bài kiểm tra',
                         onPressed: () async {
                           print('Xem chi tiết');
-                          showCustomDialog(
-                              context,
-                              "Không thể bắt đầu ngay bây giờ. Hãy thử lại sau!",
-                              false);
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => const ThongKeDiem()),
+                          );
                         })
                     : baiKiemTra.baikiemtra!.trangThai == 4
                         ? FloatingBtun(
@@ -246,7 +260,13 @@ class _ThongKePageState extends State<ThongKePage> {
                                     DateTime.now().toString(),
                                     '',
                                     '4');
-                                Navigator.pop(context);
+                                Navigator.of(context).pushAndRemoveUntil(
+                                    MaterialPageRoute(
+                                        builder: (context) => SubjectView(
+                                              id_lopHp: baiKiemTra
+                                                  .baikiemtra!.idLopHocPhan!,
+                                            )),
+                                    (route) => false);
                               } else {
                                 showCustomDialog(
                                     context,

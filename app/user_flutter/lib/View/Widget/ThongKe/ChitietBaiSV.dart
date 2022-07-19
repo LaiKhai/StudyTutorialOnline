@@ -2,32 +2,30 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:user_flutter/Model/BaiKtrta.dart';
 import 'package:user_flutter/Model/Bai_da_luu.dart';
-import 'package:user_flutter/Model/User_login.dart';
 import 'package:user_flutter/Model_View/bai_Ktra.dart';
 import 'package:user_flutter/View/Widget/widget_loadin.dart';
 import 'package:user_flutter/View/common/constant/color.dart';
 import 'package:user_flutter/View/common/constant/dimen.dart';
-import 'package:user_flutter/View/page/subject_view.dart';
 
-class Bai_Ktra extends StatefulWidget {
+class ChitietKtraSV extends StatefulWidget {
   int id;
-  Bai_Ktra({
-    Key? key,
-    required this.id, int? idSv,
-  }) : super(key: key);
+  int idSv;
+  ChitietKtraSV({Key? key, required this.id, required this.idSv})
+      : super(key: key);
 
   @override
-  State<Bai_Ktra> createState() => _Bai_KtraState();
+  State<ChitietKtraSV> createState() => _ChitietKtraSVState();
 }
 
-class _Bai_KtraState extends State<Bai_Ktra> {
+class _ChitietKtraSVState extends State<ChitietKtraSV> {
   BaiDaLuuModel? baiDaluu = null;
   List<String> a = [];
   List<int> _verticalGroupValue = [];
   List<String> _status = ["Pendings", "Released", "Blocked"];
 
   getBaidaluu() async {
-    BaiDaLuuModel? gets = await BaiKiemTraVM.Getbaidaluu(widget.id,user.user!.id!);
+    BaiDaLuuModel? gets =
+        await BaiKiemTraVM.Getbaidaluu(widget.id, widget.idSv);
     setState(() {
       baiDaluu = gets;
     });
@@ -83,53 +81,32 @@ class _Bai_KtraState extends State<Bai_Ktra> {
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-        child: FutureBuilder<CT_Bai_Ktra_model>(
+    return FutureBuilder<CT_Bai_Ktra_model>(
       future: BaiKiemTraVM.Show_BKTra(widget.id),
       builder: (context, snapshot) {
         if (snapshot.hasData) {
-          List<Cauhoi> lst_Cauhoi = snapshot.data!.baikiemtra!.cauhoi!;
+          List<Cauhoi> lst_Cauhoi;
+          if (snapshot.data == null) {
+            lst_Cauhoi = [];
+          } else {
+            if (snapshot.data!.baikiemtra == null) {
+              lst_Cauhoi = [];
+            } else {
+              lst_Cauhoi = snapshot.data!.baikiemtra!.cauhoi!;
+            }
+          }
+
           CT_Baikiemtra ct_baikiemtra = snapshot.data!.baikiemtra!;
           khoitao_Value(lst_Cauhoi.length);
           return Scaffold(
-              floatingActionButton: FloatingActionButton.extended(
-                backgroundColor: AppColor.theme,
-                label: Text(
-                  'Nộp bài',
-                  style: GoogleFonts.quicksand(
-                    color: Colors.white,
-                    fontSize: 20,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-                onPressed: () async {
-                  bool ktra = true;
-                  ktra = await BaiKiemTraVM.postNopBai(
-                      ct_baikiemtra.id!, user.user!.id!);
-
-                  if (ktra == true) {
-                    Navigator.of(context).pushAndRemoveUntil(
-                        MaterialPageRoute(
-                            builder: (context) => SubjectView(
-                                  id_lopHp: ct_baikiemtra.idLopHocPhan!,
-                                )),
-                        (route) => false);
-                  }
-                },
-                tooltip: 'Increment',
-                //foregroundColor: Colors.yellow,
-                //backgroundColor: Colors.red,
-                //elevation: 0.0,
-                //shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
-              ),
               appBar: AppBar(
                 backgroundColor: US_APP_COLOR,
                 title: Text(
-                  'Kiểm tra 1 tiết',
+                  ct_baikiemtra.tieuDe!,
                   style: GoogleFonts.quicksand(
                       fontSize: 20,
                       fontWeight: FontWeight.w700,
-                      color: Colors.black),
+                      color: Colors.white),
                 ),
                 centerTitle: true,
               ),
@@ -138,11 +115,48 @@ class _Bai_KtraState extends State<Bai_Ktra> {
                   SliverList(
                       delegate: SliverChildListDelegate([
                     Container(
-                      margin: EdgeInsets.only(top: 20, left: 20, right: 20),
-                      padding: EdgeInsets.only(bottom: 20, left: 20, right: 20),
+                      margin:
+                          const EdgeInsets.only(top: 20, left: 20, right: 20),
+                      padding: const EdgeInsets.only(
+                          bottom: 20, left: 20, right: 20),
                       decoration: BoxDecoration(
                         color: Colors.white,
-                        boxShadow: [
+                        boxShadow: const [
+                          BoxShadow(
+                            blurRadius: 4,
+                            color: Color(0x34090F13),
+                            offset: Offset(0, 2),
+                          )
+                        ],
+                        borderRadius: BorderRadius.circular(12),
+                      ),
+                      child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              'Thông tin sinh viên:',
+                              style: GoogleFonts.quicksand(
+                                  fontSize: 20,
+                                  fontWeight: FontWeight.w700,
+                                  color: Colors.black),
+                            ),
+                            Text(
+                              'Tên: ' + ct_baikiemtra.noiDung!,
+                              style: GoogleFonts.quicksand(
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.w500,
+                                  color: Colors.black),
+                            )
+                          ]),
+                    ),
+                    Container(
+                      margin:
+                          const EdgeInsets.only(top: 20, left: 20, right: 20),
+                      padding: const EdgeInsets.only(
+                          bottom: 20, left: 20, right: 20),
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        boxShadow: const [
                           BoxShadow(
                             blurRadius: 4,
                             color: Color(0x34090F13),
@@ -169,7 +183,7 @@ class _Bai_KtraState extends State<Bai_Ktra> {
                                   color: Colors.black),
                             )
                           ]),
-                    )
+                    ),
                   ])),
                   SliverList(
                       delegate: SliverChildBuilderDelegate(
@@ -212,7 +226,7 @@ class _Bai_KtraState extends State<Bai_Ktra> {
                                 bottom: 20, left: 20, right: 20),
                             decoration: BoxDecoration(
                               color: Colors.white,
-                              boxShadow: [
+                              boxShadow: const [
                                 BoxShadow(
                                   blurRadius: 4,
                                   color: Color(0x34090F13),
@@ -224,6 +238,25 @@ class _Bai_KtraState extends State<Bai_Ktra> {
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
+                                Padding(
+                                  padding: const EdgeInsets.only(top: 10.0),
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.end,
+                                    children: [
+                                      Text(
+                                        baiDaluu!.baikiemtra![index].dapAn ==
+                                                baiDaluu!.baikiemtra![index]
+                                                    .dapAnDung
+                                            ? '${baiDaluu!.baikiemtra![index].diem}/${baiDaluu!.baikiemtra![index].diem}'
+                                            : '0/${baiDaluu!.baikiemtra![index].diem}',
+                                        style: GoogleFonts.quicksand(
+                                            fontSize: 15,
+                                            fontWeight: FontWeight.w600,
+                                            color: Colors.black),
+                                      ),
+                                    ],
+                                  ),
+                                ),
                                 Text(
                                   'Câu ${index + 1}: ' +
                                       lst_Cauhoi[index].deBai!,
@@ -234,79 +267,80 @@ class _Bai_KtraState extends State<Bai_Ktra> {
                                 ),
                                 GroupRadioButton(
                                   label: [
-                                    Container(
+                                    SizedBox(
                                         width: getWidthSize(context) * 2 / 3,
                                         child: Text(
                                           _status[0],
                                           style: GoogleFonts.quicksand(
-                                              textStyle: TextStyle(
+                                              textStyle: const TextStyle(
                                                   overflow: TextOverflow.clip),
                                               fontSize: 15,
                                               fontWeight: FontWeight.w600),
                                         )),
-                                    Container(
+                                    SizedBox(
                                         width: getWidthSize(context) * 2 / 3,
                                         child: Text(
                                           _status[1],
                                           style: GoogleFonts.quicksand(
-                                              textStyle: TextStyle(
+                                              textStyle: const TextStyle(
                                                   overflow: TextOverflow.clip),
                                               fontSize: 15,
                                               fontWeight: FontWeight.w600),
                                         )),
-                                    Container(
+                                    SizedBox(
                                         width: getWidthSize(context) * 2 / 3,
                                         child: Text(
                                           _status[2],
                                           style: GoogleFonts.quicksand(
-                                              textStyle: TextStyle(
+                                              textStyle: const TextStyle(
                                                   overflow: TextOverflow.clip),
                                               fontSize: 15,
                                               fontWeight: FontWeight.w600),
                                         )),
-                                    Container(
+                                    SizedBox(
                                         width: getWidthSize(context) * 2 / 3,
                                         child: Text(
                                           _status[3],
                                           style: GoogleFonts.quicksand(
-                                              textStyle: TextStyle(
+                                              textStyle: const TextStyle(
                                                   overflow: TextOverflow.clip),
                                               fontSize: 15,
                                               fontWeight: FontWeight.w600),
                                         )),
                                   ],
-                                  padding: EdgeInsets.symmetric(vertical: 10),
+                                  padding:
+                                      const EdgeInsets.symmetric(vertical: 10),
                                   spaceBetween: 5,
                                   radioRadius: 10,
                                   color: US_APP_COLOR,
                                   selectedIndex: _verticalGroupValue[index],
                                   onChanged: (listIndex) {
-                                    print(listIndex);
-                                    print('index: ' + index.toString());
-                                    String trl = '';
-                                    if (listIndex == 0) {
-                                      trl = "A";
-                                    }
-                                    if (listIndex == 1) {
-                                      trl = "B";
-                                    }
-                                    if (listIndex == 2) {
-                                      trl = "C";
-                                    }
-                                    if (listIndex == 3) {
-                                      trl = "D";
-                                    }
-                                    setState(() {
-                                      trl;
-                                    });
-                                    BaiKiemTraVM.traLoiMotCau(
-                                        trl,
-                                        lst_Cauhoi[index].id!,
-                                        widget.id,
-                                        baiDaluu!.baikiemtra![index].idTraLoi!);
-                                    setState(() {
-                                      _verticalGroupValue[index] = listIndex;
-                                    });
+                                    // print(listIndex);
+                                    // print('index: ' + index.toString());
+                                    // String trl = '';
+                                    // if (listIndex == 0) {
+                                    //   trl = "A";
+                                    // }
+                                    // if (listIndex == 1) {
+                                    //   trl = "B";
+                                    // }
+                                    // if (listIndex == 2) {
+                                    //   trl = "C";
+                                    // }
+                                    // if (listIndex == 3) {
+                                    //   trl = "D";
+                                    // }
+                                    // setState(() {
+                                    //   trl;
+                                    // });
+                                    // BaiKiemTraVM.traLoiMotCau(
+                                    //     trl,
+                                    //     lst_Cauhoi[index].id!,
+                                    //     widget.id,
+                                    //     baiDaluu!.baikiemtra![index].idTraLoi!);
+                                    // setState(() {
+                                    //   _verticalGroupValue[index] = listIndex;
+                                    // });
                                   },
                                 ),
                                 // RadioGroup<String>.builder(
@@ -350,6 +384,32 @@ class _Bai_KtraState extends State<Bai_Ktra> {
                                 //     item,
                                 //   ),
                                 // ),
+                                Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceEvenly,
+                                  children: [
+                                    Text(
+                                      'Đáp án: ${baiDaluu!.baikiemtra![index].dapAnDung}',
+                                      style: GoogleFonts.quicksand(
+                                          fontSize: 15,
+                                          fontWeight: FontWeight.w600,
+                                          color: Colors.black),
+                                    ),
+                                    Text(
+                                      baiDaluu!.baikiemtra![index].dapAn != null
+                                          ? baiDaluu!.baikiemtra![index]
+                                                      .dapAn !=
+                                                  'L'
+                                              ? 'Sinh viên chọn: ${baiDaluu!.baikiemtra![index].dapAn}'
+                                              : 'Sinh viên chưa làm bài'
+                                          : 'Sinh viên chưa làm bài',
+                                      style: GoogleFonts.quicksand(
+                                          fontSize: 15,
+                                          fontWeight: FontWeight.w600,
+                                          color: Colors.black),
+                                    )
+                                  ],
+                                )
                               ],
                             ),
                           ),
@@ -358,13 +418,14 @@ class _Bai_KtraState extends State<Bai_Ktra> {
                     },
                     childCount: lst_Cauhoi.length,
                   )),
+                  SliverList(delegate: SliverChildListDelegate([]))
                 ],
               ));
         } else {
           return Loading();
         }
       },
-    ));
+    );
   }
 }
 

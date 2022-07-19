@@ -201,7 +201,7 @@ class _TaoPostWidgetState extends State<TaoPostWidget> {
                             ],
                           ),
                         ),
-                        Tra_Loi(),
+                        GuiFiles(),
                         Row(
                           mainAxisSize: MainAxisSize.max,
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,

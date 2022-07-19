@@ -12,7 +12,6 @@ import 'package:user_flutter/Model/User_login.dart';
 import 'package:user_flutter/Model/createBktra.dart';
 import 'package:user_flutter/Model/listBaiKtra_model.dart';
 import 'package:user_flutter/Model_View/login.dart';
-import 'package:user_flutter/View/Widget/ThongKe.dart/TatCa.dart';
 import 'package:user_flutter/View/common/constant/string.dart';
 import 'package:user_flutter/View/page/Form_tao_Bktra.dart';
 
@@ -285,13 +284,13 @@ class BaiKiemTraVM {
     }
   }
 
-  static Future<BaiDaLuuModel?> Getbaidaluu(int idbaiktra) async {
+  static Future<BaiDaLuuModel?> Getbaidaluu(int idbaiktra,int idSv) async {
     // try {
     String url = getBaiDaluu;
     String token = await Login.getToken();
     Map body = {
       "id_bai_ktra": idbaiktra.toString(),
-      "id_sinh_vien": user.user!.id.toString(),
+      "id_sinh_vien": idSv.toString(),
     };
     print(idbaiktra);
     print(user.user!.id);

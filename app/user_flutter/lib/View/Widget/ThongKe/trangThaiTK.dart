@@ -1,13 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:user_flutter/Model/User_login.dart';
-import 'package:user_flutter/Model/subject_assignment.dart';
 import 'package:user_flutter/View/common/constant/color.dart';
 
-class AssignmentStatus extends StatelessWidget {
+class TrangThaiTK extends StatelessWidget {
   final int type;
 
-  const AssignmentStatus({Key? key, required this.type}) : super(key: key);
+  const TrangThaiTK({Key? key, required this.type}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -21,30 +20,31 @@ class AssignmentStatus extends StatelessWidget {
             borderRadius: BorderRadius.circular(360),
             color: (type == 1
                     ? AppColor.green
-                    : type == 2
+                    : type == 3
                         ? AppColor.red
-                        : type == 3
+                        : type == 2
                             ? Colors.deepPurple
                             : type == 4
-                                ? Colors.blueAccent
-                                : AppColor.grey2)
+                                ? Color.fromARGB(0, 68, 137, 255)
+                                : Color.fromARGB(0, 245, 245, 245))
                 .withOpacity(0.25)),
         child: Text(
           type == 1
-              ? "Đã kết thúc bài kiểm tra"
-              : type == 2
-                  ? "Chưa bắt đầu kiểm tra"
-                  : type == 3
-                      ? "Chưa xác định"
+              ? "Đã hoàn thành đúng hạn"
+              : type == 3
+                  ? "Chưa hoàn thành"
+                  : type == 2
+                      ? "Hoàn thành trể"
                       : type == 4
-                          ? "Đã bắt đầu"
-                          : "Có vấn đề xảy ra",
+                          ? ""
+                          : "",
           style: GoogleFonts.quicksand(
+              fontWeight: FontWeight.w700,
               color: type == 1
                   ? AppColor.green
-                  : type == 2
+                  : type == 3
                       ? AppColor.red
-                      : type == 3
+                      : type == 2
                           ? Colors.deepPurple
                           : type == 4
                               ? Colors.blueAccent
