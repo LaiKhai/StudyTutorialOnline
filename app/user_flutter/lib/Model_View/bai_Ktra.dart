@@ -11,6 +11,7 @@ import 'package:user_flutter/Model/SinhVienLamKtraM.dart';
 import 'package:user_flutter/Model/User_login.dart';
 import 'package:user_flutter/Model/createBktra.dart';
 import 'package:user_flutter/Model/listBaiKtra_model.dart';
+import 'package:user_flutter/Model/ttSinhvienKtra.dart';
 import 'package:user_flutter/Model_View/login.dart';
 import 'package:user_flutter/View/common/constant/string.dart';
 import 'package:user_flutter/View/page/Form_tao_Bktra.dart';
@@ -285,7 +286,7 @@ class BaiKiemTraVM {
   }
 
   static Future<BaiDaLuuModel?> Getbaidaluu(int idbaiktra,int idSv) async {
-    // try {
+    try {
     String url = getBaiDaluu;
     String token = await Login.getToken();
     Map body = {
@@ -306,9 +307,9 @@ class BaiKiemTraVM {
     final jsonResponse =
         BaiDaLuuModel.fromJson(json.decode(response.body.toString()));
     return jsonResponse;
-    // } catch (e) {
-    //   return null;
-    // }
+    } catch (e) {
+      return null;
+    }
   }
 
   static Future<bool> postNopBai(int idBaiKiemTra, int idSinhVien) async {
@@ -332,5 +333,29 @@ class BaiKiemTraVM {
     } catch (e) {
       return false;
     }
+  }
+   static Future<ttSvienKtra_M?> GetTtSinhVien(int idbaiktra,int idSv) async {
+    // try {
+    String url = urlgetSinhvienKtra;
+    String token = await Login.getToken();
+    Map body = {
+      "id_bai_kiem_tra": idbaiktra.toString(),
+      "id_sinh_vien": idSv.toString(),
+    };
+    var response = await http.post(Uri.parse(url),
+        headers: <String, String>{
+          'Accept': 'application/json',
+          'Authorization': 'Bearer $token',
+        },
+        body: body);
+    Map<String, dynamic> map = json.decode(response.body);
+    var posts = map["message"];
+    print(response.body);
+    final jsonResponse =
+        ttSvienKtra_M.fromJson(json.decode(response.body.toString()));
+    return jsonResponse;
+    // } catch (e) {
+    //   return null;
+    // }
   }
 }

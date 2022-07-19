@@ -33,3 +33,4 @@ const String urlgetSinhvienchualam = '$Link/api/svChuaHoanThanhBKT';
 const String urlgetSinhviendalam= '$Link/api/svHoanThanhBKT';
 const String urlgetSinhvienall= '$Link/api/svwithBKT';
 const String urlpostTraLoiBaitap= '$Link/api/traloithongbao';
+const String urlgetSinhvienKtra= '$Link/api/getSinhVienBaiKiemTra';

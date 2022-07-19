@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:user_flutter/Model/BaiKtrta.dart';
 import 'package:user_flutter/Model/Bai_da_luu.dart';
+import 'package:user_flutter/Model/ttSinhvienKtra.dart';
 import 'package:user_flutter/Model_View/bai_Ktra.dart';
 import 'package:user_flutter/View/Widget/widget_loadin.dart';
 import 'package:user_flutter/View/common/constant/color.dart';
@@ -21,6 +22,7 @@ class _ChitietKtraSVState extends State<ChitietKtraSV> {
   BaiDaLuuModel? baiDaluu = null;
   List<String> a = [];
   List<int> _verticalGroupValue = [];
+  List<SinhvienKtra> sv = [];
   List<String> _status = ["Pendings", "Released", "Blocked"];
 
   getBaidaluu() async {
@@ -72,11 +74,29 @@ class _ChitietKtraSVState extends State<ChitietKtraSV> {
     }
   }
 
+  getTtSinhvien() async {
+    ttSvienKtra_M? ds =
+        await BaiKiemTraVM.GetTtSinhVien(widget.id, widget.idSv);
+    if (ds != null) {
+      try {
+        sv = ds.sinhvien!;
+      } catch (e) {
+        sv = [];
+      }
+    } else {
+      sv = [];
+    }
+    setState(() {
+      sv;
+    });
+  }
+
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
     getBaidaluu();
+    getTtSinhvien();
   }
 
   @override
@@ -132,6 +152,7 @@ class _ChitietKtraSVState extends State<ChitietKtraSV> {
                       ),
                       child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                           children: [
                             Text(
                               'Thông tin sinh viên:',
@@ -140,12 +161,76 @@ class _ChitietKtraSVState extends State<ChitietKtraSV> {
                                   fontWeight: FontWeight.w700,
                                   color: Colors.black),
                             ),
-                            Text(
-                              'Tên: ' + ct_baikiemtra.noiDung!,
-                              style: GoogleFonts.quicksand(
-                                  fontSize: 16,
-                                  fontWeight: FontWeight.w500,
-                                  color: Colors.black),
+                            Padding(
+                              padding:
+                                  const EdgeInsets.only(left: 8.0, bottom: 8.0),
+                              child: Text(
+                                sv.length == 0
+                                    ? 'Tên sinh viên'
+                                    : 'Tên: ' + sv[0].hoTen!,
+                                style: GoogleFonts.quicksand(
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.w500,
+                                    color: Colors.black),
+                              ),
+                            ),
+                            Padding(
+                              padding:
+                                  const EdgeInsets.only(left: 8.0, bottom: 8.0),
+                              child: Text(
+                                sv.length == 0
+                                    ? 'Mã số sinh viên'
+                                    : 'Mssv: ' + sv[0].maSo!,
+                                style: GoogleFonts.quicksand(
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.w500,
+                                    color: Colors.black),
+                              ),
+                            ),
+                            Padding(
+                              padding:
+                                  const EdgeInsets.only(left: 8.0, bottom: 8.0),
+                              child: Text(
+                                sv.length == 0
+                                    ? 'Email sinh viên'
+                                    : 'Email: ' + sv[0].email!,
+                                style: GoogleFonts.quicksand(
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.w500,
+                                    color: Colors.black),
+                              ),
+                            ),
+                            Padding(
+                              padding:
+                                  const EdgeInsets.only(left: 8.0, bottom: 8.0),
+                              child: Text(
+                                sv.length == 0
+                                    ? 'Lớp'
+                                    : 'Lớp: ' + sv[0].tenLop!,
+                                style: GoogleFonts.quicksand(
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.w500,
+                                    color: Colors.black),
+                              ),
+                            ),
+                            Padding(
+                              padding:
+                                  const EdgeInsets.only(left: 8.0, bottom: 8.0),
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.end,
+                                children: [
+                                  Text(
+                                    sv.length == 0
+                                        ? 'Điểm'
+                                        : 'Tổng điểm: ' +
+                                            sv[0].tongdiem!.toString(),
+                                    style: GoogleFonts.quicksand(
+                                        fontSize: 16,
+                                        fontWeight: FontWeight.w700,
+                                        color: US_APP_COLOR_2),
+                                  ),
+                                ],
+                              ),
                             )
                           ]),
                     ),
