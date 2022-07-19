@@ -113,9 +113,15 @@ class BaiKiemTraController extends Controller
         $baiKiemTra->file;
         $baiKiemTra->ctbaikiemtra;
         $baiKiemTra->cauhoi;
+        $sv = CTBaiKiemTra::join('bai_kiem_tras', 'ct_bai_kiem_tras.id_bai_kiem_tra', '=', 'bai_kiem_tras.id')
+            ->join('sinh_viens', 'ct_bai_kiem_tras.id_sinh_vien', '=', 'sinh_viens.id')
+            ->where('bai_kiem_tras.id', $id)
+            ->select('sinh_viens.*')
+            ->get();
         $response = [
             'status' => true,
             'baikiemtra' => $baiKiemTra,
+            'sinhvien' => $sv
         ];
         return response($response, 200);
     }

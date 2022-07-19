@@ -25,6 +25,8 @@ class Storeprocedure extends Migration
         $droptaocapnhatBKT = "DROP PROCEDURE IF EXISTS `cap_nhat_trang_thai_CTBKT`;";
         $droptaoCauTraLoi2 = "DROP PROCEDURE IF EXISTS `tao_chi_tiet_bai_ktra_2`;";
         $dropTinhDiem = "DROP FUNCTION IF EXISTS `TinhDiem`;";
+        $dropTaoTraLoiThongBao = "DROP PROCEDURE IF EXISTS `tao_traloi_thongbao`;";
+        $dropCapNhatTraLoiThongBao = "DROP PROCEDURE IF EXISTS `capnhat_traloi_thongbao`;";
 
         DB::unprepared($dropbatdauKT);
         DB::unprepared($droptaobaiKT);
@@ -37,6 +39,8 @@ class Storeprocedure extends Migration
         DB::unprepared($droptaocapnhatBKT);
         DB::unprepared($droptaoCauTraLoi2);
         DB::unprepared($dropTinhDiem);
+        DB::unprepared($dropTaoTraLoiThongBao);
+        DB::unprepared($dropCapNhatTraLoiThongBao);
 
         $batdauKT = 'CREATE PROCEDURE `Bat_dau_KT`(IN `id_bai_ktra` INT, IN `id_lop_hphan` INT) 
         BEGIN
@@ -57,9 +61,9 @@ class Storeprocedure extends Migration
 
         $taoCauTraLoi = "CREATE PROCEDURE `Tao_cau_TrL`(IN `dapan` VARCHAR(15), IN `id_cauhoi` INT, IN `id_cautrl` INT) 
             UPDATE `tra_lois` SET `dap_an`=dapan,`diem`= Case 
-            WHEN `dap_an`=(SELECT `dap_an_dung`FROM `cau_hois` WHERE cau_hois.id=id_cauhoi)
+            WHEN dapan =(SELECT `dap_an_dung`FROM `cau_hois` WHERE cau_hois.id=id_cauhoi)
             THEN (SELECT `diem`FROM `cau_hois` WHERE cau_hois.id=id_cauhoi)
-            WHEN `dap_an`!=(SELECT `dap_an_dung`FROM `cau_hois` WHERE cau_hois.id=id_cauhoi) THEN 0 END,
+            ELSE 0 END,
             `trang_thai`=1,`created_at`=Now(),`updated_at`=Now() WHERE id=id_cautrl";
 
         $taoDSSV = "CREATE PROCEDURE `tao_dssv`(IN `id_sinh_vien` VARCHAR(255),IN `id_lop_hoc_phan` INT)
@@ -95,6 +99,13 @@ class Storeprocedure extends Migration
         INSERT INTO `ct_bai_kiem_tras`(`id_bai_kiem_tra`, `id_sinh_vien`, `tg_nop_bai`, `tong_diem`, `trang_thai`, `created_at`, `updated_at`) 
         SELECT cau_hois.id_bai_kiem_tra, tra_lois.id_sinh_vien,NOW(),0,trangthai,NOW(),NOW() FROM cau_hois,tra_lois WHERE cau_hois.id=tra_lois.id_cau_hoi AND cau_hois.id_bai_kiem_tra=idbaikiemtra GROUP BY cau_hois.id_bai_kiem_tra,tra_lois.id_sinh_vien;";
 
+        $taotraloithongbao = "CREATE PROCEDURE `tao_traloi_thongbao`(IN `id_sinh_vien` INT, IN `id_bai_viet` INT, IN `id_file` INT, IN `cau_tra_loi` VARCHAR(255), IN `trang_thai` INT)
+        INSERT INTO `traloi_thongbao`(`id_sinh_vien`, `id_bai_viet`, `cau_tra_loi`, `id_file`, `trang_thai`, `created_at`, `updated_at`) VALUES (id_sinh_vien,id_bai_viet,cau_tra_loi,id_file,trang_thai,NOW(),NOW());";
+
+        $capnhattraloithongbao = "CREATE PROCEDURE `capnhat_traloi_thongbao`(IN `id_sinh_vien` INT, IN `id_bai_viet` INT, IN `id_file` INT, IN `cau_tra_loi` VARCHAR(255), IN `trang_thai` INT)
+        UPDATE `traloi_thongbao` SET `id_sinh_vien`=id_sinh_vien,`id_bai_viet`=id_bai_viet,`cau_tra_loi`=cau_tra_loi,`id_file`=id_file,`trang_thai`=trang_thai,`created_at`=NOW(),`updated_at`=NOW()
+        WHERE `id_sinh_vien`=id_sinh_vien AND `id_bai_viet`=id_bai_viet;";
+
         DB::unprepared($taoBaiKT);
         DB::unprepared($batdauKT);
         DB::unprepared($taoCauHoi);
@@ -107,6 +118,8 @@ class Storeprocedure extends Migration
         DB::unprepared($tao_ct_bai_kiem_tra);
         DB::unprepared($capnhatCTBKT);
         DB::unprepared($taoCauTraLoi2);
+        DB::unprepared($taotraloithongbao);
+        DB::unprepared($capnhattraloithongbao);
     }
 
     /**

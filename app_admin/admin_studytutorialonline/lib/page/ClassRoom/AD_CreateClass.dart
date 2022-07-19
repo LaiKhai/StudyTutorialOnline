@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:StudyTutorialOnlineAdmin/data/ClassRoom.dart';
 import 'package:StudyTutorialOnlineAdmin/data/Teacher.dart';
 import 'package:StudyTutorialOnlineAdmin/data/Teachers.dart';
@@ -8,12 +10,14 @@ import 'package:StudyTutorialOnlineAdmin/provider/ClassRoom/ClassRoomProvider.da
 import 'package:StudyTutorialOnlineAdmin/provider/Department/DepartmentProvider.dart';
 import 'package:StudyTutorialOnlineAdmin/provider/Teacher/TeacherProvider.dart';
 import 'package:StudyTutorialOnlineAdmin/widget/InputForm.dart';
+import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 
 import '../../common/contrains/color.dart';
 import '../../common/contrains/dimen.dart';
 import '../../common/contrains/string.dart';
 import '../../data/User.dart';
+import '../../provider/Import_Export_file.dart';
 
 class CreateClass extends StatefulWidget {
   final User us;
@@ -47,6 +51,15 @@ class _CreateClassState extends State<CreateClass> {
     setState(() {
       khoas = lst.khoa!;
     });
+  }
+
+  File? imgClassPart;
+  chonAnh() async {
+    FilePickerResult? result = await FilePicker.platform.pickFiles();
+    if (result != null) {
+      imgClassPart = File(result.files.single.path!);
+    }
+    setState(() {});
   }
 
   @override
@@ -142,6 +155,50 @@ class _CreateClassState extends State<CreateClass> {
                       labeltext: 'Niên khóa',
                       preIcon: Icons.date_range_rounded),
                   Container(
+                    height: 50,
+                    width: getWidthSize(context),
+                    child: InkWell(
+                      onTap: () {},
+                      child: Container(
+                        margin: EdgeInsets.fromLTRB(30, 0, 30, 0),
+                        height: 200,
+                        width: getWidthSize(context),
+                        child: Center(
+                            child: Text(imgClassPart != null
+                                ? imgClassPart.toString()
+                                : 'hiện tại chưa có file nào')),
+                      ),
+                    ),
+                  ),
+                  Container(
+                    margin: EdgeInsets.fromLTRB(getWidthSize(context) * 0.06,
+                        10, getWidthSize(context) * 0.06, 10),
+                    width: getWidthSize(context),
+                    child: Container(
+                        margin: EdgeInsets.fromLTRB(2, 10, 0, 0),
+                        width: getWidthSize(context) * 0.86,
+                        height: getHeightSize(context) * 0.06,
+                        child: ElevatedButton(
+                          child: Text(
+                            'Thêm file danh sách',
+                            style: ggTextStyle(
+                                20, FontWeight.bold, AppColor.white),
+                          ),
+                          onPressed: () {
+                            imgClassPart = null;
+                            chonAnh();
+                          },
+                          style: ButtonStyle(
+                              backgroundColor: MaterialStateProperty.all<Color>(
+                                  AppColor.theme),
+                              shape: MaterialStateProperty.all<
+                                      RoundedRectangleBorder>(
+                                  RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(10),
+                              ))),
+                        )),
+                  ),
+                  Container(
                     margin: EdgeInsets.fromLTRB(getWidthSize(context) * 0.06,
                         10, getWidthSize(context) * 0.06, 10),
                     width: getWidthSize(context),
@@ -221,7 +278,8 @@ class _CreateClassState extends State<CreateClass> {
                                       });
                                 }
                                 if (_tenlopController.text == '' ||
-                                    _nienkhoaController.text == '') {
+                                    _nienkhoaController.text == '' ||
+                                    imgClassPart == null) {
                                   showDialog(
                                       context: context,
                                       builder: (BuildContext context) {
@@ -264,7 +322,8 @@ class _CreateClassState extends State<CreateClass> {
                                 }
                                 if (value2 != null &&
                                     _tenlopController.text != '' &&
-                                    _nienkhoaController.text != '') {
+                                    _nienkhoaController.text != '' &&
+                                    imgClassPart != null) {
                                   ClassRoomProvider.postClass(
                                       context,
                                       value1!.id.toString(),
@@ -272,6 +331,8 @@ class _CreateClassState extends State<CreateClass> {
                                       _tenlopController.text,
                                       _nienkhoaController.text,
                                       us);
+                                  Import_Export.import(
+                                      context, imgClassPart!, us);
                                 }
                               },
                               style: ButtonStyle(

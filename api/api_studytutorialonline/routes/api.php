@@ -20,6 +20,7 @@ use App\Http\Controllers\DSSinhVienController;
 use App\Http\Controllers\DSGiangVienController;
 use App\Http\Controllers\FileController;
 use App\Http\Controllers\ThongKeController;
+use App\Http\Controllers\TraLoi_ThongBaoController;
 use App\Http\Controllers\TraLoiController;
 use App\Models\CTBaiKiemTra;
 use App\Models\DS_GiangVien;
@@ -43,6 +44,12 @@ Route::post('dngv', [AuthController::class, 'dangNhapGiangVien']);
 Route::post('admin', [AuthController::class, 'dangNhapAdmin']);
 Route::post('/sinhvien/import', [SinhVienController::class, 'import']);
 Route::get('/sinhvien/export', [SinhVienController::class, 'export']);
+
+Route::get('/traloi/exportDiemSV', [TraLoiController::class, 'exportDiemSV']);
+Route::post('/traloi/danhsachDiemSV', [TraLoiController::class, 'danhsachDiemSV']);
+Route::post('/traloi/lichsuTraLoi', [TraLoiController::class, 'lichsuTraLoi']);
+
+
 Route::get('/sinhvien/exportDiemDanh/{idlop}', [SinhVienController::class, 'exportDiemDanh']);
 //Lay danh sach lop theo id sinh vien
 Route::get('/lop/lstWithIdSV', [LopController::class, 'LstLopWithIdSV']);
@@ -99,6 +106,12 @@ Route::apiResource('dsgv', DS_GiangVien::class);
 Route::apiResource('traloi', TraLoiController::class);
 Route::apiResource('ctbaikiemtra', CTBaiKiemTraController::class);
 Route::apiResource('binhluan', BinhLuanController::class);
+Route::apiResource('traloithongbao', TraLoi_ThongBaoController::class);
+
+//lấy danh sách sinh viên
+Route::post('getSinhVien', [TraLoi_ThongBaoController::class, 'getSinhVien']);
+//lấy danh sách file
+Route::post('getfile', [TraLoi_ThongBaoController::class, 'getfile']);
 
 
 //Tạo Bài Kiểm Tra

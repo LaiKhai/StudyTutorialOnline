@@ -47,6 +47,12 @@ class _Import_Export_DSSVState extends State<Import_Export_DSSV> {
   }
 
   @override
+  void initState() {
+    super.initState();
+    getAllClass();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
@@ -65,8 +71,8 @@ class _Import_Export_DSSVState extends State<Import_Export_DSSV> {
                   EdgeInsets.fromLTRB(getWidthSize(context) * 0.05, 20, 0, 0),
               width: getWidthSize(context),
               child: Text(
-                'Import/ Export DSSV',
-                style: ggTextStyle(30, FontWeight.bold, AppColor.theme),
+                'Export Danh Sách Sinh Viên',
+                style: ggTextStyle(24, FontWeight.bold, AppColor.theme),
               ),
             ),
             Container(
@@ -77,108 +83,13 @@ class _Import_Export_DSSVState extends State<Import_Export_DSSV> {
               color: AppColor.theme,
             ),
             Container(
-              height: 100,
+              margin: EdgeInsets.fromLTRB(getWidthSize(context) * 0.05, 10,
+                  getWidthSize(context) * 0.05, 10),
               width: getWidthSize(context),
-              child: InkWell(
-                onTap: () {},
-                child: Container(
-                  margin: EdgeInsets.fromLTRB(30, 0, 30, 0),
-                  height: 300,
-                  width: getWidthSize(context),
-                  child: Center(
-                      child: Text(imgClassPart != null
-                          ? imgClassPart.toString()
-                          : 'hiện tại chưa có file nào')),
-                ),
+              child: Text(
+                'Export mẫu danh sách để import',
+                style: ggTextStyle(13, FontWeight.normal, AppColor.grey),
               ),
-            ),
-            Container(
-              margin: EdgeInsets.fromLTRB(getWidthSize(context) * 0.06, 10,
-                  getWidthSize(context) * 0.06, 10),
-              width: getWidthSize(context),
-              child: Container(
-                  margin: EdgeInsets.fromLTRB(2, 10, 0, 0),
-                  width: getWidthSize(context) * 0.86,
-                  height: getHeightSize(context) * 0.06,
-                  child: ElevatedButton(
-                    child: Text(
-                      'Thêm file danh sách',
-                      style: ggTextStyle(20, FontWeight.bold, AppColor.white),
-                    ),
-                    onPressed: () {
-                      imgClassPart = null;
-                      chonAnh();
-                    },
-                    style: ButtonStyle(
-                        backgroundColor:
-                            MaterialStateProperty.all<Color>(AppColor.theme),
-                        shape:
-                            MaterialStateProperty.all<RoundedRectangleBorder>(
-                                RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(10),
-                        ))),
-                  )),
-            ),
-            Container(
-              margin: EdgeInsets.fromLTRB(getWidthSize(context) * 0.06, 10,
-                  getWidthSize(context) * 0.06, 10),
-              width: getWidthSize(context),
-              child: Container(
-                  margin: EdgeInsets.fromLTRB(2, 10, 0, 0),
-                  width: getWidthSize(context) * 0.86,
-                  height: getHeightSize(context) * 0.06,
-                  child: ElevatedButton(
-                    child: Text(
-                      'Import file danh sách',
-                      style: ggTextStyle(20, FontWeight.bold, AppColor.white),
-                    ),
-                    onPressed: () {
-                      if (imgClassPart != null) {
-                        Import_Export.import(context, imgClassPart!, us);
-                      } else {
-                        showDialog(
-                            context: context,
-                            builder: (BuildContext context) {
-                              return AlertDialog(
-                                content: Text('Bạn chưa thêm file nào !',
-                                    style: ggTextStyle(
-                                        13, FontWeight.bold, AppColor.black)),
-                                title: Row(
-                                  children: [
-                                    Icon(
-                                      Icons.warning_rounded,
-                                      color: AppColor.theme,
-                                    ),
-                                    SizedBox(
-                                      width: 10,
-                                    ),
-                                    Text('Thông báo',
-                                        style: ggTextStyle(13, FontWeight.bold,
-                                            AppColor.black))
-                                  ],
-                                ),
-                                actions: [
-                                  TextButton(
-                                      onPressed: () {
-                                        Navigator.pop(context);
-                                      },
-                                      child: Text('OK',
-                                          style: ggTextStyle(13,
-                                              FontWeight.bold, AppColor.black)))
-                                ],
-                              );
-                            });
-                      }
-                    },
-                    style: ButtonStyle(
-                        backgroundColor:
-                            MaterialStateProperty.all<Color>(AppColor.theme),
-                        shape:
-                            MaterialStateProperty.all<RoundedRectangleBorder>(
-                                RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(10),
-                        ))),
-                  )),
             ),
             Container(
               margin: EdgeInsets.fromLTRB(getWidthSize(context) * 0.06, 10,
@@ -194,10 +105,7 @@ class _Import_Export_DSSVState extends State<Import_Export_DSSV> {
                       style: ggTextStyle(20, FontWeight.bold, AppColor.white),
                     ),
                     onPressed: () {
-                      linkUrl.openLink(
-                          url: baseUrl + 
-                              '/api/sinhvien/exportDiemDanh/' +
-                              selectedValue!.toString());
+                      linkUrl.openLink(url: baseUrl + '/api/sinhvien/export');
                     },
                     style: ButtonStyle(
                         backgroundColor:
@@ -208,6 +116,15 @@ class _Import_Export_DSSVState extends State<Import_Export_DSSV> {
                           borderRadius: BorderRadius.circular(10),
                         ))),
                   )),
+            ),
+            Container(
+              margin: EdgeInsets.fromLTRB(getWidthSize(context) * 0.05, 40,
+                  getWidthSize(context) * 0.05, 10),
+              width: getWidthSize(context),
+              child: Text(
+                'Export danh sách điểm danh theo lớp',
+                style: ggTextStyle(13, FontWeight.normal, AppColor.grey),
+              ),
             ),
             Container(
               margin: EdgeInsets.fromLTRB(getWidthSize(context) * 0.05, 10,
@@ -251,10 +168,13 @@ class _Import_Export_DSSVState extends State<Import_Export_DSSV> {
                   child: ElevatedButton(
                     child: Text(
                       'Export file danh sách điểm danh',
-                      style: ggTextStyle(20, FontWeight.bold, AppColor.white),
+                      style: ggTextStyle(15, FontWeight.bold, AppColor.white),
                     ),
                     onPressed: () {
-                      linkUrl.openLink(url: baseUrl + '/api/sinhvien/export');
+                      linkUrl.openLink(
+                          url: baseUrl +
+                              '/api/sinhvien/exportDiemDanh/' +
+                              selectedValue!.toString());
                     },
                     style: ButtonStyle(
                         backgroundColor:

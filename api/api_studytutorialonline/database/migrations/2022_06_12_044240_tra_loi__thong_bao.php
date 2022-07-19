@@ -16,7 +16,8 @@ class TraLoiThongBao extends Migration
         Schema::create('traloi_thongbao', function (Blueprint $table) {
             $table->id();
             $table->foreignId('id_sinh_vien');
-            $table->foreignId('id_cau_hoi');
+            $table->foreignId('id_bai_viet');
+            $table->foreignId('id_file')->nullable();
             $table->string('cau_tra_loi');
             $table->integer('trang_thai');
             $table->timestamps();
