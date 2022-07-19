@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\CTBaiKiemTra;
+use App\Models\BaiKiemTra;
 use App\Models\GiangVien;
 use App\Models\SinhVien;
 use App\Models\Lop;
@@ -39,4 +40,25 @@ class ThongKeController extends Controller
         ];
         return response()->json($response, 200);
     }
+
+
+    public function thongkeBangDiem(Request $request)
+    {
+        $idBKT = $request->input('id_bai_kiem_tra');
+        $cTietBaiktra = 
+        CTBaiKiemTra::where([['id_bai_kiem_tra', $idBKT], ['ct_bai_kiem_tras.trang_thai', '>', '0']])
+       ->get();
+        $baiktra=BaiKiemTra::join('giang_viens','bai_kiem_tras.id_giang_vien','=','giang_viens.id')
+        ->where([['bai_kiem_tras.id', $idBKT],['bai_kiem_tras.trang_thai', '>', '0']])->get();
+       foreach ($cTietBaiktra as $item) {
+        $item->sinhvien;
+    }
+        $response = [
+            'status' => true,
+            'data' => $cTietBaiktra,
+            'databaiktra'=>$baiktra
+        ];
+        return response()->json($response, 200);
+    }
+
 }

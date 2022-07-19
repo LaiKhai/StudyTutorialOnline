@@ -155,6 +155,7 @@ Route::post('/svHoanThanhBKT', [CTBaiKiemTraController::class, 'svHoanThanhBKT']
 Route::post('/svChuaHoanThanhBKT', [CTBaiKiemTraController::class, 'svChuaHoanThanhBKT']);
 //danh sách sinh viên tham gia kiểm tra
 Route::post('/svwithBKT', [CTBaiKiemTraController::class, 'svwithBKT']);
+Route::post('ThongkeBangDiem', [ThongKeController::class, 'thongkeBangDiem']);
 
 
 Route::middleware(['auth:sanctum'])->group(function () {
