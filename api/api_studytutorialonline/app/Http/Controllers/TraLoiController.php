@@ -201,18 +201,20 @@ class TraLoiController extends Controller
 
     public function exportDiemSV(Request $request)
     {
-        return Excel::download(new DanhSachDiemExport($request->baikt, $request->lop), 'DS_Diem_SV.xlsx');
+        return Excel::download(new DanhSachDiemExport($request->baikt, $request->lophp), 'DS_Diem_SV.xlsx');
     }
 
     public function danhsachDiemSV(Request $request)
     {
         $lsttraloi = TraLoi::join('cau_hois', 'tra_lois.id_cau_hoi', '=', 'cau_hois.id')
             ->join('bai_kiem_tras', 'cau_hois.id_bai_kiem_tra', '=', 'bai_kiem_tras.id')
+            ->join('ct_bai_kiem_tras', 'ct_bai_kiem_tras.id_bai_kiem_tra', '=', 'bai_kiem_tras.id')
             ->join('sinh_viens', 'tra_lois.id_sinh_vien', '=', 'sinh_viens.id')
             ->join('lops', 'sinh_viens.id_lop', '=', 'lops.id')
-            ->where([['cau_hois.id_bai_kiem_tra', $request->input('id_bai_kiem_tra')], ['sinh_viens.id_lop', $request->input('id_lop')]])
-            ->select('sinh_viens.ma_so', 'sinh_viens.ho_ten', 'lops.ten_lop', 'bai_kiem_tras.id as idBKT', DB::raw("SUM(tra_lois.diem) as tongdiem"))
-            ->groupBy('sinh_viens.ma_so', 'sinh_viens.ho_ten', 'lops.ten_lop', 'bai_kiem_tras.id')
+            ->join('lop_hoc_phans', 'lop_hoc_phans.id_lop', '=', 'sinh_viens.id_lop')
+            ->where([['cau_hois.id_bai_kiem_tra', $request->input('id_bai_kiem_tra')], ['lop_hoc_phans.id', $request->input('id_lop_hp')]])
+            ->select('sinh_viens.ma_so', 'sinh_viens.ho_ten', 'lops.ten_lop', 'bai_kiem_tras.id as idBKT', DB::raw("SUM(tra_lois.diem) as tongdiem"), 'ct_bai_kiem_tras.trang_thai as trangthaiCTBKT')
+            ->groupBy('sinh_viens.ma_so', 'sinh_viens.ho_ten', 'lops.ten_lop', 'bai_kiem_tras.id', 'ct_bai_kiem_tras.trang_thai')
             ->get();
 
         $response = [
@@ -230,6 +232,7 @@ class TraLoiController extends Controller
             ->join('lops', 'sinh_viens.id_lop', '=', 'lops.id')
             ->where([['cau_hois.id_bai_kiem_tra', $request->input('id_bai_kiem_tra')], ['sinh_viens.id', $request->input('id_sinh_vien')]])
             ->select('tra_lois.id as idcautraloi', 'sinh_viens.ma_so', 'sinh_viens.ho_ten', 'lops.ten_lop', 'bai_kiem_tras.id as idBKT', 'tra_lois.dap_an')
+            ->groupBy('tra_lois.id', 'sinh_viens.ma_so', 'sinh_viens.ho_ten', 'lops.ten_lop', 'bai_kiem_tras.id', 'tra_lois.dap_an')
             ->get();
 
         $response = [

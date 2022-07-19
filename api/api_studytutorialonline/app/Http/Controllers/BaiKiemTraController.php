@@ -6,6 +6,7 @@ use App\Models\BaiKiemTra;
 use App\Models\CauHoi;
 use App\Models\CTBaiKiemTra;
 use App\Models\DS_SinhVien;
+use App\Models\SinhVien;
 use App\Models\TraLoi;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
@@ -99,7 +100,7 @@ class BaiKiemTraController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Request $request, $id)
     {
         $baiKiemTra = BaiKiemTra::find($id);
         if (empty($baiKiemTra)) {
@@ -113,9 +114,16 @@ class BaiKiemTraController extends Controller
         $baiKiemTra->file;
         $baiKiemTra->ctbaikiemtra;
         $baiKiemTra->cauhoi;
+        $idsv = CTBaiKiemTra::join('bai_kiem_tras', 'ct_bai_kiem_tras.id_bai_kiem_tra', '=', 'bai_kiem_tras.id')
+            ->join('sinh_viens', 'ct_bai_kiem_tras.id_sinh_vien', '=', 'sinh_viens.id')
+            ->where('ct_bai_kiem_tras.id_bai_kiem_tra', $id)
+            ->select('ct_bai_kiem_tras.id_sinh_vien')
+            ->first();
+        $sv = SinhVien::find($idsv);
         $response = [
             'status' => true,
             'baikiemtra' => $baiKiemTra,
+            'sinhvien' => $sv
         ];
         return response($response, 200);
     }
