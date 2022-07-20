@@ -3,17 +3,19 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import 'package:intl/intl.dart';
+import 'package:user_flutter/Model/User_login.dart';
 import 'package:user_flutter/Model/listBaiKtra_model.dart';
-import 'package:user_flutter/Model/subject_assignment.dart';
+import 'package:user_flutter/Model/model_reing/BaiTapModel.dart';
 import 'package:user_flutter/View/Widget/Home/assignment_status.dart';
+import 'package:user_flutter/View/Widget/ThongKe/ChitietBaiSV.dart';
+import 'package:user_flutter/View/Widget/showNouti.dart';
 import 'package:user_flutter/View/common/constant/color.dart';
 import 'package:user_flutter/View/page/Bai_Ktra.dart';
+import 'package:user_flutter/View/page/thongKe.dart';
 
 class AssignmentItem extends StatelessWidget {
-  final SubjectAssignment assignment;
-  final BaiKtra_model baikiemtra;
-  AssignmentItem({Key? key, required this.assignment, required this.baikiemtra})
-      : super(key: key);
+  final BaiTapModel baikiemtra;
+  AssignmentItem({Key? key, required this.baikiemtra}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -35,13 +37,34 @@ class AssignmentItem extends StatelessWidget {
         children: [
           InkWell(
             onTap: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                    builder: (context) => Bai_Ktra(
-                          id: baikiemtra.id!,
-                        )),
-              );
+              if (user.user!.idChucVu != 0) {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => ThongKePage(
+                            idBktra: baikiemtra.id,
+                          )),
+                );
+              } else {
+                if (baikiemtra.type == 1 || baikiemtra.type == 2) {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => ChitietKtraSV(
+                              id: baikiemtra.id,
+                              idSv: user.user!.id!,
+                            )),
+                  );
+                } else {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => Bai_Ktra(
+                              id: baikiemtra.id,
+                            )),
+                  );
+                }
+              }
             },
             child: Container(
               padding: const EdgeInsets.all(12),
@@ -64,7 +87,7 @@ class AssignmentItem extends StatelessWidget {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              baikiemtra.tieuDe!,
+                              baikiemtra.tieuDe,
                               style: GoogleFonts.quicksand(
                                 fontSize: 20,
                                 color: AppColor.white,
@@ -75,7 +98,7 @@ class AssignmentItem extends StatelessWidget {
                             Text(
                               "Due at " +
                                   DateFormat("MMM dd").format(
-                                      DateTime.parse(baikiemtra.createdAt!)),
+                                      DateTime.parse(baikiemtra.createAt)),
                               style: GoogleFonts.quicksand(
                                 color: AppColor.grey,
                                 fontSize: 15,
@@ -85,14 +108,13 @@ class AssignmentItem extends StatelessWidget {
                         ),
                       ),
                       const SizedBox(width: 16),
-                      AssignmentStatus(type: SubjectAssignmentType.turnedIn),
                     ],
                   ),
                   const SizedBox(height: 8),
                   Padding(
                     padding: const EdgeInsets.only(left: 40),
                     child: Text(
-                      baikiemtra.noiDung!,
+                      baikiemtra.noiDung,
                       maxLines: 3,
                       overflow: TextOverflow.ellipsis,
                       style: GoogleFonts.quicksand(
@@ -101,50 +123,56 @@ class AssignmentItem extends StatelessWidget {
                       ),
                     ),
                   ),
-                ],
-              ),
-            ),
-          ),
-          InkWell(
-            splashColor: AppColor.white.withOpacity(0.05),
-            highlightColor: AppColor.white.withOpacity(0.15),
-            borderRadius: const BorderRadius.only(
-              bottomLeft: Radius.circular(15),
-              bottomRight: Radius.circular(15),
-            ),
-            onTap: () {
-              print('object');
-            },
-            child: Container(
-              padding: const EdgeInsets.all(12),
-              decoration: const BoxDecoration(
-                border: Border.symmetric(
-                  horizontal: BorderSide(
-                    color: Color(0xFFdcdcdc),
-                  ),
-                ),
-              ),
-              child: Row(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  SvgPicture.asset(
-                    "assets/icons/comment.svg",
-                    color: AppColor.grey,
-                    width: 16,
-                    height: 16,
-                  ),
-                  const SizedBox(width: 16),
-                  Text(
-                    "Add class's comment",
-                    style: GoogleFonts.quicksand(
-                      color: AppColor.grey,
-                      fontSize: 12,
-                    ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: [
+                      AssignmentStatus(type: baikiemtra.type),
+                    ],
                   ),
                 ],
               ),
             ),
           ),
+          // InkWell(
+          //   splashColor: AppColor.white.withOpacity(0.05),
+          //   highlightColor: AppColor.white.withOpacity(0.15),
+          //   borderRadius: const BorderRadius.only(
+          //     bottomLeft: Radius.circular(15),
+          //     bottomRight: Radius.circular(15),
+          //   ),
+          //   onTap: () {
+          //     print('object');
+          //   },
+          //   child: Container(
+          //     padding: const EdgeInsets.all(12),
+          //     decoration: const BoxDecoration(
+          //       border: Border.symmetric(
+          //         horizontal: BorderSide(
+          //           color: Color(0xFFdcdcdc),
+          //         ),
+          //       ),
+          //     ),
+          //     child: Row(
+          //       crossAxisAlignment: CrossAxisAlignment.center,
+          //       children: [
+          //         SvgPicture.asset(
+          //           "assets/icons/comment.svg",
+          //           color: AppColor.grey,
+          //           width: 16,
+          //           height: 16,
+          //         ),
+          //         const SizedBox(width: 16),
+          //         Text(
+          //           "Add class's comment",
+          //           style: GoogleFonts.quicksand(
+          //             color: AppColor.grey,
+          //             fontSize: 12,
+          //           ),
+          //         ),
+          //       ],
+          //     ),
+          //   ),
+          // ),
         ],
       ),
     );

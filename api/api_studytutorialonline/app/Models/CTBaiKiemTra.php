@@ -27,4 +27,8 @@ class CTBaiKiemTra extends Model
     {
         return $this->belongsTo(SinhVien::class, 'id_sinh_vien');
     }
+    public function giangvien()
+    {
+        return $this->belongsToMany('App\Models\GiangVien', 'bai_kiem_tras', 'id_bai_kiem_tra', 'id_giang_vien');
+    }
 }

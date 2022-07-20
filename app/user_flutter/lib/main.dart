@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:user_flutter/View/page/splash_page.dart';
+import 'package:user_flutter/View/page/thongKe.dart';
 
 void main() {
   runApp(const MyApp());

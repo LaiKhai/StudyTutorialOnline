@@ -14,7 +14,7 @@ import 'package:http/http.dart' as http;
 import 'package:user_flutter/View/controller/tao_bai.dart';
 import 'package:user_flutter/View/page/subject_view.dart';
 
-class BaiViet {
+class BaiVietVM {
   static Future<baiViets> getAllBaiViet(int id) async {
     String url = getListwithclass + id.toString();
     String token = await Login.getToken();
@@ -38,10 +38,10 @@ class BaiViet {
       BuildContext context, int loaiThongBao) async {
     Dio dio = new Dio();
     var lst = [];
-    if (listFile.length == 0) {
-      showCustomDialog(context, 'Đăng bài thất bại', false);
-      return false;
-    }
+    // if (listFile.length == 0) {
+    //   showCustomDialog(context, 'Đăng bài thất bại', false);
+    //   return false;
+    // }
     if (listFile.length != 0) {
       for (var img in listFile) {
         img.existsSync();
@@ -72,6 +72,64 @@ class BaiViet {
         'id_giang_vien': user.user!.id.toString(),
         'noi_dung': noidung,
         'file[]': await lst
+      });
+    }
+    listFile.clear();
+    final response = await dio.post(url,
+        data: formData,
+        options: Options(headers: {
+          'Authorization': 'Bearer $token',
+        }));
+    if (response.statusCode == 200) {
+      showCustomDialog(context, 'Đăng bài thành công', true);
+      Navigator.of(context).pushAndRemoveUntil(
+          MaterialPageRoute(
+              builder: (context) => SubjectView(
+                    id_lopHp: id_lopHp,
+                  )),
+          (route) => false);
+      return true;
+    } else {
+      showCustomDialog(context, 'Đăng bài thất bại', false);
+      return false;
+    }
+  }
+
+  static Future<bool> postNopBai(int idBaiViet, String noidung,
+      BuildContext context, int id_lopHp) async {
+    Dio dio = new Dio();
+    var lst = [];
+    // if (listFile.length == 0) {
+    //   showCustomDialog(context, 'Đăng bài thất bại', false);
+    //   return false;
+    // }
+
+    if (listFile.length != 0) {
+      for (var img in listFile) {
+        img.existsSync();
+        lst.add(await MultipartFile.fromFile(img.path));
+      }
+    }
+    ;
+    String url = urlpostTraLoiBaitap;
+    String token = await Login.getToken();
+    Map body;
+    FormData formData;
+    if (lst.length != 0) {
+      // ignore: unnecessary_new, unused_local_variable
+      formData = new FormData.fromMap({
+        'id_sinh_vien': user.user!.id,
+        'id_bai_viet': idBaiViet.toString(),
+        'cau_tra_loi': noidung,
+        'file': lst[0],
+      });
+    } else {
+      // ignore: unnecessary_new
+      formData = new FormData.fromMap({
+        'id_sinh_vien': user.user!.id.toString(),
+        'id_bai_viet': idBaiViet.toString(),
+        'cau_tra_loi': noidung,
+        'file': '',
       });
     }
     listFile.clear();

@@ -3,6 +3,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:user_flutter/Model/BaiKiemTraSVModel.dart';
 import 'package:user_flutter/Model/BaiKtrta.dart';
 import 'package:user_flutter/Model/User_login.dart';
 import 'package:user_flutter/Model/bai_Viet.dart';
@@ -10,6 +11,7 @@ import 'package:user_flutter/Model/cTiet_LopHP.dart';
 import 'package:user_flutter/Model/class_data.dart';
 import 'package:user_flutter/Model/home_data.dart';
 import 'package:user_flutter/Model/listBaiKtra_model.dart';
+import 'package:user_flutter/Model/model_reing/BaiTapModel.dart';
 import 'package:user_flutter/Model/subject_assignment.dart';
 import 'package:user_flutter/Model/subject_stream.dart';
 import 'package:user_flutter/Model_View/Baiviet.dart';
@@ -117,7 +119,8 @@ class _SubjectViewState extends State<SubjectView> {
                       : null,
                   backgroundColor: const Color(0xFFF6F9FE),
                   body: Padding(
-                    padding: const EdgeInsets.all(16),
+                    padding:
+                        const EdgeInsets.only(top: 16, left: 16, right: 16),
                     child: SingleChildScrollView(
                       controller: scroll,
                       child: Column(
@@ -298,11 +301,11 @@ class _StreamBodyState extends State<StreamBody> {
         const SizedBox(height: 16),
         Expanded(
             child: FutureBuilder<baiViets>(
-          future: BaiViet.getAllBaiViet(widget.id_Lop),
+          future: BaiVietVM.getAllBaiViet(widget.id_Lop),
           builder: ((context, snapshot) {
             if (snapshot.hasData) {
               if (snapshot.data!.data!.length == 0) {
-                return NoChild(icon: 'noThongB.svg');
+                return NoChild(icon: 'comment.svg');
               } else {
                 return ListView.builder(
                   physics: const BouncingScrollPhysics(),
@@ -325,13 +328,18 @@ class _StreamBodyState extends State<StreamBody> {
   }
 }
 
-class AssignmentBody extends StatelessWidget {
+class AssignmentBody extends StatefulWidget {
   final List<SubjectAssignment> assignments;
   final int id_lop;
   const AssignmentBody(
       {Key? key, required this.assignments, required this.id_lop})
       : super(key: key);
 
+  @override
+  State<AssignmentBody> createState() => _AssignmentBodyState();
+}
+
+class _AssignmentBodyState extends State<AssignmentBody> {
   @override
   Widget build(BuildContext context) {
     int id = 0;
@@ -342,33 +350,72 @@ class AssignmentBody extends StatelessWidget {
         ),
         const SizedBox(height: 16),
         Expanded(
-          child: FutureBuilder<List_Ktra_model>(
-            future: BaiKiemTraVM.Get_BKTra(id_lop),
-            builder: (context, snapshot) {
-              if (snapshot.hasData) {
-                if (snapshot.data!.data!.length == 0) {
-                  return NoChild(icon: 'list-check.svg');
-                } else {
-                  List_Ktra_model ktra = snapshot.data!;
-                  return ListView.builder(
-                    physics: const BouncingScrollPhysics(),
-                    itemCount: ktra.data!.length,
-                    itemBuilder: (ctx, index) {
-                      final assignment = assignments[0];
-
-                      return AssignmentItem(
-                        assignment: assignment,
-                        baikiemtra: ktra.data![index],
-                      );
+            child: user.user!.idChucVu != 0
+                ? FutureBuilder<List_Ktra_model>(
+                    future: BaiKiemTraVM.Get_BKTra(widget.id_lop),
+                    builder: (context, snapshot) {
+                      if (snapshot.hasData) {
+                        if (snapshot.data!.data!.length == 0) {
+                          return NoChild(icon: 'list-check.svg');
+                        } else {
+                          List_Ktra_model ktra = snapshot.data!;
+                          return ListView.builder(
+                            physics: const BouncingScrollPhysics(),
+                            itemCount: ktra.data!.length,
+                            itemBuilder: (ctx, index) {
+                              final assignment = assignments[0];
+                              BaiTapModel baitap = BaiTapModel(
+                                  diem: 0.0,
+                                  idLopHP: ktra.data![index].idLopHocPhan!,
+                                  id: ktra.data![index].id!,
+                                  tieuDe: ktra.data![index].tieuDe!,
+                                  noiDung: ktra.data![index].noiDung!,
+                                  createAt: ktra.data![index].createdAt!,
+                                  type: ktra.data![index].trangThai!);
+                              return AssignmentItem(
+                                baikiemtra: baitap,
+                              );
+                            },
+                          );
+                        }
+                      } else {
+                        return Loading();
+                      }
                     },
-                  );
-                }
-              } else {
-                return Loading();
-              }
-            },
-          ),
-        ),
+                  )
+                : FutureBuilder<BaiKtraSVModel?>(
+                    future: BaiKiemTraVM.Get_BKTraSV(widget.id_lop),
+                    builder: (context, snapshot) {
+                      if (snapshot.hasData) {
+                        if (snapshot.data!.data!.length == 0) {
+                          return NoChild(icon: 'list-check.svg');
+                        } else {
+                          BaiKtraSVModel ktra = snapshot.data!;
+                          return ListView.builder(
+                            physics: const BouncingScrollPhysics(),
+                            itemCount: ktra.data!.length,
+                            itemBuilder: (ctx, index) {
+                              BaiTapModel baiTap = BaiTapModel(
+                                  diem: ktra.data![index].tongDiem!,
+                                  idLopHP: ktra.data![index].idlophocphan!,
+                                  id: ktra.data![index].idBaiKiemTra!,
+                                  tieuDe: ktra.data![index].tieuDe!,
+                                  noiDung: ktra.data![index].noiDung!,
+                                  createAt: ktra.data![index].createdAt!,
+                                  type: ktra.data![index].trangThai!);
+
+                              final assignment = assignments[0];
+                              return AssignmentItem(
+                                baikiemtra: baiTap,
+                              );
+                            },
+                          );
+                        }
+                      } else {
+                        return Loading();
+                      }
+                    },
+                  )),
       ],
     );
   }

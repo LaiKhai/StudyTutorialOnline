@@ -1,137 +1,3 @@
-class Bai_Ktra_model {
-  bool? status;
-  Data? data;
-
-  Bai_Ktra_model({this.status, this.data});
-
-  Bai_Ktra_model.fromJson(Map<String, dynamic> json) {
-    status = json['status'];
-    data = json['data'] != null ? new Data.fromJson(json['data']) : null;
-  }
-
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['status'] = this.status;
-    if (this.data != null) {
-      data['data'] = this.data!.toJson();
-    }
-    return data;
-  }
-}
-
-class Data {
-  int? id;
-  int? idBoMon;
-  int? idLop;
-  String? avt;
-  int? trangThai;
-  String? createdAt;
-  String? updatedAt;
-  List<Baikiemtra_model>? baikiemtra;
-
-  Data(
-      {this.id,
-      this.idBoMon,
-      this.idLop,
-      this.avt,
-      this.trangThai,
-      this.createdAt,
-      this.updatedAt,
-      this.baikiemtra});
-
-  Data.fromJson(Map<String, dynamic> json) {
-    id = json['id'];
-    idBoMon = json['id_bo_mon'];
-    idLop = json['id_lop'];
-    avt = json['avt'];
-    trangThai = json['trang_thai'];
-    createdAt = json['created_at'];
-    updatedAt = json['updated_at'];
-    if (json['baikiemtra'] != null) {
-      baikiemtra = <Baikiemtra_model>[];
-      json['baikiemtra'].forEach((v) {
-        baikiemtra!.add(new Baikiemtra_model.fromJson(v));
-      });
-    }
-  }
-
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['id'] = this.id;
-    data['id_bo_mon'] = this.idBoMon;
-    data['id_lop'] = this.idLop;
-    data['avt'] = this.avt;
-    data['trang_thai'] = this.trangThai;
-    data['created_at'] = this.createdAt;
-    data['updated_at'] = this.updatedAt;
-    if (this.baikiemtra != null) {
-      data['baikiemtra'] = this.baikiemtra!.map((v) => v.toJson()).toList();
-    }
-    return data;
-  }
-}
-
-class Baikiemtra_model {
-  int? id;
-  int? idLopHocPhan;
-  int? idGiangVien;
-  int? slCauHoi;
-  String? tieuDe;
-  String? noiDung;
-  String? tgBatDau;
-  String? tgKetThuc;
-  int? trangThai;
-  DateTime? createdAt;
-  DateTime? updatedAt;
-
-  Baikiemtra_model(
-      {this.id,
-      this.idLopHocPhan,
-      this.idGiangVien,
-      this.slCauHoi,
-      this.tieuDe,
-      this.noiDung,
-      this.tgBatDau,
-      this.tgKetThuc,
-      this.trangThai,
-      this.createdAt,
-      this.updatedAt});
-
-  Baikiemtra_model.fromJson(Map<String, dynamic> json) {
-    id = json['id'];
-    idLopHocPhan = json['id_lop_hoc_phan'];
-    idGiangVien = json['id_giang_vien'];
-    slCauHoi = json['sl_cau_hoi'];
-    tieuDe = json['tieu_de'];
-    noiDung = json['noi_dung'];
-    tgBatDau = json['tg_bat_dau'];
-    tgKetThuc = json['tg_ket_thuc'];
-    trangThai = json['trang_thai'];
-    createdAt = DateTime.parse(json['created_at']);
-    if (updatedAt != null) {
-      updatedAt = DateTime.parse(json['updated_at']);
-    } else {
-      updatedAt = DateTime.now();
-    }
-  }
-
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['id'] = this.id;
-    data['id_lop_hoc_phan'] = this.idLopHocPhan;
-    data['id_giang_vien'] = this.idGiangVien;
-    data['sl_cau_hoi'] = this.slCauHoi;
-    data['tieu_de'] = this.tieuDe;
-    data['noi_dung'] = this.noiDung;
-    data['tg_bat_dau'] = this.tgBatDau;
-    data['tg_ket_thuc'] = this.tgKetThuc;
-    data['trang_thai'] = this.trangThai;
-    data['created_at'] = this.createdAt;
-    data['updated_at'] = this.updatedAt;
-    return data;
-  }
-}
-
 class CT_Bai_Ktra_model {
   bool? status;
   CT_Baikiemtra? baikiemtra;
@@ -155,8 +21,6 @@ class CT_Bai_Ktra_model {
   }
 }
 
-//model chi tiết bài ktra
-
 class CT_Baikiemtra {
   int? id;
   int? idLopHocPhan;
@@ -165,12 +29,12 @@ class CT_Baikiemtra {
   String? tieuDe;
   String? noiDung;
   String? tgBatDau;
-  String? tgKetThuc;
   int? trangThai;
   String? createdAt;
   String? updatedAt;
   Lophocphan? lophocphan;
   Giangvien? giangvien;
+  List<Ctbaikiemtra>? ctbaikiemtra;
   List<Cauhoi>? cauhoi;
 
   CT_Baikiemtra(
@@ -181,12 +45,12 @@ class CT_Baikiemtra {
       this.tieuDe,
       this.noiDung,
       this.tgBatDau,
-      this.tgKetThuc,
       this.trangThai,
       this.createdAt,
       this.updatedAt,
       this.lophocphan,
       this.giangvien,
+      this.ctbaikiemtra,
       this.cauhoi});
 
   CT_Baikiemtra.fromJson(Map<String, dynamic> json) {
@@ -197,7 +61,6 @@ class CT_Baikiemtra {
     tieuDe = json['tieu_de'];
     noiDung = json['noi_dung'];
     tgBatDau = json['tg_bat_dau'];
-    tgKetThuc = json['tg_ket_thuc'];
     trangThai = json['trang_thai'];
     createdAt = json['created_at'];
     updatedAt = json['updated_at'];
@@ -207,7 +70,12 @@ class CT_Baikiemtra {
     giangvien = json['giangvien'] != null
         ? new Giangvien.fromJson(json['giangvien'])
         : null;
-
+    if (json['ctbaikiemtra'] != null) {
+      ctbaikiemtra = <Ctbaikiemtra>[];
+      json['ctbaikiemtra'].forEach((v) {
+        ctbaikiemtra!.add(new Ctbaikiemtra.fromJson(v));
+      });
+    }
     if (json['cauhoi'] != null) {
       cauhoi = <Cauhoi>[];
       json['cauhoi'].forEach((v) {
@@ -225,7 +93,6 @@ class CT_Baikiemtra {
     data['tieu_de'] = this.tieuDe;
     data['noi_dung'] = this.noiDung;
     data['tg_bat_dau'] = this.tgBatDau;
-    data['tg_ket_thuc'] = this.tgKetThuc;
     data['trang_thai'] = this.trangThai;
     data['created_at'] = this.createdAt;
     data['updated_at'] = this.updatedAt;
@@ -234,6 +101,9 @@ class CT_Baikiemtra {
     }
     if (this.giangvien != null) {
       data['giangvien'] = this.giangvien!.toJson();
+    }
+    if (this.ctbaikiemtra != null) {
+      data['ctbaikiemtra'] = this.ctbaikiemtra!.map((v) => v.toJson()).toList();
     }
     if (this.cauhoi != null) {
       data['cauhoi'] = this.cauhoi!.map((v) => v.toJson()).toList();
@@ -287,40 +157,49 @@ class Giangvien {
   int? id;
   int? idKhoa;
   int? idChucVu;
+  Null? idLop;
   String? email;
   String? password;
+  Null? avt;
   String? maSo;
   String? sdt;
   String? hoTen;
   String? ngaySinh;
   int? trangThai;
+  String? createdAt;
+  String? updatedAt;
 
-  Giangvien({
-    this.id,
-    this.idKhoa,
-    this.idChucVu,
-    this.email,
-    this.password,
-    this.maSo,
-    this.sdt,
-    this.hoTen,
-    this.ngaySinh,
-    this.trangThai,
-  });
+  Giangvien(
+      {this.id,
+      this.idKhoa,
+      this.idChucVu,
+      this.idLop,
+      this.email,
+      this.password,
+      this.avt,
+      this.maSo,
+      this.sdt,
+      this.hoTen,
+      this.ngaySinh,
+      this.trangThai,
+      this.createdAt,
+      this.updatedAt});
 
   Giangvien.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     idKhoa = json['id_khoa'];
     idChucVu = json['id_chuc_vu'];
-
+    idLop = json['id_lop'];
     email = json['email'];
     password = json['password'];
-
+    avt = json['avt'];
     maSo = json['ma_so'];
     sdt = json['sdt'];
     hoTen = json['ho_ten'];
     ngaySinh = json['ngay_sinh'];
     trangThai = json['trang_thai'];
+    createdAt = json['created_at'];
+    updatedAt = json['updated_at'];
   }
 
   Map<String, dynamic> toJson() {
@@ -328,13 +207,58 @@ class Giangvien {
     data['id'] = this.id;
     data['id_khoa'] = this.idKhoa;
     data['id_chuc_vu'] = this.idChucVu;
+    data['id_lop'] = this.idLop;
     data['email'] = this.email;
     data['password'] = this.password;
+    data['avt'] = this.avt;
     data['ma_so'] = this.maSo;
     data['sdt'] = this.sdt;
     data['ho_ten'] = this.hoTen;
     data['ngay_sinh'] = this.ngaySinh;
     data['trang_thai'] = this.trangThai;
+    data['created_at'] = this.createdAt;
+    data['updated_at'] = this.updatedAt;
+    return data;
+  }
+}
+
+class Ctbaikiemtra {
+  int? idBaiKiemTra;
+  int? idSinhVien;
+  String? tgNopBai;
+  int? tongDiem;
+  int? trangThai;
+  String? createdAt;
+  String? updatedAt;
+
+  Ctbaikiemtra(
+      {this.idBaiKiemTra,
+      this.idSinhVien,
+      this.tgNopBai,
+      this.tongDiem,
+      this.trangThai,
+      this.createdAt,
+      this.updatedAt});
+
+  Ctbaikiemtra.fromJson(Map<String, dynamic> json) {
+    idBaiKiemTra = json['id_bai_kiem_tra'];
+    idSinhVien = json['id_sinh_vien'];
+    tgNopBai = json['tg_nop_bai'];
+    tongDiem = json['tong_diem'];
+    trangThai = json['trang_thai'];
+    createdAt = json['created_at'];
+    updatedAt = json['updated_at'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['id_bai_kiem_tra'] = this.idBaiKiemTra;
+    data['id_sinh_vien'] = this.idSinhVien;
+    data['tg_nop_bai'] = this.tgNopBai;
+    data['tong_diem'] = this.tongDiem;
+    data['trang_thai'] = this.trangThai;
+    data['created_at'] = this.createdAt;
+    data['updated_at'] = this.updatedAt;
     return data;
   }
 }
@@ -342,6 +266,7 @@ class Giangvien {
 class Cauhoi {
   int? id;
   int? idBaiKiemTra;
+  Null? idFile;
   String? deBai;
   String? dapAn1;
   String? dapAn2;
@@ -356,6 +281,7 @@ class Cauhoi {
   Cauhoi(
       {this.id,
       this.idBaiKiemTra,
+      this.idFile,
       this.deBai,
       this.dapAn1,
       this.dapAn2,
@@ -370,6 +296,7 @@ class Cauhoi {
   Cauhoi.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     idBaiKiemTra = json['id_bai_kiem_tra'];
+    idFile = json['id_file'];
     deBai = json['de_bai'];
     dapAn1 = json['dap_an_1'];
     dapAn2 = json['dap_an_2'];
@@ -386,6 +313,7 @@ class Cauhoi {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     data['id'] = this.id;
     data['id_bai_kiem_tra'] = this.idBaiKiemTra;
+    data['id_file'] = this.idFile;
     data['de_bai'] = this.deBai;
     data['dap_an_1'] = this.dapAn1;
     data['dap_an_2'] = this.dapAn2;

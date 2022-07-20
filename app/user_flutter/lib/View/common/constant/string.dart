@@ -21,3 +21,16 @@ const String postCauHoi = '$Link/api/taoCauHoi';
 const String urlBaiktra = '$Link/api/baikiemtra/';
 const String getBaiktra = '$Link/api/listbaikiemtra/';
 const String postTraLoi = '$Link/api/taoCauTraLoi';
+const String postBatDktra = '$Link/api/batdauKT';
+const String getBaiDaluu = '$Link/api/traloiwithbaikiemtra';
+const String postNopbai = '$Link/api/ctbaikiemtra';
+const String urlBinhLuan = '$Link/api/binhluan';
+const String urlgetBinhLuan = '$Link/api/binhluanwithidbaiviet';
+
+const String urlgetBaiktraSV = '$Link/api/baikiemtrawithsinhvien';
+const String urlThongKe = '$Link/api/thongkeCTBKT';
+const String urlgetSinhvienchualam = '$Link/api/svChuaHoanThanhBKT';
+const String urlgetSinhviendalam= '$Link/api/svHoanThanhBKT';
+const String urlgetSinhvienall= '$Link/api/svwithBKT';
+const String urlpostTraLoiBaitap= '$Link/api/traloithongbao';
+const String urlgetSinhvienKtra= '$Link/api/getSinhVienBaiKiemTra';

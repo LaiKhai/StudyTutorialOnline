@@ -37,6 +37,7 @@ void showCustomDialog(BuildContext context, String text, bool yes) {
                 padding: EdgeInsets.all(20),
                 child: Text(
                   text,
+                  textAlign: TextAlign.center,
                   style: GoogleFonts.quicksand(
                     decoration: TextDecoration.none,
                     fontWeight: FontWeight.bold,

@@ -11,7 +11,9 @@ import 'package:user_flutter/View/Widget/Home/stream_type.dart';
 import 'package:user_flutter/View/common/constant/color.dart';
 import 'package:user_flutter/View/common/constant/dimen.dart';
 import 'package:user_flutter/View/common/constant/string.dart';
+import 'package:user_flutter/View/page/Binh_luan.dart';
 import 'package:user_flutter/View/page/Chi_tiet_bai_tap.dart';
+import 'package:user_flutter/provider/link_url.dart';
 
 class StreamItem extends StatelessWidget {
   final Data bv;
@@ -36,7 +38,8 @@ class StreamItem extends StatelessWidget {
           Type: bv.idLoaiBaiViet!);
     }
     return Container(
-      margin: const EdgeInsets.symmetric(vertical: 8),
+      margin:
+          const EdgeInsets.only(top: 8.0, left: 8.0, right: 8.0, bottom: 20),
       decoration: BoxDecoration(
         boxShadow: const [
           BoxShadow(
@@ -58,7 +61,9 @@ class StreamItem extends StatelessWidget {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                      builder: (context) =>  Chi_tiet_Page(baiviet: bv,)),
+                      builder: (context) => Chi_tiet_Page(
+                            baiviet: bv,
+                          )),
                 );
               }
             },
@@ -124,7 +129,9 @@ class StreamItem extends StatelessWidget {
                   Files file = bv.files![index];
                   return InkWell(
                     onTap: () {
-                      print('object');
+                      linkUrl.openLink(
+                          url:
+                              '${Link}/api/dowloadfile/${bv.files![index].id}');
                     },
                     child: Container(
                       width: getWidthSize(context) * 0.2 / 5,
@@ -206,7 +213,16 @@ class StreamItem extends StatelessWidget {
               bottomLeft: Radius.circular(15),
               bottomRight: Radius.circular(15),
             ),
-            onTap: () {},
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) => BinhLuan_Page(
+                          id_baiviet: bv.id!,
+                          id_lophp: bv.idLopHocPhan!,
+                        )),
+              );
+            },
             child: Container(
               padding: const EdgeInsets.all(12),
               child: Row(

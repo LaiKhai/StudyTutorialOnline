@@ -180,12 +180,12 @@ class _Tao_trac_nghiemState extends State<Tao_trac_nghiem> {
             ),
           ),
           onPressed: () {
-            if (Checknull() == false) {
-              showCustomDialog(context,
-                  'Hãy đảm bảo là không có giá trị nào bị trống', false);
-            } else {
-              Lay();
-            }
+            // if (Checknull() == false) {
+            //   showCustomDialog(context,
+            //       'Hãy đảm bảo là không có giá trị nào bị trống', false);
+            // } else {
+            Lay();
+            // }
 
             // Navigator.push(
             //   context,

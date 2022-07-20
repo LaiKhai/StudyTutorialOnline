@@ -50,7 +50,7 @@ class _Dang_thong_baoState extends State<Dang_thong_bao> {
                 loai = 1;
               }
               print(loai);
-              BaiViet.postBaiViet(
+              BaiVietVM.postBaiViet(
                   widget.id_lop, textController.text, context, loai);
             },
             child: Container(
@@ -191,7 +191,7 @@ class _Dang_thong_baoState extends State<Dang_thong_bao> {
             ),
           ],
 
-          const Tra_Loi(),
+          const GuiFiles(),
         ],
       ),
     );
