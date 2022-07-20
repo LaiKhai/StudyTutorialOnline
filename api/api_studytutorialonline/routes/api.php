@@ -44,6 +44,9 @@ Route::post('dkgv', [AuthController::class, 'dangKyGiangVien']);
 Route::post('login', [AuthController::class, 'loginUser']);
 Route::post('dngv', [AuthController::class, 'dangNhapGiangVien']);
 Route::post('admin', [AuthController::class, 'dangNhapAdmin']);
+
+
+
 Route::post('/sinhvien/import', [SinhVienController::class, 'import']);
 Route::get('/sinhvien/export', [SinhVienController::class, 'export']);
 
@@ -175,8 +178,5 @@ Route::post('/deletesinhvien', [DSSinhVienController::class, 'deletesinhvien']);
 
 //lấy idfile
 Route::post('/getidFile', [CauHoiController::class, 'getidFile']);
-
-
-
 Route::middleware(['auth:sanctum'])->group(function () {
 });
