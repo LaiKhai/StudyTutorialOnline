@@ -139,6 +139,7 @@ class DSSinhVienController extends Controller
         DS_SinhVien::where('id_sinh_vien', $request->input('id_sinh_vien'))->delete();
         $lstSinhVien = DS_SinhVien::all();
         $response = [
+            'status' => true,
             'message' => 'xoa thanh cong !',
             'sinhvien' => $lstSinhVien
         ];

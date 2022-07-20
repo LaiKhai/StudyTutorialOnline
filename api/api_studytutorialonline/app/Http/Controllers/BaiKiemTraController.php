@@ -112,11 +112,21 @@ class BaiKiemTraController extends Controller
         $baiKiemTra->giangvien;
         $baiKiemTra->file;
         $baiKiemTra->ctbaikiemtra;
-        $baiKiemTra->cauhoi;
+        $cauhoi = CauHoi::join('files', 'cau_hois.file', '=', 'files.id')
+            ->join('bai_kiem_tras', 'cau_hois.id_bai_kiem_tra', '=', 'bai_kiem_tras.id')
+            ->where([
+                ['cau_hois.id_bai_kiem_tra', $id]
+            ])
+            ->orWhere('cau_hois.file_1', 'files.id')
+            ->orWhere('cau_hois.file_2', 'files.id')
+            ->orWhere('cau_hois.file_3', 'files.id')
+            ->orWhere('cau_hois.file_4', 'files.id')
+            ->select('cau_hois.*', 'files.noi_dung')->get();
 
         $response = [
             'status' => true,
-            'baikiemtra' => $baiKiemTra
+            'baikiemtra' => $baiKiemTra,
+            'cauhoi' => $cauhoi
         ];
         return response($response, 200);
     }

@@ -132,7 +132,7 @@ class TraLoi_ThongBaoController extends Controller
             ->join('lops', 'sinh_viens.id_lop', '=', 'lops.id')
             ->join('files', 'traloi_thongbao.id_file', '=', 'files.id')
             ->where([['traloi_thongbao.id_bai_viet', $idbaiviet], ['bai_viets.id_loai_bai_viet', 2]])
-            ->select('traloi_thongbao.id_bai_viet', 'sinh_viens.*', 'lops.ten_lop', 'files.noi_dung', 'files.ten_file', 'files.loai_file', 'bai_viets.id_loai_bai_viet')
+            ->select('traloi_thongbao.id_bai_viet', 'traloi_thongbao.cau_tra_loi', 'sinh_viens.*', 'lops.ten_lop', 'files.noi_dung', 'files.ten_file', 'files.loai_file', 'bai_viets.id_loai_bai_viet')
             ->get();
 
         $response = [
@@ -152,7 +152,7 @@ class TraLoi_ThongBaoController extends Controller
             ->join('lops', 'sinh_viens.id_lop', '=', 'lops.id')
             ->join('files', 'traloi_thongbao.id_file', '=', 'files.id')
             ->where([['traloi_thongbao.id_bai_viet', $idbaiviet], ['traloi_thongbao.id', $idtraloi], ['bai_viets.id_loai_bai_viet', 2]])
-            ->select('traloi_thongbao.id_bai_viet', 'sinh_viens.*', 'lops.ten_lop', 'files.noi_dung', 'files.ten_file', 'files.loai_file', 'bai_viets.id_loai_bai_viet')
+            ->select('traloi_thongbao.id_bai_viet', 'traloi_thongbao.cau_tra_loi', 'sinh_viens.*', 'lops.ten_lop', 'files.noi_dung', 'files.ten_file', 'files.loai_file', 'bai_viets.id_loai_bai_viet')
             ->get();
 
         $response = [
