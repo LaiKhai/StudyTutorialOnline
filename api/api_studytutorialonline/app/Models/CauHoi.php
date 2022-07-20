@@ -16,12 +16,16 @@ class CauHoi extends Model
     protected $fillable = [
         'id',
         'id_bai_kiem_tra',
-        'id_file',
         'de_bai',
+        'file',
         'dap_an_1',
+        'file_1',
         'dap_an_2',
+        'file_2',
         'dap_an_3',
+        'file_3',
         'dap_an_4',
+        'file_4',
         'dap_an_dung',
         'diem',
         'trang_thai'
@@ -30,10 +34,7 @@ class CauHoi extends Model
     {
         return $this->belongsTo(BaiKiemTra::class, 'id_bai_kiem_tra');
     }
-    public function file()
-    {
-        return $this->belongsTo(File::class, 'id_file');
-    }
+
     public function traloi()
     {
         return $this->hasMany(TraLoi::class, 'id_cau_hoi', 'id');

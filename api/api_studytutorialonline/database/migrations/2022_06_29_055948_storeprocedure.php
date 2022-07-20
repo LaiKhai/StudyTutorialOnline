@@ -55,9 +55,9 @@ class Storeprocedure extends Migration
         VALUES (id_lop_hoc_phan,id_giang_vien,sl_cau_hoi,tieu_de,noi_dung,NOW(),trang_thai,NOW()); 
         END';
 
-        $taoCauHoi = "CREATE PROCEDURE `tao_cau_hoi`(IN `id_bai_kiem_tra` INT, IN `de_bai` VARCHAR(255), IN `dap_an_1` VARCHAR(255), IN `dap_an_2` VARCHAR(255), IN `dap_an_3` VARCHAR(255), IN `dap_an_4` VARCHAR(255), IN `dap_an_dung` VARCHAR(255),IN `diem` INT) 
-        INSERT INTO `cau_hois`( `id_bai_kiem_tra`, `de_bai`, `dap_an_1`, `dap_an_2`, `dap_an_3`, `dap_an_4`, `dap_an_dung`, `diem`, `trang_thai`, `created_at`, `updated_at`) 
-        VALUES (id_bai_kiem_tra,de_bai,dap_an_1,dap_an_2,dap_an_3,dap_an_4,dap_an_dung,diem,1,NOW(),NOW());";
+        $taoCauHoi = "CREATE PROCEDURE `tao_cau_hoi`(IN `id_bai_kiem_tra` INT, IN `de_bai` VARCHAR(255), IN `dap_an_1` VARCHAR(255), IN `dap_an_2` VARCHAR(255), IN `dap_an_3` VARCHAR(255), IN `dap_an_4` VARCHAR(255), IN `dap_an_dung` VARCHAR(255), IN `diem` INT, IN `file` VARCHAR(225), IN `file1` VARCHAR(225), IN `file2` VARCHAR(225), IN `file3` VARCHAR(225), IN `file4` VARCHAR(225))
+        INSERT INTO `cau_hois`( `id_bai_kiem_tra`, `de_bai`,`file`, `dap_an_1`, `file_1`,`dap_an_2`,`file_2`, `dap_an_3`,`file_3`, `dap_an_4`,`file_4`, `dap_an_dung`, `diem`, `trang_thai`, `created_at`, `updated_at`) 
+        VALUES (id_bai_kiem_tra,de_bai,file,dap_an_1,file1,dap_an_2,file2,dap_an_3,file3,dap_an_4,file4,dap_an_dung,diem,1,NOW(),NOW());";
 
         $taoCauTraLoi = "CREATE PROCEDURE `Tao_cau_TrL`(IN `dapan` VARCHAR(15), IN `id_cauhoi` INT, IN `id_cautrl` INT) 
             UPDATE `tra_lois` SET `dap_an`=dapan,`diem`= Case 

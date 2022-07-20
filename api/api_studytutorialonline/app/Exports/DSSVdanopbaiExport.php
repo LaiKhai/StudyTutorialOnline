@@ -36,9 +36,10 @@ class DSSVdanopbaiExport implements
     {
         $data = CTBaiKiemTra::query()->join('sinh_viens', 'ct_bai_kiem_tras.id_sinh_vien', '=', 'sinh_viens.id')
             ->join('lops', 'sinh_viens.id_lop', '=', 'lops.id')
-            ->where([['ct_bai_kiem_tras.id_bai_kiem_tra', $this->idbkt], ['ct_bai_kiem_tras.trang_thai', '1']])
-            ->orWhere([['ct_bai_kiem_tras.id_bai_kiem_tra', $this->idbkt], ['ct_bai_kiem_tras.trang_thai', '2']])
-            ->select('sinh_viens.*', 'lops.ten_lop', 'ct_bai_kiem_tras.trang_thai as trangthaiCTBKT');
+            ->where([['ct_bai_kiem_tras.id_bai_kiem_tra', $this->idbkt], ['sinh_viens.id_lop', $this->idlop], ['ct_bai_kiem_tras.trang_thai', '1']])
+            ->orWhere([['ct_bai_kiem_tras.id_bai_kiem_tra', $this->idbkt], ['sinh_viens.id_lop', $this->idlop], ['ct_bai_kiem_tras.trang_thai', '2']])
+            ->select('sinh_viens.ma_so', 'sinh_viens.ho_ten', 'lops.ten_lop', 'ct_bai_kiem_tras.trang_thai as trangthaiCTBKT')
+            ->groupBy('sinh_viens.ma_so', 'sinh_viens.ho_ten', 'lops.ten_lop', 'ct_bai_kiem_tras.trang_thai');
 
         return $data;
     }

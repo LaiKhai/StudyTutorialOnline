@@ -24,6 +24,7 @@ use App\Http\Controllers\TraLoi_ThongBaoController;
 use App\Http\Controllers\TraLoiController;
 use App\Models\CTBaiKiemTra;
 use App\Models\DS_GiangVien;
+use App\Models\DS_SinhVien;
 use Database\Factories\BoMonFactory;
 
 /*
@@ -97,8 +98,7 @@ Route::apiResource('bomon', BoMonController::class);
 Route::apiResource('baitap', BaiTapController::class);
 Route::apiResource('baikiemtra', BaiKiemTraController::class);
 Route::apiResource('loaibaitap', LoaiBaiTapController::class);
-Route::apiResource('dssv', DSSinhVienController::class);
-Route::apiResource('dsgv', DSGiangVienController::class);
+Route::apiResource('dssv', DS_SinhVien::class);
 Route::apiResource('loaibaiviet', LoaiBaiVietController::class);
 Route::apiResource('baiviet', BaiVietController::class);
 Route::apiResource('file', FileController::class);
@@ -166,6 +166,9 @@ Route::post('/getdstraloi', [TraLoi_ThongBaoController::class, 'getdstraloi']);
 //chi tiết câu trả lời
 Route::post('/getchitiettraloi', [TraLoi_ThongBaoController::class, 'getchitiettraloi']);
 
+
+//xóa sinh viên trong ds sinh viên
+Route::post('/deletesinhvien', [DSSinhVienController::class, 'deletesinhvien']);
 
 
 
