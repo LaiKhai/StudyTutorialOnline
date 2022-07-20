@@ -1,11 +1,15 @@
-    import 'package:flutter/material.dart';
+import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:user_flutter/Model/User_login.dart';
 import 'package:user_flutter/Model/bai_Viet.dart';
+import 'package:user_flutter/Model/traLoiauHoi_M.dart';
 import 'package:user_flutter/Model_View/Baiviet.dart';
+import 'package:user_flutter/Model_View/traLoiCauHoi_MV.dart';
 import 'package:user_flutter/View/Widget/Bai_kiemtra/Tra_loi.dart';
+import 'package:user_flutter/View/Widget/Cau_Hoi/ds_TraLoi.dart';
 import 'package:user_flutter/View/Widget/Home/show_File.dart';
 import 'package:user_flutter/View/Widget/showNouti.dart';
+import 'package:user_flutter/View/Widget/widget_loadin.dart';
 import 'package:user_flutter/View/common/constant/color.dart';
 import 'package:user_flutter/View/common/constant/dimen.dart';
 import 'package:user_flutter/provider/link_url.dart';
@@ -86,17 +90,7 @@ class _Chi_tiet_PageState extends State<Chi_tiet_Page> {
               ),
               onPressed: () async {
                 // ignore: unrelated_type_equality_checks
-                if (BaiVietVM.postNopBai(
-                        widget.baiviet.id!,
-                        textController.text,
-                        context,
-                        widget.baiviet.idLopHocPhan!) ==
-                    true) {
-                  showCustomDialog(context, 'Đã gửi câu trả lời', true);
-                } else {
-                  showCustomDialog(context, 'Gửi câu trả lời thất bại', false);
-                }
-                ;
+                Navigator.pop(context);
               },
               tooltip: 'Increment',
               //foregroundColor: Colors.yellow,
@@ -307,6 +301,18 @@ class _Chi_tiet_PageState extends State<Chi_tiet_Page> {
                       })),
             ),
           ],
+          FutureBuilder<traLoiCauHoi_M?>(
+            future: TraLoiCauHoi_MV.getDsTraloi(widget.baiviet.id!),
+            builder: (context, snapshot) {
+              if (snapshot.hasData) {
+                return DanhSachTrl(listTraloi: snapshot.data!);
+              } else {
+                return SliverList(
+                  delegate: SliverChildListDelegate([Loading()]),
+                );
+              }
+            },
+          ),
           SliverList(
               delegate: SliverChildListDelegate([
             Container(

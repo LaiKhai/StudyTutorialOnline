@@ -37,7 +37,6 @@ class _Tao_trac_nghiemState extends State<Tao_trac_nghiem> {
   List<String> lst_dropdownValue = [];
   List<TextEditingController> Lst_Cauhoi = [];
   List<List<TextEditingController>> lst_Trl_TracNghiem = [];
-  List<String> listanh = [];
   //Khi thay đổi giá trị tổng các giá trị khác sẽ thay đổi
   xetSo() {
     double diem;
@@ -84,11 +83,6 @@ class _Tao_trac_nghiemState extends State<Tao_trac_nghiem> {
     double diem =
         double.parse(widget.diemToiDaController.text) / widget.SoLuong;
     for (int i = 0; i < widget.SoLuong; i++) {
-      listanh.add('');
-      listanh.add('');
-      listanh.add('');
-      listanh.add('');
-      listanh.add('');
       TextEditingController cauHoi = new TextEditingController();
       Lst_Cauhoi.add(cauHoi);
       List<TextEditingController> lst_Ctiet_Trl = [];
@@ -118,7 +112,6 @@ class _Tao_trac_nghiemState extends State<Tao_trac_nghiem> {
   Lay() {
     Cauhoi_Ktra cauhoi_ktra = new Cauhoi_Ktra();
     List<ListCauHoi> lst_cauhoi = [];
-
     for (int i = 0; i < Lst_Cauhoi.length; i++) {
       ListCauHoi lst = new ListCauHoi();
       lst.idBaiKiemTra = widget.bktra.baikiemtra!.id;
@@ -218,8 +211,8 @@ class _Tao_trac_nghiemState extends State<Tao_trac_nghiem> {
                 key: centerKey,
                 delegate: SliverChildListDelegate([
                   Container(
-                      margin: const EdgeInsets.only(top: 20, left: 20, right: 20),
-                      padding: const EdgeInsets.only(
+                      margin: EdgeInsets.only(top: 20, left: 20, right: 20),
+                      padding: EdgeInsets.only(
                           bottom: 20, left: 20, right: 20, top: 20),
                       decoration: BoxDecoration(
                         color: Colors.white,

@@ -15,6 +15,7 @@ import 'package:user_flutter/Model/ttSinhvienKtra.dart';
 import 'package:user_flutter/Model_View/login.dart';
 import 'package:user_flutter/View/common/constant/string.dart';
 import 'package:user_flutter/View/page/Form_tao_Bktra.dart';
+import 'package:user_flutter/View/page/subject_view.dart';
 
 class BaiKiemTraVM {
   static Future<List_Ktra_model> Get_BKTra(int idLop) async {
@@ -179,6 +180,28 @@ class BaiKiemTraVM {
     }
   }
 
+  static Future<bool> removeSv(
+      int idSv, BuildContext context, int idlophp) async {
+    String url = deleteSv;
+    String token = await Login.getToken();
+    Map body = {
+      "id_sinh_vien": idSv.toString(),
+    };
+    var response = await http.post(Uri.parse(url),
+        headers: <String, String>{
+          'Accept': 'application/json',
+          'Authorization': 'Bearer $token',
+        },
+        body: body);
+    print(response.body);
+    Map<String, dynamic> map = json.decode(response.body);
+    if (response.statusCode == 200) {
+     
+      return true;
+    }
+    return false;
+  }
+
   static Future<bool> Update_BKTra(
       int idbkt,
       int idLop,
@@ -285,28 +308,28 @@ class BaiKiemTraVM {
     }
   }
 
-  static Future<BaiDaLuuModel?> Getbaidaluu(int idbaiktra,int idSv) async {
+  static Future<BaiDaLuuModel?> Getbaidaluu(int idbaiktra, int idSv) async {
     try {
-    String url = getBaiDaluu;
-    String token = await Login.getToken();
-    Map body = {
-      "id_bai_ktra": idbaiktra.toString(),
-      "id_sinh_vien": idSv.toString(),
-    };
-    print(idbaiktra);
-    print(user.user!.id);
-    var response = await http.post(Uri.parse(url),
-        headers: <String, String>{
-          'Accept': 'application/json',
-          'Authorization': 'Bearer $token',
-        },
-        body: body);
-    Map<String, dynamic> map = json.decode(response.body);
-    var posts = map["message"];
-    print(response.body);
-    final jsonResponse =
-        BaiDaLuuModel.fromJson(json.decode(response.body.toString()));
-    return jsonResponse;
+      String url = getBaiDaluu;
+      String token = await Login.getToken();
+      Map body = {
+        "id_bai_ktra": idbaiktra.toString(),
+        "id_sinh_vien": idSv.toString(),
+      };
+      print(idbaiktra);
+      print(user.user!.id);
+      var response = await http.post(Uri.parse(url),
+          headers: <String, String>{
+            'Accept': 'application/json',
+            'Authorization': 'Bearer $token',
+          },
+          body: body);
+      Map<String, dynamic> map = json.decode(response.body);
+      var posts = map["message"];
+      print(response.body);
+      final jsonResponse =
+          BaiDaLuuModel.fromJson(json.decode(response.body.toString()));
+      return jsonResponse;
     } catch (e) {
       return null;
     }
@@ -334,7 +357,8 @@ class BaiKiemTraVM {
       return false;
     }
   }
-   static Future<ttSvienKtra_M?> GetTtSinhVien(int idbaiktra,int idSv) async {
+
+  static Future<ttSvienKtra_M?> GetTtSinhVien(int idbaiktra, int idSv) async {
     // try {
     String url = urlgetSinhvienKtra;
     String token = await Login.getToken();

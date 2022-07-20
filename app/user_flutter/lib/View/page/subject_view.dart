@@ -444,7 +444,7 @@ class ClassmateBody extends StatelessWidget {
                   itemBuilder: (ctx, index) {
                     final student = dssv[index];
 
-                    return StudentItem(student: student);
+                    return StudentItem(student: student,idlop_hp:id_lop);
                   },
                 ),
               ),

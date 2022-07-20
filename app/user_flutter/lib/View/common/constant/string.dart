@@ -35,3 +35,6 @@ const String urlgetSinhvienall = '$Link/api/svwithBKT';
 const String urlpostTraLoiBaitap = '$Link/api/traloithongbao';
 const String urlgetSinhvienKtra = '$Link/api/getSinhVienBaiKiemTra';
 const String urlThongKeDiem = '$Link/api/ThongkeBangDiem';
+const String urlGuifile = '$Link/api/getidFile';
+const String deleteSv='$Link/api/deletesinhvien';
+const String getdstraloi='$Link/api/getdstraloi';

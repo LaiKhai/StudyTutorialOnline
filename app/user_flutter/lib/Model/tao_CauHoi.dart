@@ -31,11 +31,6 @@ class ListCauHoi {
   String? dapAnDung;
   double? diem;
   int? trangThai;
-  String? file;
-  String? file1;
-  String? file2;
-  String? file3;
-  String? file4;
 
   ListCauHoi(
       {this.idBaiKiemTra,
@@ -46,12 +41,7 @@ class ListCauHoi {
       this.dapAn4,
       this.dapAnDung,
       this.diem,
-      this.trangThai,
-      this.file,
-      this.file1,
-      this.file2,
-      this.file3,
-      this.file4});
+      this.trangThai});
 
   ListCauHoi.fromJson(Map<String, dynamic> json) {
     idBaiKiemTra = json['id_bai_kiem_tra'];
@@ -63,11 +53,6 @@ class ListCauHoi {
     dapAnDung = json['dap_an_dung'];
     diem = json['diem'];
     trangThai = json['trang_thai'];
-    file = json['file'];
-    file1 = json['file1'];
-    file2 = json['file2'];
-    file3 = json['file3'];
-    file4 = json['file4'];
   }
 
   Map<String, dynamic> toJson() {
@@ -81,11 +66,6 @@ class ListCauHoi {
     data['dap_an_dung'] = this.dapAnDung;
     data['diem'] = this.diem;
     data['trang_thai'] = this.trangThai;
-    data['file'] = this.file;
-    data['file1'] = this.file1;
-    data['file2'] = this.file2;
-    data['file3'] = this.file3;
-    data['file4'] = this.file4;
     return data;
   }
 }
