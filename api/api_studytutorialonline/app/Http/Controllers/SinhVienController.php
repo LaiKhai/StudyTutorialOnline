@@ -225,7 +225,7 @@ class SinhVienController extends Controller
             ->join('bo_mons', 'lop_hoc_phans.id_bo_mon', '=', 'bo_mons.id')
             ->join('lops', 'lop_hoc_phans.id_lop', '=', 'lops.id')
             ->join('giang_viens', 'lops.id_giangvien', '=', 'giang_viens.id')
-            ->where('ds_sinh_viens.id_sinh_vien', $id)
+            ->where([['ds_sinh_viens.id_sinh_vien', $id], ['ds_sinh_viens.trang_thai', '>', '0']])
             ->select('ds_sinh_viens.id_sinh_vien', 'lop_hoc_phans.*', 'sinh_viens.ho_ten as ho_ten_sv', 'bo_mons.ten_mon_hoc', 'lops.ten_lop', 'giang_viens.ho_ten as hoten_giangvien')
             ->distinct()
             ->get();

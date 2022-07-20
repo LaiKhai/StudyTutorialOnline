@@ -159,6 +159,12 @@ Route::post('/svwithBKT', [CTBaiKiemTraController::class, 'svwithBKT']);
 //lấy danh sách sinh viên theo bai kiểm tra
 Route::post('/getSinhVienBaiKiemTra', [BaiKiemTraController::class, 'getSinhVienBaiKiemTra']);
 
+//lấy danh sách câu trả lời bài tập
+Route::post('/getdstraloi', [TraLoi_ThongBaoController::class, 'getdstraloi']);
+
+//chi tiết câu trả lời
+Route::post('/getchitiettraloi', [TraLoi_ThongBaoController::class, 'getchitiettraloi']);
+
 
 
 
