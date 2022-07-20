@@ -14,6 +14,7 @@ use App\Http\Controllers\LoaiBaiTapController;
 use App\Http\Controllers\KhoaController;
 use App\Http\Controllers\LopHocPhanController;
 use App\Http\Controllers\BoMonController;
+use App\Http\Controllers\CauHoiController;
 use App\Http\Controllers\CTBaiKiemTraController;
 use App\Http\Controllers\LoaiBaiVietController;
 use App\Http\Controllers\DSSinhVienController;
@@ -171,6 +172,9 @@ Route::post('/getchitiettraloi', [TraLoi_ThongBaoController::class, 'getchitiett
 
 //xóa sinh viên trong ds sinh viên
 Route::post('/deletesinhvien', [DSSinhVienController::class, 'deletesinhvien']);
+
+//lấy idfile
+Route::post('/getidFile', [CauHoiController::class, 'getidFile']);
 
 
 
