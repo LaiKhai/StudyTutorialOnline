@@ -49,6 +49,8 @@ Route::get('/sinhvien/export', [SinhVienController::class, 'export']);
 Route::get('/traloi/exportDiemSV', [TraLoiController::class, 'exportDiemSV']);
 Route::post('/traloi/danhsachDiemSV', [TraLoiController::class, 'danhsachDiemSV']);
 Route::post('/traloi/lichsuTraLoi', [TraLoiController::class, 'lichsuTraLoi']);
+Route::get('/cttraloi/exportDSSVlamKiemTra', [CTBaiKiemTraController::class, 'exportDSSVlamKiemTra']);
+
 
 
 Route::get('/sinhvien/exportDiemDanh/{idlop}', [SinhVienController::class, 'exportDiemDanh']);

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Exports\DSSVdanopbaiExport;
 use App\Models\BaiKiemTra;
 use App\Models\TraLoi;
 use App\Models\CTBaiKiemTra;
@@ -9,6 +10,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Carbon;
+use Maatwebsite\Excel\Facades\Excel;
 
 class CTBaiKiemTraController extends Controller
 {
@@ -262,5 +264,10 @@ class CTBaiKiemTraController extends Controller
             ->get();
         $response = ['status' => true, 'data' => $ctBKT];
         return response()->json($response, 200);
+    }
+
+    public function exportDSSVlamKiemTra(Request $request)
+    {
+        return Excel::download(new DSSVdanopbaiExport($request->baikt, $request->lop), 'DS_SV_DA_HOAN_THANH.xlsx');
     }
 }
