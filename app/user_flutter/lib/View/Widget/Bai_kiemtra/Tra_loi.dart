@@ -16,8 +16,9 @@ class GuiFiles extends StatefulWidget {
 class _GuiFilesState extends State<GuiFiles> {
   chonAnh() async {
     FilePickerResult? result = await FilePicker.platform.pickFiles(
+        allowMultiple: true,
         type: FileType.custom,
-        allowedExtensions: ['jpg', 'png', 'jpg', 'pdf', 'doc']);
+        allowedExtensions: ['jpg', 'png', 'jpg', 'pdf', 'doc', 'xlsx']);
 
     if (result != null) {
       listFile = result.paths.map((path) => File(path!)).toList();

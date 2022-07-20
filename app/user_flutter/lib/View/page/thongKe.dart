@@ -206,7 +206,7 @@ class _ThongKePageState extends State<ThongKePage> {
                           Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: (context) => const ThongKeDiem()),
+                                builder: (context) =>  ThongKeDiem(idbktra: baiKiemTra.baikiemtra!.id!,)),
                           );
                         })
                     : baiKiemTra.baikiemtra!.trangThai == 4

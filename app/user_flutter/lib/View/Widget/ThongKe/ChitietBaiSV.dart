@@ -120,6 +120,8 @@ class _ChitietKtraSVState extends State<ChitietKtraSV> {
           khoitao_Value(lst_Cauhoi.length);
           return Scaffold(
               appBar: AppBar(
+                elevation: 0,
+                shadowColor: Color.fromARGB(0, 244, 67, 54),
                 backgroundColor: US_APP_COLOR,
                 title: Text(
                   ct_baikiemtra.tieuDe!,

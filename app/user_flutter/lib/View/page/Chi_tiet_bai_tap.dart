@@ -1,8 +1,7 @@
-import 'package:flutter/material.dart';
+    import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:user_flutter/Model/User_login.dart';
 import 'package:user_flutter/Model/bai_Viet.dart';
-import 'package:user_flutter/Model/cTiet_LopHP.dart';
 import 'package:user_flutter/Model_View/Baiviet.dart';
 import 'package:user_flutter/View/Widget/Bai_kiemtra/Tra_loi.dart';
 import 'package:user_flutter/View/Widget/Home/show_File.dart';
@@ -44,33 +43,67 @@ class _Chi_tiet_PageState extends State<Chi_tiet_Page> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      floatingActionButton: FloatingActionButton.extended(
-        backgroundColor: AppColor.theme,
-        label: Text(
-          'Nộp bài',
-          style: GoogleFonts.quicksand(
-            color: Colors.white,
-            fontSize: 20,
-            fontWeight: FontWeight.bold,
-          ),
-        ),
-        onPressed: () async {
-          // ignore: unrelated_type_equality_checks
-          if (BaiVietVM.postNopBai(widget.baiviet.id!, textController.text,
-                  context, widget.baiviet.idLopHocPhan!) ==
-              true) {
-            showCustomDialog(context, 'Đã gửi câu trả lời', true);
-          } else {
-            showCustomDialog(context, 'Gửi câu trả lời thất bại', false);
-          }
-          ;
-        },
-        tooltip: 'Increment',
-        //foregroundColor: Colors.yellow,
-        //backgroundColor: Colors.red,
-        //elevation: 0.0,
-        //shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
-      ),
+      floatingActionButton: user.user!.idChucVu == 0
+          ? FloatingActionButton.extended(
+              backgroundColor: AppColor.theme,
+              label: Text(
+                'Nộp bài',
+                style: GoogleFonts.quicksand(
+                  color: Colors.white,
+                  fontSize: 20,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              onPressed: () async {
+                // ignore: unrelated_type_equality_checks
+                if (BaiVietVM.postNopBai(
+                        widget.baiviet.id!,
+                        textController.text,
+                        context,
+                        widget.baiviet.idLopHocPhan!) ==
+                    true) {
+                  showCustomDialog(context, 'Đã gửi câu trả lời', true);
+                } else {
+                  showCustomDialog(context, 'Gửi câu trả lời thất bại', false);
+                }
+                ;
+              },
+              tooltip: 'Increment',
+              //foregroundColor: Colors.yellow,
+              //backgroundColor: Colors.red,
+              //elevation: 0.0,
+              //shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
+            )
+          : FloatingActionButton.extended(
+              backgroundColor: AppColor.theme,
+              label: Text(
+                'Đóng bài',
+                style: GoogleFonts.quicksand(
+                  color: Colors.white,
+                  fontSize: 20,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              onPressed: () async {
+                // ignore: unrelated_type_equality_checks
+                if (BaiVietVM.postNopBai(
+                        widget.baiviet.id!,
+                        textController.text,
+                        context,
+                        widget.baiviet.idLopHocPhan!) ==
+                    true) {
+                  showCustomDialog(context, 'Đã gửi câu trả lời', true);
+                } else {
+                  showCustomDialog(context, 'Gửi câu trả lời thất bại', false);
+                }
+                ;
+              },
+              tooltip: 'Increment',
+              //foregroundColor: Colors.yellow,
+              //backgroundColor: Colors.red,
+              //elevation: 0.0,
+              //shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
+            ),
       key: scaffoldKey,
       appBar: AppBar(
         backgroundColor: const Color(0xFFF1F4F8),
