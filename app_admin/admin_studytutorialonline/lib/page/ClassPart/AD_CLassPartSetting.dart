@@ -212,7 +212,7 @@ class _ClassPartSettingState extends State<ClassPartSetting> {
                             height: getHeightSize(context) * 0.3,
                             width: getWidthSize(context),
                             child: Image.network(
-                              baseUrl + classpart.avt!,
+                              baseUrl + '/storage/' + classpart.avt!,
                               fit: BoxFit.contain,
                             )),
                         // Container(
