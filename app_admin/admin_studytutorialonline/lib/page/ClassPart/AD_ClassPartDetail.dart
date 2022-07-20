@@ -79,7 +79,9 @@ class _ClassPartDetailState extends State<ClassPartDetail> {
                               width: getWidthSize(context),
                               height: getHeightSize(context) * 0.3,
                               child: Image.network(
-                                baseUrl + classPart.avt.toString(),
+                                baseUrl +
+                                    '/storage/' +
+                                    classPart.avt.toString(),
                                 fit: BoxFit.contain,
                               )),
                           Container(
