@@ -204,7 +204,9 @@ class _CreatePostState extends State<CreatePost> {
                               style: ggTextStyle(
                                   20, FontWeight.bold, AppColor.black),
                             ),
-                            onPressed: () {},
+                            onPressed: () {
+                              Navigator.pop(context);
+                            },
                             style: ButtonStyle(
                                 shape: MaterialStateProperty.all<
                                         RoundedRectangleBorder>(

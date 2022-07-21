@@ -14,6 +14,7 @@ use App\Http\Controllers\LoaiBaiTapController;
 use App\Http\Controllers\KhoaController;
 use App\Http\Controllers\LopHocPhanController;
 use App\Http\Controllers\BoMonController;
+use App\Http\Controllers\CauHoiController;
 use App\Http\Controllers\CTBaiKiemTraController;
 use App\Http\Controllers\LoaiBaiVietController;
 use App\Http\Controllers\DSSinhVienController;
@@ -24,6 +25,7 @@ use App\Http\Controllers\TraLoi_ThongBaoController;
 use App\Http\Controllers\TraLoiController;
 use App\Models\CTBaiKiemTra;
 use App\Models\DS_GiangVien;
+use App\Models\DS_SinhVien;
 use Database\Factories\BoMonFactory;
 
 /*
@@ -48,6 +50,8 @@ Route::get('/sinhvien/export', [SinhVienController::class, 'export']);
 Route::get('/traloi/exportDiemSV', [TraLoiController::class, 'exportDiemSV']);
 Route::post('/traloi/danhsachDiemSV', [TraLoiController::class, 'danhsachDiemSV']);
 Route::post('/traloi/lichsuTraLoi', [TraLoiController::class, 'lichsuTraLoi']);
+Route::get('/cttraloi/exportDSSVlamKiemTra', [CTBaiKiemTraController::class, 'exportDSSVlamKiemTra']);
+
 
 
 Route::get('/sinhvien/exportDiemDanh/{idlop}', [SinhVienController::class, 'exportDiemDanh']);
@@ -97,8 +101,7 @@ Route::apiResource('bomon', BoMonController::class);
 Route::apiResource('baitap', BaiTapController::class);
 Route::apiResource('baikiemtra', BaiKiemTraController::class);
 Route::apiResource('loaibaitap', LoaiBaiTapController::class);
-Route::apiResource('dssv', DSSinhVienController::class);
-Route::apiResource('dsgv', DSGiangVienController::class);
+Route::apiResource('dssv', DS_SinhVien::class);
 Route::apiResource('loaibaiviet', LoaiBaiVietController::class);
 Route::apiResource('baiviet', BaiVietController::class);
 Route::apiResource('file', FileController::class);
@@ -160,6 +163,18 @@ Route::post('ThongkeBangDiem', [ThongKeController::class, 'thongkeBangDiem']);
 //lấy danh sách sinh viên theo bai kiểm tra
 Route::post('/getSinhVienBaiKiemTra', [BaiKiemTraController::class, 'getSinhVienBaiKiemTra']);
 
+//lấy danh sách câu trả lời bài tập
+Route::post('/getdstraloi', [TraLoi_ThongBaoController::class, 'getdstraloi']);
+
+//chi tiết câu trả lời
+Route::post('/getchitiettraloi', [TraLoi_ThongBaoController::class, 'getchitiettraloi']);
+
+
+//xóa sinh viên trong ds sinh viên
+Route::post('/deletesinhvien', [DSSinhVienController::class, 'deletesinhvien']);
+
+//lấy idfile
+Route::post('/getidFile', [CauHoiController::class, 'getidFile']);
 
 
 

@@ -204,6 +204,7 @@ class TraLoiController extends Controller
         return Excel::download(new DanhSachDiemExport($request->baikt, $request->lophp), 'DS_Diem_SV.xlsx');
     }
 
+
     public function danhsachDiemSV(Request $request)
     {
         $lsttraloi = TraLoi::join('cau_hois', 'tra_lois.id_cau_hoi', '=', 'cau_hois.id')

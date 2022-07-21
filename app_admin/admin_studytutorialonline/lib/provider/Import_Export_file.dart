@@ -30,7 +30,7 @@ class Import_Export {
           context: context,
           builder: (BuildContext context) {
             return AlertDialog(
-              content: Text('Thêm danh sách sinh viên thành công ',
+              content: Text('Thêm danh sách sinh viên vào lớp thành công ',
                   style: ggTextStyle(13, FontWeight.bold, AppColor.black)),
               title: Row(
                 children: [
@@ -65,7 +65,7 @@ class Import_Export {
           context: context,
           builder: (BuildContext context) {
             return AlertDialog(
-              content: Text('Thêm danh sách sinh viên thất bại !',
+              content: Text('Thêm danh sách sinh viên vào lớp thất bại !',
                   style: ggTextStyle(13, FontWeight.bold, AppColor.black)),
               title: Row(
                 children: [

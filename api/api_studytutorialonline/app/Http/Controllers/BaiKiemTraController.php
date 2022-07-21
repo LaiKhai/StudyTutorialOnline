@@ -238,7 +238,7 @@ class BaiKiemTraController extends Controller
     public function taoCauHoi(Request $request)
     {
         foreach ($request->json('list_cau_hoi') as $item) {
-            DB::select('call tao_cau_hoi(?,?,?,?,?,?,?,?)', [
+            DB::select('call tao_cau_hoi(?,?,?,?,?,?,?,?,?,?,?,?,?)', [
                 $item['id_bai_kiem_tra'],
                 $item['de_bai'],
                 $item['dap_an_1'],
@@ -247,6 +247,11 @@ class BaiKiemTraController extends Controller
                 $item['dap_an_4'],
                 $item['dap_an_dung'],
                 $item['diem'],
+                $item['file'],
+                $item['file1'],
+                $item['file2'],
+                $item['file3'],
+                $item['file4'],
             ]);
         }
         $cauHoi = CauHoi::all();

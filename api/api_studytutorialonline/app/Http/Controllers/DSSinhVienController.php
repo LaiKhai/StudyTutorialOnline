@@ -126,9 +126,23 @@ class DSSinhVienController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function deletesinhvien(Request $request)
     {
-        //
+        $dssv = DS_SinhVien::where('id_sinh_vien', $request->input('id_sinh_vien'))->first();
+        if (empty($dssv)) {
+            $response = [
+                'status' => false,
+                'message' => 'khong tim thay sinh vien nao !'
+            ];
+            return response()->json($response, 404);
+        }
+        DS_SinhVien::where('id_sinh_vien', $request->input('id_sinh_vien'))->delete();
+        $lstSinhVien = DS_SinhVien::all();
+        $response = [
+            'message' => 'xoa thanh cong !',
+            'sinhvien' => $lstSinhVien
+        ];
+        return response()->json($response, 200);
     }
 
     public function createDSSVWithSinhVien()

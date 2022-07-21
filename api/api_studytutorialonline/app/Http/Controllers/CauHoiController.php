@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\CauHoi;
+use App\Models\CheckFile;
+use App\Models\File;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
@@ -174,6 +176,24 @@ class CauHoiController extends Controller
             'status' => true,
             'message' => 'xoa thanh cong !',
             'cauhoi' => $lstCauHoi
+        ];
+        return response()->json($response, 200);
+    }
+
+    public function getidFile(Request $request)
+    {
+        $files = $request->file('file');
+        $inputfile['trang_thai'] = 1;
+        if ($request->hasFile('file')) {
+            $path = $files->store('assets/files/' . $files->getClientOriginalName(), 'public');
+            $inputfile['noi_dung'] = $path;
+            $inputfile['loai_file'] = $files->extension();
+            $inputfile['ten_file'] = $files->getClientOriginalName();
+            $itemFile2 = File::create($inputfile);
+        }
+        $response = [
+            'status' => true,
+            'file' => $itemFile2->id
         ];
         return response()->json($response, 200);
     }

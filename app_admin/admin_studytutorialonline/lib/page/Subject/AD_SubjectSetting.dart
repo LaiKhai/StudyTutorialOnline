@@ -271,13 +271,57 @@ class _SubjectSettingState extends State<SubjectSetting> {
                                           20, FontWeight.bold, AppColor.white),
                                     ),
                                     onPressed: () {
-                                      SubjectProvider.updateSubject(
-                                          context,
-                                          selectedValue.toString(),
-                                          _tenmonhocController.text,
-                                          value2.toString(),
-                                          us,
-                                          subjectId);
+                                      if (selectedValue != null &&
+                                          value2 != null &&
+                                          _tenmonhocController.text != "") {
+                                        SubjectProvider.updateSubject(
+                                            context,
+                                            selectedValue.toString(),
+                                            _tenmonhocController.text,
+                                            value2.toString(),
+                                            us,
+                                            subjectId);
+                                      } else {
+                                        showDialog(
+                                            context: context,
+                                            builder: (BuildContext context) {
+                                              return AlertDialog(
+                                                content: Text(
+                                                    'Yêu cầu điền đầy đủ thông tin !',
+                                                    style: ggTextStyle(
+                                                        13,
+                                                        FontWeight.bold,
+                                                        AppColor.black)),
+                                                title: Row(
+                                                  children: [
+                                                    Icon(
+                                                      Icons.warning_rounded,
+                                                      color: AppColor.theme,
+                                                    ),
+                                                    SizedBox(
+                                                      width: 10,
+                                                    ),
+                                                    Text('Thông báo',
+                                                        style: ggTextStyle(
+                                                            13,
+                                                            FontWeight.bold,
+                                                            AppColor.black))
+                                                  ],
+                                                ),
+                                                actions: [
+                                                  TextButton(
+                                                      onPressed: () {
+                                                        Navigator.pop(context);
+                                                      },
+                                                      child: Text('Quay lại',
+                                                          style: ggTextStyle(
+                                                              13,
+                                                              FontWeight.bold,
+                                                              AppColor.black)))
+                                                ],
+                                              );
+                                            });
+                                      }
                                     },
                                     style: ButtonStyle(
                                         backgroundColor:

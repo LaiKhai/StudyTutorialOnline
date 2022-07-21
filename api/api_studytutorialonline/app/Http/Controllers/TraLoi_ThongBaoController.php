@@ -123,4 +123,42 @@ class TraLoi_ThongBaoController extends Controller
             return response()->json($response, 404);
         }
     }
+
+    public function getdstraloi(Request $request)
+    {
+        $idbaiviet = $request->input('id_bai_viet');
+        $dstraloi = TraLoi_ThongBao::join('bai_viets', 'traloi_thongbao.id_bai_viet', '=', 'bai_viets.id')
+            ->join('sinh_viens', 'traloi_thongbao.id_sinh_vien', '=', 'sinh_viens.id')
+            ->join('lops', 'sinh_viens.id_lop', '=', 'lops.id')
+            ->join('files', 'traloi_thongbao.id_file', '=', 'files.id')
+            ->where([['traloi_thongbao.id_bai_viet', $idbaiviet], ['bai_viets.id_loai_bai_viet', 2]])
+            ->select('traloi_thongbao.id_bai_viet', 'sinh_viens.*', 'lops.ten_lop', 'files.noi_dung', 'files.ten_file', 'files.loai_file', 'bai_viets.id_loai_bai_viet')
+            ->get();
+
+        $response = [
+            'status' => true,
+            'data' => $dstraloi
+        ];
+        return response()->json($response, 200);
+    }
+
+    public function getchitiettraloi(Request $request)
+    {
+        $idbaiviet = $request->input('id_bai_viet');
+        $idtraloi = $request->input('id_tra_loi');
+
+        $cttraloi = TraLoi_ThongBao::join('bai_viets', 'traloi_thongbao.id_bai_viet', '=', 'bai_viets.id')
+            ->join('sinh_viens', 'traloi_thongbao.id_sinh_vien', '=', 'sinh_viens.id')
+            ->join('lops', 'sinh_viens.id_lop', '=', 'lops.id')
+            ->join('files', 'traloi_thongbao.id_file', '=', 'files.id')
+            ->where([['traloi_thongbao.id_bai_viet', $idbaiviet], ['traloi_thongbao.id', $idtraloi], ['bai_viets.id_loai_bai_viet', 2]])
+            ->select('traloi_thongbao.id_bai_viet', 'sinh_viens.*', 'lops.ten_lop', 'files.noi_dung', 'files.ten_file', 'files.loai_file', 'bai_viets.id_loai_bai_viet')
+            ->get();
+
+        $response = [
+            'status' => true,
+            'data' => $cttraloi
+        ];
+        return response()->json($response, 200);
+    }
 }

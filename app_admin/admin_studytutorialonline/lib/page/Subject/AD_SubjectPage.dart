@@ -258,7 +258,7 @@ class _SubjectPageState extends State<SubjectPage> {
                                                               ),
                                                               if (lstsubject
                                                                       .loaiMonHoc! ==
-                                                                  "1")
+                                                                  1)
                                                                 Container(
                                                                   child: Text(
                                                                     'Lí Thuyết',
@@ -272,7 +272,7 @@ class _SubjectPageState extends State<SubjectPage> {
                                                                 )
                                                               else if (lstsubject
                                                                       .loaiMonHoc! ==
-                                                                  "2")
+                                                                  2)
                                                                 Container(
                                                                   child: Text(
                                                                     'Thực Hành',
@@ -286,7 +286,7 @@ class _SubjectPageState extends State<SubjectPage> {
                                                                 )
                                                               else if (lstsubject
                                                                       .loaiMonHoc! ==
-                                                                  "3")
+                                                                  3)
                                                                 Container(
                                                                   child: Text(
                                                                     'Thực Hành',

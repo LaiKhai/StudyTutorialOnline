@@ -31,10 +31,7 @@ class File extends Model
     {
         return $this->hasMany(BaiTap::class, 'id_file', 'id');
     }
-    public function cauhoi()
-    {
-        return $this->hasMany(CauHoi::class, 'id_file', 'id');
-    }
+
     public function checkfile()
     {
         return $this->hasMany(CheckFile::class, 'id_file', 'id');
