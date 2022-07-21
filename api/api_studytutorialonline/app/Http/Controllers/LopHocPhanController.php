@@ -93,6 +93,7 @@ class LopHocPhanController extends Controller
         if ($request->hasFile('avt')) {
             $lopHocPhan['avt'] = $request->file('avt')->store('assets/images/lophocphan/' . $lopHocPhan['id'], 'public');
         }
+        $lopHocPhan->save();
         $sinhVien = SinhVien::join('lops', 'sinh_viens.id_lop', '=', 'lops.id')
             ->where('sinh_viens.id_lop', $lopHocPhan->id_lop)
             ->select('sinh_viens.*')
