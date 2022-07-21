@@ -99,10 +99,10 @@ class _SubjectViewState extends State<SubjectView> {
                       ? FloatingActionButton.extended(
                           backgroundColor: AppColor.theme,
                           label: Text(
-                            'Tạo bài tập',
+                            '+',
                             style: GoogleFonts.quicksand(
                               color: Colors.white,
-                              fontSize: 20,
+                              fontSize: 30,
                               fontWeight: FontWeight.bold,
                             ),
                           ),
@@ -444,7 +444,7 @@ class ClassmateBody extends StatelessWidget {
                   itemBuilder: (ctx, index) {
                     final student = dssv[index];
 
-                    return StudentItem(student: student,idlop_hp:id_lop);
+                    return StudentItem(student: student, idlop_hp: id_lop);
                   },
                 ),
               ),

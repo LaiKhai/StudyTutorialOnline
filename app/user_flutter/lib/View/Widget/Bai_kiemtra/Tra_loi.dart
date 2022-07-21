@@ -223,6 +223,7 @@ class _GuiFileState extends State<GuiFile> {
 
     if (result != null) {
       File file = File(result.files.single.path.toString());
+      listFile.add(file);
       setState(() {});
     } else {
       // User canceled the picker

@@ -377,7 +377,7 @@ class _Chi_tiet_PageState extends State<Chi_tiet_Page> {
                   ),
                 ),
               ),
-              GuiFiles()
+              GuiFile()
             ]
           ]))
         ],

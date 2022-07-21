@@ -63,7 +63,7 @@ class _HomeViewState extends State<HomeView> {
                       child: AppIconButton(
                         icon: Stack(
                           children: [
-                            thong_bao(),
+                            const thong_bao(),
                             Positioned(
                               right: 2,
                               top: 0,
@@ -73,7 +73,7 @@ class _HomeViewState extends State<HomeView> {
                                 decoration: BoxDecoration(
                                   color: Theme.of(context).primaryColor,
                                   border: Border.all(
-                                    color: Color(0xFFdcdcdc),
+                                    color: const Color(0xFFdcdcdc),
                                     width: 1.5,
                                   ),
                                   borderRadius: BorderRadius.circular(360),
@@ -326,80 +326,81 @@ class _HomeViewState extends State<HomeView> {
                               ),
                             ),
                           ),
-                          Padding(
-                            padding: const EdgeInsets.only(
-                                left: 20, right: 20, top: 20),
-                            child: Column(
-                              mainAxisSize: MainAxisSize.min,
-                              children: [
-                                Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  crossAxisAlignment: CrossAxisAlignment.center,
-                                  children: [
-                                    Text(
-                                      "Tuần này",
-                                      style: GoogleFonts.quicksand(
-                                        color: AppColor.white,
-                                        fontSize: 16,
-                                        fontWeight: FontWeight.w600,
-                                      ),
-                                    ),
-                                    InkWell(
-                                      borderRadius: BorderRadius.circular(360),
-                                      splashColor: Theme.of(context)
-                                          .primaryColor
-                                          .withOpacity(0.25),
-                                      highlightColor: Theme.of(context)
-                                          .primaryColor
-                                          .withOpacity(0.4),
-                                      onTap: () {},
-                                      child: Padding(
-                                        padding: const EdgeInsets.all(4),
-                                        child: Text(
-                                          "Tất cả",
-                                          style: GoogleFonts.quicksand(
-                                            color: AppColor.primary,
-                                            fontSize: 12,
-                                            fontWeight: FontWeight.bold,
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                                const SizedBox(height: 16),
-                                Row(
-                                  children: const [
-                                    Expanded(
-                                      child: AssignmentWeek(
-                                        count: 5,
-                                        subjects: ["Tên các lớp giao bài tập "],
-                                        type: AssignmentType.assigned,
-                                      ),
-                                    ),
-                                    SizedBox(width: 16),
-                                    Expanded(
-                                      child: AssignmentWeek(
-                                        count: 2,
-                                        subjects: ["các lớp bỏ lở bài tập"],
-                                        type: AssignmentType.missed,
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ],
-                            ),
-                          ),
+                          // Padding(
+                          //   padding: const EdgeInsets.only(
+                          //       left: 20, right: 20, top: 20),
+                          //   child: Column(
+                          //     mainAxisSize: MainAxisSize.min,
+                          //     children: [
+                          //       Row(
+                          //         mainAxisAlignment:
+                          //             MainAxisAlignment.spaceBetween,
+                          //         crossAxisAlignment: CrossAxisAlignment.center,
+                          //         children: [
+                          //           Text(
+                          //             "Tuần này",
+                          //             style: GoogleFonts.quicksand(
+                          //               color: AppColor.white,
+                          //               fontSize: 16,
+                          //               fontWeight: FontWeight.w600,
+                          //             ),
+                          //           ),
+                          //           InkWell(
+                          //             borderRadius: BorderRadius.circular(360),
+                          //             splashColor: Theme.of(context)
+                          //                 .primaryColor
+                          //                 .withOpacity(0.25),
+                          //             highlightColor: Theme.of(context)
+                          //                 .primaryColor
+                          //                 .withOpacity(0.4),
+                          //             onTap: () {},
+                          //             child: Padding(
+                          //               padding: const EdgeInsets.all(4),
+                          //               child: Text(
+                          //                 "Tất cả",
+                          //                 style: GoogleFonts.quicksand(
+                          //                   color: AppColor.primary,
+                          //                   fontSize: 12,
+                          //                   fontWeight: FontWeight.bold,
+                          //                 ),
+                          //               ),
+                          //             ),
+                          //           ),
+                          //         ],
+                          //       ),
+
+                          //       const SizedBox(height: 16),
+                          //       // Row(
+                          //       //   children: const [
+                          //       //     Expanded(
+                          //       //       child: AssignmentWeek(
+                          //       //         count: 5,
+                          //       //         subjects: ["Tên các lớp giao bài tập "],
+                          //       //         type: AssignmentType.assigned,
+                          //       //       ),
+                          //       //     ),
+                          //       //     SizedBox(width: 16),
+                          //       //     Expanded(
+                          //       //       child: AssignmentWeek(
+                          //       //         count: 2,
+                          //       //         subjects: ["các lớp bỏ lở bài tập"],
+                          //       //         type: AssignmentType.missed,
+                          //       //       ),
+                          //       //     ),
+                          //       //   ],
+                          //       // ),
+                          //     ],
+                          //   ),
+                          // ),
                           const SizedBox(height: 32),
                         ])),
-                    Load_lopHP()
+                    const Load_lopHP()
                   ],
                 ),
               ),
             );
           } else {
-            return Loading();
+            return const Loading();
           }
         });
   }

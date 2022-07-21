@@ -70,7 +70,9 @@ class SubjectItem extends StatelessWidget {
               CircleAvatar(
                   radius: 40,
                   backgroundImage: NetworkImage(
-                    Link + '/storage/' + subject.avt!.toString(),
+                    subject.avt != null
+                        ? Link + '/storage/' + subject.avt!.toString()
+                        : 'https://i.pinimg.com/originals/71/4e/c4/714ec474db7fe0a3b55d34aa6ec247e8.jpg',
                   )),
             ],
           ),
