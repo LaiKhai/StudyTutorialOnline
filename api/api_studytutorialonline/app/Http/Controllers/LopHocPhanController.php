@@ -75,7 +75,6 @@ class LopHocPhanController extends Controller
         $input['id_bo_mon'] = $request->input('id_bo_mon');
         $input['id_lop'] = $request->input('id_lop');
         $input['trang_thai'] = $request->input('trang_thai');
-        $input['avt'] = "";
         $validator = Validator::make($input, [
             'id_bo_mon' => ['required', 'max:255', 'integer'],
             'id_lop' => ['required', 'max:255', 'integer'],
@@ -90,10 +89,7 @@ class LopHocPhanController extends Controller
             return response()->json($response, 404);
         }
         $lopHocPhan = LopHocPhan::create($input);
-        if ($request->hasFile('avt')) {
-            $lopHocPhan['avt'] = $request->file('avt')->store('assets/images/lophocphan/' . $lopHocPhan['id'], 'public');
-        }
-        $lopHocPhan->save();
+
         $sinhVien = SinhVien::join('lops', 'sinh_viens.id_lop', '=', 'lops.id')
             ->where('sinh_viens.id_lop', $lopHocPhan->id_lop)
             ->select('sinh_viens.*')
