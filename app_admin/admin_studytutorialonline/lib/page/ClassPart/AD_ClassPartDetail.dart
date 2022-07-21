@@ -78,12 +78,16 @@ class _ClassPartDetailState extends State<ClassPartDetail> {
                               margin: EdgeInsets.fromLTRB(20, 10, 20, 0),
                               width: getWidthSize(context),
                               height: getHeightSize(context) * 0.3,
-                              child: Image.network(
-                                baseUrl +
-                                    '/storage/' +
-                                    classPart.avt.toString(),
-                                fit: BoxFit.contain,
-                              )),
+                              child: classPart.avt != null
+                                  ? Image.network(
+                                      baseUrl +
+                                          '/storage/' +
+                                          classPart.avt.toString(),
+                                      fit: BoxFit.contain,
+                                    )
+                                  : Center(
+                                      child: Text('Không có ảnh'),
+                                    )),
                           Container(
                             margin: EdgeInsets.fromLTRB(
                                 getWidthSize(context) * 0.06,

@@ -211,10 +211,16 @@ class _ClassPartSettingState extends State<ClassPartSetting> {
                         Container(
                             height: getHeightSize(context) * 0.3,
                             width: getWidthSize(context),
-                            child: Image.network(
-                              baseUrl + '/storage/' + classpart.avt!,
-                              fit: BoxFit.contain,
-                            )),
+                            child: classpart.avt != null
+                                ? Image.network(
+                                    baseUrl +
+                                        '/storage/' +
+                                        classpart.avt.toString(),
+                                    fit: BoxFit.contain,
+                                  )
+                                : Center(
+                                    child: Text('Không có ảnh'),
+                                  )),
                         // Container(
                         //   margin: EdgeInsets.fromLTRB(
                         //       getWidthSize(context) * 0.06,

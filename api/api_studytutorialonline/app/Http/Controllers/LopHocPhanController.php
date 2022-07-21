@@ -32,7 +32,7 @@ class LopHocPhanController extends Controller
      */
     public function index()
     {
-        $lstLopHocPhan = LopHocPhan::where('trang_thai', '>', "0")->get();
+        $lstLopHocPhan = LopHocPhan::where('trang_thai', '>', "0")->orderBy('created_at')->get();
         foreach ($lstLopHocPhan as $item) {
             $item->lop;
             $item->baikiemtra;
