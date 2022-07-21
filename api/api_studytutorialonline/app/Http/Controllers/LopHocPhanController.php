@@ -8,6 +8,7 @@ use App\Models\BaiKiemTra;
 use App\Models\DS_SinhVien;
 use App\Models\LopHocPhan;
 use App\Models\CheckFile;
+use App\Models\File;
 use Illuminate\Support\Facades\DB;
 use App\Models\SinhVien;
 use Illuminate\Http\Request;
@@ -74,6 +75,7 @@ class LopHocPhanController extends Controller
         $input['id_bo_mon'] = $request->input('id_bo_mon');
         $input['id_lop'] = $request->input('id_lop');
         $input['trang_thai'] = $request->input('trang_thai');
+        $input['avt'] = "";
         $validator = Validator::make($input, [
             'id_bo_mon' => ['required', 'max:255', 'integer'],
             'id_lop' => ['required', 'max:255', 'integer'],
@@ -88,6 +90,9 @@ class LopHocPhanController extends Controller
             return response()->json($response, 404);
         }
         $lopHocPhan = LopHocPhan::create($input);
+        if ($request->hasFile('avt')) {
+            $lopHocPhan['avt'] = $request->file('avt')->store('assets/images/lophocphan/' . $lopHocPhan['id'], 'public');
+        }
         $sinhVien = SinhVien::join('lops', 'sinh_viens.id_lop', '=', 'lops.id')
             ->where('sinh_viens.id_lop', $lopHocPhan->id_lop)
             ->select('sinh_viens.*')
@@ -206,8 +211,8 @@ class LopHocPhanController extends Controller
         $this->FixImg($lopHocPhan);
 
         $dssv = DS_SinhVien::join('lop_hoc_phans', 'ds_sinh_viens.id_lop_hoc_phan', '=', 'lop_hoc_phans.id')
-        ->join('sinh_viens', 'ds_sinh_viens.id_sinh_vien', '=', 'sinh_viens.id')
-        ->where('lop_hoc_phans.id', $lopHocPhan->id)
+            ->join('sinh_viens', 'ds_sinh_viens.id_sinh_vien', '=', 'sinh_viens.id')
+            ->where('lop_hoc_phans.id', $lopHocPhan->id)
             ->select('lop_hoc_phans.*', 'sinh_viens.*')->get();
 
         $response = [
@@ -295,7 +300,7 @@ class LopHocPhanController extends Controller
         }
         if ($trangthai == 1) {
             $baikiemtra = BaiKiemTra::join('lop_hoc_phans', 'bai_kiem_tras.id_lop_hoc_phan', '=', 'lop_hoc_phans.id')
-                ->whereColumn([['bai_kiem_tras.id_lop_hoc_phan','=', $id]])
+                ->whereColumn([['bai_kiem_tras.id_lop_hoc_phan', '=', $id]])
                 ->where([['bai_kiem_tras.trang_thai', 1]])
                 ->orWhere([['bai_kiem_tras.trang_thai', 3]])
                 ->orWhere([['bai_kiem_tras.trang_thai', 4]])
