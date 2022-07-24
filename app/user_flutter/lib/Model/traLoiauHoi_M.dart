@@ -40,6 +40,7 @@ class Tt_TraLoi {
   String? createdAt;
   String? updatedAt;
   String? tenLop;
+  int? idFile;
   String? noiDung;
   String? tenFile;
   String? loaiFile;
@@ -61,6 +62,7 @@ class Tt_TraLoi {
       this.createdAt,
       this.updatedAt,
       this.tenLop,
+      this.idFile,
       this.noiDung,
       this.tenFile,
       this.loaiFile,
@@ -82,6 +84,7 @@ class Tt_TraLoi {
     createdAt = json['created_at'];
     updatedAt = json['updated_at'];
     tenLop = json['ten_lop'];
+    idFile = json['idFile'];
     noiDung = json['noi_dung'];
     tenFile = json['ten_file'];
     loaiFile = json['loai_file'];
@@ -105,6 +108,7 @@ class Tt_TraLoi {
     data['created_at'] = this.createdAt;
     data['updated_at'] = this.updatedAt;
     data['ten_lop'] = this.tenLop;
+    data['idFile'] = this.idFile;
     data['noi_dung'] = this.noiDung;
     data['ten_file'] = this.tenFile;
     data['loai_file'] = this.loaiFile;

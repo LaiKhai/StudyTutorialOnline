@@ -44,7 +44,7 @@ class CauHoi {
       int id, Crate_Bktra bktra) async {
     String token = await Login.getToken();
     var jsonString = jsonEncode(lst_cauHoi.toJson());
-
+    print(jsonString);
     String url = postCauHoi;
     var response = await http.post(Uri.parse(url),
         headers: <String, String>{

@@ -4,6 +4,7 @@ import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 import 'package:user_flutter/Model/traLoiauHoi_M.dart';
 import 'package:user_flutter/View/common/constant/color.dart';
 import 'package:user_flutter/View/common/constant/string.dart';
+import 'package:user_flutter/provider/link_url.dart';
 
 class DanhSachTrl extends StatefulWidget {
   traLoiCauHoi_M listTraloi;
@@ -82,7 +83,9 @@ class _DanhSachTrlState extends State<DanhSachTrl> {
                           ? tt_traLoi.cauTraLoi!
                           : 'trả lời',
                       style: GoogleFonts.quicksand(
-                          fontSize: 20, fontWeight: FontWeight.normal),
+                          textStyle: TextStyle(overflow: TextOverflow.clip),
+                          fontSize: 20,
+                          fontWeight: FontWeight.normal),
                     ),
                   ),
                 ],
@@ -97,41 +100,51 @@ class _DanhSachTrlState extends State<DanhSachTrl> {
                     child: Container(
                       width: double.infinity,
                       height: 130,
-                      child: Stack(
-                        children: [
-                          Padding(
-                              padding: const EdgeInsetsDirectional.fromSTEB(
-                                  0, 0, 0, 20),
-                              child: Padding(
-                                padding: const EdgeInsetsDirectional.fromSTEB(
-                                    8, 8, 8, 8),
-                                child: Container(
-                                  width: 100,
-                                  height: 100,
-                                  decoration: BoxDecoration(
-                                    color: Colors.white,
-                                    boxShadow: [
-                                      const BoxShadow(
-                                        blurRadius: 5,
-                                        color: Color(0x32000000),
-                                        offset: Offset(0, 2),
-                                      )
-                                    ],
-                                    borderRadius: BorderRadius.circular(8),
-                                  ),
-                                  child: Padding(
-                                    padding:
-                                        const EdgeInsetsDirectional.fromSTEB(
-                                            16, 16, 16, 16),
-                                    child: Row(
-                                      mainAxisSize: MainAxisSize.max,
-                                      children: [
-                                        Icon(
-                                          Icons.folder_special_rounded,
-                                          color: US_APP_COLOR,
-                                          size: 48,
-                                        ),
-                                        Padding(
+                      child: Padding(
+                          padding:
+                              const EdgeInsetsDirectional.fromSTEB(0, 0, 0, 20),
+                          child: Padding(
+                            padding: const EdgeInsetsDirectional.fromSTEB(
+                                8, 8, 8, 8),
+                            child: InkWell(
+                              onTap: () {
+                                if (widget.listTraloi.data != null ||
+                                    widget.listTraloi.data![index].idFile !=
+                                        null) {
+                                  print(
+                                      '$Link/api/dowloadfile/${widget.listTraloi.data![index].idFile}');
+                                  linkUrl.openLink(
+                                      url:
+                                          '$Link/api/dowloadfile/${widget.listTraloi.data![index].idFile}');
+                                }
+                              },
+                              child: Container(
+                                width: 100,
+                                height: 100,
+                                decoration: BoxDecoration(
+                                  color: Colors.white,
+                                  boxShadow: [
+                                    const BoxShadow(
+                                      blurRadius: 5,
+                                      color: Color(0x32000000),
+                                      offset: Offset(0, 2),
+                                    )
+                                  ],
+                                  borderRadius: BorderRadius.circular(8),
+                                ),
+                                child: Padding(
+                                  padding: const EdgeInsetsDirectional.fromSTEB(
+                                      16, 16, 16, 16),
+                                  child: Row(
+                                    mainAxisSize: MainAxisSize.max,
+                                    children: [
+                                      Icon(
+                                        Icons.folder_special_rounded,
+                                        color: US_APP_COLOR,
+                                        size: 48,
+                                      ),
+                                      Expanded(
+                                        child: Padding(
                                           padding: const EdgeInsetsDirectional
                                               .fromSTEB(16, 0, 0, 0),
                                           child: Column(
@@ -145,6 +158,7 @@ class _DanhSachTrlState extends State<DanhSachTrl> {
                                                 tt_traLoi.tenFile != null
                                                     ? tt_traLoi.tenFile!
                                                     : 'tên file',
+                                                overflow: TextOverflow.ellipsis,
                                                 style: GoogleFonts.quicksand(
                                                     fontSize: 15,
                                                     fontWeight:
@@ -167,13 +181,13 @@ class _DanhSachTrlState extends State<DanhSachTrl> {
                                             ],
                                           ),
                                         ),
-                                      ],
-                                    ),
+                                      ),
+                                    ],
                                   ),
                                 ),
-                              )),
-                        ],
-                      ),
+                              ),
+                            ),
+                          )),
                     ),
                   ),
                 ],

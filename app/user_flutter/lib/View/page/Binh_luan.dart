@@ -38,42 +38,44 @@ class _BinhLuan_PageState extends State<BinhLuan_Page> {
                 child: LoadBinhLuan(
               ibBaiviet: widget.id_baiviet,
             )),
-            Container(
-              padding: EdgeInsets.fromLTRB(10, 0, 10, 10),
-              child: TextField(
-                controller: textcontroller,
-                decoration: InputDecoration(
-                    hintText: 'Nhập bình luận',
-                    suffixIcon: IconButton(
-                      icon: Icon(
-                        Icons.send_rounded,
-                        color: AppColor.theme,
+            if (user.user!.idChucVu == 0) ...[
+              Container(
+                padding: EdgeInsets.fromLTRB(10, 0, 10, 10),
+                child: TextField(
+                  controller: textcontroller,
+                  decoration: InputDecoration(
+                      hintText: 'Nhập bình luận',
+                      suffixIcon: IconButton(
+                        icon: Icon(
+                          Icons.send_rounded,
+                          color: AppColor.theme,
+                        ),
+                        onPressed: () async {
+                          bool bl;
+                          bl = await BinhLuan_MV.postBinhLuan(
+                              widget.id_baiviet.toString(),
+                              user.user!.id.toString(),
+                              textcontroller.text);
+                          if (bl == true) {
+                            textcontroller.clear();
+                            setState(() {
+                              textcontroller;
+                            });
+                            Navigator.of(context).pushAndRemoveUntil(
+                                MaterialPageRoute(
+                                    builder: (context) => BinhLuan_Page(
+                                          id_baiviet: widget.id_baiviet,
+                                          id_lophp: widget.id_lophp,
+                                        )),
+                                (route) => false);
+                          }
+                        },
                       ),
-                      onPressed: () async {
-                        bool bl;
-                        bl = await BinhLuan_MV.postBinhLuan(
-                            widget.id_baiviet.toString(),
-                            user.user!.id.toString(),
-                            textcontroller.text);
-                        if (bl == true) {
-                          textcontroller.clear();
-                          setState(() {
-                            textcontroller;
-                          });
-                          Navigator.of(context).pushAndRemoveUntil(
-                              MaterialPageRoute(
-                                  builder: (context) => BinhLuan_Page(
-                                        id_baiviet: widget.id_baiviet,
-                                        id_lophp: widget.id_lophp,
-                                      )),
-                              (route) => false);
-                        }
-                      },
-                    ),
-                    border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(30))),
-              ),
-            )
+                      border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(30))),
+                ),
+              )
+            ]
           ],
         ),
       ),

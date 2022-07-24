@@ -71,7 +71,7 @@ class _SubjectViewState extends State<SubjectView> {
     List<SubjectStream> subjectStreams =
         streams.where((item) => item.subjectId == subjects[1].id).toList();
     final List<Map<String, dynamic>> menus = [
-      {'index': 1, 'icon': Icons.timer, 'title': "Bản tin"},
+      {'index': 1, 'icon': Icons.timer, 'title': "Bảng tin"},
       {'index': 2, 'icon': Icons.assignment, 'title': "Bài tập"},
       {'index': 3, 'icon': Icons.group, 'title': "Mọi người"},
     ];

@@ -72,7 +72,7 @@ class _LoadBinhLuanState extends State<LoadBinhLuan> {
                                     child: Text(
                                       dsBinhluan.createdAt == null
                                           ? '2022-07-16 10:22'
-                                          : dsBinhluan.createdAt!,
+                                          : '${DateTime.parse(dsBinhluan.createdAt!).year}-${DateTime.parse(dsBinhluan.createdAt!).month}-${DateTime.parse(dsBinhluan.createdAt!).day} ${DateTime.parse(dsBinhluan.createdAt!).hour}:${DateTime.parse(dsBinhluan.createdAt!).minute}',
                                       style: ggTextStyle(10, FontWeight.normal,
                                           AppColor.black),
                                     ),
